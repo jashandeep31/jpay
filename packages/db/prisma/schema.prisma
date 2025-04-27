@@ -258,10 +258,11 @@ model PaymentPageFormField {
   required    Boolean                  @default(false)
   value       String?
 
-  paymentPageForm   PaymentPageForm @relation(fields: [paymentPageFormId], references: [id])
-  paymentPageFormId String
-  createdAt         DateTime        @default(now())
-  updatedAt         DateTime        @updatedAt
+  paymentPageForm           PaymentPageForm             @relation(fields: [paymentPageFormId], references: [id])
+  paymentPageFormId         String
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  PaymentPageFormFieldValue PaymentPageFormFieldValue[]
 }
 
 enum PaymentPageFormFieldType {
@@ -269,4 +270,16 @@ enum PaymentPageFormFieldType {
   NUMBER
   EMAIL
   PHONE
+}
+
+model PaymentPageFormFieldValue {
+  id String @id @default(uuid())
+
+  paymentPageFormField   PaymentPageFormField @relation(fields: [paymentPageFormFieldId], references: [id])
+  paymentPageFormFieldId String
+
+  value String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

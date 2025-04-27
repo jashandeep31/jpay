@@ -239,6 +239,35 @@ exports.Prisma.TransactionScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PaymentButtonScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  type: 'type',
+  description: 'description',
+  amount: 'amount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentPageFormScalarFieldEnum = {
+  id: 'id',
+  paymentPageId: 'paymentPageId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentPageFormFieldScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  label: 'label',
+  placeholder: 'placeholder',
+  required: 'required',
+  value: 'value',
+  paymentPageFormId: 'paymentPageFormId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -290,6 +319,19 @@ exports.TransactionStatus = exports.$Enums.TransactionStatus = {
   FAILED: 'FAILED'
 };
 
+exports.PaymentButtonType = exports.$Enums.PaymentButtonType = {
+  QUICK_PAYMENT: 'QUICK_PAYMENT',
+  DONATION: 'DONATION',
+  OTHER: 'OTHER'
+};
+
+exports.PaymentPageFormFieldType = exports.$Enums.PaymentPageFormFieldType = {
+  TEXT: 'TEXT',
+  NUMBER: 'NUMBER',
+  EMAIL: 'EMAIL',
+  PHONE: 'PHONE'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Account: 'Account',
@@ -301,7 +343,10 @@ exports.Prisma.ModelName = {
   PaymentLink: 'PaymentLink',
   PaymentPage: 'PaymentPage',
   IntiatedPayment: 'IntiatedPayment',
-  Transaction: 'Transaction'
+  Transaction: 'Transaction',
+  PaymentButton: 'PaymentButton',
+  PaymentPageForm: 'PaymentPageForm',
+  PaymentPageFormField: 'PaymentPageFormField'
 };
 
 /**

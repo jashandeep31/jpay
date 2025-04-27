@@ -13,6 +13,10 @@ import {
   LogOut,
   ChevronLeft,
   ChevronRight,
+  QrCode,
+  FileKey2,
+  Webhook,
+  Landmark,
 } from "lucide-react";
 import { useSidebar } from "@/context/sidebar-context";
 import {
@@ -38,10 +42,36 @@ const sidebarLinks = [
     href: "/dashboard/payment-pages",
     icon: FileText,
   },
+  {
+    name: "Invoices",
+    href: "/dashboard/invoices",
+    icon: FileKey2,
+  },
 
+  {
+    name: "QR Payments",
+    href: "/dashboard/qr-payments",
+    icon: QrCode,
+  },
+
+  {
+    name: "Invoices & Subscriptions",
+    href: "/dashboard/invoices",
+    icon: FileText,
+  },
   {
     name: "Payouts",
     href: "/dashboard/payouts",
+    icon: Landmark,
+  },
+  {
+    name: "Web API",
+    href: "/dashboard/web-api",
+    icon: Webhook,
+  },
+  {
+    name: "@jpay-js",
+    href: "/dashboard/jpay-js",
     icon: ArrowDownToLine,
   },
 ];

@@ -68,6 +68,21 @@ export type IntiatedPayment = $Result.DefaultSelection<Prisma.$IntiatedPaymentPa
  * 
  */
 export type Transaction = $Result.DefaultSelection<Prisma.$TransactionPayload>
+/**
+ * Model PaymentButton
+ * 
+ */
+export type PaymentButton = $Result.DefaultSelection<Prisma.$PaymentButtonPayload>
+/**
+ * Model PaymentPageForm
+ * 
+ */
+export type PaymentPageForm = $Result.DefaultSelection<Prisma.$PaymentPageFormPayload>
+/**
+ * Model PaymentPageFormField
+ * 
+ */
+export type PaymentPageFormField = $Result.DefaultSelection<Prisma.$PaymentPageFormFieldPayload>
 
 /**
  * Enums
@@ -124,6 +139,25 @@ export const TransactionStatus: {
 
 export type TransactionStatus = (typeof TransactionStatus)[keyof typeof TransactionStatus]
 
+
+export const PaymentButtonType: {
+  QUICK_PAYMENT: 'QUICK_PAYMENT',
+  DONATION: 'DONATION',
+  OTHER: 'OTHER'
+};
+
+export type PaymentButtonType = (typeof PaymentButtonType)[keyof typeof PaymentButtonType]
+
+
+export const PaymentPageFormFieldType: {
+  TEXT: 'TEXT',
+  NUMBER: 'NUMBER',
+  EMAIL: 'EMAIL',
+  PHONE: 'PHONE'
+};
+
+export type PaymentPageFormFieldType = (typeof PaymentPageFormFieldType)[keyof typeof PaymentPageFormFieldType]
+
 }
 
 export type PaymentLinkStatus = $Enums.PaymentLinkStatus
@@ -145,6 +179,14 @@ export const IntiatedPaymentStatus: typeof $Enums.IntiatedPaymentStatus
 export type TransactionStatus = $Enums.TransactionStatus
 
 export const TransactionStatus: typeof $Enums.TransactionStatus
+
+export type PaymentButtonType = $Enums.PaymentButtonType
+
+export const PaymentButtonType: typeof $Enums.PaymentButtonType
+
+export type PaymentPageFormFieldType = $Enums.PaymentPageFormFieldType
+
+export const PaymentPageFormFieldType: typeof $Enums.PaymentPageFormFieldType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -380,6 +422,36 @@ export class PrismaClient<
     * ```
     */
   get transaction(): Prisma.TransactionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.paymentButton`: Exposes CRUD operations for the **PaymentButton** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PaymentButtons
+    * const paymentButtons = await prisma.paymentButton.findMany()
+    * ```
+    */
+  get paymentButton(): Prisma.PaymentButtonDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.paymentPageForm`: Exposes CRUD operations for the **PaymentPageForm** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PaymentPageForms
+    * const paymentPageForms = await prisma.paymentPageForm.findMany()
+    * ```
+    */
+  get paymentPageForm(): Prisma.PaymentPageFormDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.paymentPageFormField`: Exposes CRUD operations for the **PaymentPageFormField** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PaymentPageFormFields
+    * const paymentPageFormFields = await prisma.paymentPageFormField.findMany()
+    * ```
+    */
+  get paymentPageFormField(): Prisma.PaymentPageFormFieldDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -830,7 +902,10 @@ export namespace Prisma {
     PaymentLink: 'PaymentLink',
     PaymentPage: 'PaymentPage',
     IntiatedPayment: 'IntiatedPayment',
-    Transaction: 'Transaction'
+    Transaction: 'Transaction',
+    PaymentButton: 'PaymentButton',
+    PaymentPageForm: 'PaymentPageForm',
+    PaymentPageFormField: 'PaymentPageFormField'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -849,7 +924,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "account" | "session" | "verificationToken" | "authenticator" | "wallet" | "stableCoin" | "paymentLink" | "paymentPage" | "intiatedPayment" | "transaction"
+      modelProps: "user" | "account" | "session" | "verificationToken" | "authenticator" | "wallet" | "stableCoin" | "paymentLink" | "paymentPage" | "intiatedPayment" | "transaction" | "paymentButton" | "paymentPageForm" | "paymentPageFormField"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1667,6 +1742,228 @@ export namespace Prisma {
           }
         }
       }
+      PaymentButton: {
+        payload: Prisma.$PaymentButtonPayload<ExtArgs>
+        fields: Prisma.PaymentButtonFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PaymentButtonFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentButtonPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PaymentButtonFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentButtonPayload>
+          }
+          findFirst: {
+            args: Prisma.PaymentButtonFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentButtonPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PaymentButtonFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentButtonPayload>
+          }
+          findMany: {
+            args: Prisma.PaymentButtonFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentButtonPayload>[]
+          }
+          create: {
+            args: Prisma.PaymentButtonCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentButtonPayload>
+          }
+          createMany: {
+            args: Prisma.PaymentButtonCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PaymentButtonCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentButtonPayload>[]
+          }
+          delete: {
+            args: Prisma.PaymentButtonDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentButtonPayload>
+          }
+          update: {
+            args: Prisma.PaymentButtonUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentButtonPayload>
+          }
+          deleteMany: {
+            args: Prisma.PaymentButtonDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PaymentButtonUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PaymentButtonUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentButtonPayload>[]
+          }
+          upsert: {
+            args: Prisma.PaymentButtonUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentButtonPayload>
+          }
+          aggregate: {
+            args: Prisma.PaymentButtonAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePaymentButton>
+          }
+          groupBy: {
+            args: Prisma.PaymentButtonGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PaymentButtonGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PaymentButtonCountArgs<ExtArgs>
+            result: $Utils.Optional<PaymentButtonCountAggregateOutputType> | number
+          }
+        }
+      }
+      PaymentPageForm: {
+        payload: Prisma.$PaymentPageFormPayload<ExtArgs>
+        fields: Prisma.PaymentPageFormFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PaymentPageFormFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PaymentPageFormFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormPayload>
+          }
+          findFirst: {
+            args: Prisma.PaymentPageFormFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PaymentPageFormFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormPayload>
+          }
+          findMany: {
+            args: Prisma.PaymentPageFormFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormPayload>[]
+          }
+          create: {
+            args: Prisma.PaymentPageFormCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormPayload>
+          }
+          createMany: {
+            args: Prisma.PaymentPageFormCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PaymentPageFormCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormPayload>[]
+          }
+          delete: {
+            args: Prisma.PaymentPageFormDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormPayload>
+          }
+          update: {
+            args: Prisma.PaymentPageFormUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormPayload>
+          }
+          deleteMany: {
+            args: Prisma.PaymentPageFormDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PaymentPageFormUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PaymentPageFormUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormPayload>[]
+          }
+          upsert: {
+            args: Prisma.PaymentPageFormUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormPayload>
+          }
+          aggregate: {
+            args: Prisma.PaymentPageFormAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePaymentPageForm>
+          }
+          groupBy: {
+            args: Prisma.PaymentPageFormGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PaymentPageFormGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PaymentPageFormCountArgs<ExtArgs>
+            result: $Utils.Optional<PaymentPageFormCountAggregateOutputType> | number
+          }
+        }
+      }
+      PaymentPageFormField: {
+        payload: Prisma.$PaymentPageFormFieldPayload<ExtArgs>
+        fields: Prisma.PaymentPageFormFieldFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PaymentPageFormFieldFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormFieldPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PaymentPageFormFieldFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormFieldPayload>
+          }
+          findFirst: {
+            args: Prisma.PaymentPageFormFieldFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormFieldPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PaymentPageFormFieldFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormFieldPayload>
+          }
+          findMany: {
+            args: Prisma.PaymentPageFormFieldFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormFieldPayload>[]
+          }
+          create: {
+            args: Prisma.PaymentPageFormFieldCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormFieldPayload>
+          }
+          createMany: {
+            args: Prisma.PaymentPageFormFieldCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PaymentPageFormFieldCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormFieldPayload>[]
+          }
+          delete: {
+            args: Prisma.PaymentPageFormFieldDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormFieldPayload>
+          }
+          update: {
+            args: Prisma.PaymentPageFormFieldUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormFieldPayload>
+          }
+          deleteMany: {
+            args: Prisma.PaymentPageFormFieldDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PaymentPageFormFieldUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PaymentPageFormFieldUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormFieldPayload>[]
+          }
+          upsert: {
+            args: Prisma.PaymentPageFormFieldUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PaymentPageFormFieldPayload>
+          }
+          aggregate: {
+            args: Prisma.PaymentPageFormFieldAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePaymentPageFormField>
+          }
+          groupBy: {
+            args: Prisma.PaymentPageFormFieldGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PaymentPageFormFieldGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PaymentPageFormFieldCountArgs<ExtArgs>
+            result: $Utils.Optional<PaymentPageFormFieldCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1762,6 +2059,9 @@ export namespace Prisma {
     paymentPage?: PaymentPageOmit
     intiatedPayment?: IntiatedPaymentOmit
     transaction?: TransactionOmit
+    paymentButton?: PaymentButtonOmit
+    paymentPageForm?: PaymentPageFormOmit
+    paymentPageFormField?: PaymentPageFormFieldOmit
   }
 
   /* Types for Logging */
@@ -1995,10 +2295,12 @@ export namespace Prisma {
 
   export type PaymentPageCountOutputType = {
     IntiatedPayment: number
+    PaymentPageForm: number
   }
 
   export type PaymentPageCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     IntiatedPayment?: boolean | PaymentPageCountOutputTypeCountIntiatedPaymentArgs
+    PaymentPageForm?: boolean | PaymentPageCountOutputTypeCountPaymentPageFormArgs
   }
 
   // Custom InputTypes
@@ -2017,6 +2319,13 @@ export namespace Prisma {
    */
   export type PaymentPageCountOutputTypeCountIntiatedPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: IntiatedPaymentWhereInput
+  }
+
+  /**
+   * PaymentPageCountOutputType without action
+   */
+  export type PaymentPageCountOutputTypeCountPaymentPageFormArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentPageFormWhereInput
   }
 
 
@@ -2048,6 +2357,37 @@ export namespace Prisma {
    */
   export type IntiatedPaymentCountOutputTypeCountTransactionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TransactionWhereInput
+  }
+
+
+  /**
+   * Count Type PaymentPageFormCountOutputType
+   */
+
+  export type PaymentPageFormCountOutputType = {
+    PaymentPageFormField: number
+  }
+
+  export type PaymentPageFormCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    PaymentPageFormField?: boolean | PaymentPageFormCountOutputTypeCountPaymentPageFormFieldArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PaymentPageFormCountOutputType without action
+   */
+  export type PaymentPageFormCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormCountOutputType
+     */
+    select?: PaymentPageFormCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PaymentPageFormCountOutputType without action
+   */
+  export type PaymentPageFormCountOutputTypeCountPaymentPageFormFieldArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentPageFormFieldWhereInput
   }
 
 
@@ -11255,6 +11595,7 @@ export namespace Prisma {
     status?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     IntiatedPayment?: boolean | PaymentPage$IntiatedPaymentArgs<ExtArgs>
+    PaymentPageForm?: boolean | PaymentPage$PaymentPageFormArgs<ExtArgs>
     _count?: boolean | PaymentPageCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["paymentPage"]>
 
@@ -11303,6 +11644,7 @@ export namespace Prisma {
   export type PaymentPageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     IntiatedPayment?: boolean | PaymentPage$IntiatedPaymentArgs<ExtArgs>
+    PaymentPageForm?: boolean | PaymentPage$PaymentPageFormArgs<ExtArgs>
     _count?: boolean | PaymentPageCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PaymentPageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -11317,6 +11659,7 @@ export namespace Prisma {
     objects: {
       user: Prisma.$UserPayload<ExtArgs>
       IntiatedPayment: Prisma.$IntiatedPaymentPayload<ExtArgs>[]
+      PaymentPageForm: Prisma.$PaymentPageFormPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11725,6 +12068,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     IntiatedPayment<T extends PaymentPage$IntiatedPaymentArgs<ExtArgs> = {}>(args?: Subset<T, PaymentPage$IntiatedPaymentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntiatedPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    PaymentPageForm<T extends PaymentPage$PaymentPageFormArgs<ExtArgs> = {}>(args?: Subset<T, PaymentPage$PaymentPageFormArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12181,6 +12525,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: IntiatedPaymentScalarFieldEnum | IntiatedPaymentScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentPage.PaymentPageForm
+   */
+  export type PaymentPage$PaymentPageFormArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormInclude<ExtArgs> | null
+    where?: PaymentPageFormWhereInput
+    orderBy?: PaymentPageFormOrderByWithRelationInput | PaymentPageFormOrderByWithRelationInput[]
+    cursor?: PaymentPageFormWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PaymentPageFormScalarFieldEnum | PaymentPageFormScalarFieldEnum[]
   }
 
   /**
@@ -14623,6 +14991,3246 @@ export namespace Prisma {
 
 
   /**
+   * Model PaymentButton
+   */
+
+  export type AggregatePaymentButton = {
+    _count: PaymentButtonCountAggregateOutputType | null
+    _avg: PaymentButtonAvgAggregateOutputType | null
+    _sum: PaymentButtonSumAggregateOutputType | null
+    _min: PaymentButtonMinAggregateOutputType | null
+    _max: PaymentButtonMaxAggregateOutputType | null
+  }
+
+  export type PaymentButtonAvgAggregateOutputType = {
+    amount: Decimal | null
+  }
+
+  export type PaymentButtonSumAggregateOutputType = {
+    amount: Decimal | null
+  }
+
+  export type PaymentButtonMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    type: $Enums.PaymentButtonType | null
+    description: string | null
+    amount: Decimal | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PaymentButtonMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    type: $Enums.PaymentButtonType | null
+    description: string | null
+    amount: Decimal | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PaymentButtonCountAggregateOutputType = {
+    id: number
+    title: number
+    type: number
+    description: number
+    amount: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PaymentButtonAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type PaymentButtonSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type PaymentButtonMinAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    description?: true
+    amount?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PaymentButtonMaxAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    description?: true
+    amount?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PaymentButtonCountAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    description?: true
+    amount?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PaymentButtonAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PaymentButton to aggregate.
+     */
+    where?: PaymentButtonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentButtons to fetch.
+     */
+    orderBy?: PaymentButtonOrderByWithRelationInput | PaymentButtonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PaymentButtonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentButtons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentButtons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PaymentButtons
+    **/
+    _count?: true | PaymentButtonCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PaymentButtonAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PaymentButtonSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PaymentButtonMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PaymentButtonMaxAggregateInputType
+  }
+
+  export type GetPaymentButtonAggregateType<T extends PaymentButtonAggregateArgs> = {
+        [P in keyof T & keyof AggregatePaymentButton]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePaymentButton[P]>
+      : GetScalarType<T[P], AggregatePaymentButton[P]>
+  }
+
+
+
+
+  export type PaymentButtonGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentButtonWhereInput
+    orderBy?: PaymentButtonOrderByWithAggregationInput | PaymentButtonOrderByWithAggregationInput[]
+    by: PaymentButtonScalarFieldEnum[] | PaymentButtonScalarFieldEnum
+    having?: PaymentButtonScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PaymentButtonCountAggregateInputType | true
+    _avg?: PaymentButtonAvgAggregateInputType
+    _sum?: PaymentButtonSumAggregateInputType
+    _min?: PaymentButtonMinAggregateInputType
+    _max?: PaymentButtonMaxAggregateInputType
+  }
+
+  export type PaymentButtonGroupByOutputType = {
+    id: string
+    title: string
+    type: $Enums.PaymentButtonType
+    description: string | null
+    amount: Decimal
+    createdAt: Date
+    updatedAt: Date
+    _count: PaymentButtonCountAggregateOutputType | null
+    _avg: PaymentButtonAvgAggregateOutputType | null
+    _sum: PaymentButtonSumAggregateOutputType | null
+    _min: PaymentButtonMinAggregateOutputType | null
+    _max: PaymentButtonMaxAggregateOutputType | null
+  }
+
+  type GetPaymentButtonGroupByPayload<T extends PaymentButtonGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PaymentButtonGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PaymentButtonGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PaymentButtonGroupByOutputType[P]>
+            : GetScalarType<T[P], PaymentButtonGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PaymentButtonSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    description?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["paymentButton"]>
+
+  export type PaymentButtonSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    description?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["paymentButton"]>
+
+  export type PaymentButtonSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    description?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["paymentButton"]>
+
+  export type PaymentButtonSelectScalar = {
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    description?: boolean
+    amount?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PaymentButtonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "description" | "amount" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentButton"]>
+
+  export type $PaymentButtonPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PaymentButton"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      type: $Enums.PaymentButtonType
+      description: string | null
+      amount: Prisma.Decimal
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["paymentButton"]>
+    composites: {}
+  }
+
+  type PaymentButtonGetPayload<S extends boolean | null | undefined | PaymentButtonDefaultArgs> = $Result.GetResult<Prisma.$PaymentButtonPayload, S>
+
+  type PaymentButtonCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PaymentButtonFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PaymentButtonCountAggregateInputType | true
+    }
+
+  export interface PaymentButtonDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PaymentButton'], meta: { name: 'PaymentButton' } }
+    /**
+     * Find zero or one PaymentButton that matches the filter.
+     * @param {PaymentButtonFindUniqueArgs} args - Arguments to find a PaymentButton
+     * @example
+     * // Get one PaymentButton
+     * const paymentButton = await prisma.paymentButton.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PaymentButtonFindUniqueArgs>(args: SelectSubset<T, PaymentButtonFindUniqueArgs<ExtArgs>>): Prisma__PaymentButtonClient<$Result.GetResult<Prisma.$PaymentButtonPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PaymentButton that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PaymentButtonFindUniqueOrThrowArgs} args - Arguments to find a PaymentButton
+     * @example
+     * // Get one PaymentButton
+     * const paymentButton = await prisma.paymentButton.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PaymentButtonFindUniqueOrThrowArgs>(args: SelectSubset<T, PaymentButtonFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PaymentButtonClient<$Result.GetResult<Prisma.$PaymentButtonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PaymentButton that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentButtonFindFirstArgs} args - Arguments to find a PaymentButton
+     * @example
+     * // Get one PaymentButton
+     * const paymentButton = await prisma.paymentButton.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PaymentButtonFindFirstArgs>(args?: SelectSubset<T, PaymentButtonFindFirstArgs<ExtArgs>>): Prisma__PaymentButtonClient<$Result.GetResult<Prisma.$PaymentButtonPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PaymentButton that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentButtonFindFirstOrThrowArgs} args - Arguments to find a PaymentButton
+     * @example
+     * // Get one PaymentButton
+     * const paymentButton = await prisma.paymentButton.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PaymentButtonFindFirstOrThrowArgs>(args?: SelectSubset<T, PaymentButtonFindFirstOrThrowArgs<ExtArgs>>): Prisma__PaymentButtonClient<$Result.GetResult<Prisma.$PaymentButtonPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PaymentButtons that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentButtonFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PaymentButtons
+     * const paymentButtons = await prisma.paymentButton.findMany()
+     * 
+     * // Get first 10 PaymentButtons
+     * const paymentButtons = await prisma.paymentButton.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const paymentButtonWithIdOnly = await prisma.paymentButton.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PaymentButtonFindManyArgs>(args?: SelectSubset<T, PaymentButtonFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentButtonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PaymentButton.
+     * @param {PaymentButtonCreateArgs} args - Arguments to create a PaymentButton.
+     * @example
+     * // Create one PaymentButton
+     * const PaymentButton = await prisma.paymentButton.create({
+     *   data: {
+     *     // ... data to create a PaymentButton
+     *   }
+     * })
+     * 
+     */
+    create<T extends PaymentButtonCreateArgs>(args: SelectSubset<T, PaymentButtonCreateArgs<ExtArgs>>): Prisma__PaymentButtonClient<$Result.GetResult<Prisma.$PaymentButtonPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PaymentButtons.
+     * @param {PaymentButtonCreateManyArgs} args - Arguments to create many PaymentButtons.
+     * @example
+     * // Create many PaymentButtons
+     * const paymentButton = await prisma.paymentButton.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PaymentButtonCreateManyArgs>(args?: SelectSubset<T, PaymentButtonCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PaymentButtons and returns the data saved in the database.
+     * @param {PaymentButtonCreateManyAndReturnArgs} args - Arguments to create many PaymentButtons.
+     * @example
+     * // Create many PaymentButtons
+     * const paymentButton = await prisma.paymentButton.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PaymentButtons and only return the `id`
+     * const paymentButtonWithIdOnly = await prisma.paymentButton.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PaymentButtonCreateManyAndReturnArgs>(args?: SelectSubset<T, PaymentButtonCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentButtonPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PaymentButton.
+     * @param {PaymentButtonDeleteArgs} args - Arguments to delete one PaymentButton.
+     * @example
+     * // Delete one PaymentButton
+     * const PaymentButton = await prisma.paymentButton.delete({
+     *   where: {
+     *     // ... filter to delete one PaymentButton
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PaymentButtonDeleteArgs>(args: SelectSubset<T, PaymentButtonDeleteArgs<ExtArgs>>): Prisma__PaymentButtonClient<$Result.GetResult<Prisma.$PaymentButtonPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PaymentButton.
+     * @param {PaymentButtonUpdateArgs} args - Arguments to update one PaymentButton.
+     * @example
+     * // Update one PaymentButton
+     * const paymentButton = await prisma.paymentButton.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PaymentButtonUpdateArgs>(args: SelectSubset<T, PaymentButtonUpdateArgs<ExtArgs>>): Prisma__PaymentButtonClient<$Result.GetResult<Prisma.$PaymentButtonPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PaymentButtons.
+     * @param {PaymentButtonDeleteManyArgs} args - Arguments to filter PaymentButtons to delete.
+     * @example
+     * // Delete a few PaymentButtons
+     * const { count } = await prisma.paymentButton.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PaymentButtonDeleteManyArgs>(args?: SelectSubset<T, PaymentButtonDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PaymentButtons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentButtonUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PaymentButtons
+     * const paymentButton = await prisma.paymentButton.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PaymentButtonUpdateManyArgs>(args: SelectSubset<T, PaymentButtonUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PaymentButtons and returns the data updated in the database.
+     * @param {PaymentButtonUpdateManyAndReturnArgs} args - Arguments to update many PaymentButtons.
+     * @example
+     * // Update many PaymentButtons
+     * const paymentButton = await prisma.paymentButton.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PaymentButtons and only return the `id`
+     * const paymentButtonWithIdOnly = await prisma.paymentButton.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PaymentButtonUpdateManyAndReturnArgs>(args: SelectSubset<T, PaymentButtonUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentButtonPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PaymentButton.
+     * @param {PaymentButtonUpsertArgs} args - Arguments to update or create a PaymentButton.
+     * @example
+     * // Update or create a PaymentButton
+     * const paymentButton = await prisma.paymentButton.upsert({
+     *   create: {
+     *     // ... data to create a PaymentButton
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PaymentButton we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PaymentButtonUpsertArgs>(args: SelectSubset<T, PaymentButtonUpsertArgs<ExtArgs>>): Prisma__PaymentButtonClient<$Result.GetResult<Prisma.$PaymentButtonPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PaymentButtons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentButtonCountArgs} args - Arguments to filter PaymentButtons to count.
+     * @example
+     * // Count the number of PaymentButtons
+     * const count = await prisma.paymentButton.count({
+     *   where: {
+     *     // ... the filter for the PaymentButtons we want to count
+     *   }
+     * })
+    **/
+    count<T extends PaymentButtonCountArgs>(
+      args?: Subset<T, PaymentButtonCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PaymentButtonCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PaymentButton.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentButtonAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PaymentButtonAggregateArgs>(args: Subset<T, PaymentButtonAggregateArgs>): Prisma.PrismaPromise<GetPaymentButtonAggregateType<T>>
+
+    /**
+     * Group by PaymentButton.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentButtonGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PaymentButtonGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PaymentButtonGroupByArgs['orderBy'] }
+        : { orderBy?: PaymentButtonGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PaymentButtonGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPaymentButtonGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PaymentButton model
+   */
+  readonly fields: PaymentButtonFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PaymentButton.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PaymentButtonClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PaymentButton model
+   */
+  interface PaymentButtonFieldRefs {
+    readonly id: FieldRef<"PaymentButton", 'String'>
+    readonly title: FieldRef<"PaymentButton", 'String'>
+    readonly type: FieldRef<"PaymentButton", 'PaymentButtonType'>
+    readonly description: FieldRef<"PaymentButton", 'String'>
+    readonly amount: FieldRef<"PaymentButton", 'Decimal'>
+    readonly createdAt: FieldRef<"PaymentButton", 'DateTime'>
+    readonly updatedAt: FieldRef<"PaymentButton", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PaymentButton findUnique
+   */
+  export type PaymentButtonFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentButton
+     */
+    select?: PaymentButtonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentButton
+     */
+    omit?: PaymentButtonOmit<ExtArgs> | null
+    /**
+     * Filter, which PaymentButton to fetch.
+     */
+    where: PaymentButtonWhereUniqueInput
+  }
+
+  /**
+   * PaymentButton findUniqueOrThrow
+   */
+  export type PaymentButtonFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentButton
+     */
+    select?: PaymentButtonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentButton
+     */
+    omit?: PaymentButtonOmit<ExtArgs> | null
+    /**
+     * Filter, which PaymentButton to fetch.
+     */
+    where: PaymentButtonWhereUniqueInput
+  }
+
+  /**
+   * PaymentButton findFirst
+   */
+  export type PaymentButtonFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentButton
+     */
+    select?: PaymentButtonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentButton
+     */
+    omit?: PaymentButtonOmit<ExtArgs> | null
+    /**
+     * Filter, which PaymentButton to fetch.
+     */
+    where?: PaymentButtonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentButtons to fetch.
+     */
+    orderBy?: PaymentButtonOrderByWithRelationInput | PaymentButtonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PaymentButtons.
+     */
+    cursor?: PaymentButtonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentButtons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentButtons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PaymentButtons.
+     */
+    distinct?: PaymentButtonScalarFieldEnum | PaymentButtonScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentButton findFirstOrThrow
+   */
+  export type PaymentButtonFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentButton
+     */
+    select?: PaymentButtonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentButton
+     */
+    omit?: PaymentButtonOmit<ExtArgs> | null
+    /**
+     * Filter, which PaymentButton to fetch.
+     */
+    where?: PaymentButtonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentButtons to fetch.
+     */
+    orderBy?: PaymentButtonOrderByWithRelationInput | PaymentButtonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PaymentButtons.
+     */
+    cursor?: PaymentButtonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentButtons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentButtons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PaymentButtons.
+     */
+    distinct?: PaymentButtonScalarFieldEnum | PaymentButtonScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentButton findMany
+   */
+  export type PaymentButtonFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentButton
+     */
+    select?: PaymentButtonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentButton
+     */
+    omit?: PaymentButtonOmit<ExtArgs> | null
+    /**
+     * Filter, which PaymentButtons to fetch.
+     */
+    where?: PaymentButtonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentButtons to fetch.
+     */
+    orderBy?: PaymentButtonOrderByWithRelationInput | PaymentButtonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PaymentButtons.
+     */
+    cursor?: PaymentButtonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentButtons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentButtons.
+     */
+    skip?: number
+    distinct?: PaymentButtonScalarFieldEnum | PaymentButtonScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentButton create
+   */
+  export type PaymentButtonCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentButton
+     */
+    select?: PaymentButtonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentButton
+     */
+    omit?: PaymentButtonOmit<ExtArgs> | null
+    /**
+     * The data needed to create a PaymentButton.
+     */
+    data: XOR<PaymentButtonCreateInput, PaymentButtonUncheckedCreateInput>
+  }
+
+  /**
+   * PaymentButton createMany
+   */
+  export type PaymentButtonCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PaymentButtons.
+     */
+    data: PaymentButtonCreateManyInput | PaymentButtonCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PaymentButton createManyAndReturn
+   */
+  export type PaymentButtonCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentButton
+     */
+    select?: PaymentButtonSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentButton
+     */
+    omit?: PaymentButtonOmit<ExtArgs> | null
+    /**
+     * The data used to create many PaymentButtons.
+     */
+    data: PaymentButtonCreateManyInput | PaymentButtonCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PaymentButton update
+   */
+  export type PaymentButtonUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentButton
+     */
+    select?: PaymentButtonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentButton
+     */
+    omit?: PaymentButtonOmit<ExtArgs> | null
+    /**
+     * The data needed to update a PaymentButton.
+     */
+    data: XOR<PaymentButtonUpdateInput, PaymentButtonUncheckedUpdateInput>
+    /**
+     * Choose, which PaymentButton to update.
+     */
+    where: PaymentButtonWhereUniqueInput
+  }
+
+  /**
+   * PaymentButton updateMany
+   */
+  export type PaymentButtonUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PaymentButtons.
+     */
+    data: XOR<PaymentButtonUpdateManyMutationInput, PaymentButtonUncheckedUpdateManyInput>
+    /**
+     * Filter which PaymentButtons to update
+     */
+    where?: PaymentButtonWhereInput
+    /**
+     * Limit how many PaymentButtons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PaymentButton updateManyAndReturn
+   */
+  export type PaymentButtonUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentButton
+     */
+    select?: PaymentButtonSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentButton
+     */
+    omit?: PaymentButtonOmit<ExtArgs> | null
+    /**
+     * The data used to update PaymentButtons.
+     */
+    data: XOR<PaymentButtonUpdateManyMutationInput, PaymentButtonUncheckedUpdateManyInput>
+    /**
+     * Filter which PaymentButtons to update
+     */
+    where?: PaymentButtonWhereInput
+    /**
+     * Limit how many PaymentButtons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PaymentButton upsert
+   */
+  export type PaymentButtonUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentButton
+     */
+    select?: PaymentButtonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentButton
+     */
+    omit?: PaymentButtonOmit<ExtArgs> | null
+    /**
+     * The filter to search for the PaymentButton to update in case it exists.
+     */
+    where: PaymentButtonWhereUniqueInput
+    /**
+     * In case the PaymentButton found by the `where` argument doesn't exist, create a new PaymentButton with this data.
+     */
+    create: XOR<PaymentButtonCreateInput, PaymentButtonUncheckedCreateInput>
+    /**
+     * In case the PaymentButton was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PaymentButtonUpdateInput, PaymentButtonUncheckedUpdateInput>
+  }
+
+  /**
+   * PaymentButton delete
+   */
+  export type PaymentButtonDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentButton
+     */
+    select?: PaymentButtonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentButton
+     */
+    omit?: PaymentButtonOmit<ExtArgs> | null
+    /**
+     * Filter which PaymentButton to delete.
+     */
+    where: PaymentButtonWhereUniqueInput
+  }
+
+  /**
+   * PaymentButton deleteMany
+   */
+  export type PaymentButtonDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PaymentButtons to delete
+     */
+    where?: PaymentButtonWhereInput
+    /**
+     * Limit how many PaymentButtons to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PaymentButton without action
+   */
+  export type PaymentButtonDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentButton
+     */
+    select?: PaymentButtonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentButton
+     */
+    omit?: PaymentButtonOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PaymentPageForm
+   */
+
+  export type AggregatePaymentPageForm = {
+    _count: PaymentPageFormCountAggregateOutputType | null
+    _min: PaymentPageFormMinAggregateOutputType | null
+    _max: PaymentPageFormMaxAggregateOutputType | null
+  }
+
+  export type PaymentPageFormMinAggregateOutputType = {
+    id: string | null
+    paymentPageId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PaymentPageFormMaxAggregateOutputType = {
+    id: string | null
+    paymentPageId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PaymentPageFormCountAggregateOutputType = {
+    id: number
+    paymentPageId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PaymentPageFormMinAggregateInputType = {
+    id?: true
+    paymentPageId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PaymentPageFormMaxAggregateInputType = {
+    id?: true
+    paymentPageId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PaymentPageFormCountAggregateInputType = {
+    id?: true
+    paymentPageId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PaymentPageFormAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PaymentPageForm to aggregate.
+     */
+    where?: PaymentPageFormWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentPageForms to fetch.
+     */
+    orderBy?: PaymentPageFormOrderByWithRelationInput | PaymentPageFormOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PaymentPageFormWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentPageForms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentPageForms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PaymentPageForms
+    **/
+    _count?: true | PaymentPageFormCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PaymentPageFormMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PaymentPageFormMaxAggregateInputType
+  }
+
+  export type GetPaymentPageFormAggregateType<T extends PaymentPageFormAggregateArgs> = {
+        [P in keyof T & keyof AggregatePaymentPageForm]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePaymentPageForm[P]>
+      : GetScalarType<T[P], AggregatePaymentPageForm[P]>
+  }
+
+
+
+
+  export type PaymentPageFormGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentPageFormWhereInput
+    orderBy?: PaymentPageFormOrderByWithAggregationInput | PaymentPageFormOrderByWithAggregationInput[]
+    by: PaymentPageFormScalarFieldEnum[] | PaymentPageFormScalarFieldEnum
+    having?: PaymentPageFormScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PaymentPageFormCountAggregateInputType | true
+    _min?: PaymentPageFormMinAggregateInputType
+    _max?: PaymentPageFormMaxAggregateInputType
+  }
+
+  export type PaymentPageFormGroupByOutputType = {
+    id: string
+    paymentPageId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: PaymentPageFormCountAggregateOutputType | null
+    _min: PaymentPageFormMinAggregateOutputType | null
+    _max: PaymentPageFormMaxAggregateOutputType | null
+  }
+
+  type GetPaymentPageFormGroupByPayload<T extends PaymentPageFormGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PaymentPageFormGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PaymentPageFormGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PaymentPageFormGroupByOutputType[P]>
+            : GetScalarType<T[P], PaymentPageFormGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PaymentPageFormSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    paymentPageId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    paymentPage?: boolean | PaymentPageDefaultArgs<ExtArgs>
+    PaymentPageFormField?: boolean | PaymentPageForm$PaymentPageFormFieldArgs<ExtArgs>
+    _count?: boolean | PaymentPageFormCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paymentPageForm"]>
+
+  export type PaymentPageFormSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    paymentPageId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    paymentPage?: boolean | PaymentPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paymentPageForm"]>
+
+  export type PaymentPageFormSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    paymentPageId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    paymentPage?: boolean | PaymentPageDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paymentPageForm"]>
+
+  export type PaymentPageFormSelectScalar = {
+    id?: boolean
+    paymentPageId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PaymentPageFormOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "paymentPageId" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentPageForm"]>
+  export type PaymentPageFormInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    paymentPage?: boolean | PaymentPageDefaultArgs<ExtArgs>
+    PaymentPageFormField?: boolean | PaymentPageForm$PaymentPageFormFieldArgs<ExtArgs>
+    _count?: boolean | PaymentPageFormCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PaymentPageFormIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    paymentPage?: boolean | PaymentPageDefaultArgs<ExtArgs>
+  }
+  export type PaymentPageFormIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    paymentPage?: boolean | PaymentPageDefaultArgs<ExtArgs>
+  }
+
+  export type $PaymentPageFormPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PaymentPageForm"
+    objects: {
+      paymentPage: Prisma.$PaymentPagePayload<ExtArgs>
+      PaymentPageFormField: Prisma.$PaymentPageFormFieldPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      paymentPageId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["paymentPageForm"]>
+    composites: {}
+  }
+
+  type PaymentPageFormGetPayload<S extends boolean | null | undefined | PaymentPageFormDefaultArgs> = $Result.GetResult<Prisma.$PaymentPageFormPayload, S>
+
+  type PaymentPageFormCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PaymentPageFormFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PaymentPageFormCountAggregateInputType | true
+    }
+
+  export interface PaymentPageFormDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PaymentPageForm'], meta: { name: 'PaymentPageForm' } }
+    /**
+     * Find zero or one PaymentPageForm that matches the filter.
+     * @param {PaymentPageFormFindUniqueArgs} args - Arguments to find a PaymentPageForm
+     * @example
+     * // Get one PaymentPageForm
+     * const paymentPageForm = await prisma.paymentPageForm.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PaymentPageFormFindUniqueArgs>(args: SelectSubset<T, PaymentPageFormFindUniqueArgs<ExtArgs>>): Prisma__PaymentPageFormClient<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PaymentPageForm that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PaymentPageFormFindUniqueOrThrowArgs} args - Arguments to find a PaymentPageForm
+     * @example
+     * // Get one PaymentPageForm
+     * const paymentPageForm = await prisma.paymentPageForm.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PaymentPageFormFindUniqueOrThrowArgs>(args: SelectSubset<T, PaymentPageFormFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PaymentPageFormClient<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PaymentPageForm that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormFindFirstArgs} args - Arguments to find a PaymentPageForm
+     * @example
+     * // Get one PaymentPageForm
+     * const paymentPageForm = await prisma.paymentPageForm.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PaymentPageFormFindFirstArgs>(args?: SelectSubset<T, PaymentPageFormFindFirstArgs<ExtArgs>>): Prisma__PaymentPageFormClient<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PaymentPageForm that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormFindFirstOrThrowArgs} args - Arguments to find a PaymentPageForm
+     * @example
+     * // Get one PaymentPageForm
+     * const paymentPageForm = await prisma.paymentPageForm.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PaymentPageFormFindFirstOrThrowArgs>(args?: SelectSubset<T, PaymentPageFormFindFirstOrThrowArgs<ExtArgs>>): Prisma__PaymentPageFormClient<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PaymentPageForms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PaymentPageForms
+     * const paymentPageForms = await prisma.paymentPageForm.findMany()
+     * 
+     * // Get first 10 PaymentPageForms
+     * const paymentPageForms = await prisma.paymentPageForm.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const paymentPageFormWithIdOnly = await prisma.paymentPageForm.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PaymentPageFormFindManyArgs>(args?: SelectSubset<T, PaymentPageFormFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PaymentPageForm.
+     * @param {PaymentPageFormCreateArgs} args - Arguments to create a PaymentPageForm.
+     * @example
+     * // Create one PaymentPageForm
+     * const PaymentPageForm = await prisma.paymentPageForm.create({
+     *   data: {
+     *     // ... data to create a PaymentPageForm
+     *   }
+     * })
+     * 
+     */
+    create<T extends PaymentPageFormCreateArgs>(args: SelectSubset<T, PaymentPageFormCreateArgs<ExtArgs>>): Prisma__PaymentPageFormClient<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PaymentPageForms.
+     * @param {PaymentPageFormCreateManyArgs} args - Arguments to create many PaymentPageForms.
+     * @example
+     * // Create many PaymentPageForms
+     * const paymentPageForm = await prisma.paymentPageForm.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PaymentPageFormCreateManyArgs>(args?: SelectSubset<T, PaymentPageFormCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PaymentPageForms and returns the data saved in the database.
+     * @param {PaymentPageFormCreateManyAndReturnArgs} args - Arguments to create many PaymentPageForms.
+     * @example
+     * // Create many PaymentPageForms
+     * const paymentPageForm = await prisma.paymentPageForm.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PaymentPageForms and only return the `id`
+     * const paymentPageFormWithIdOnly = await prisma.paymentPageForm.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PaymentPageFormCreateManyAndReturnArgs>(args?: SelectSubset<T, PaymentPageFormCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PaymentPageForm.
+     * @param {PaymentPageFormDeleteArgs} args - Arguments to delete one PaymentPageForm.
+     * @example
+     * // Delete one PaymentPageForm
+     * const PaymentPageForm = await prisma.paymentPageForm.delete({
+     *   where: {
+     *     // ... filter to delete one PaymentPageForm
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PaymentPageFormDeleteArgs>(args: SelectSubset<T, PaymentPageFormDeleteArgs<ExtArgs>>): Prisma__PaymentPageFormClient<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PaymentPageForm.
+     * @param {PaymentPageFormUpdateArgs} args - Arguments to update one PaymentPageForm.
+     * @example
+     * // Update one PaymentPageForm
+     * const paymentPageForm = await prisma.paymentPageForm.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PaymentPageFormUpdateArgs>(args: SelectSubset<T, PaymentPageFormUpdateArgs<ExtArgs>>): Prisma__PaymentPageFormClient<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PaymentPageForms.
+     * @param {PaymentPageFormDeleteManyArgs} args - Arguments to filter PaymentPageForms to delete.
+     * @example
+     * // Delete a few PaymentPageForms
+     * const { count } = await prisma.paymentPageForm.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PaymentPageFormDeleteManyArgs>(args?: SelectSubset<T, PaymentPageFormDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PaymentPageForms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PaymentPageForms
+     * const paymentPageForm = await prisma.paymentPageForm.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PaymentPageFormUpdateManyArgs>(args: SelectSubset<T, PaymentPageFormUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PaymentPageForms and returns the data updated in the database.
+     * @param {PaymentPageFormUpdateManyAndReturnArgs} args - Arguments to update many PaymentPageForms.
+     * @example
+     * // Update many PaymentPageForms
+     * const paymentPageForm = await prisma.paymentPageForm.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PaymentPageForms and only return the `id`
+     * const paymentPageFormWithIdOnly = await prisma.paymentPageForm.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PaymentPageFormUpdateManyAndReturnArgs>(args: SelectSubset<T, PaymentPageFormUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PaymentPageForm.
+     * @param {PaymentPageFormUpsertArgs} args - Arguments to update or create a PaymentPageForm.
+     * @example
+     * // Update or create a PaymentPageForm
+     * const paymentPageForm = await prisma.paymentPageForm.upsert({
+     *   create: {
+     *     // ... data to create a PaymentPageForm
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PaymentPageForm we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PaymentPageFormUpsertArgs>(args: SelectSubset<T, PaymentPageFormUpsertArgs<ExtArgs>>): Prisma__PaymentPageFormClient<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PaymentPageForms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormCountArgs} args - Arguments to filter PaymentPageForms to count.
+     * @example
+     * // Count the number of PaymentPageForms
+     * const count = await prisma.paymentPageForm.count({
+     *   where: {
+     *     // ... the filter for the PaymentPageForms we want to count
+     *   }
+     * })
+    **/
+    count<T extends PaymentPageFormCountArgs>(
+      args?: Subset<T, PaymentPageFormCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PaymentPageFormCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PaymentPageForm.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PaymentPageFormAggregateArgs>(args: Subset<T, PaymentPageFormAggregateArgs>): Prisma.PrismaPromise<GetPaymentPageFormAggregateType<T>>
+
+    /**
+     * Group by PaymentPageForm.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PaymentPageFormGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PaymentPageFormGroupByArgs['orderBy'] }
+        : { orderBy?: PaymentPageFormGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PaymentPageFormGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPaymentPageFormGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PaymentPageForm model
+   */
+  readonly fields: PaymentPageFormFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PaymentPageForm.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PaymentPageFormClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    paymentPage<T extends PaymentPageDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PaymentPageDefaultArgs<ExtArgs>>): Prisma__PaymentPageClient<$Result.GetResult<Prisma.$PaymentPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    PaymentPageFormField<T extends PaymentPageForm$PaymentPageFormFieldArgs<ExtArgs> = {}>(args?: Subset<T, PaymentPageForm$PaymentPageFormFieldArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPageFormFieldPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PaymentPageForm model
+   */
+  interface PaymentPageFormFieldRefs {
+    readonly id: FieldRef<"PaymentPageForm", 'String'>
+    readonly paymentPageId: FieldRef<"PaymentPageForm", 'String'>
+    readonly createdAt: FieldRef<"PaymentPageForm", 'DateTime'>
+    readonly updatedAt: FieldRef<"PaymentPageForm", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PaymentPageForm findUnique
+   */
+  export type PaymentPageFormFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentPageForm to fetch.
+     */
+    where: PaymentPageFormWhereUniqueInput
+  }
+
+  /**
+   * PaymentPageForm findUniqueOrThrow
+   */
+  export type PaymentPageFormFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentPageForm to fetch.
+     */
+    where: PaymentPageFormWhereUniqueInput
+  }
+
+  /**
+   * PaymentPageForm findFirst
+   */
+  export type PaymentPageFormFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentPageForm to fetch.
+     */
+    where?: PaymentPageFormWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentPageForms to fetch.
+     */
+    orderBy?: PaymentPageFormOrderByWithRelationInput | PaymentPageFormOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PaymentPageForms.
+     */
+    cursor?: PaymentPageFormWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentPageForms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentPageForms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PaymentPageForms.
+     */
+    distinct?: PaymentPageFormScalarFieldEnum | PaymentPageFormScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentPageForm findFirstOrThrow
+   */
+  export type PaymentPageFormFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentPageForm to fetch.
+     */
+    where?: PaymentPageFormWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentPageForms to fetch.
+     */
+    orderBy?: PaymentPageFormOrderByWithRelationInput | PaymentPageFormOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PaymentPageForms.
+     */
+    cursor?: PaymentPageFormWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentPageForms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentPageForms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PaymentPageForms.
+     */
+    distinct?: PaymentPageFormScalarFieldEnum | PaymentPageFormScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentPageForm findMany
+   */
+  export type PaymentPageFormFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentPageForms to fetch.
+     */
+    where?: PaymentPageFormWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentPageForms to fetch.
+     */
+    orderBy?: PaymentPageFormOrderByWithRelationInput | PaymentPageFormOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PaymentPageForms.
+     */
+    cursor?: PaymentPageFormWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentPageForms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentPageForms.
+     */
+    skip?: number
+    distinct?: PaymentPageFormScalarFieldEnum | PaymentPageFormScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentPageForm create
+   */
+  export type PaymentPageFormCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PaymentPageForm.
+     */
+    data: XOR<PaymentPageFormCreateInput, PaymentPageFormUncheckedCreateInput>
+  }
+
+  /**
+   * PaymentPageForm createMany
+   */
+  export type PaymentPageFormCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PaymentPageForms.
+     */
+    data: PaymentPageFormCreateManyInput | PaymentPageFormCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PaymentPageForm createManyAndReturn
+   */
+  export type PaymentPageFormCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * The data used to create many PaymentPageForms.
+     */
+    data: PaymentPageFormCreateManyInput | PaymentPageFormCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PaymentPageForm update
+   */
+  export type PaymentPageFormUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PaymentPageForm.
+     */
+    data: XOR<PaymentPageFormUpdateInput, PaymentPageFormUncheckedUpdateInput>
+    /**
+     * Choose, which PaymentPageForm to update.
+     */
+    where: PaymentPageFormWhereUniqueInput
+  }
+
+  /**
+   * PaymentPageForm updateMany
+   */
+  export type PaymentPageFormUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PaymentPageForms.
+     */
+    data: XOR<PaymentPageFormUpdateManyMutationInput, PaymentPageFormUncheckedUpdateManyInput>
+    /**
+     * Filter which PaymentPageForms to update
+     */
+    where?: PaymentPageFormWhereInput
+    /**
+     * Limit how many PaymentPageForms to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PaymentPageForm updateManyAndReturn
+   */
+  export type PaymentPageFormUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * The data used to update PaymentPageForms.
+     */
+    data: XOR<PaymentPageFormUpdateManyMutationInput, PaymentPageFormUncheckedUpdateManyInput>
+    /**
+     * Filter which PaymentPageForms to update
+     */
+    where?: PaymentPageFormWhereInput
+    /**
+     * Limit how many PaymentPageForms to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PaymentPageForm upsert
+   */
+  export type PaymentPageFormUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PaymentPageForm to update in case it exists.
+     */
+    where: PaymentPageFormWhereUniqueInput
+    /**
+     * In case the PaymentPageForm found by the `where` argument doesn't exist, create a new PaymentPageForm with this data.
+     */
+    create: XOR<PaymentPageFormCreateInput, PaymentPageFormUncheckedCreateInput>
+    /**
+     * In case the PaymentPageForm was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PaymentPageFormUpdateInput, PaymentPageFormUncheckedUpdateInput>
+  }
+
+  /**
+   * PaymentPageForm delete
+   */
+  export type PaymentPageFormDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormInclude<ExtArgs> | null
+    /**
+     * Filter which PaymentPageForm to delete.
+     */
+    where: PaymentPageFormWhereUniqueInput
+  }
+
+  /**
+   * PaymentPageForm deleteMany
+   */
+  export type PaymentPageFormDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PaymentPageForms to delete
+     */
+    where?: PaymentPageFormWhereInput
+    /**
+     * Limit how many PaymentPageForms to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PaymentPageForm.PaymentPageFormField
+   */
+  export type PaymentPageForm$PaymentPageFormFieldArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldInclude<ExtArgs> | null
+    where?: PaymentPageFormFieldWhereInput
+    orderBy?: PaymentPageFormFieldOrderByWithRelationInput | PaymentPageFormFieldOrderByWithRelationInput[]
+    cursor?: PaymentPageFormFieldWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PaymentPageFormFieldScalarFieldEnum | PaymentPageFormFieldScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentPageForm without action
+   */
+  export type PaymentPageFormDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageForm
+     */
+    select?: PaymentPageFormSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageForm
+     */
+    omit?: PaymentPageFormOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PaymentPageFormField
+   */
+
+  export type AggregatePaymentPageFormField = {
+    _count: PaymentPageFormFieldCountAggregateOutputType | null
+    _min: PaymentPageFormFieldMinAggregateOutputType | null
+    _max: PaymentPageFormFieldMaxAggregateOutputType | null
+  }
+
+  export type PaymentPageFormFieldMinAggregateOutputType = {
+    id: string | null
+    type: $Enums.PaymentPageFormFieldType | null
+    label: string | null
+    placeholder: string | null
+    required: boolean | null
+    value: string | null
+    paymentPageFormId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PaymentPageFormFieldMaxAggregateOutputType = {
+    id: string | null
+    type: $Enums.PaymentPageFormFieldType | null
+    label: string | null
+    placeholder: string | null
+    required: boolean | null
+    value: string | null
+    paymentPageFormId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PaymentPageFormFieldCountAggregateOutputType = {
+    id: number
+    type: number
+    label: number
+    placeholder: number
+    required: number
+    value: number
+    paymentPageFormId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PaymentPageFormFieldMinAggregateInputType = {
+    id?: true
+    type?: true
+    label?: true
+    placeholder?: true
+    required?: true
+    value?: true
+    paymentPageFormId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PaymentPageFormFieldMaxAggregateInputType = {
+    id?: true
+    type?: true
+    label?: true
+    placeholder?: true
+    required?: true
+    value?: true
+    paymentPageFormId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PaymentPageFormFieldCountAggregateInputType = {
+    id?: true
+    type?: true
+    label?: true
+    placeholder?: true
+    required?: true
+    value?: true
+    paymentPageFormId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PaymentPageFormFieldAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PaymentPageFormField to aggregate.
+     */
+    where?: PaymentPageFormFieldWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentPageFormFields to fetch.
+     */
+    orderBy?: PaymentPageFormFieldOrderByWithRelationInput | PaymentPageFormFieldOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PaymentPageFormFieldWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentPageFormFields from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentPageFormFields.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PaymentPageFormFields
+    **/
+    _count?: true | PaymentPageFormFieldCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PaymentPageFormFieldMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PaymentPageFormFieldMaxAggregateInputType
+  }
+
+  export type GetPaymentPageFormFieldAggregateType<T extends PaymentPageFormFieldAggregateArgs> = {
+        [P in keyof T & keyof AggregatePaymentPageFormField]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePaymentPageFormField[P]>
+      : GetScalarType<T[P], AggregatePaymentPageFormField[P]>
+  }
+
+
+
+
+  export type PaymentPageFormFieldGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentPageFormFieldWhereInput
+    orderBy?: PaymentPageFormFieldOrderByWithAggregationInput | PaymentPageFormFieldOrderByWithAggregationInput[]
+    by: PaymentPageFormFieldScalarFieldEnum[] | PaymentPageFormFieldScalarFieldEnum
+    having?: PaymentPageFormFieldScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PaymentPageFormFieldCountAggregateInputType | true
+    _min?: PaymentPageFormFieldMinAggregateInputType
+    _max?: PaymentPageFormFieldMaxAggregateInputType
+  }
+
+  export type PaymentPageFormFieldGroupByOutputType = {
+    id: string
+    type: $Enums.PaymentPageFormFieldType
+    label: string
+    placeholder: string | null
+    required: boolean
+    value: string | null
+    paymentPageFormId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: PaymentPageFormFieldCountAggregateOutputType | null
+    _min: PaymentPageFormFieldMinAggregateOutputType | null
+    _max: PaymentPageFormFieldMaxAggregateOutputType | null
+  }
+
+  type GetPaymentPageFormFieldGroupByPayload<T extends PaymentPageFormFieldGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PaymentPageFormFieldGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PaymentPageFormFieldGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PaymentPageFormFieldGroupByOutputType[P]>
+            : GetScalarType<T[P], PaymentPageFormFieldGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PaymentPageFormFieldSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    label?: boolean
+    placeholder?: boolean
+    required?: boolean
+    value?: boolean
+    paymentPageFormId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    paymentPageForm?: boolean | PaymentPageFormDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paymentPageFormField"]>
+
+  export type PaymentPageFormFieldSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    label?: boolean
+    placeholder?: boolean
+    required?: boolean
+    value?: boolean
+    paymentPageFormId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    paymentPageForm?: boolean | PaymentPageFormDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paymentPageFormField"]>
+
+  export type PaymentPageFormFieldSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    type?: boolean
+    label?: boolean
+    placeholder?: boolean
+    required?: boolean
+    value?: boolean
+    paymentPageFormId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    paymentPageForm?: boolean | PaymentPageFormDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["paymentPageFormField"]>
+
+  export type PaymentPageFormFieldSelectScalar = {
+    id?: boolean
+    type?: boolean
+    label?: boolean
+    placeholder?: boolean
+    required?: boolean
+    value?: boolean
+    paymentPageFormId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PaymentPageFormFieldOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "type" | "label" | "placeholder" | "required" | "value" | "paymentPageFormId" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentPageFormField"]>
+  export type PaymentPageFormFieldInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    paymentPageForm?: boolean | PaymentPageFormDefaultArgs<ExtArgs>
+  }
+  export type PaymentPageFormFieldIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    paymentPageForm?: boolean | PaymentPageFormDefaultArgs<ExtArgs>
+  }
+  export type PaymentPageFormFieldIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    paymentPageForm?: boolean | PaymentPageFormDefaultArgs<ExtArgs>
+  }
+
+  export type $PaymentPageFormFieldPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PaymentPageFormField"
+    objects: {
+      paymentPageForm: Prisma.$PaymentPageFormPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      type: $Enums.PaymentPageFormFieldType
+      label: string
+      placeholder: string | null
+      required: boolean
+      value: string | null
+      paymentPageFormId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["paymentPageFormField"]>
+    composites: {}
+  }
+
+  type PaymentPageFormFieldGetPayload<S extends boolean | null | undefined | PaymentPageFormFieldDefaultArgs> = $Result.GetResult<Prisma.$PaymentPageFormFieldPayload, S>
+
+  type PaymentPageFormFieldCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PaymentPageFormFieldFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PaymentPageFormFieldCountAggregateInputType | true
+    }
+
+  export interface PaymentPageFormFieldDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PaymentPageFormField'], meta: { name: 'PaymentPageFormField' } }
+    /**
+     * Find zero or one PaymentPageFormField that matches the filter.
+     * @param {PaymentPageFormFieldFindUniqueArgs} args - Arguments to find a PaymentPageFormField
+     * @example
+     * // Get one PaymentPageFormField
+     * const paymentPageFormField = await prisma.paymentPageFormField.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PaymentPageFormFieldFindUniqueArgs>(args: SelectSubset<T, PaymentPageFormFieldFindUniqueArgs<ExtArgs>>): Prisma__PaymentPageFormFieldClient<$Result.GetResult<Prisma.$PaymentPageFormFieldPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PaymentPageFormField that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PaymentPageFormFieldFindUniqueOrThrowArgs} args - Arguments to find a PaymentPageFormField
+     * @example
+     * // Get one PaymentPageFormField
+     * const paymentPageFormField = await prisma.paymentPageFormField.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PaymentPageFormFieldFindUniqueOrThrowArgs>(args: SelectSubset<T, PaymentPageFormFieldFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PaymentPageFormFieldClient<$Result.GetResult<Prisma.$PaymentPageFormFieldPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PaymentPageFormField that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormFieldFindFirstArgs} args - Arguments to find a PaymentPageFormField
+     * @example
+     * // Get one PaymentPageFormField
+     * const paymentPageFormField = await prisma.paymentPageFormField.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PaymentPageFormFieldFindFirstArgs>(args?: SelectSubset<T, PaymentPageFormFieldFindFirstArgs<ExtArgs>>): Prisma__PaymentPageFormFieldClient<$Result.GetResult<Prisma.$PaymentPageFormFieldPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PaymentPageFormField that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormFieldFindFirstOrThrowArgs} args - Arguments to find a PaymentPageFormField
+     * @example
+     * // Get one PaymentPageFormField
+     * const paymentPageFormField = await prisma.paymentPageFormField.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PaymentPageFormFieldFindFirstOrThrowArgs>(args?: SelectSubset<T, PaymentPageFormFieldFindFirstOrThrowArgs<ExtArgs>>): Prisma__PaymentPageFormFieldClient<$Result.GetResult<Prisma.$PaymentPageFormFieldPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PaymentPageFormFields that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormFieldFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PaymentPageFormFields
+     * const paymentPageFormFields = await prisma.paymentPageFormField.findMany()
+     * 
+     * // Get first 10 PaymentPageFormFields
+     * const paymentPageFormFields = await prisma.paymentPageFormField.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const paymentPageFormFieldWithIdOnly = await prisma.paymentPageFormField.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PaymentPageFormFieldFindManyArgs>(args?: SelectSubset<T, PaymentPageFormFieldFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPageFormFieldPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PaymentPageFormField.
+     * @param {PaymentPageFormFieldCreateArgs} args - Arguments to create a PaymentPageFormField.
+     * @example
+     * // Create one PaymentPageFormField
+     * const PaymentPageFormField = await prisma.paymentPageFormField.create({
+     *   data: {
+     *     // ... data to create a PaymentPageFormField
+     *   }
+     * })
+     * 
+     */
+    create<T extends PaymentPageFormFieldCreateArgs>(args: SelectSubset<T, PaymentPageFormFieldCreateArgs<ExtArgs>>): Prisma__PaymentPageFormFieldClient<$Result.GetResult<Prisma.$PaymentPageFormFieldPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PaymentPageFormFields.
+     * @param {PaymentPageFormFieldCreateManyArgs} args - Arguments to create many PaymentPageFormFields.
+     * @example
+     * // Create many PaymentPageFormFields
+     * const paymentPageFormField = await prisma.paymentPageFormField.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PaymentPageFormFieldCreateManyArgs>(args?: SelectSubset<T, PaymentPageFormFieldCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PaymentPageFormFields and returns the data saved in the database.
+     * @param {PaymentPageFormFieldCreateManyAndReturnArgs} args - Arguments to create many PaymentPageFormFields.
+     * @example
+     * // Create many PaymentPageFormFields
+     * const paymentPageFormField = await prisma.paymentPageFormField.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PaymentPageFormFields and only return the `id`
+     * const paymentPageFormFieldWithIdOnly = await prisma.paymentPageFormField.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PaymentPageFormFieldCreateManyAndReturnArgs>(args?: SelectSubset<T, PaymentPageFormFieldCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPageFormFieldPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PaymentPageFormField.
+     * @param {PaymentPageFormFieldDeleteArgs} args - Arguments to delete one PaymentPageFormField.
+     * @example
+     * // Delete one PaymentPageFormField
+     * const PaymentPageFormField = await prisma.paymentPageFormField.delete({
+     *   where: {
+     *     // ... filter to delete one PaymentPageFormField
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PaymentPageFormFieldDeleteArgs>(args: SelectSubset<T, PaymentPageFormFieldDeleteArgs<ExtArgs>>): Prisma__PaymentPageFormFieldClient<$Result.GetResult<Prisma.$PaymentPageFormFieldPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PaymentPageFormField.
+     * @param {PaymentPageFormFieldUpdateArgs} args - Arguments to update one PaymentPageFormField.
+     * @example
+     * // Update one PaymentPageFormField
+     * const paymentPageFormField = await prisma.paymentPageFormField.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PaymentPageFormFieldUpdateArgs>(args: SelectSubset<T, PaymentPageFormFieldUpdateArgs<ExtArgs>>): Prisma__PaymentPageFormFieldClient<$Result.GetResult<Prisma.$PaymentPageFormFieldPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PaymentPageFormFields.
+     * @param {PaymentPageFormFieldDeleteManyArgs} args - Arguments to filter PaymentPageFormFields to delete.
+     * @example
+     * // Delete a few PaymentPageFormFields
+     * const { count } = await prisma.paymentPageFormField.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PaymentPageFormFieldDeleteManyArgs>(args?: SelectSubset<T, PaymentPageFormFieldDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PaymentPageFormFields.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormFieldUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PaymentPageFormFields
+     * const paymentPageFormField = await prisma.paymentPageFormField.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PaymentPageFormFieldUpdateManyArgs>(args: SelectSubset<T, PaymentPageFormFieldUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PaymentPageFormFields and returns the data updated in the database.
+     * @param {PaymentPageFormFieldUpdateManyAndReturnArgs} args - Arguments to update many PaymentPageFormFields.
+     * @example
+     * // Update many PaymentPageFormFields
+     * const paymentPageFormField = await prisma.paymentPageFormField.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PaymentPageFormFields and only return the `id`
+     * const paymentPageFormFieldWithIdOnly = await prisma.paymentPageFormField.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PaymentPageFormFieldUpdateManyAndReturnArgs>(args: SelectSubset<T, PaymentPageFormFieldUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPageFormFieldPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PaymentPageFormField.
+     * @param {PaymentPageFormFieldUpsertArgs} args - Arguments to update or create a PaymentPageFormField.
+     * @example
+     * // Update or create a PaymentPageFormField
+     * const paymentPageFormField = await prisma.paymentPageFormField.upsert({
+     *   create: {
+     *     // ... data to create a PaymentPageFormField
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PaymentPageFormField we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PaymentPageFormFieldUpsertArgs>(args: SelectSubset<T, PaymentPageFormFieldUpsertArgs<ExtArgs>>): Prisma__PaymentPageFormFieldClient<$Result.GetResult<Prisma.$PaymentPageFormFieldPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PaymentPageFormFields.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormFieldCountArgs} args - Arguments to filter PaymentPageFormFields to count.
+     * @example
+     * // Count the number of PaymentPageFormFields
+     * const count = await prisma.paymentPageFormField.count({
+     *   where: {
+     *     // ... the filter for the PaymentPageFormFields we want to count
+     *   }
+     * })
+    **/
+    count<T extends PaymentPageFormFieldCountArgs>(
+      args?: Subset<T, PaymentPageFormFieldCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PaymentPageFormFieldCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PaymentPageFormField.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormFieldAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PaymentPageFormFieldAggregateArgs>(args: Subset<T, PaymentPageFormFieldAggregateArgs>): Prisma.PrismaPromise<GetPaymentPageFormFieldAggregateType<T>>
+
+    /**
+     * Group by PaymentPageFormField.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PaymentPageFormFieldGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PaymentPageFormFieldGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PaymentPageFormFieldGroupByArgs['orderBy'] }
+        : { orderBy?: PaymentPageFormFieldGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PaymentPageFormFieldGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPaymentPageFormFieldGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PaymentPageFormField model
+   */
+  readonly fields: PaymentPageFormFieldFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PaymentPageFormField.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PaymentPageFormFieldClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    paymentPageForm<T extends PaymentPageFormDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PaymentPageFormDefaultArgs<ExtArgs>>): Prisma__PaymentPageFormClient<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PaymentPageFormField model
+   */
+  interface PaymentPageFormFieldFieldRefs {
+    readonly id: FieldRef<"PaymentPageFormField", 'String'>
+    readonly type: FieldRef<"PaymentPageFormField", 'PaymentPageFormFieldType'>
+    readonly label: FieldRef<"PaymentPageFormField", 'String'>
+    readonly placeholder: FieldRef<"PaymentPageFormField", 'String'>
+    readonly required: FieldRef<"PaymentPageFormField", 'Boolean'>
+    readonly value: FieldRef<"PaymentPageFormField", 'String'>
+    readonly paymentPageFormId: FieldRef<"PaymentPageFormField", 'String'>
+    readonly createdAt: FieldRef<"PaymentPageFormField", 'DateTime'>
+    readonly updatedAt: FieldRef<"PaymentPageFormField", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PaymentPageFormField findUnique
+   */
+  export type PaymentPageFormFieldFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentPageFormField to fetch.
+     */
+    where: PaymentPageFormFieldWhereUniqueInput
+  }
+
+  /**
+   * PaymentPageFormField findUniqueOrThrow
+   */
+  export type PaymentPageFormFieldFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentPageFormField to fetch.
+     */
+    where: PaymentPageFormFieldWhereUniqueInput
+  }
+
+  /**
+   * PaymentPageFormField findFirst
+   */
+  export type PaymentPageFormFieldFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentPageFormField to fetch.
+     */
+    where?: PaymentPageFormFieldWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentPageFormFields to fetch.
+     */
+    orderBy?: PaymentPageFormFieldOrderByWithRelationInput | PaymentPageFormFieldOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PaymentPageFormFields.
+     */
+    cursor?: PaymentPageFormFieldWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentPageFormFields from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentPageFormFields.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PaymentPageFormFields.
+     */
+    distinct?: PaymentPageFormFieldScalarFieldEnum | PaymentPageFormFieldScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentPageFormField findFirstOrThrow
+   */
+  export type PaymentPageFormFieldFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentPageFormField to fetch.
+     */
+    where?: PaymentPageFormFieldWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentPageFormFields to fetch.
+     */
+    orderBy?: PaymentPageFormFieldOrderByWithRelationInput | PaymentPageFormFieldOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PaymentPageFormFields.
+     */
+    cursor?: PaymentPageFormFieldWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentPageFormFields from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentPageFormFields.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PaymentPageFormFields.
+     */
+    distinct?: PaymentPageFormFieldScalarFieldEnum | PaymentPageFormFieldScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentPageFormField findMany
+   */
+  export type PaymentPageFormFieldFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldInclude<ExtArgs> | null
+    /**
+     * Filter, which PaymentPageFormFields to fetch.
+     */
+    where?: PaymentPageFormFieldWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PaymentPageFormFields to fetch.
+     */
+    orderBy?: PaymentPageFormFieldOrderByWithRelationInput | PaymentPageFormFieldOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PaymentPageFormFields.
+     */
+    cursor?: PaymentPageFormFieldWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PaymentPageFormFields from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PaymentPageFormFields.
+     */
+    skip?: number
+    distinct?: PaymentPageFormFieldScalarFieldEnum | PaymentPageFormFieldScalarFieldEnum[]
+  }
+
+  /**
+   * PaymentPageFormField create
+   */
+  export type PaymentPageFormFieldCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PaymentPageFormField.
+     */
+    data: XOR<PaymentPageFormFieldCreateInput, PaymentPageFormFieldUncheckedCreateInput>
+  }
+
+  /**
+   * PaymentPageFormField createMany
+   */
+  export type PaymentPageFormFieldCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PaymentPageFormFields.
+     */
+    data: PaymentPageFormFieldCreateManyInput | PaymentPageFormFieldCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PaymentPageFormField createManyAndReturn
+   */
+  export type PaymentPageFormFieldCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * The data used to create many PaymentPageFormFields.
+     */
+    data: PaymentPageFormFieldCreateManyInput | PaymentPageFormFieldCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PaymentPageFormField update
+   */
+  export type PaymentPageFormFieldUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PaymentPageFormField.
+     */
+    data: XOR<PaymentPageFormFieldUpdateInput, PaymentPageFormFieldUncheckedUpdateInput>
+    /**
+     * Choose, which PaymentPageFormField to update.
+     */
+    where: PaymentPageFormFieldWhereUniqueInput
+  }
+
+  /**
+   * PaymentPageFormField updateMany
+   */
+  export type PaymentPageFormFieldUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PaymentPageFormFields.
+     */
+    data: XOR<PaymentPageFormFieldUpdateManyMutationInput, PaymentPageFormFieldUncheckedUpdateManyInput>
+    /**
+     * Filter which PaymentPageFormFields to update
+     */
+    where?: PaymentPageFormFieldWhereInput
+    /**
+     * Limit how many PaymentPageFormFields to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PaymentPageFormField updateManyAndReturn
+   */
+  export type PaymentPageFormFieldUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * The data used to update PaymentPageFormFields.
+     */
+    data: XOR<PaymentPageFormFieldUpdateManyMutationInput, PaymentPageFormFieldUncheckedUpdateManyInput>
+    /**
+     * Filter which PaymentPageFormFields to update
+     */
+    where?: PaymentPageFormFieldWhereInput
+    /**
+     * Limit how many PaymentPageFormFields to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PaymentPageFormField upsert
+   */
+  export type PaymentPageFormFieldUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PaymentPageFormField to update in case it exists.
+     */
+    where: PaymentPageFormFieldWhereUniqueInput
+    /**
+     * In case the PaymentPageFormField found by the `where` argument doesn't exist, create a new PaymentPageFormField with this data.
+     */
+    create: XOR<PaymentPageFormFieldCreateInput, PaymentPageFormFieldUncheckedCreateInput>
+    /**
+     * In case the PaymentPageFormField was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PaymentPageFormFieldUpdateInput, PaymentPageFormFieldUncheckedUpdateInput>
+  }
+
+  /**
+   * PaymentPageFormField delete
+   */
+  export type PaymentPageFormFieldDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldInclude<ExtArgs> | null
+    /**
+     * Filter which PaymentPageFormField to delete.
+     */
+    where: PaymentPageFormFieldWhereUniqueInput
+  }
+
+  /**
+   * PaymentPageFormField deleteMany
+   */
+  export type PaymentPageFormFieldDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PaymentPageFormFields to delete
+     */
+    where?: PaymentPageFormFieldWhereInput
+    /**
+     * Limit how many PaymentPageFormFields to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PaymentPageFormField without action
+   */
+  export type PaymentPageFormFieldDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPageFormField
+     */
+    select?: PaymentPageFormFieldSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPageFormField
+     */
+    omit?: PaymentPageFormFieldOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageFormFieldInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14791,6 +18399,44 @@ export namespace Prisma {
   export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
 
 
+  export const PaymentButtonScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    type: 'type',
+    description: 'description',
+    amount: 'amount',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PaymentButtonScalarFieldEnum = (typeof PaymentButtonScalarFieldEnum)[keyof typeof PaymentButtonScalarFieldEnum]
+
+
+  export const PaymentPageFormScalarFieldEnum: {
+    id: 'id',
+    paymentPageId: 'paymentPageId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PaymentPageFormScalarFieldEnum = (typeof PaymentPageFormScalarFieldEnum)[keyof typeof PaymentPageFormScalarFieldEnum]
+
+
+  export const PaymentPageFormFieldScalarFieldEnum: {
+    id: 'id',
+    type: 'type',
+    label: 'label',
+    placeholder: 'placeholder',
+    required: 'required',
+    value: 'value',
+    paymentPageFormId: 'paymentPageFormId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PaymentPageFormFieldScalarFieldEnum = (typeof PaymentPageFormFieldScalarFieldEnum)[keyof typeof PaymentPageFormFieldScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -14950,6 +18596,34 @@ export namespace Prisma {
    * Reference to a field of type 'TransactionStatus[]'
    */
   export type ListEnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TransactionStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentButtonType'
+   */
+  export type EnumPaymentButtonTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentButtonType'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentButtonType[]'
+   */
+  export type ListEnumPaymentButtonTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentButtonType[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentPageFormFieldType'
+   */
+  export type EnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentPageFormFieldType'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentPageFormFieldType[]'
+   */
+  export type ListEnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentPageFormFieldType[]'>
     
 
 
@@ -15540,6 +19214,7 @@ export namespace Prisma {
     status?: EnumPaymentPageStatusFilter<"PaymentPage"> | $Enums.PaymentPageStatus
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     IntiatedPayment?: IntiatedPaymentListRelationFilter
+    PaymentPageForm?: PaymentPageFormListRelationFilter
   }
 
   export type PaymentPageOrderByWithRelationInput = {
@@ -15555,6 +19230,7 @@ export namespace Prisma {
     status?: SortOrder
     user?: UserOrderByWithRelationInput
     IntiatedPayment?: IntiatedPaymentOrderByRelationAggregateInput
+    PaymentPageForm?: PaymentPageFormOrderByRelationAggregateInput
   }
 
   export type PaymentPageWhereUniqueInput = Prisma.AtLeast<{
@@ -15573,6 +19249,7 @@ export namespace Prisma {
     status?: EnumPaymentPageStatusFilter<"PaymentPage"> | $Enums.PaymentPageStatus
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     IntiatedPayment?: IntiatedPaymentListRelationFilter
+    PaymentPageForm?: PaymentPageFormListRelationFilter
   }, "id">
 
   export type PaymentPageOrderByWithAggregationInput = {
@@ -15787,6 +19464,198 @@ export namespace Prisma {
     settledTo?: StringNullableWithAggregatesFilter<"Transaction"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Transaction"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Transaction"> | Date | string
+  }
+
+  export type PaymentButtonWhereInput = {
+    AND?: PaymentButtonWhereInput | PaymentButtonWhereInput[]
+    OR?: PaymentButtonWhereInput[]
+    NOT?: PaymentButtonWhereInput | PaymentButtonWhereInput[]
+    id?: StringFilter<"PaymentButton"> | string
+    title?: StringFilter<"PaymentButton"> | string
+    type?: EnumPaymentButtonTypeFilter<"PaymentButton"> | $Enums.PaymentButtonType
+    description?: StringNullableFilter<"PaymentButton"> | string | null
+    amount?: DecimalFilter<"PaymentButton"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"PaymentButton"> | Date | string
+    updatedAt?: DateTimeFilter<"PaymentButton"> | Date | string
+  }
+
+  export type PaymentButtonOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    description?: SortOrderInput | SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentButtonWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PaymentButtonWhereInput | PaymentButtonWhereInput[]
+    OR?: PaymentButtonWhereInput[]
+    NOT?: PaymentButtonWhereInput | PaymentButtonWhereInput[]
+    title?: StringFilter<"PaymentButton"> | string
+    type?: EnumPaymentButtonTypeFilter<"PaymentButton"> | $Enums.PaymentButtonType
+    description?: StringNullableFilter<"PaymentButton"> | string | null
+    amount?: DecimalFilter<"PaymentButton"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFilter<"PaymentButton"> | Date | string
+    updatedAt?: DateTimeFilter<"PaymentButton"> | Date | string
+  }, "id">
+
+  export type PaymentButtonOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    description?: SortOrderInput | SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PaymentButtonCountOrderByAggregateInput
+    _avg?: PaymentButtonAvgOrderByAggregateInput
+    _max?: PaymentButtonMaxOrderByAggregateInput
+    _min?: PaymentButtonMinOrderByAggregateInput
+    _sum?: PaymentButtonSumOrderByAggregateInput
+  }
+
+  export type PaymentButtonScalarWhereWithAggregatesInput = {
+    AND?: PaymentButtonScalarWhereWithAggregatesInput | PaymentButtonScalarWhereWithAggregatesInput[]
+    OR?: PaymentButtonScalarWhereWithAggregatesInput[]
+    NOT?: PaymentButtonScalarWhereWithAggregatesInput | PaymentButtonScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PaymentButton"> | string
+    title?: StringWithAggregatesFilter<"PaymentButton"> | string
+    type?: EnumPaymentButtonTypeWithAggregatesFilter<"PaymentButton"> | $Enums.PaymentButtonType
+    description?: StringNullableWithAggregatesFilter<"PaymentButton"> | string | null
+    amount?: DecimalWithAggregatesFilter<"PaymentButton"> | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeWithAggregatesFilter<"PaymentButton"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PaymentButton"> | Date | string
+  }
+
+  export type PaymentPageFormWhereInput = {
+    AND?: PaymentPageFormWhereInput | PaymentPageFormWhereInput[]
+    OR?: PaymentPageFormWhereInput[]
+    NOT?: PaymentPageFormWhereInput | PaymentPageFormWhereInput[]
+    id?: StringFilter<"PaymentPageForm"> | string
+    paymentPageId?: StringFilter<"PaymentPageForm"> | string
+    createdAt?: DateTimeFilter<"PaymentPageForm"> | Date | string
+    updatedAt?: DateTimeFilter<"PaymentPageForm"> | Date | string
+    paymentPage?: XOR<PaymentPageScalarRelationFilter, PaymentPageWhereInput>
+    PaymentPageFormField?: PaymentPageFormFieldListRelationFilter
+  }
+
+  export type PaymentPageFormOrderByWithRelationInput = {
+    id?: SortOrder
+    paymentPageId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    paymentPage?: PaymentPageOrderByWithRelationInput
+    PaymentPageFormField?: PaymentPageFormFieldOrderByRelationAggregateInput
+  }
+
+  export type PaymentPageFormWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PaymentPageFormWhereInput | PaymentPageFormWhereInput[]
+    OR?: PaymentPageFormWhereInput[]
+    NOT?: PaymentPageFormWhereInput | PaymentPageFormWhereInput[]
+    paymentPageId?: StringFilter<"PaymentPageForm"> | string
+    createdAt?: DateTimeFilter<"PaymentPageForm"> | Date | string
+    updatedAt?: DateTimeFilter<"PaymentPageForm"> | Date | string
+    paymentPage?: XOR<PaymentPageScalarRelationFilter, PaymentPageWhereInput>
+    PaymentPageFormField?: PaymentPageFormFieldListRelationFilter
+  }, "id">
+
+  export type PaymentPageFormOrderByWithAggregationInput = {
+    id?: SortOrder
+    paymentPageId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PaymentPageFormCountOrderByAggregateInput
+    _max?: PaymentPageFormMaxOrderByAggregateInput
+    _min?: PaymentPageFormMinOrderByAggregateInput
+  }
+
+  export type PaymentPageFormScalarWhereWithAggregatesInput = {
+    AND?: PaymentPageFormScalarWhereWithAggregatesInput | PaymentPageFormScalarWhereWithAggregatesInput[]
+    OR?: PaymentPageFormScalarWhereWithAggregatesInput[]
+    NOT?: PaymentPageFormScalarWhereWithAggregatesInput | PaymentPageFormScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PaymentPageForm"> | string
+    paymentPageId?: StringWithAggregatesFilter<"PaymentPageForm"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PaymentPageForm"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PaymentPageForm"> | Date | string
+  }
+
+  export type PaymentPageFormFieldWhereInput = {
+    AND?: PaymentPageFormFieldWhereInput | PaymentPageFormFieldWhereInput[]
+    OR?: PaymentPageFormFieldWhereInput[]
+    NOT?: PaymentPageFormFieldWhereInput | PaymentPageFormFieldWhereInput[]
+    id?: StringFilter<"PaymentPageFormField"> | string
+    type?: EnumPaymentPageFormFieldTypeFilter<"PaymentPageFormField"> | $Enums.PaymentPageFormFieldType
+    label?: StringFilter<"PaymentPageFormField"> | string
+    placeholder?: StringNullableFilter<"PaymentPageFormField"> | string | null
+    required?: BoolFilter<"PaymentPageFormField"> | boolean
+    value?: StringNullableFilter<"PaymentPageFormField"> | string | null
+    paymentPageFormId?: StringFilter<"PaymentPageFormField"> | string
+    createdAt?: DateTimeFilter<"PaymentPageFormField"> | Date | string
+    updatedAt?: DateTimeFilter<"PaymentPageFormField"> | Date | string
+    paymentPageForm?: XOR<PaymentPageFormScalarRelationFilter, PaymentPageFormWhereInput>
+  }
+
+  export type PaymentPageFormFieldOrderByWithRelationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    label?: SortOrder
+    placeholder?: SortOrderInput | SortOrder
+    required?: SortOrder
+    value?: SortOrderInput | SortOrder
+    paymentPageFormId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    paymentPageForm?: PaymentPageFormOrderByWithRelationInput
+  }
+
+  export type PaymentPageFormFieldWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PaymentPageFormFieldWhereInput | PaymentPageFormFieldWhereInput[]
+    OR?: PaymentPageFormFieldWhereInput[]
+    NOT?: PaymentPageFormFieldWhereInput | PaymentPageFormFieldWhereInput[]
+    type?: EnumPaymentPageFormFieldTypeFilter<"PaymentPageFormField"> | $Enums.PaymentPageFormFieldType
+    label?: StringFilter<"PaymentPageFormField"> | string
+    placeholder?: StringNullableFilter<"PaymentPageFormField"> | string | null
+    required?: BoolFilter<"PaymentPageFormField"> | boolean
+    value?: StringNullableFilter<"PaymentPageFormField"> | string | null
+    paymentPageFormId?: StringFilter<"PaymentPageFormField"> | string
+    createdAt?: DateTimeFilter<"PaymentPageFormField"> | Date | string
+    updatedAt?: DateTimeFilter<"PaymentPageFormField"> | Date | string
+    paymentPageForm?: XOR<PaymentPageFormScalarRelationFilter, PaymentPageFormWhereInput>
+  }, "id">
+
+  export type PaymentPageFormFieldOrderByWithAggregationInput = {
+    id?: SortOrder
+    type?: SortOrder
+    label?: SortOrder
+    placeholder?: SortOrderInput | SortOrder
+    required?: SortOrder
+    value?: SortOrderInput | SortOrder
+    paymentPageFormId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PaymentPageFormFieldCountOrderByAggregateInput
+    _max?: PaymentPageFormFieldMaxOrderByAggregateInput
+    _min?: PaymentPageFormFieldMinOrderByAggregateInput
+  }
+
+  export type PaymentPageFormFieldScalarWhereWithAggregatesInput = {
+    AND?: PaymentPageFormFieldScalarWhereWithAggregatesInput | PaymentPageFormFieldScalarWhereWithAggregatesInput[]
+    OR?: PaymentPageFormFieldScalarWhereWithAggregatesInput[]
+    NOT?: PaymentPageFormFieldScalarWhereWithAggregatesInput | PaymentPageFormFieldScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PaymentPageFormField"> | string
+    type?: EnumPaymentPageFormFieldTypeWithAggregatesFilter<"PaymentPageFormField"> | $Enums.PaymentPageFormFieldType
+    label?: StringWithAggregatesFilter<"PaymentPageFormField"> | string
+    placeholder?: StringNullableWithAggregatesFilter<"PaymentPageFormField"> | string | null
+    required?: BoolWithAggregatesFilter<"PaymentPageFormField"> | boolean
+    value?: StringNullableWithAggregatesFilter<"PaymentPageFormField"> | string | null
+    paymentPageFormId?: StringWithAggregatesFilter<"PaymentPageFormField"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PaymentPageFormField"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PaymentPageFormField"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -16394,6 +20263,7 @@ export namespace Prisma {
     status?: $Enums.PaymentPageStatus
     user: UserCreateNestedOneWithoutPaymentPageInput
     IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutPaymentPageInput
+    PaymentPageForm?: PaymentPageFormCreateNestedManyWithoutPaymentPageInput
   }
 
   export type PaymentPageUncheckedCreateInput = {
@@ -16408,6 +20278,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     status?: $Enums.PaymentPageStatus
     IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutPaymentPageInput
+    PaymentPageForm?: PaymentPageFormUncheckedCreateNestedManyWithoutPaymentPageInput
   }
 
   export type PaymentPageUpdateInput = {
@@ -16422,6 +20293,7 @@ export namespace Prisma {
     status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
     user?: UserUpdateOneRequiredWithoutPaymentPageNestedInput
     IntiatedPayment?: IntiatedPaymentUpdateManyWithoutPaymentPageNestedInput
+    PaymentPageForm?: PaymentPageFormUpdateManyWithoutPaymentPageNestedInput
   }
 
   export type PaymentPageUncheckedUpdateInput = {
@@ -16436,6 +20308,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
     IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutPaymentPageNestedInput
+    PaymentPageForm?: PaymentPageFormUncheckedUpdateManyWithoutPaymentPageNestedInput
   }
 
   export type PaymentPageCreateManyInput = {
@@ -16669,6 +20542,211 @@ export namespace Prisma {
     settled?: BoolFieldUpdateOperationsInput | boolean
     settledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     settledTo?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentButtonCreateInput = {
+    id?: string
+    title: string
+    type: $Enums.PaymentButtonType
+    description?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentButtonUncheckedCreateInput = {
+    id?: string
+    title: string
+    type: $Enums.PaymentButtonType
+    description?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentButtonUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: EnumPaymentButtonTypeFieldUpdateOperationsInput | $Enums.PaymentButtonType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentButtonUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: EnumPaymentButtonTypeFieldUpdateOperationsInput | $Enums.PaymentButtonType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentButtonCreateManyInput = {
+    id?: string
+    title: string
+    type: $Enums.PaymentButtonType
+    description?: string | null
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentButtonUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: EnumPaymentButtonTypeFieldUpdateOperationsInput | $Enums.PaymentButtonType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentButtonUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    type?: EnumPaymentButtonTypeFieldUpdateOperationsInput | $Enums.PaymentButtonType
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentPageFormCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    paymentPage: PaymentPageCreateNestedOneWithoutPaymentPageFormInput
+    PaymentPageFormField?: PaymentPageFormFieldCreateNestedManyWithoutPaymentPageFormInput
+  }
+
+  export type PaymentPageFormUncheckedCreateInput = {
+    id?: string
+    paymentPageId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    PaymentPageFormField?: PaymentPageFormFieldUncheckedCreateNestedManyWithoutPaymentPageFormInput
+  }
+
+  export type PaymentPageFormUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    paymentPage?: PaymentPageUpdateOneRequiredWithoutPaymentPageFormNestedInput
+    PaymentPageFormField?: PaymentPageFormFieldUpdateManyWithoutPaymentPageFormNestedInput
+  }
+
+  export type PaymentPageFormUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentPageId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    PaymentPageFormField?: PaymentPageFormFieldUncheckedUpdateManyWithoutPaymentPageFormNestedInput
+  }
+
+  export type PaymentPageFormCreateManyInput = {
+    id?: string
+    paymentPageId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentPageFormUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentPageFormUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentPageId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentPageFormFieldCreateInput = {
+    id?: string
+    type: $Enums.PaymentPageFormFieldType
+    label: string
+    placeholder?: string | null
+    required?: boolean
+    value?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    paymentPageForm: PaymentPageFormCreateNestedOneWithoutPaymentPageFormFieldInput
+  }
+
+  export type PaymentPageFormFieldUncheckedCreateInput = {
+    id?: string
+    type: $Enums.PaymentPageFormFieldType
+    label: string
+    placeholder?: string | null
+    required?: boolean
+    value?: string | null
+    paymentPageFormId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentPageFormFieldUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumPaymentPageFormFieldTypeFieldUpdateOperationsInput | $Enums.PaymentPageFormFieldType
+    label?: StringFieldUpdateOperationsInput | string
+    placeholder?: NullableStringFieldUpdateOperationsInput | string | null
+    required?: BoolFieldUpdateOperationsInput | boolean
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    paymentPageForm?: PaymentPageFormUpdateOneRequiredWithoutPaymentPageFormFieldNestedInput
+  }
+
+  export type PaymentPageFormFieldUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumPaymentPageFormFieldTypeFieldUpdateOperationsInput | $Enums.PaymentPageFormFieldType
+    label?: StringFieldUpdateOperationsInput | string
+    placeholder?: NullableStringFieldUpdateOperationsInput | string | null
+    required?: BoolFieldUpdateOperationsInput | boolean
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentPageFormId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentPageFormFieldCreateManyInput = {
+    id?: string
+    type: $Enums.PaymentPageFormFieldType
+    label: string
+    placeholder?: string | null
+    required?: boolean
+    value?: string | null
+    paymentPageFormId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentPageFormFieldUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumPaymentPageFormFieldTypeFieldUpdateOperationsInput | $Enums.PaymentPageFormFieldType
+    label?: StringFieldUpdateOperationsInput | string
+    placeholder?: NullableStringFieldUpdateOperationsInput | string | null
+    required?: BoolFieldUpdateOperationsInput | boolean
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentPageFormFieldUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumPaymentPageFormFieldTypeFieldUpdateOperationsInput | $Enums.PaymentPageFormFieldType
+    label?: StringFieldUpdateOperationsInput | string
+    placeholder?: NullableStringFieldUpdateOperationsInput | string | null
+    required?: BoolFieldUpdateOperationsInput | boolean
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentPageFormId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17282,6 +21360,16 @@ export namespace Prisma {
     not?: NestedEnumPaymentPageStatusFilter<$PrismaModel> | $Enums.PaymentPageStatus
   }
 
+  export type PaymentPageFormListRelationFilter = {
+    every?: PaymentPageFormWhereInput
+    some?: PaymentPageFormWhereInput
+    none?: PaymentPageFormWhereInput
+  }
+
+  export type PaymentPageFormOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type PaymentPageCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -17515,6 +21603,155 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTransactionStatusFilter<$PrismaModel>
     _max?: NestedEnumTransactionStatusFilter<$PrismaModel>
+  }
+
+  export type EnumPaymentButtonTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentButtonType | EnumPaymentButtonTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentButtonType[] | ListEnumPaymentButtonTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentButtonType[] | ListEnumPaymentButtonTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentButtonTypeFilter<$PrismaModel> | $Enums.PaymentButtonType
+  }
+
+  export type PaymentButtonCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentButtonAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type PaymentButtonMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentButtonMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    description?: SortOrder
+    amount?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentButtonSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type EnumPaymentButtonTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentButtonType | EnumPaymentButtonTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentButtonType[] | ListEnumPaymentButtonTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentButtonType[] | ListEnumPaymentButtonTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentButtonTypeWithAggregatesFilter<$PrismaModel> | $Enums.PaymentButtonType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentButtonTypeFilter<$PrismaModel>
+    _max?: NestedEnumPaymentButtonTypeFilter<$PrismaModel>
+  }
+
+  export type PaymentPageScalarRelationFilter = {
+    is?: PaymentPageWhereInput
+    isNot?: PaymentPageWhereInput
+  }
+
+  export type PaymentPageFormFieldListRelationFilter = {
+    every?: PaymentPageFormFieldWhereInput
+    some?: PaymentPageFormFieldWhereInput
+    none?: PaymentPageFormFieldWhereInput
+  }
+
+  export type PaymentPageFormFieldOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PaymentPageFormCountOrderByAggregateInput = {
+    id?: SortOrder
+    paymentPageId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentPageFormMaxOrderByAggregateInput = {
+    id?: SortOrder
+    paymentPageId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentPageFormMinOrderByAggregateInput = {
+    id?: SortOrder
+    paymentPageId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumPaymentPageFormFieldTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentPageFormFieldType | EnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentPageFormFieldType[] | ListEnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentPageFormFieldType[] | ListEnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentPageFormFieldTypeFilter<$PrismaModel> | $Enums.PaymentPageFormFieldType
+  }
+
+  export type PaymentPageFormScalarRelationFilter = {
+    is?: PaymentPageFormWhereInput
+    isNot?: PaymentPageFormWhereInput
+  }
+
+  export type PaymentPageFormFieldCountOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    label?: SortOrder
+    placeholder?: SortOrder
+    required?: SortOrder
+    value?: SortOrder
+    paymentPageFormId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentPageFormFieldMaxOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    label?: SortOrder
+    placeholder?: SortOrder
+    required?: SortOrder
+    value?: SortOrder
+    paymentPageFormId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PaymentPageFormFieldMinOrderByAggregateInput = {
+    id?: SortOrder
+    type?: SortOrder
+    label?: SortOrder
+    placeholder?: SortOrder
+    required?: SortOrder
+    value?: SortOrder
+    paymentPageFormId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumPaymentPageFormFieldTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentPageFormFieldType | EnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentPageFormFieldType[] | ListEnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentPageFormFieldType[] | ListEnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentPageFormFieldTypeWithAggregatesFilter<$PrismaModel> | $Enums.PaymentPageFormFieldType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentPageFormFieldTypeFilter<$PrismaModel>
+    _max?: NestedEnumPaymentPageFormFieldTypeFilter<$PrismaModel>
   }
 
   export type AccountCreateNestedManyWithoutUserInput = {
@@ -17998,11 +22235,25 @@ export namespace Prisma {
     connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
   }
 
+  export type PaymentPageFormCreateNestedManyWithoutPaymentPageInput = {
+    create?: XOR<PaymentPageFormCreateWithoutPaymentPageInput, PaymentPageFormUncheckedCreateWithoutPaymentPageInput> | PaymentPageFormCreateWithoutPaymentPageInput[] | PaymentPageFormUncheckedCreateWithoutPaymentPageInput[]
+    connectOrCreate?: PaymentPageFormCreateOrConnectWithoutPaymentPageInput | PaymentPageFormCreateOrConnectWithoutPaymentPageInput[]
+    createMany?: PaymentPageFormCreateManyPaymentPageInputEnvelope
+    connect?: PaymentPageFormWhereUniqueInput | PaymentPageFormWhereUniqueInput[]
+  }
+
   export type IntiatedPaymentUncheckedCreateNestedManyWithoutPaymentPageInput = {
     create?: XOR<IntiatedPaymentCreateWithoutPaymentPageInput, IntiatedPaymentUncheckedCreateWithoutPaymentPageInput> | IntiatedPaymentCreateWithoutPaymentPageInput[] | IntiatedPaymentUncheckedCreateWithoutPaymentPageInput[]
     connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutPaymentPageInput | IntiatedPaymentCreateOrConnectWithoutPaymentPageInput[]
     createMany?: IntiatedPaymentCreateManyPaymentPageInputEnvelope
     connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+  }
+
+  export type PaymentPageFormUncheckedCreateNestedManyWithoutPaymentPageInput = {
+    create?: XOR<PaymentPageFormCreateWithoutPaymentPageInput, PaymentPageFormUncheckedCreateWithoutPaymentPageInput> | PaymentPageFormCreateWithoutPaymentPageInput[] | PaymentPageFormUncheckedCreateWithoutPaymentPageInput[]
+    connectOrCreate?: PaymentPageFormCreateOrConnectWithoutPaymentPageInput | PaymentPageFormCreateOrConnectWithoutPaymentPageInput[]
+    createMany?: PaymentPageFormCreateManyPaymentPageInputEnvelope
+    connect?: PaymentPageFormWhereUniqueInput | PaymentPageFormWhereUniqueInput[]
   }
 
   export type EnumPaymentPageStatusFieldUpdateOperationsInput = {
@@ -18031,6 +22282,20 @@ export namespace Prisma {
     deleteMany?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
   }
 
+  export type PaymentPageFormUpdateManyWithoutPaymentPageNestedInput = {
+    create?: XOR<PaymentPageFormCreateWithoutPaymentPageInput, PaymentPageFormUncheckedCreateWithoutPaymentPageInput> | PaymentPageFormCreateWithoutPaymentPageInput[] | PaymentPageFormUncheckedCreateWithoutPaymentPageInput[]
+    connectOrCreate?: PaymentPageFormCreateOrConnectWithoutPaymentPageInput | PaymentPageFormCreateOrConnectWithoutPaymentPageInput[]
+    upsert?: PaymentPageFormUpsertWithWhereUniqueWithoutPaymentPageInput | PaymentPageFormUpsertWithWhereUniqueWithoutPaymentPageInput[]
+    createMany?: PaymentPageFormCreateManyPaymentPageInputEnvelope
+    set?: PaymentPageFormWhereUniqueInput | PaymentPageFormWhereUniqueInput[]
+    disconnect?: PaymentPageFormWhereUniqueInput | PaymentPageFormWhereUniqueInput[]
+    delete?: PaymentPageFormWhereUniqueInput | PaymentPageFormWhereUniqueInput[]
+    connect?: PaymentPageFormWhereUniqueInput | PaymentPageFormWhereUniqueInput[]
+    update?: PaymentPageFormUpdateWithWhereUniqueWithoutPaymentPageInput | PaymentPageFormUpdateWithWhereUniqueWithoutPaymentPageInput[]
+    updateMany?: PaymentPageFormUpdateManyWithWhereWithoutPaymentPageInput | PaymentPageFormUpdateManyWithWhereWithoutPaymentPageInput[]
+    deleteMany?: PaymentPageFormScalarWhereInput | PaymentPageFormScalarWhereInput[]
+  }
+
   export type IntiatedPaymentUncheckedUpdateManyWithoutPaymentPageNestedInput = {
     create?: XOR<IntiatedPaymentCreateWithoutPaymentPageInput, IntiatedPaymentUncheckedCreateWithoutPaymentPageInput> | IntiatedPaymentCreateWithoutPaymentPageInput[] | IntiatedPaymentUncheckedCreateWithoutPaymentPageInput[]
     connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutPaymentPageInput | IntiatedPaymentCreateOrConnectWithoutPaymentPageInput[]
@@ -18043,6 +22308,20 @@ export namespace Prisma {
     update?: IntiatedPaymentUpdateWithWhereUniqueWithoutPaymentPageInput | IntiatedPaymentUpdateWithWhereUniqueWithoutPaymentPageInput[]
     updateMany?: IntiatedPaymentUpdateManyWithWhereWithoutPaymentPageInput | IntiatedPaymentUpdateManyWithWhereWithoutPaymentPageInput[]
     deleteMany?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
+  }
+
+  export type PaymentPageFormUncheckedUpdateManyWithoutPaymentPageNestedInput = {
+    create?: XOR<PaymentPageFormCreateWithoutPaymentPageInput, PaymentPageFormUncheckedCreateWithoutPaymentPageInput> | PaymentPageFormCreateWithoutPaymentPageInput[] | PaymentPageFormUncheckedCreateWithoutPaymentPageInput[]
+    connectOrCreate?: PaymentPageFormCreateOrConnectWithoutPaymentPageInput | PaymentPageFormCreateOrConnectWithoutPaymentPageInput[]
+    upsert?: PaymentPageFormUpsertWithWhereUniqueWithoutPaymentPageInput | PaymentPageFormUpsertWithWhereUniqueWithoutPaymentPageInput[]
+    createMany?: PaymentPageFormCreateManyPaymentPageInputEnvelope
+    set?: PaymentPageFormWhereUniqueInput | PaymentPageFormWhereUniqueInput[]
+    disconnect?: PaymentPageFormWhereUniqueInput | PaymentPageFormWhereUniqueInput[]
+    delete?: PaymentPageFormWhereUniqueInput | PaymentPageFormWhereUniqueInput[]
+    connect?: PaymentPageFormWhereUniqueInput | PaymentPageFormWhereUniqueInput[]
+    update?: PaymentPageFormUpdateWithWhereUniqueWithoutPaymentPageInput | PaymentPageFormUpdateWithWhereUniqueWithoutPaymentPageInput[]
+    updateMany?: PaymentPageFormUpdateManyWithWhereWithoutPaymentPageInput | PaymentPageFormUpdateManyWithWhereWithoutPaymentPageInput[]
+    deleteMany?: PaymentPageFormScalarWhereInput | PaymentPageFormScalarWhereInput[]
   }
 
   export type PaymentPageCreateNestedOneWithoutIntiatedPaymentInput = {
@@ -18143,6 +22422,84 @@ export namespace Prisma {
     upsert?: IntiatedPaymentUpsertWithoutTransactionInput
     connect?: IntiatedPaymentWhereUniqueInput
     update?: XOR<XOR<IntiatedPaymentUpdateToOneWithWhereWithoutTransactionInput, IntiatedPaymentUpdateWithoutTransactionInput>, IntiatedPaymentUncheckedUpdateWithoutTransactionInput>
+  }
+
+  export type EnumPaymentButtonTypeFieldUpdateOperationsInput = {
+    set?: $Enums.PaymentButtonType
+  }
+
+  export type PaymentPageCreateNestedOneWithoutPaymentPageFormInput = {
+    create?: XOR<PaymentPageCreateWithoutPaymentPageFormInput, PaymentPageUncheckedCreateWithoutPaymentPageFormInput>
+    connectOrCreate?: PaymentPageCreateOrConnectWithoutPaymentPageFormInput
+    connect?: PaymentPageWhereUniqueInput
+  }
+
+  export type PaymentPageFormFieldCreateNestedManyWithoutPaymentPageFormInput = {
+    create?: XOR<PaymentPageFormFieldCreateWithoutPaymentPageFormInput, PaymentPageFormFieldUncheckedCreateWithoutPaymentPageFormInput> | PaymentPageFormFieldCreateWithoutPaymentPageFormInput[] | PaymentPageFormFieldUncheckedCreateWithoutPaymentPageFormInput[]
+    connectOrCreate?: PaymentPageFormFieldCreateOrConnectWithoutPaymentPageFormInput | PaymentPageFormFieldCreateOrConnectWithoutPaymentPageFormInput[]
+    createMany?: PaymentPageFormFieldCreateManyPaymentPageFormInputEnvelope
+    connect?: PaymentPageFormFieldWhereUniqueInput | PaymentPageFormFieldWhereUniqueInput[]
+  }
+
+  export type PaymentPageFormFieldUncheckedCreateNestedManyWithoutPaymentPageFormInput = {
+    create?: XOR<PaymentPageFormFieldCreateWithoutPaymentPageFormInput, PaymentPageFormFieldUncheckedCreateWithoutPaymentPageFormInput> | PaymentPageFormFieldCreateWithoutPaymentPageFormInput[] | PaymentPageFormFieldUncheckedCreateWithoutPaymentPageFormInput[]
+    connectOrCreate?: PaymentPageFormFieldCreateOrConnectWithoutPaymentPageFormInput | PaymentPageFormFieldCreateOrConnectWithoutPaymentPageFormInput[]
+    createMany?: PaymentPageFormFieldCreateManyPaymentPageFormInputEnvelope
+    connect?: PaymentPageFormFieldWhereUniqueInput | PaymentPageFormFieldWhereUniqueInput[]
+  }
+
+  export type PaymentPageUpdateOneRequiredWithoutPaymentPageFormNestedInput = {
+    create?: XOR<PaymentPageCreateWithoutPaymentPageFormInput, PaymentPageUncheckedCreateWithoutPaymentPageFormInput>
+    connectOrCreate?: PaymentPageCreateOrConnectWithoutPaymentPageFormInput
+    upsert?: PaymentPageUpsertWithoutPaymentPageFormInput
+    connect?: PaymentPageWhereUniqueInput
+    update?: XOR<XOR<PaymentPageUpdateToOneWithWhereWithoutPaymentPageFormInput, PaymentPageUpdateWithoutPaymentPageFormInput>, PaymentPageUncheckedUpdateWithoutPaymentPageFormInput>
+  }
+
+  export type PaymentPageFormFieldUpdateManyWithoutPaymentPageFormNestedInput = {
+    create?: XOR<PaymentPageFormFieldCreateWithoutPaymentPageFormInput, PaymentPageFormFieldUncheckedCreateWithoutPaymentPageFormInput> | PaymentPageFormFieldCreateWithoutPaymentPageFormInput[] | PaymentPageFormFieldUncheckedCreateWithoutPaymentPageFormInput[]
+    connectOrCreate?: PaymentPageFormFieldCreateOrConnectWithoutPaymentPageFormInput | PaymentPageFormFieldCreateOrConnectWithoutPaymentPageFormInput[]
+    upsert?: PaymentPageFormFieldUpsertWithWhereUniqueWithoutPaymentPageFormInput | PaymentPageFormFieldUpsertWithWhereUniqueWithoutPaymentPageFormInput[]
+    createMany?: PaymentPageFormFieldCreateManyPaymentPageFormInputEnvelope
+    set?: PaymentPageFormFieldWhereUniqueInput | PaymentPageFormFieldWhereUniqueInput[]
+    disconnect?: PaymentPageFormFieldWhereUniqueInput | PaymentPageFormFieldWhereUniqueInput[]
+    delete?: PaymentPageFormFieldWhereUniqueInput | PaymentPageFormFieldWhereUniqueInput[]
+    connect?: PaymentPageFormFieldWhereUniqueInput | PaymentPageFormFieldWhereUniqueInput[]
+    update?: PaymentPageFormFieldUpdateWithWhereUniqueWithoutPaymentPageFormInput | PaymentPageFormFieldUpdateWithWhereUniqueWithoutPaymentPageFormInput[]
+    updateMany?: PaymentPageFormFieldUpdateManyWithWhereWithoutPaymentPageFormInput | PaymentPageFormFieldUpdateManyWithWhereWithoutPaymentPageFormInput[]
+    deleteMany?: PaymentPageFormFieldScalarWhereInput | PaymentPageFormFieldScalarWhereInput[]
+  }
+
+  export type PaymentPageFormFieldUncheckedUpdateManyWithoutPaymentPageFormNestedInput = {
+    create?: XOR<PaymentPageFormFieldCreateWithoutPaymentPageFormInput, PaymentPageFormFieldUncheckedCreateWithoutPaymentPageFormInput> | PaymentPageFormFieldCreateWithoutPaymentPageFormInput[] | PaymentPageFormFieldUncheckedCreateWithoutPaymentPageFormInput[]
+    connectOrCreate?: PaymentPageFormFieldCreateOrConnectWithoutPaymentPageFormInput | PaymentPageFormFieldCreateOrConnectWithoutPaymentPageFormInput[]
+    upsert?: PaymentPageFormFieldUpsertWithWhereUniqueWithoutPaymentPageFormInput | PaymentPageFormFieldUpsertWithWhereUniqueWithoutPaymentPageFormInput[]
+    createMany?: PaymentPageFormFieldCreateManyPaymentPageFormInputEnvelope
+    set?: PaymentPageFormFieldWhereUniqueInput | PaymentPageFormFieldWhereUniqueInput[]
+    disconnect?: PaymentPageFormFieldWhereUniqueInput | PaymentPageFormFieldWhereUniqueInput[]
+    delete?: PaymentPageFormFieldWhereUniqueInput | PaymentPageFormFieldWhereUniqueInput[]
+    connect?: PaymentPageFormFieldWhereUniqueInput | PaymentPageFormFieldWhereUniqueInput[]
+    update?: PaymentPageFormFieldUpdateWithWhereUniqueWithoutPaymentPageFormInput | PaymentPageFormFieldUpdateWithWhereUniqueWithoutPaymentPageFormInput[]
+    updateMany?: PaymentPageFormFieldUpdateManyWithWhereWithoutPaymentPageFormInput | PaymentPageFormFieldUpdateManyWithWhereWithoutPaymentPageFormInput[]
+    deleteMany?: PaymentPageFormFieldScalarWhereInput | PaymentPageFormFieldScalarWhereInput[]
+  }
+
+  export type PaymentPageFormCreateNestedOneWithoutPaymentPageFormFieldInput = {
+    create?: XOR<PaymentPageFormCreateWithoutPaymentPageFormFieldInput, PaymentPageFormUncheckedCreateWithoutPaymentPageFormFieldInput>
+    connectOrCreate?: PaymentPageFormCreateOrConnectWithoutPaymentPageFormFieldInput
+    connect?: PaymentPageFormWhereUniqueInput
+  }
+
+  export type EnumPaymentPageFormFieldTypeFieldUpdateOperationsInput = {
+    set?: $Enums.PaymentPageFormFieldType
+  }
+
+  export type PaymentPageFormUpdateOneRequiredWithoutPaymentPageFormFieldNestedInput = {
+    create?: XOR<PaymentPageFormCreateWithoutPaymentPageFormFieldInput, PaymentPageFormUncheckedCreateWithoutPaymentPageFormFieldInput>
+    connectOrCreate?: PaymentPageFormCreateOrConnectWithoutPaymentPageFormFieldInput
+    upsert?: PaymentPageFormUpsertWithoutPaymentPageFormFieldInput
+    connect?: PaymentPageFormWhereUniqueInput
+    update?: XOR<XOR<PaymentPageFormUpdateToOneWithWhereWithoutPaymentPageFormFieldInput, PaymentPageFormUpdateWithoutPaymentPageFormFieldInput>, PaymentPageFormUncheckedUpdateWithoutPaymentPageFormFieldInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -18458,6 +22815,40 @@ export namespace Prisma {
     _max?: NestedEnumTransactionStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumPaymentButtonTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentButtonType | EnumPaymentButtonTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentButtonType[] | ListEnumPaymentButtonTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentButtonType[] | ListEnumPaymentButtonTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentButtonTypeFilter<$PrismaModel> | $Enums.PaymentButtonType
+  }
+
+  export type NestedEnumPaymentButtonTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentButtonType | EnumPaymentButtonTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentButtonType[] | ListEnumPaymentButtonTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentButtonType[] | ListEnumPaymentButtonTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentButtonTypeWithAggregatesFilter<$PrismaModel> | $Enums.PaymentButtonType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentButtonTypeFilter<$PrismaModel>
+    _max?: NestedEnumPaymentButtonTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumPaymentPageFormFieldTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentPageFormFieldType | EnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentPageFormFieldType[] | ListEnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentPageFormFieldType[] | ListEnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentPageFormFieldTypeFilter<$PrismaModel> | $Enums.PaymentPageFormFieldType
+  }
+
+  export type NestedEnumPaymentPageFormFieldTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentPageFormFieldType | EnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentPageFormFieldType[] | ListEnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentPageFormFieldType[] | ListEnumPaymentPageFormFieldTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentPageFormFieldTypeWithAggregatesFilter<$PrismaModel> | $Enums.PaymentPageFormFieldType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentPageFormFieldTypeFilter<$PrismaModel>
+    _max?: NestedEnumPaymentPageFormFieldTypeFilter<$PrismaModel>
+  }
+
   export type AccountCreateWithoutUserInput = {
     type: string
     provider: string
@@ -18621,6 +23012,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     status?: $Enums.PaymentPageStatus
     IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutPaymentPageInput
+    PaymentPageForm?: PaymentPageFormCreateNestedManyWithoutPaymentPageInput
   }
 
   export type PaymentPageUncheckedCreateWithoutUserInput = {
@@ -18634,6 +23026,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     status?: $Enums.PaymentPageStatus
     IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutPaymentPageInput
+    PaymentPageForm?: PaymentPageFormUncheckedCreateNestedManyWithoutPaymentPageInput
   }
 
   export type PaymentPageCreateOrConnectWithoutUserInput = {
@@ -19445,6 +23838,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PaymentPageFormCreateWithoutPaymentPageInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    PaymentPageFormField?: PaymentPageFormFieldCreateNestedManyWithoutPaymentPageFormInput
+  }
+
+  export type PaymentPageFormUncheckedCreateWithoutPaymentPageInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    PaymentPageFormField?: PaymentPageFormFieldUncheckedCreateNestedManyWithoutPaymentPageFormInput
+  }
+
+  export type PaymentPageFormCreateOrConnectWithoutPaymentPageInput = {
+    where: PaymentPageFormWhereUniqueInput
+    create: XOR<PaymentPageFormCreateWithoutPaymentPageInput, PaymentPageFormUncheckedCreateWithoutPaymentPageInput>
+  }
+
+  export type PaymentPageFormCreateManyPaymentPageInputEnvelope = {
+    data: PaymentPageFormCreateManyPaymentPageInput | PaymentPageFormCreateManyPaymentPageInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutPaymentPageInput = {
     update: XOR<UserUpdateWithoutPaymentPageInput, UserUncheckedUpdateWithoutPaymentPageInput>
     create: XOR<UserCreateWithoutPaymentPageInput, UserUncheckedCreateWithoutPaymentPageInput>
@@ -19502,6 +23919,32 @@ export namespace Prisma {
     data: XOR<IntiatedPaymentUpdateManyMutationInput, IntiatedPaymentUncheckedUpdateManyWithoutPaymentPageInput>
   }
 
+  export type PaymentPageFormUpsertWithWhereUniqueWithoutPaymentPageInput = {
+    where: PaymentPageFormWhereUniqueInput
+    update: XOR<PaymentPageFormUpdateWithoutPaymentPageInput, PaymentPageFormUncheckedUpdateWithoutPaymentPageInput>
+    create: XOR<PaymentPageFormCreateWithoutPaymentPageInput, PaymentPageFormUncheckedCreateWithoutPaymentPageInput>
+  }
+
+  export type PaymentPageFormUpdateWithWhereUniqueWithoutPaymentPageInput = {
+    where: PaymentPageFormWhereUniqueInput
+    data: XOR<PaymentPageFormUpdateWithoutPaymentPageInput, PaymentPageFormUncheckedUpdateWithoutPaymentPageInput>
+  }
+
+  export type PaymentPageFormUpdateManyWithWhereWithoutPaymentPageInput = {
+    where: PaymentPageFormScalarWhereInput
+    data: XOR<PaymentPageFormUpdateManyMutationInput, PaymentPageFormUncheckedUpdateManyWithoutPaymentPageInput>
+  }
+
+  export type PaymentPageFormScalarWhereInput = {
+    AND?: PaymentPageFormScalarWhereInput | PaymentPageFormScalarWhereInput[]
+    OR?: PaymentPageFormScalarWhereInput[]
+    NOT?: PaymentPageFormScalarWhereInput | PaymentPageFormScalarWhereInput[]
+    id?: StringFilter<"PaymentPageForm"> | string
+    paymentPageId?: StringFilter<"PaymentPageForm"> | string
+    createdAt?: DateTimeFilter<"PaymentPageForm"> | Date | string
+    updatedAt?: DateTimeFilter<"PaymentPageForm"> | Date | string
+  }
+
   export type PaymentPageCreateWithoutIntiatedPaymentInput = {
     id?: string
     title: string
@@ -19513,6 +23956,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     status?: $Enums.PaymentPageStatus
     user: UserCreateNestedOneWithoutPaymentPageInput
+    PaymentPageForm?: PaymentPageFormCreateNestedManyWithoutPaymentPageInput
   }
 
   export type PaymentPageUncheckedCreateWithoutIntiatedPaymentInput = {
@@ -19526,6 +23970,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     status?: $Enums.PaymentPageStatus
+    PaymentPageForm?: PaymentPageFormUncheckedCreateNestedManyWithoutPaymentPageInput
   }
 
   export type PaymentPageCreateOrConnectWithoutIntiatedPaymentInput = {
@@ -19620,6 +24065,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
     user?: UserUpdateOneRequiredWithoutPaymentPageNestedInput
+    PaymentPageForm?: PaymentPageFormUpdateManyWithoutPaymentPageNestedInput
   }
 
   export type PaymentPageUncheckedUpdateWithoutIntiatedPaymentInput = {
@@ -19633,6 +24079,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
+    PaymentPageForm?: PaymentPageFormUncheckedUpdateManyWithoutPaymentPageNestedInput
   }
 
   export type PaymentLinkUpsertWithoutIntiatedPaymentInput = {
@@ -19766,6 +24213,185 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paymentPageId?: NullableStringFieldUpdateOperationsInput | string | null
     paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentPageCreateWithoutPaymentPageFormInput = {
+    id?: string
+    title: string
+    description?: string | null
+    logoUrl: string
+    amount: Decimal | DecimalJsLike | number | string
+    expiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.PaymentPageStatus
+    user: UserCreateNestedOneWithoutPaymentPageInput
+    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutPaymentPageInput
+  }
+
+  export type PaymentPageUncheckedCreateWithoutPaymentPageFormInput = {
+    id?: string
+    title: string
+    description?: string | null
+    logoUrl: string
+    amount: Decimal | DecimalJsLike | number | string
+    userId: string
+    expiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.PaymentPageStatus
+    IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutPaymentPageInput
+  }
+
+  export type PaymentPageCreateOrConnectWithoutPaymentPageFormInput = {
+    where: PaymentPageWhereUniqueInput
+    create: XOR<PaymentPageCreateWithoutPaymentPageFormInput, PaymentPageUncheckedCreateWithoutPaymentPageFormInput>
+  }
+
+  export type PaymentPageFormFieldCreateWithoutPaymentPageFormInput = {
+    id?: string
+    type: $Enums.PaymentPageFormFieldType
+    label: string
+    placeholder?: string | null
+    required?: boolean
+    value?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentPageFormFieldUncheckedCreateWithoutPaymentPageFormInput = {
+    id?: string
+    type: $Enums.PaymentPageFormFieldType
+    label: string
+    placeholder?: string | null
+    required?: boolean
+    value?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentPageFormFieldCreateOrConnectWithoutPaymentPageFormInput = {
+    where: PaymentPageFormFieldWhereUniqueInput
+    create: XOR<PaymentPageFormFieldCreateWithoutPaymentPageFormInput, PaymentPageFormFieldUncheckedCreateWithoutPaymentPageFormInput>
+  }
+
+  export type PaymentPageFormFieldCreateManyPaymentPageFormInputEnvelope = {
+    data: PaymentPageFormFieldCreateManyPaymentPageFormInput | PaymentPageFormFieldCreateManyPaymentPageFormInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PaymentPageUpsertWithoutPaymentPageFormInput = {
+    update: XOR<PaymentPageUpdateWithoutPaymentPageFormInput, PaymentPageUncheckedUpdateWithoutPaymentPageFormInput>
+    create: XOR<PaymentPageCreateWithoutPaymentPageFormInput, PaymentPageUncheckedCreateWithoutPaymentPageFormInput>
+    where?: PaymentPageWhereInput
+  }
+
+  export type PaymentPageUpdateToOneWithWhereWithoutPaymentPageFormInput = {
+    where?: PaymentPageWhereInput
+    data: XOR<PaymentPageUpdateWithoutPaymentPageFormInput, PaymentPageUncheckedUpdateWithoutPaymentPageFormInput>
+  }
+
+  export type PaymentPageUpdateWithoutPaymentPageFormInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
+    user?: UserUpdateOneRequiredWithoutPaymentPageNestedInput
+    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutPaymentPageNestedInput
+  }
+
+  export type PaymentPageUncheckedUpdateWithoutPaymentPageFormInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    userId?: StringFieldUpdateOperationsInput | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
+    IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutPaymentPageNestedInput
+  }
+
+  export type PaymentPageFormFieldUpsertWithWhereUniqueWithoutPaymentPageFormInput = {
+    where: PaymentPageFormFieldWhereUniqueInput
+    update: XOR<PaymentPageFormFieldUpdateWithoutPaymentPageFormInput, PaymentPageFormFieldUncheckedUpdateWithoutPaymentPageFormInput>
+    create: XOR<PaymentPageFormFieldCreateWithoutPaymentPageFormInput, PaymentPageFormFieldUncheckedCreateWithoutPaymentPageFormInput>
+  }
+
+  export type PaymentPageFormFieldUpdateWithWhereUniqueWithoutPaymentPageFormInput = {
+    where: PaymentPageFormFieldWhereUniqueInput
+    data: XOR<PaymentPageFormFieldUpdateWithoutPaymentPageFormInput, PaymentPageFormFieldUncheckedUpdateWithoutPaymentPageFormInput>
+  }
+
+  export type PaymentPageFormFieldUpdateManyWithWhereWithoutPaymentPageFormInput = {
+    where: PaymentPageFormFieldScalarWhereInput
+    data: XOR<PaymentPageFormFieldUpdateManyMutationInput, PaymentPageFormFieldUncheckedUpdateManyWithoutPaymentPageFormInput>
+  }
+
+  export type PaymentPageFormFieldScalarWhereInput = {
+    AND?: PaymentPageFormFieldScalarWhereInput | PaymentPageFormFieldScalarWhereInput[]
+    OR?: PaymentPageFormFieldScalarWhereInput[]
+    NOT?: PaymentPageFormFieldScalarWhereInput | PaymentPageFormFieldScalarWhereInput[]
+    id?: StringFilter<"PaymentPageFormField"> | string
+    type?: EnumPaymentPageFormFieldTypeFilter<"PaymentPageFormField"> | $Enums.PaymentPageFormFieldType
+    label?: StringFilter<"PaymentPageFormField"> | string
+    placeholder?: StringNullableFilter<"PaymentPageFormField"> | string | null
+    required?: BoolFilter<"PaymentPageFormField"> | boolean
+    value?: StringNullableFilter<"PaymentPageFormField"> | string | null
+    paymentPageFormId?: StringFilter<"PaymentPageFormField"> | string
+    createdAt?: DateTimeFilter<"PaymentPageFormField"> | Date | string
+    updatedAt?: DateTimeFilter<"PaymentPageFormField"> | Date | string
+  }
+
+  export type PaymentPageFormCreateWithoutPaymentPageFormFieldInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    paymentPage: PaymentPageCreateNestedOneWithoutPaymentPageFormInput
+  }
+
+  export type PaymentPageFormUncheckedCreateWithoutPaymentPageFormFieldInput = {
+    id?: string
+    paymentPageId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentPageFormCreateOrConnectWithoutPaymentPageFormFieldInput = {
+    where: PaymentPageFormWhereUniqueInput
+    create: XOR<PaymentPageFormCreateWithoutPaymentPageFormFieldInput, PaymentPageFormUncheckedCreateWithoutPaymentPageFormFieldInput>
+  }
+
+  export type PaymentPageFormUpsertWithoutPaymentPageFormFieldInput = {
+    update: XOR<PaymentPageFormUpdateWithoutPaymentPageFormFieldInput, PaymentPageFormUncheckedUpdateWithoutPaymentPageFormFieldInput>
+    create: XOR<PaymentPageFormCreateWithoutPaymentPageFormFieldInput, PaymentPageFormUncheckedCreateWithoutPaymentPageFormFieldInput>
+    where?: PaymentPageFormWhereInput
+  }
+
+  export type PaymentPageFormUpdateToOneWithWhereWithoutPaymentPageFormFieldInput = {
+    where?: PaymentPageFormWhereInput
+    data: XOR<PaymentPageFormUpdateWithoutPaymentPageFormFieldInput, PaymentPageFormUncheckedUpdateWithoutPaymentPageFormFieldInput>
+  }
+
+  export type PaymentPageFormUpdateWithoutPaymentPageFormFieldInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    paymentPage?: PaymentPageUpdateOneRequiredWithoutPaymentPageFormNestedInput
+  }
+
+  export type PaymentPageFormUncheckedUpdateWithoutPaymentPageFormFieldInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    paymentPageId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -19995,6 +24621,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
     IntiatedPayment?: IntiatedPaymentUpdateManyWithoutPaymentPageNestedInput
+    PaymentPageForm?: PaymentPageFormUpdateManyWithoutPaymentPageNestedInput
   }
 
   export type PaymentPageUncheckedUpdateWithoutUserInput = {
@@ -20008,6 +24635,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
     IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutPaymentPageNestedInput
+    PaymentPageForm?: PaymentPageFormUncheckedUpdateManyWithoutPaymentPageNestedInput
   }
 
   export type PaymentPageUncheckedUpdateManyWithoutUserInput = {
@@ -20116,6 +24744,12 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type PaymentPageFormCreateManyPaymentPageInput = {
+    id?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type IntiatedPaymentUpdateWithoutPaymentPageInput = {
     id?: StringFieldUpdateOperationsInput | string
     initiatedFrom?: EnumIntiatedFromFieldUpdateOperationsInput | $Enums.IntiatedFrom
@@ -20150,6 +24784,26 @@ export namespace Prisma {
     walletAddress?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentPageFormUpdateWithoutPaymentPageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    PaymentPageFormField?: PaymentPageFormFieldUpdateManyWithoutPaymentPageFormNestedInput
+  }
+
+  export type PaymentPageFormUncheckedUpdateWithoutPaymentPageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    PaymentPageFormField?: PaymentPageFormFieldUncheckedUpdateManyWithoutPaymentPageFormNestedInput
+  }
+
+  export type PaymentPageFormUncheckedUpdateManyWithoutPaymentPageInput = {
+    id?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -20206,6 +24860,50 @@ export namespace Prisma {
     settled?: BoolFieldUpdateOperationsInput | boolean
     settledAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     settledTo?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentPageFormFieldCreateManyPaymentPageFormInput = {
+    id?: string
+    type: $Enums.PaymentPageFormFieldType
+    label: string
+    placeholder?: string | null
+    required?: boolean
+    value?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PaymentPageFormFieldUpdateWithoutPaymentPageFormInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumPaymentPageFormFieldTypeFieldUpdateOperationsInput | $Enums.PaymentPageFormFieldType
+    label?: StringFieldUpdateOperationsInput | string
+    placeholder?: NullableStringFieldUpdateOperationsInput | string | null
+    required?: BoolFieldUpdateOperationsInput | boolean
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentPageFormFieldUncheckedUpdateWithoutPaymentPageFormInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumPaymentPageFormFieldTypeFieldUpdateOperationsInput | $Enums.PaymentPageFormFieldType
+    label?: StringFieldUpdateOperationsInput | string
+    placeholder?: NullableStringFieldUpdateOperationsInput | string | null
+    required?: BoolFieldUpdateOperationsInput | boolean
+    value?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentPageFormFieldUncheckedUpdateManyWithoutPaymentPageFormInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: EnumPaymentPageFormFieldTypeFieldUpdateOperationsInput | $Enums.PaymentPageFormFieldType
+    label?: StringFieldUpdateOperationsInput | string
+    placeholder?: NullableStringFieldUpdateOperationsInput | string | null
+    required?: BoolFieldUpdateOperationsInput | boolean
+    value?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
