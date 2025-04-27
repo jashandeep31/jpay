@@ -169,6 +169,14 @@ export const PaymentPageFormFieldType: {
 export type PaymentPageFormFieldType = (typeof PaymentPageFormFieldType)[keyof typeof PaymentPageFormFieldType]
 
 
+export const QRPaymentType: {
+  PERMANENT: 'PERMANENT',
+  SINGLE_USE: 'SINGLE_USE'
+};
+
+export type QRPaymentType = (typeof QRPaymentType)[keyof typeof QRPaymentType]
+
+
 export const QRPaymentStatus: {
   USED: 'USED',
   ACTIVE: 'ACTIVE',
@@ -206,6 +214,10 @@ export const PaymentButtonType: typeof $Enums.PaymentButtonType
 export type PaymentPageFormFieldType = $Enums.PaymentPageFormFieldType
 
 export const PaymentPageFormFieldType: typeof $Enums.PaymentPageFormFieldType
+
+export type QRPaymentType = $Enums.QRPaymentType
+
+export const QRPaymentType: typeof $Enums.QRPaymentType
 
 export type QRPaymentStatus = $Enums.QRPaymentStatus
 
@@ -19605,6 +19617,9 @@ export namespace Prisma {
     id: string | null
     amount: Decimal | null
     status: $Enums.QRPaymentStatus | null
+    type: $Enums.QRPaymentType | null
+    expiresAt: Date | null
+    expired: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     userId: string | null
@@ -19614,6 +19629,9 @@ export namespace Prisma {
     id: string | null
     amount: Decimal | null
     status: $Enums.QRPaymentStatus | null
+    type: $Enums.QRPaymentType | null
+    expiresAt: Date | null
+    expired: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     userId: string | null
@@ -19623,6 +19641,9 @@ export namespace Prisma {
     id: number
     amount: number
     status: number
+    type: number
+    expiresAt: number
+    expired: number
     createdAt: number
     updatedAt: number
     userId: number
@@ -19642,6 +19663,9 @@ export namespace Prisma {
     id?: true
     amount?: true
     status?: true
+    type?: true
+    expiresAt?: true
+    expired?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
@@ -19651,6 +19675,9 @@ export namespace Prisma {
     id?: true
     amount?: true
     status?: true
+    type?: true
+    expiresAt?: true
+    expired?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
@@ -19660,6 +19687,9 @@ export namespace Prisma {
     id?: true
     amount?: true
     status?: true
+    type?: true
+    expiresAt?: true
+    expired?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
@@ -19756,6 +19786,9 @@ export namespace Prisma {
     id: string
     amount: Decimal
     status: $Enums.QRPaymentStatus
+    type: $Enums.QRPaymentType
+    expiresAt: Date | null
+    expired: boolean
     createdAt: Date
     updatedAt: Date
     userId: string
@@ -19784,6 +19817,9 @@ export namespace Prisma {
     id?: boolean
     amount?: boolean
     status?: boolean
+    type?: boolean
+    expiresAt?: boolean
+    expired?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -19794,6 +19830,9 @@ export namespace Prisma {
     id?: boolean
     amount?: boolean
     status?: boolean
+    type?: boolean
+    expiresAt?: boolean
+    expired?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -19804,6 +19843,9 @@ export namespace Prisma {
     id?: boolean
     amount?: boolean
     status?: boolean
+    type?: boolean
+    expiresAt?: boolean
+    expired?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -19814,12 +19856,15 @@ export namespace Prisma {
     id?: boolean
     amount?: boolean
     status?: boolean
+    type?: boolean
+    expiresAt?: boolean
+    expired?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
   }
 
-  export type QRPaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "status" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["qRPayment"]>
+  export type QRPaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "status" | "type" | "expiresAt" | "expired" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["qRPayment"]>
   export type QRPaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -19839,6 +19884,9 @@ export namespace Prisma {
       id: string
       amount: Prisma.Decimal
       status: $Enums.QRPaymentStatus
+      type: $Enums.QRPaymentType
+      expiresAt: Date | null
+      expired: boolean
       createdAt: Date
       updatedAt: Date
       userId: string
@@ -20269,6 +20317,9 @@ export namespace Prisma {
     readonly id: FieldRef<"QRPayment", 'String'>
     readonly amount: FieldRef<"QRPayment", 'Decimal'>
     readonly status: FieldRef<"QRPayment", 'QRPaymentStatus'>
+    readonly type: FieldRef<"QRPayment", 'QRPaymentType'>
+    readonly expiresAt: FieldRef<"QRPayment", 'DateTime'>
+    readonly expired: FieldRef<"QRPayment", 'Boolean'>
     readonly createdAt: FieldRef<"QRPayment", 'DateTime'>
     readonly updatedAt: FieldRef<"QRPayment", 'DateTime'>
     readonly userId: FieldRef<"QRPayment", 'String'>
@@ -20908,6 +20959,9 @@ export namespace Prisma {
     id: 'id',
     amount: 'amount',
     status: 'status',
+    type: 'type',
+    expiresAt: 'expiresAt',
+    expired: 'expired',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     userId: 'userId'
@@ -21117,6 +21171,20 @@ export namespace Prisma {
    * Reference to a field of type 'QRPaymentStatus[]'
    */
   export type ListEnumQRPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QRPaymentStatus[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'QRPaymentType'
+   */
+  export type EnumQRPaymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QRPaymentType'>
+    
+
+
+  /**
+   * Reference to a field of type 'QRPaymentType[]'
+   */
+  export type ListEnumQRPaymentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QRPaymentType[]'>
     
 
 
@@ -22219,6 +22287,9 @@ export namespace Prisma {
     id?: StringFilter<"QRPayment"> | string
     amount?: DecimalFilter<"QRPayment"> | Decimal | DecimalJsLike | number | string
     status?: EnumQRPaymentStatusFilter<"QRPayment"> | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFilter<"QRPayment"> | $Enums.QRPaymentType
+    expiresAt?: DateTimeNullableFilter<"QRPayment"> | Date | string | null
+    expired?: BoolFilter<"QRPayment"> | boolean
     createdAt?: DateTimeFilter<"QRPayment"> | Date | string
     updatedAt?: DateTimeFilter<"QRPayment"> | Date | string
     userId?: StringFilter<"QRPayment"> | string
@@ -22229,6 +22300,9 @@ export namespace Prisma {
     id?: SortOrder
     amount?: SortOrder
     status?: SortOrder
+    type?: SortOrder
+    expiresAt?: SortOrderInput | SortOrder
+    expired?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -22242,6 +22316,9 @@ export namespace Prisma {
     NOT?: QRPaymentWhereInput | QRPaymentWhereInput[]
     amount?: DecimalFilter<"QRPayment"> | Decimal | DecimalJsLike | number | string
     status?: EnumQRPaymentStatusFilter<"QRPayment"> | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFilter<"QRPayment"> | $Enums.QRPaymentType
+    expiresAt?: DateTimeNullableFilter<"QRPayment"> | Date | string | null
+    expired?: BoolFilter<"QRPayment"> | boolean
     createdAt?: DateTimeFilter<"QRPayment"> | Date | string
     updatedAt?: DateTimeFilter<"QRPayment"> | Date | string
     userId?: StringFilter<"QRPayment"> | string
@@ -22252,6 +22329,9 @@ export namespace Prisma {
     id?: SortOrder
     amount?: SortOrder
     status?: SortOrder
+    type?: SortOrder
+    expiresAt?: SortOrderInput | SortOrder
+    expired?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -22269,6 +22349,9 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"QRPayment"> | string
     amount?: DecimalWithAggregatesFilter<"QRPayment"> | Decimal | DecimalJsLike | number | string
     status?: EnumQRPaymentStatusWithAggregatesFilter<"QRPayment"> | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeWithAggregatesFilter<"QRPayment"> | $Enums.QRPaymentType
+    expiresAt?: DateTimeNullableWithAggregatesFilter<"QRPayment"> | Date | string | null
+    expired?: BoolWithAggregatesFilter<"QRPayment"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"QRPayment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"QRPayment"> | Date | string
     userId?: StringWithAggregatesFilter<"QRPayment"> | string
@@ -23434,6 +23517,9 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status?: $Enums.QRPaymentStatus
+    type?: $Enums.QRPaymentType
+    expiresAt?: Date | string | null
+    expired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutQRPaymentInput
@@ -23443,6 +23529,9 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status?: $Enums.QRPaymentStatus
+    type?: $Enums.QRPaymentType
+    expiresAt?: Date | string | null
+    expired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
@@ -23452,6 +23541,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutQRPaymentNestedInput
@@ -23461,6 +23553,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -23470,6 +23565,9 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status?: $Enums.QRPaymentStatus
+    type?: $Enums.QRPaymentType
+    expiresAt?: Date | string | null
+    expired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
@@ -23479,6 +23577,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -23487,6 +23588,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
@@ -24551,10 +24655,20 @@ export namespace Prisma {
     not?: NestedEnumQRPaymentStatusFilter<$PrismaModel> | $Enums.QRPaymentStatus
   }
 
+  export type EnumQRPaymentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.QRPaymentType | EnumQRPaymentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.QRPaymentType[] | ListEnumQRPaymentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.QRPaymentType[] | ListEnumQRPaymentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumQRPaymentTypeFilter<$PrismaModel> | $Enums.QRPaymentType
+  }
+
   export type QRPaymentCountOrderByAggregateInput = {
     id?: SortOrder
     amount?: SortOrder
     status?: SortOrder
+    type?: SortOrder
+    expiresAt?: SortOrder
+    expired?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -24568,6 +24682,9 @@ export namespace Prisma {
     id?: SortOrder
     amount?: SortOrder
     status?: SortOrder
+    type?: SortOrder
+    expiresAt?: SortOrder
+    expired?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -24577,6 +24694,9 @@ export namespace Prisma {
     id?: SortOrder
     amount?: SortOrder
     status?: SortOrder
+    type?: SortOrder
+    expiresAt?: SortOrder
+    expired?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -24594,6 +24714,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumQRPaymentStatusFilter<$PrismaModel>
     _max?: NestedEnumQRPaymentStatusFilter<$PrismaModel>
+  }
+
+  export type EnumQRPaymentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.QRPaymentType | EnumQRPaymentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.QRPaymentType[] | ListEnumQRPaymentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.QRPaymentType[] | ListEnumQRPaymentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumQRPaymentTypeWithAggregatesFilter<$PrismaModel> | $Enums.QRPaymentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumQRPaymentTypeFilter<$PrismaModel>
+    _max?: NestedEnumQRPaymentTypeFilter<$PrismaModel>
   }
 
   export type AccountCreateNestedManyWithoutUserInput = {
@@ -25452,6 +25582,10 @@ export namespace Prisma {
     set?: $Enums.QRPaymentStatus
   }
 
+  export type EnumQRPaymentTypeFieldUpdateOperationsInput = {
+    set?: $Enums.QRPaymentType
+  }
+
   export type UserUpdateOneRequiredWithoutQRPaymentNestedInput = {
     create?: XOR<UserCreateWithoutQRPaymentInput, UserUncheckedCreateWithoutQRPaymentInput>
     connectOrCreate?: UserCreateOrConnectWithoutQRPaymentInput
@@ -25814,6 +25948,13 @@ export namespace Prisma {
     not?: NestedEnumQRPaymentStatusFilter<$PrismaModel> | $Enums.QRPaymentStatus
   }
 
+  export type NestedEnumQRPaymentTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.QRPaymentType | EnumQRPaymentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.QRPaymentType[] | ListEnumQRPaymentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.QRPaymentType[] | ListEnumQRPaymentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumQRPaymentTypeFilter<$PrismaModel> | $Enums.QRPaymentType
+  }
+
   export type NestedEnumQRPaymentStatusWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.QRPaymentStatus | EnumQRPaymentStatusFieldRefInput<$PrismaModel>
     in?: $Enums.QRPaymentStatus[] | ListEnumQRPaymentStatusFieldRefInput<$PrismaModel>
@@ -25822,6 +25963,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumQRPaymentStatusFilter<$PrismaModel>
     _max?: NestedEnumQRPaymentStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumQRPaymentTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.QRPaymentType | EnumQRPaymentTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.QRPaymentType[] | ListEnumQRPaymentTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.QRPaymentType[] | ListEnumQRPaymentTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumQRPaymentTypeWithAggregatesFilter<$PrismaModel> | $Enums.QRPaymentType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumQRPaymentTypeFilter<$PrismaModel>
+    _max?: NestedEnumQRPaymentTypeFilter<$PrismaModel>
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -26018,6 +26169,9 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status?: $Enums.QRPaymentStatus
+    type?: $Enums.QRPaymentType
+    expiresAt?: Date | string | null
+    expired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -26026,6 +26180,9 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status?: $Enums.QRPaymentStatus
+    type?: $Enums.QRPaymentType
+    expiresAt?: Date | string | null
+    expired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -26245,6 +26402,9 @@ export namespace Prisma {
     id?: StringFilter<"QRPayment"> | string
     amount?: DecimalFilter<"QRPayment"> | Decimal | DecimalJsLike | number | string
     status?: EnumQRPaymentStatusFilter<"QRPayment"> | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFilter<"QRPayment"> | $Enums.QRPaymentType
+    expiresAt?: DateTimeNullableFilter<"QRPayment"> | Date | string | null
+    expired?: BoolFilter<"QRPayment"> | boolean
     createdAt?: DateTimeFilter<"QRPayment"> | Date | string
     updatedAt?: DateTimeFilter<"QRPayment"> | Date | string
     userId?: StringFilter<"QRPayment"> | string
@@ -27712,6 +27872,9 @@ export namespace Prisma {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
     status?: $Enums.QRPaymentStatus
+    type?: $Enums.QRPaymentType
+    expiresAt?: Date | string | null
+    expired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -27912,6 +28075,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -27920,6 +28086,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -27928,6 +28097,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

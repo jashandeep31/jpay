@@ -280,6 +280,9 @@ exports.Prisma.QRPaymentScalarFieldEnum = {
   id: 'id',
   amount: 'amount',
   status: 'status',
+  type: 'type',
+  expiresAt: 'expiresAt',
+  expired: 'expired',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId'
@@ -353,6 +356,11 @@ exports.QRPaymentStatus = exports.$Enums.QRPaymentStatus = {
   USED: 'USED',
   ACTIVE: 'ACTIVE',
   EXPIRED: 'EXPIRED'
+};
+
+exports.QRPaymentType = exports.$Enums.QRPaymentType = {
+  PERMANENT: 'PERMANENT',
+  SINGLE_USE: 'SINGLE_USE'
 };
 
 exports.Prisma.ModelName = {

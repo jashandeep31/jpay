@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useToast } from "@/app/hooks/use-toast";
 import {
   Tabs,
@@ -17,32 +17,38 @@ import {
 } from "@repo/ui/components/ui/card";
 import { buttonVariants } from "@repo/ui/components/ui/button";
 import { Loader2, Plus } from "lucide-react";
-import PaymentPageTable from "@/components/dashboard/payment-pages/payment-page-table";
 import { QRPayment } from "@repo/db";
 import Link from "next/link";
 import { getQRPayments } from "./_actions";
 import QRPaymentsTable from "@/components/dashboard/qr-payments/qr-payments-table";
 
 export default function QRPaymentsPage() {
+  const { toast } = useToast();
   const [loading, setloading] = useState(true);
   const [qrPayments, setQRPayments] = useState<QRPayment[]>([]);
-  useEffect(() => {
-    (async () => {
-      try {
-        const payments = await getQRPayments();
-        if (!payments) throw new Error("No payments found");
-        if ("error" in payments) {
-          throw new Error(payments.error as string);
-        }
-        setQRPayments(payments ?? []);
-      } catch (error) {
-        console.error("Failed to fetch payment pages:", error);
-        setQRPayments([]);
-      } finally {
-        setloading(false);
+
+  const callGetQRPayments = useCallback(async () => {
+    try {
+      const resposne = await getQRPayments();
+      if (!resposne.ok) {
+        throw new Error(resposne.error as string);
       }
-    })();
-  }, []);
+      setQRPayments(resposne.data as unknown as QRPayment[]);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Unknown error",
+      });
+
+      setQRPayments([]);
+    } finally {
+      setloading(false);
+    }
+  }, [toast]);
+
+  useEffect(() => {
+    callGetQRPayments();
+  }, [callGetQRPayments]);
 
   const [activeTab, setActiveTab] = useState("all");
 
@@ -82,8 +88,6 @@ export default function QRPaymentsPage() {
             <TabsList className="mb-4">
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="active">Active</TabsTrigger>
-              <TabsTrigger value="pending">Pending</TabsTrigger>
-              <TabsTrigger value="completed">Completed</TabsTrigger>
               <TabsTrigger value="expired">Expired</TabsTrigger>
             </TabsList>
 

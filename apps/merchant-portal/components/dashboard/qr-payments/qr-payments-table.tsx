@@ -18,27 +18,11 @@ import {
   DropdownMenuTrigger,
 } from "@repo/ui/components/ui/dropdown-menu";
 import { Button } from "@repo/ui/components/ui/button";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@repo/ui/components/ui/alert-dialog";
 import { Badge } from "@repo/ui/components/ui/badge";
-import {
-  Copy,
-  ExternalLink,
-  MoreHorizontal,
-  Trash,
-  XCircle,
-} from "lucide-react";
+import { Copy, ExternalLink, MoreHorizontal } from "lucide-react";
 import { formatCurrency, formatDate } from "@/app/lib/utils";
 import { useToast } from "@/app/hooks/use-toast";
-import { PaymentLink, PaymentPage, QRPayment } from "@repo/db";
+import { QRPayment } from "@repo/db";
 
 interface QRPaymentsTableProps {
   qrPayments: QRPayment[];
@@ -47,8 +31,6 @@ interface QRPaymentsTableProps {
 
 export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
   const { toast } = useToast();
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [selectedLinkId, setSelectedLinkId] = useState<string | null>(null);
 
   const handleCopyLink = (id: string) => {
     const linkUrl = `${window.location.origin}/payment/${id}`;
@@ -65,13 +47,6 @@ export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
   };
 
   const handleCancelLink = async (id: string) => {};
-
-  const handleDeleteLink = async () => {};
-
-  const confirmDelete = (id: string) => {
-    setSelectedLinkId(id);
-    setIsDeleteDialogOpen(true);
-  };
 
   const getStatusBadge = (status: QRPayment["status"]) => {
     switch (status) {
@@ -122,10 +97,9 @@ export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
         <TableHeader>
           <TableRow>
             <TableHead>Amount</TableHead>
-            <TableHead>Description</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead>Created</TableHead>
-            <TableHead>Expires</TableHead>
+            <TableHead>Type</TableHead>
+            <TableHead>Created at</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -137,6 +111,7 @@ export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
               </TableCell>
 
               <TableCell>{getStatusBadge(link.status)}</TableCell>
+              <TableCell>{link.type}</TableCell>
               <TableCell>{formatDate(new Date(link.createdAt))}</TableCell>
 
               <TableCell className="text-right">
@@ -158,14 +133,6 @@ export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
                       <ExternalLink className="mr-2 h-4 w-4" />
                       Open Link
                     </DropdownMenuItem>
-
-                    <DropdownMenuItem
-                      onClick={() => confirmDelete(link.id)}
-                      className="text-red-600 focus:text-red-600"
-                    >
-                      <Trash className="mr-2 h-4 w-4" />
-                      Delete
-                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
@@ -173,30 +140,6 @@ export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
           ))}
         </TableBody>
       </Table>
-
-      <AlertDialog
-        open={isDeleteDialogOpen}
-        onOpenChange={setIsDeleteDialogOpen}
-      >
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              payment link.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDeleteLink}
-              className="bg-red-600 hover:bg-red-700"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   );
 }

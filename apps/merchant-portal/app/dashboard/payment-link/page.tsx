@@ -31,7 +31,7 @@ export default function PaymentLinksPage() {
   const callGetPaymentLinks = useCallback(async () => {
     const payments = await getPaymentLinks();
     if (payments.ok) {
-      setPaymentLinks(payments.data);
+      setPaymentLinks(payments.data as unknown as PaymentLink[]);
     } else {
       toast({
         title: "Error",
