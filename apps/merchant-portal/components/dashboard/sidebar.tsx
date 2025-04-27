@@ -38,7 +38,7 @@ const sidebarLinks = [
     icon: LinkIcon,
   },
   {
-    name: "Payments Pages",
+    name: "Payment Pages",
     href: "/dashboard/payment-pages",
     icon: FileText,
   },

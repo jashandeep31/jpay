@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useToast } from "@/app/hooks/use-toast";
 import {
   Tabs,
@@ -27,28 +27,37 @@ export default function PaymentPagesPage() {
 
   const [loading, setloading] = useState(true);
   const [paymentPages, setPaymentPages] = useState<PaymentPage[]>([]);
-  useEffect(() => {
-    (async () => {
-      try {
-        const pages = await getPaymentPages();
-        if ("error" in pages) {
-          throw new Error(pages.error);
-        }
-        setPaymentPages(pages);
-      } catch (error) {
-        console.error("Failed to fetch payment pages:", error);
-        setPaymentPages([]);
-      } finally {
-        setloading(false);
+
+  const callGetPaymentPages = useCallback(async () => {
+    try {
+      const response = await getPaymentPages();
+      if (!response.ok) {
+        throw new Error(response.error);
       }
-    })();
-  }, []);
+      const pages = response.data;
+      // Temporary fix to ensure the data is typed correctly
+      setPaymentPages(pages as unknown as PaymentPage[]);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Unknown error",
+        variant: "destructive",
+      });
+      setPaymentPages([]);
+    } finally {
+      setloading(false);
+    }
+  }, [toast]);
+
+  useEffect(() => {
+    callGetPaymentPages();
+  }, [callGetPaymentPages]);
 
   const [activeTab, setActiveTab] = useState("all");
 
   const mutate = async () => {
     setloading(true);
-    // setPaymentPages(await getPaymentPages());
+    await callGetPaymentPages();
     setloading(false);
   };
 

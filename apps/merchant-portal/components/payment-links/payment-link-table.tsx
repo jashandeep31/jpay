@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -18,31 +17,14 @@ import {
   DropdownMenuTrigger,
 } from "@repo/ui/components/ui/dropdown-menu";
 import { Button } from "@repo/ui/components/ui/button";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@repo/ui/components/ui/alert-dialog";
+
 import { Badge } from "@repo/ui/components/ui/badge";
-import {
-  Copy,
-  ExternalLink,
-  MoreHorizontal,
-  Trash,
-  XCircle,
-} from "lucide-react";
+import { Copy, ExternalLink, MoreHorizontal, XCircle } from "lucide-react";
 import { formatCurrency, formatDate } from "@/app/lib/utils";
 import { useToast } from "@/app/hooks/use-toast";
-import {
-  updatePaymentLinkStatus,
-  deletePaymentLink,
-} from "@/app/lib/payment-links";
+
 import { PaymentLink } from "@repo/db";
+import { cancelPaymentLink } from "@/app/dashboard/payment-link/_actions";
 
 interface PaymentLinkTableProps {
   paymentLinks: PaymentLink[];
@@ -54,8 +36,6 @@ export default function PaymentLinkTable({
   onStatusChange,
 }: PaymentLinkTableProps) {
   const { toast } = useToast();
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [selectedLinkId, setSelectedLinkId] = useState<string | null>(null);
 
   const handleCopyLink = (id: string) => {
     const linkUrl = `${window.location.origin}/payment/${id}`;
@@ -73,44 +53,27 @@ export default function PaymentLinkTable({
 
   const handleCancelLink = async (id: string) => {
     try {
-      await updatePaymentLinkStatus(id, "CANCELLED");
-      toast({
-        title: "Payment link cancelled",
-        description: "The payment link has been cancelled successfully.",
-      });
-      onStatusChange();
+      const response = await cancelPaymentLink(id);
+      if (response.ok) {
+        toast({
+          title: "Payment link cancelled",
+          description: "The payment link has been cancelled successfully.",
+        });
+        onStatusChange();
+      } else {
+        toast({
+          title: "Error",
+          description: response.error,
+          variant: "destructive",
+        });
+      }
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to cancel payment link. Please try again.",
+        description: error instanceof Error ? error.message : "Unknown error",
         variant: "destructive",
       });
     }
-  };
-
-  const handleDeleteLink = async () => {
-    if (!selectedLinkId) return;
-
-    try {
-      await deletePaymentLink(selectedLinkId);
-      toast({
-        title: "Payment link deleted",
-        description: "The payment link has been deleted successfully.",
-      });
-      setIsDeleteDialogOpen(false);
-      onStatusChange();
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to delete payment link. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const confirmDelete = (id: string) => {
-    setSelectedLinkId(id);
-    setIsDeleteDialogOpen(true);
   };
 
   const getStatusBadge = (status: PaymentLink["status"]) => {
@@ -193,7 +156,9 @@ export default function PaymentLinkTable({
                 {formatCurrency(Number.parseFloat(link.amount.toString()))}
               </TableCell>
               <TableCell className="max-w-[200px] truncate">
-                {link.description || "—"}
+                {link.description && link.description.length > 20
+                  ? `${link.description.slice(0, 20)}...`
+                  : link.description || "—"}
               </TableCell>
               <TableCell>{getStatusBadge(link.status)}</TableCell>
               <TableCell>{formatDate(new Date(link.createdAt))}</TableCell>
@@ -230,13 +195,6 @@ export default function PaymentLinkTable({
                           Cancel Link
                         </DropdownMenuItem>
                       )}
-                    <DropdownMenuItem
-                      onClick={() => confirmDelete(link.id)}
-                      className="text-red-600 focus:text-red-600"
-                    >
-                      <Trash className="mr-2 h-4 w-4" />
-                      Delete
-                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
@@ -244,30 +202,6 @@ export default function PaymentLinkTable({
           ))}
         </TableBody>
       </Table>
-
-      <AlertDialog
-        open={isDeleteDialogOpen}
-        onOpenChange={setIsDeleteDialogOpen}
-      >
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the
-              payment link.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDeleteLink}
-              className="bg-red-600 hover:bg-red-700"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   );
 }

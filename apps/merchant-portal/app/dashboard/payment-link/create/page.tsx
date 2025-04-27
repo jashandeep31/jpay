@@ -14,8 +14,11 @@ import { Input } from "@repo/ui/components/ui/input";
 import { Label } from "@repo/ui/components/ui/label";
 import { Textarea } from "@repo/ui/components/ui/textarea";
 import { createPaymentLink } from "../_actions";
-
+import { useRouter } from "next/navigation";
+import { useToast } from "@/app/hooks/use-toast";
 export default function CreateLinkPage() {
+  const { toast } = useToast();
+  const router = useRouter();
   const [amount, setAmount] = useState<number | null>();
   const [description, setDescription] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
@@ -27,7 +30,14 @@ export default function CreateLinkPage() {
       description,
       expiryDate
     );
-    console.log(paymentLink);
+    if (paymentLink.ok) {
+      router.push(`/dashboard/payment-link/`);
+    } else {
+      toast({
+        title: "Error",
+        description: paymentLink.error,
+      });
+    }
   };
 
   return (

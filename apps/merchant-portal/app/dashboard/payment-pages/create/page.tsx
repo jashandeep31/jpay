@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { CalendarIcon, InfoIcon } from "lucide-react";
+import { InfoIcon } from "lucide-react";
 
 import { Button } from "@repo/ui/components/ui/button";
 import {
@@ -28,11 +28,8 @@ import {
 import { Input } from "@repo/ui/components/ui/input";
 import { Textarea } from "@repo/ui/components/ui/textarea";
 
-// import { Calendar } from "@repo/ui/components/ui/calendar";
-import { format } from "date-fns";
 import { useToast } from "@/app/hooks/use-toast";
 import { createPaymentPage } from "../_actions";
-// import { createPaymentPage } from "@/lib/payment-pages";
 
 const formSchema = z.object({
   title: z.string().min(3, {
@@ -57,7 +54,6 @@ export default function CreatePaymentPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [previewData, setPreviewData] = useState(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -69,8 +65,6 @@ export default function CreatePaymentPage() {
       expiresAt: undefined,
     },
   });
-
-  // const watchedValues = form.watch();
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
@@ -196,7 +190,7 @@ export default function CreatePaymentPage() {
                         <FormControl>
                           <div className="relative">
                             <span className="absolute left-3 top-1/2 -translate-y-1/2">
-                              ₹
+                              $
                             </span>
                             <Input
                               type="number"

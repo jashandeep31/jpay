@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useToast } from "@/app/hooks/use-toast";
 import {
   Tabs,
@@ -27,19 +27,31 @@ export default function PaymentLinksPage() {
 
   const [loading, setloading] = useState(true);
   const [paymentLinks, setPaymentLinks] = useState<PaymentLink[]>([]);
+
+  const callGetPaymentLinks = useCallback(async () => {
+    const payments = await getPaymentLinks();
+    if (payments.ok) {
+      setPaymentLinks(payments.data);
+    } else {
+      toast({
+        title: "Error",
+        description: payments.error,
+      });
+    }
+  }, [toast]);
+
   useEffect(() => {
     (async () => {
-      const payments = await getPaymentLinks();
-      setPaymentLinks(payments);
+      await callGetPaymentLinks();
       setloading(false);
     })();
-  }, []);
+  }, [callGetPaymentLinks]);
 
   const [activeTab, setActiveTab] = useState("all");
 
   const mutate = async () => {
     setloading(true);
-    setPaymentLinks(await getPaymentLinks());
+    await callGetPaymentLinks();
     setloading(false);
   };
 
