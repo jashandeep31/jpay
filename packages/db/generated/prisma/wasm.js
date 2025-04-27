@@ -194,7 +194,7 @@ exports.Prisma.PaymentLinkScalarFieldEnum = {
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   expiresAt: 'expiresAt',
-  stableCoinId: 'stableCoinId',
+  description: 'description',
   userId: 'userId'
 };
 
@@ -255,6 +255,8 @@ exports.PaymentLinkStatus = exports.$Enums.PaymentLinkStatus = {
   PENDING: 'PENDING',
   COMPLETED: 'COMPLETED',
   FAILED: 'FAILED',
+  ACTIVE: 'ACTIVE',
+  CANCELLED: 'CANCELLED',
   EXPIRED: 'EXPIRED'
 };
 

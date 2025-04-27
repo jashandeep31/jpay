@@ -100,29 +100,27 @@ model Wallet {
 }
 
 model StableCoin {
-  id          String        @id @default(cuid())
+  id          String   @id @default(cuid())
   name        String
-  symbol      String        @unique
+  symbol      String   @unique
   logoUrl     String?
   description String?
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  PaymentLink PaymentLink[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   Wallet      Wallet[]
 }
 
 model PaymentLink {
-  id        String            @id @default(uuid())
-  amount    Decimal           @db.Decimal(10, 2)
-  status    PaymentLinkStatus
-  createdAt DateTime          @default(now())
-  updatedAt DateTime          @updatedAt
-  expiresAt DateTime?
+  id          String            @id @default(uuid())
+  amount      Decimal           @db.Decimal(10, 2)
+  status      PaymentLinkStatus @default(PENDING)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  expiresAt   DateTime?
+  description String?
 
-  stableCoin StableCoin @relation(fields: [stableCoinId], references: [id])
-  user       User       @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id])
 
-  stableCoinId    String
   userId          String
   IntiatedPayment IntiatedPayment[]
 }
@@ -131,6 +129,8 @@ enum PaymentLinkStatus {
   PENDING
   COMPLETED
   FAILED
+  ACTIVE
+  CANCELLED
   EXPIRED
 }
 

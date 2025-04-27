@@ -30,8 +30,8 @@ const sidebarLinks = [
     icon: LayoutDashboard,
   },
   {
-    name: "Create Link",
-    href: "/dashboard/create-link",
+    name: "Payment Links",
+    href: "/dashboard/payment-link",
     icon: LinkIcon,
   },
   {

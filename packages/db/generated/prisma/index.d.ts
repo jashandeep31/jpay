@@ -77,6 +77,8 @@ export namespace $Enums {
   PENDING: 'PENDING',
   COMPLETED: 'COMPLETED',
   FAILED: 'FAILED',
+  ACTIVE: 'ACTIVE',
+  CANCELLED: 'CANCELLED',
   EXPIRED: 'EXPIRED'
 };
 
@@ -1905,12 +1907,10 @@ export namespace Prisma {
    */
 
   export type StableCoinCountOutputType = {
-    PaymentLink: number
     Wallet: number
   }
 
   export type StableCoinCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    PaymentLink?: boolean | StableCoinCountOutputTypeCountPaymentLinkArgs
     Wallet?: boolean | StableCoinCountOutputTypeCountWalletArgs
   }
 
@@ -1923,13 +1923,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the StableCoinCountOutputType
      */
     select?: StableCoinCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * StableCoinCountOutputType without action
-   */
-  export type StableCoinCountOutputTypeCountPaymentLinkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PaymentLinkWhereInput
   }
 
   /**
@@ -8892,7 +8885,6 @@ export namespace Prisma {
     description?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    PaymentLink?: boolean | StableCoin$PaymentLinkArgs<ExtArgs>
     Wallet?: boolean | StableCoin$WalletArgs<ExtArgs>
     _count?: boolean | StableCoinCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stableCoin"]>
@@ -8929,7 +8921,6 @@ export namespace Prisma {
 
   export type StableCoinOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "symbol" | "logoUrl" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["stableCoin"]>
   export type StableCoinInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    PaymentLink?: boolean | StableCoin$PaymentLinkArgs<ExtArgs>
     Wallet?: boolean | StableCoin$WalletArgs<ExtArgs>
     _count?: boolean | StableCoinCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -8939,7 +8930,6 @@ export namespace Prisma {
   export type $StableCoinPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "StableCoin"
     objects: {
-      PaymentLink: Prisma.$PaymentLinkPayload<ExtArgs>[]
       Wallet: Prisma.$WalletPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -9344,7 +9334,6 @@ export namespace Prisma {
    */
   export interface Prisma__StableCoinClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    PaymentLink<T extends StableCoin$PaymentLinkArgs<ExtArgs> = {}>(args?: Subset<T, StableCoin$PaymentLinkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Wallet<T extends StableCoin$WalletArgs<ExtArgs> = {}>(args?: Subset<T, StableCoin$WalletArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -9770,30 +9759,6 @@ export namespace Prisma {
   }
 
   /**
-   * StableCoin.PaymentLink
-   */
-  export type StableCoin$PaymentLinkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PaymentLink
-     */
-    select?: PaymentLinkSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PaymentLink
-     */
-    omit?: PaymentLinkOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PaymentLinkInclude<ExtArgs> | null
-    where?: PaymentLinkWhereInput
-    orderBy?: PaymentLinkOrderByWithRelationInput | PaymentLinkOrderByWithRelationInput[]
-    cursor?: PaymentLinkWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: PaymentLinkScalarFieldEnum | PaymentLinkScalarFieldEnum[]
-  }
-
-  /**
    * StableCoin.Wallet
    */
   export type StableCoin$WalletArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9863,7 +9828,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     expiresAt: Date | null
-    stableCoinId: string | null
+    description: string | null
     userId: string | null
   }
 
@@ -9874,7 +9839,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     expiresAt: Date | null
-    stableCoinId: string | null
+    description: string | null
     userId: string | null
   }
 
@@ -9885,7 +9850,7 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     expiresAt: number
-    stableCoinId: number
+    description: number
     userId: number
     _all: number
   }
@@ -9906,7 +9871,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     expiresAt?: true
-    stableCoinId?: true
+    description?: true
     userId?: true
   }
 
@@ -9917,7 +9882,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     expiresAt?: true
-    stableCoinId?: true
+    description?: true
     userId?: true
   }
 
@@ -9928,7 +9893,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     expiresAt?: true
-    stableCoinId?: true
+    description?: true
     userId?: true
     _all?: true
   }
@@ -10026,7 +9991,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     expiresAt: Date | null
-    stableCoinId: string
+    description: string | null
     userId: string
     _count: PaymentLinkCountAggregateOutputType | null
     _avg: PaymentLinkAvgAggregateOutputType | null
@@ -10056,9 +10021,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     expiresAt?: boolean
-    stableCoinId?: boolean
+    description?: boolean
     userId?: boolean
-    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     IntiatedPayment?: boolean | PaymentLink$IntiatedPaymentArgs<ExtArgs>
     _count?: boolean | PaymentLinkCountOutputTypeDefaultArgs<ExtArgs>
@@ -10071,9 +10035,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     expiresAt?: boolean
-    stableCoinId?: boolean
+    description?: boolean
     userId?: boolean
-    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["paymentLink"]>
 
@@ -10084,9 +10047,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     expiresAt?: boolean
-    stableCoinId?: boolean
+    description?: boolean
     userId?: boolean
-    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["paymentLink"]>
 
@@ -10097,30 +10059,26 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     expiresAt?: boolean
-    stableCoinId?: boolean
+    description?: boolean
     userId?: boolean
   }
 
-  export type PaymentLinkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "status" | "createdAt" | "updatedAt" | "expiresAt" | "stableCoinId" | "userId", ExtArgs["result"]["paymentLink"]>
+  export type PaymentLinkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "status" | "createdAt" | "updatedAt" | "expiresAt" | "description" | "userId", ExtArgs["result"]["paymentLink"]>
   export type PaymentLinkInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     IntiatedPayment?: boolean | PaymentLink$IntiatedPaymentArgs<ExtArgs>
     _count?: boolean | PaymentLinkCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PaymentLinkIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
   export type PaymentLinkIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
 
   export type $PaymentLinkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "PaymentLink"
     objects: {
-      stableCoin: Prisma.$StableCoinPayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs>
       IntiatedPayment: Prisma.$IntiatedPaymentPayload<ExtArgs>[]
     }
@@ -10131,7 +10089,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       expiresAt: Date | null
-      stableCoinId: string
+      description: string | null
       userId: string
     }, ExtArgs["result"]["paymentLink"]>
     composites: {}
@@ -10527,7 +10485,6 @@ export namespace Prisma {
    */
   export interface Prisma__PaymentLinkClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    stableCoin<T extends StableCoinDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StableCoinDefaultArgs<ExtArgs>>): Prisma__StableCoinClient<$Result.GetResult<Prisma.$StableCoinPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     IntiatedPayment<T extends PaymentLink$IntiatedPaymentArgs<ExtArgs> = {}>(args?: Subset<T, PaymentLink$IntiatedPaymentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntiatedPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -10565,7 +10522,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"PaymentLink", 'DateTime'>
     readonly updatedAt: FieldRef<"PaymentLink", 'DateTime'>
     readonly expiresAt: FieldRef<"PaymentLink", 'DateTime'>
-    readonly stableCoinId: FieldRef<"PaymentLink", 'String'>
+    readonly description: FieldRef<"PaymentLink", 'String'>
     readonly userId: FieldRef<"PaymentLink", 'String'>
   }
     
@@ -14680,7 +14637,7 @@ export namespace Prisma {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     expiresAt: 'expiresAt',
-    stableCoinId: 'stableCoinId',
+    description: 'description',
     userId: 'userId'
   };
 
@@ -15322,7 +15279,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"StableCoin"> | string | null
     createdAt?: DateTimeFilter<"StableCoin"> | Date | string
     updatedAt?: DateTimeFilter<"StableCoin"> | Date | string
-    PaymentLink?: PaymentLinkListRelationFilter
     Wallet?: WalletListRelationFilter
   }
 
@@ -15334,7 +15290,6 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    PaymentLink?: PaymentLinkOrderByRelationAggregateInput
     Wallet?: WalletOrderByRelationAggregateInput
   }
 
@@ -15349,7 +15304,6 @@ export namespace Prisma {
     description?: StringNullableFilter<"StableCoin"> | string | null
     createdAt?: DateTimeFilter<"StableCoin"> | Date | string
     updatedAt?: DateTimeFilter<"StableCoin"> | Date | string
-    PaymentLink?: PaymentLinkListRelationFilter
     Wallet?: WalletListRelationFilter
   }, "id" | "symbol">
 
@@ -15389,9 +15343,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"PaymentLink"> | Date | string
     updatedAt?: DateTimeFilter<"PaymentLink"> | Date | string
     expiresAt?: DateTimeNullableFilter<"PaymentLink"> | Date | string | null
-    stableCoinId?: StringFilter<"PaymentLink"> | string
+    description?: StringNullableFilter<"PaymentLink"> | string | null
     userId?: StringFilter<"PaymentLink"> | string
-    stableCoin?: XOR<StableCoinScalarRelationFilter, StableCoinWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     IntiatedPayment?: IntiatedPaymentListRelationFilter
   }
@@ -15403,9 +15356,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     expiresAt?: SortOrderInput | SortOrder
-    stableCoinId?: SortOrder
+    description?: SortOrderInput | SortOrder
     userId?: SortOrder
-    stableCoin?: StableCoinOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
     IntiatedPayment?: IntiatedPaymentOrderByRelationAggregateInput
   }
@@ -15420,9 +15372,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"PaymentLink"> | Date | string
     updatedAt?: DateTimeFilter<"PaymentLink"> | Date | string
     expiresAt?: DateTimeNullableFilter<"PaymentLink"> | Date | string | null
-    stableCoinId?: StringFilter<"PaymentLink"> | string
+    description?: StringNullableFilter<"PaymentLink"> | string | null
     userId?: StringFilter<"PaymentLink"> | string
-    stableCoin?: XOR<StableCoinScalarRelationFilter, StableCoinWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     IntiatedPayment?: IntiatedPaymentListRelationFilter
   }, "id">
@@ -15434,7 +15385,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     expiresAt?: SortOrderInput | SortOrder
-    stableCoinId?: SortOrder
+    description?: SortOrderInput | SortOrder
     userId?: SortOrder
     _count?: PaymentLinkCountOrderByAggregateInput
     _avg?: PaymentLinkAvgOrderByAggregateInput
@@ -15453,7 +15404,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"PaymentLink"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"PaymentLink"> | Date | string
     expiresAt?: DateTimeNullableWithAggregatesFilter<"PaymentLink"> | Date | string | null
-    stableCoinId?: StringWithAggregatesFilter<"PaymentLink"> | string
+    description?: StringNullableWithAggregatesFilter<"PaymentLink"> | string | null
     userId?: StringWithAggregatesFilter<"PaymentLink"> | string
   }
 
@@ -16152,7 +16103,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    PaymentLink?: PaymentLinkCreateNestedManyWithoutStableCoinInput
     Wallet?: WalletCreateNestedManyWithoutStableCoinInput
   }
 
@@ -16164,7 +16114,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutStableCoinInput
     Wallet?: WalletUncheckedCreateNestedManyWithoutStableCoinInput
   }
 
@@ -16176,7 +16125,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PaymentLink?: PaymentLinkUpdateManyWithoutStableCoinNestedInput
     Wallet?: WalletUpdateManyWithoutStableCoinNestedInput
   }
 
@@ -16188,7 +16136,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutStableCoinNestedInput
     Wallet?: WalletUncheckedUpdateManyWithoutStableCoinNestedInput
   }
 
@@ -16225,11 +16172,11 @@ export namespace Prisma {
   export type PaymentLinkCreateInput = {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
-    status: $Enums.PaymentLinkStatus
+    status?: $Enums.PaymentLinkStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     expiresAt?: Date | string | null
-    stableCoin: StableCoinCreateNestedOneWithoutPaymentLinkInput
+    description?: string | null
     user: UserCreateNestedOneWithoutPaymentLinkInput
     IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutPaymentLinkInput
   }
@@ -16237,11 +16184,11 @@ export namespace Prisma {
   export type PaymentLinkUncheckedCreateInput = {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
-    status: $Enums.PaymentLinkStatus
+    status?: $Enums.PaymentLinkStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     expiresAt?: Date | string | null
-    stableCoinId: string
+    description?: string | null
     userId: string
     IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutPaymentLinkInput
   }
@@ -16253,7 +16200,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stableCoin?: StableCoinUpdateOneRequiredWithoutPaymentLinkNestedInput
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutPaymentLinkNestedInput
     IntiatedPayment?: IntiatedPaymentUpdateManyWithoutPaymentLinkNestedInput
   }
@@ -16265,7 +16212,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stableCoinId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
     IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutPaymentLinkNestedInput
   }
@@ -16273,11 +16220,11 @@ export namespace Prisma {
   export type PaymentLinkCreateManyInput = {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
-    status: $Enums.PaymentLinkStatus
+    status?: $Enums.PaymentLinkStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     expiresAt?: Date | string | null
-    stableCoinId: string
+    description?: string | null
     userId: string
   }
 
@@ -16288,6 +16235,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PaymentLinkUncheckedUpdateManyInput = {
@@ -16297,7 +16245,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stableCoinId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -17127,7 +17075,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     expiresAt?: SortOrder
-    stableCoinId?: SortOrder
+    description?: SortOrder
     userId?: SortOrder
   }
 
@@ -17142,7 +17090,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     expiresAt?: SortOrder
-    stableCoinId?: SortOrder
+    description?: SortOrder
     userId?: SortOrder
   }
 
@@ -17153,7 +17101,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     expiresAt?: SortOrder
-    stableCoinId?: SortOrder
+    description?: SortOrder
     userId?: SortOrder
   }
 
@@ -17714,13 +17662,6 @@ export namespace Prisma {
     update?: XOR<XOR<StableCoinUpdateToOneWithWhereWithoutWalletInput, StableCoinUpdateWithoutWalletInput>, StableCoinUncheckedUpdateWithoutWalletInput>
   }
 
-  export type PaymentLinkCreateNestedManyWithoutStableCoinInput = {
-    create?: XOR<PaymentLinkCreateWithoutStableCoinInput, PaymentLinkUncheckedCreateWithoutStableCoinInput> | PaymentLinkCreateWithoutStableCoinInput[] | PaymentLinkUncheckedCreateWithoutStableCoinInput[]
-    connectOrCreate?: PaymentLinkCreateOrConnectWithoutStableCoinInput | PaymentLinkCreateOrConnectWithoutStableCoinInput[]
-    createMany?: PaymentLinkCreateManyStableCoinInputEnvelope
-    connect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-  }
-
   export type WalletCreateNestedManyWithoutStableCoinInput = {
     create?: XOR<WalletCreateWithoutStableCoinInput, WalletUncheckedCreateWithoutStableCoinInput> | WalletCreateWithoutStableCoinInput[] | WalletUncheckedCreateWithoutStableCoinInput[]
     connectOrCreate?: WalletCreateOrConnectWithoutStableCoinInput | WalletCreateOrConnectWithoutStableCoinInput[]
@@ -17728,32 +17669,11 @@ export namespace Prisma {
     connect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
   }
 
-  export type PaymentLinkUncheckedCreateNestedManyWithoutStableCoinInput = {
-    create?: XOR<PaymentLinkCreateWithoutStableCoinInput, PaymentLinkUncheckedCreateWithoutStableCoinInput> | PaymentLinkCreateWithoutStableCoinInput[] | PaymentLinkUncheckedCreateWithoutStableCoinInput[]
-    connectOrCreate?: PaymentLinkCreateOrConnectWithoutStableCoinInput | PaymentLinkCreateOrConnectWithoutStableCoinInput[]
-    createMany?: PaymentLinkCreateManyStableCoinInputEnvelope
-    connect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-  }
-
   export type WalletUncheckedCreateNestedManyWithoutStableCoinInput = {
     create?: XOR<WalletCreateWithoutStableCoinInput, WalletUncheckedCreateWithoutStableCoinInput> | WalletCreateWithoutStableCoinInput[] | WalletUncheckedCreateWithoutStableCoinInput[]
     connectOrCreate?: WalletCreateOrConnectWithoutStableCoinInput | WalletCreateOrConnectWithoutStableCoinInput[]
     createMany?: WalletCreateManyStableCoinInputEnvelope
     connect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
-  }
-
-  export type PaymentLinkUpdateManyWithoutStableCoinNestedInput = {
-    create?: XOR<PaymentLinkCreateWithoutStableCoinInput, PaymentLinkUncheckedCreateWithoutStableCoinInput> | PaymentLinkCreateWithoutStableCoinInput[] | PaymentLinkUncheckedCreateWithoutStableCoinInput[]
-    connectOrCreate?: PaymentLinkCreateOrConnectWithoutStableCoinInput | PaymentLinkCreateOrConnectWithoutStableCoinInput[]
-    upsert?: PaymentLinkUpsertWithWhereUniqueWithoutStableCoinInput | PaymentLinkUpsertWithWhereUniqueWithoutStableCoinInput[]
-    createMany?: PaymentLinkCreateManyStableCoinInputEnvelope
-    set?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-    disconnect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-    delete?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-    connect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-    update?: PaymentLinkUpdateWithWhereUniqueWithoutStableCoinInput | PaymentLinkUpdateWithWhereUniqueWithoutStableCoinInput[]
-    updateMany?: PaymentLinkUpdateManyWithWhereWithoutStableCoinInput | PaymentLinkUpdateManyWithWhereWithoutStableCoinInput[]
-    deleteMany?: PaymentLinkScalarWhereInput | PaymentLinkScalarWhereInput[]
   }
 
   export type WalletUpdateManyWithoutStableCoinNestedInput = {
@@ -17770,20 +17690,6 @@ export namespace Prisma {
     deleteMany?: WalletScalarWhereInput | WalletScalarWhereInput[]
   }
 
-  export type PaymentLinkUncheckedUpdateManyWithoutStableCoinNestedInput = {
-    create?: XOR<PaymentLinkCreateWithoutStableCoinInput, PaymentLinkUncheckedCreateWithoutStableCoinInput> | PaymentLinkCreateWithoutStableCoinInput[] | PaymentLinkUncheckedCreateWithoutStableCoinInput[]
-    connectOrCreate?: PaymentLinkCreateOrConnectWithoutStableCoinInput | PaymentLinkCreateOrConnectWithoutStableCoinInput[]
-    upsert?: PaymentLinkUpsertWithWhereUniqueWithoutStableCoinInput | PaymentLinkUpsertWithWhereUniqueWithoutStableCoinInput[]
-    createMany?: PaymentLinkCreateManyStableCoinInputEnvelope
-    set?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-    disconnect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-    delete?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-    connect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-    update?: PaymentLinkUpdateWithWhereUniqueWithoutStableCoinInput | PaymentLinkUpdateWithWhereUniqueWithoutStableCoinInput[]
-    updateMany?: PaymentLinkUpdateManyWithWhereWithoutStableCoinInput | PaymentLinkUpdateManyWithWhereWithoutStableCoinInput[]
-    deleteMany?: PaymentLinkScalarWhereInput | PaymentLinkScalarWhereInput[]
-  }
-
   export type WalletUncheckedUpdateManyWithoutStableCoinNestedInput = {
     create?: XOR<WalletCreateWithoutStableCoinInput, WalletUncheckedCreateWithoutStableCoinInput> | WalletCreateWithoutStableCoinInput[] | WalletUncheckedCreateWithoutStableCoinInput[]
     connectOrCreate?: WalletCreateOrConnectWithoutStableCoinInput | WalletCreateOrConnectWithoutStableCoinInput[]
@@ -17796,12 +17702,6 @@ export namespace Prisma {
     update?: WalletUpdateWithWhereUniqueWithoutStableCoinInput | WalletUpdateWithWhereUniqueWithoutStableCoinInput[]
     updateMany?: WalletUpdateManyWithWhereWithoutStableCoinInput | WalletUpdateManyWithWhereWithoutStableCoinInput[]
     deleteMany?: WalletScalarWhereInput | WalletScalarWhereInput[]
-  }
-
-  export type StableCoinCreateNestedOneWithoutPaymentLinkInput = {
-    create?: XOR<StableCoinCreateWithoutPaymentLinkInput, StableCoinUncheckedCreateWithoutPaymentLinkInput>
-    connectOrCreate?: StableCoinCreateOrConnectWithoutPaymentLinkInput
-    connect?: StableCoinWhereUniqueInput
   }
 
   export type UserCreateNestedOneWithoutPaymentLinkInput = {
@@ -17826,14 +17726,6 @@ export namespace Prisma {
 
   export type EnumPaymentLinkStatusFieldUpdateOperationsInput = {
     set?: $Enums.PaymentLinkStatus
-  }
-
-  export type StableCoinUpdateOneRequiredWithoutPaymentLinkNestedInput = {
-    create?: XOR<StableCoinCreateWithoutPaymentLinkInput, StableCoinUncheckedCreateWithoutPaymentLinkInput>
-    connectOrCreate?: StableCoinCreateOrConnectWithoutPaymentLinkInput
-    upsert?: StableCoinUpsertWithoutPaymentLinkInput
-    connect?: StableCoinWhereUniqueInput
-    update?: XOR<XOR<StableCoinUpdateToOneWithWhereWithoutPaymentLinkInput, StableCoinUpdateWithoutPaymentLinkInput>, StableCoinUncheckedUpdateWithoutPaymentLinkInput>
   }
 
   export type UserUpdateOneRequiredWithoutPaymentLinkNestedInput = {
@@ -18407,22 +18299,22 @@ export namespace Prisma {
   export type PaymentLinkCreateWithoutUserInput = {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
-    status: $Enums.PaymentLinkStatus
+    status?: $Enums.PaymentLinkStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     expiresAt?: Date | string | null
-    stableCoin: StableCoinCreateNestedOneWithoutPaymentLinkInput
+    description?: string | null
     IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutPaymentLinkInput
   }
 
   export type PaymentLinkUncheckedCreateWithoutUserInput = {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
-    status: $Enums.PaymentLinkStatus
+    status?: $Enums.PaymentLinkStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     expiresAt?: Date | string | null
-    stableCoinId: string
+    description?: string | null
     IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutPaymentLinkInput
   }
 
@@ -18580,7 +18472,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"PaymentLink"> | Date | string
     updatedAt?: DateTimeFilter<"PaymentLink"> | Date | string
     expiresAt?: DateTimeNullableFilter<"PaymentLink"> | Date | string | null
-    stableCoinId?: StringFilter<"PaymentLink"> | string
+    description?: StringNullableFilter<"PaymentLink"> | string | null
     userId?: StringFilter<"PaymentLink"> | string
   }
 
@@ -18869,7 +18761,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    PaymentLink?: PaymentLinkCreateNestedManyWithoutStableCoinInput
   }
 
   export type StableCoinUncheckedCreateWithoutWalletInput = {
@@ -18880,7 +18771,6 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutStableCoinInput
   }
 
   export type StableCoinCreateOrConnectWithoutWalletInput = {
@@ -18946,7 +18836,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PaymentLink?: PaymentLinkUpdateManyWithoutStableCoinNestedInput
   }
 
   export type StableCoinUncheckedUpdateWithoutWalletInput = {
@@ -18957,39 +18846,6 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutStableCoinNestedInput
-  }
-
-  export type PaymentLinkCreateWithoutStableCoinInput = {
-    id?: string
-    amount: Decimal | DecimalJsLike | number | string
-    status: $Enums.PaymentLinkStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expiresAt?: Date | string | null
-    user: UserCreateNestedOneWithoutPaymentLinkInput
-    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutPaymentLinkInput
-  }
-
-  export type PaymentLinkUncheckedCreateWithoutStableCoinInput = {
-    id?: string
-    amount: Decimal | DecimalJsLike | number | string
-    status: $Enums.PaymentLinkStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expiresAt?: Date | string | null
-    userId: string
-    IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutPaymentLinkInput
-  }
-
-  export type PaymentLinkCreateOrConnectWithoutStableCoinInput = {
-    where: PaymentLinkWhereUniqueInput
-    create: XOR<PaymentLinkCreateWithoutStableCoinInput, PaymentLinkUncheckedCreateWithoutStableCoinInput>
-  }
-
-  export type PaymentLinkCreateManyStableCoinInputEnvelope = {
-    data: PaymentLinkCreateManyStableCoinInput | PaymentLinkCreateManyStableCoinInput[]
-    skipDuplicates?: boolean
   }
 
   export type WalletCreateWithoutStableCoinInput = {
@@ -19018,22 +18874,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type PaymentLinkUpsertWithWhereUniqueWithoutStableCoinInput = {
-    where: PaymentLinkWhereUniqueInput
-    update: XOR<PaymentLinkUpdateWithoutStableCoinInput, PaymentLinkUncheckedUpdateWithoutStableCoinInput>
-    create: XOR<PaymentLinkCreateWithoutStableCoinInput, PaymentLinkUncheckedCreateWithoutStableCoinInput>
-  }
-
-  export type PaymentLinkUpdateWithWhereUniqueWithoutStableCoinInput = {
-    where: PaymentLinkWhereUniqueInput
-    data: XOR<PaymentLinkUpdateWithoutStableCoinInput, PaymentLinkUncheckedUpdateWithoutStableCoinInput>
-  }
-
-  export type PaymentLinkUpdateManyWithWhereWithoutStableCoinInput = {
-    where: PaymentLinkScalarWhereInput
-    data: XOR<PaymentLinkUpdateManyMutationInput, PaymentLinkUncheckedUpdateManyWithoutStableCoinInput>
-  }
-
   export type WalletUpsertWithWhereUniqueWithoutStableCoinInput = {
     where: WalletWhereUniqueInput
     update: XOR<WalletUpdateWithoutStableCoinInput, WalletUncheckedUpdateWithoutStableCoinInput>
@@ -19048,33 +18888,6 @@ export namespace Prisma {
   export type WalletUpdateManyWithWhereWithoutStableCoinInput = {
     where: WalletScalarWhereInput
     data: XOR<WalletUpdateManyMutationInput, WalletUncheckedUpdateManyWithoutStableCoinInput>
-  }
-
-  export type StableCoinCreateWithoutPaymentLinkInput = {
-    id?: string
-    name: string
-    symbol: string
-    logoUrl?: string | null
-    description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    Wallet?: WalletCreateNestedManyWithoutStableCoinInput
-  }
-
-  export type StableCoinUncheckedCreateWithoutPaymentLinkInput = {
-    id?: string
-    name: string
-    symbol: string
-    logoUrl?: string | null
-    description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    Wallet?: WalletUncheckedCreateNestedManyWithoutStableCoinInput
-  }
-
-  export type StableCoinCreateOrConnectWithoutPaymentLinkInput = {
-    where: StableCoinWhereUniqueInput
-    create: XOR<StableCoinCreateWithoutPaymentLinkInput, StableCoinUncheckedCreateWithoutPaymentLinkInput>
   }
 
   export type UserCreateWithoutPaymentLinkInput = {
@@ -19144,39 +18957,6 @@ export namespace Prisma {
   export type IntiatedPaymentCreateManyPaymentLinkInputEnvelope = {
     data: IntiatedPaymentCreateManyPaymentLinkInput | IntiatedPaymentCreateManyPaymentLinkInput[]
     skipDuplicates?: boolean
-  }
-
-  export type StableCoinUpsertWithoutPaymentLinkInput = {
-    update: XOR<StableCoinUpdateWithoutPaymentLinkInput, StableCoinUncheckedUpdateWithoutPaymentLinkInput>
-    create: XOR<StableCoinCreateWithoutPaymentLinkInput, StableCoinUncheckedCreateWithoutPaymentLinkInput>
-    where?: StableCoinWhereInput
-  }
-
-  export type StableCoinUpdateToOneWithWhereWithoutPaymentLinkInput = {
-    where?: StableCoinWhereInput
-    data: XOR<StableCoinUpdateWithoutPaymentLinkInput, StableCoinUncheckedUpdateWithoutPaymentLinkInput>
-  }
-
-  export type StableCoinUpdateWithoutPaymentLinkInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    symbol?: StringFieldUpdateOperationsInput | string
-    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Wallet?: WalletUpdateManyWithoutStableCoinNestedInput
-  }
-
-  export type StableCoinUncheckedUpdateWithoutPaymentLinkInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    symbol?: StringFieldUpdateOperationsInput | string
-    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Wallet?: WalletUncheckedUpdateManyWithoutStableCoinNestedInput
   }
 
   export type UserUpsertWithoutPaymentLinkInput = {
@@ -19332,22 +19112,22 @@ export namespace Prisma {
   export type PaymentLinkCreateWithoutIntiatedPaymentInput = {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
-    status: $Enums.PaymentLinkStatus
+    status?: $Enums.PaymentLinkStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     expiresAt?: Date | string | null
-    stableCoin: StableCoinCreateNestedOneWithoutPaymentLinkInput
+    description?: string | null
     user: UserCreateNestedOneWithoutPaymentLinkInput
   }
 
   export type PaymentLinkUncheckedCreateWithoutIntiatedPaymentInput = {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
-    status: $Enums.PaymentLinkStatus
+    status?: $Enums.PaymentLinkStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     expiresAt?: Date | string | null
-    stableCoinId: string
+    description?: string | null
     userId: string
   }
 
@@ -19445,7 +19225,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stableCoin?: StableCoinUpdateOneRequiredWithoutPaymentLinkNestedInput
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutPaymentLinkNestedInput
   }
 
@@ -19456,7 +19236,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stableCoinId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -19597,11 +19377,11 @@ export namespace Prisma {
   export type PaymentLinkCreateManyUserInput = {
     id?: string
     amount: Decimal | DecimalJsLike | number | string
-    status: $Enums.PaymentLinkStatus
+    status?: $Enums.PaymentLinkStatus
     createdAt?: Date | string
     updatedAt?: Date | string
     expiresAt?: Date | string | null
-    stableCoinId: string
+    description?: string | null
   }
 
   export type WalletCreateManyUserInput = {
@@ -19715,7 +19495,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stableCoin?: StableCoinUpdateOneRequiredWithoutPaymentLinkNestedInput
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     IntiatedPayment?: IntiatedPaymentUpdateManyWithoutPaymentLinkNestedInput
   }
 
@@ -19726,7 +19506,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stableCoinId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutPaymentLinkNestedInput
   }
 
@@ -19737,7 +19517,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    stableCoinId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type WalletUpdateWithoutUserInput = {
@@ -19764,54 +19544,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type PaymentLinkCreateManyStableCoinInput = {
-    id?: string
-    amount: Decimal | DecimalJsLike | number | string
-    status: $Enums.PaymentLinkStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expiresAt?: Date | string | null
-    userId: string
-  }
-
   export type WalletCreateManyStableCoinInput = {
     id?: string
     balance: Decimal | DecimalJsLike | number | string
     userId: string
     createdAt?: Date | string
     updatedAt?: Date | string
-  }
-
-  export type PaymentLinkUpdateWithoutStableCoinInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    status?: EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    user?: UserUpdateOneRequiredWithoutPaymentLinkNestedInput
-    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutPaymentLinkNestedInput
-  }
-
-  export type PaymentLinkUncheckedUpdateWithoutStableCoinInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    status?: EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    userId?: StringFieldUpdateOperationsInput | string
-    IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutPaymentLinkNestedInput
-  }
-
-  export type PaymentLinkUncheckedUpdateManyWithoutStableCoinInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    status?: EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type WalletUpdateWithoutStableCoinInput = {

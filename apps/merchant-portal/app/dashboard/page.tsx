@@ -17,10 +17,10 @@ import {
   LinkIcon,
 } from "lucide-react";
 import RecentPayments from "@/components/dashboard/recent-payments";
-import { prisma } from "@repo/db";
+import { db } from "../../db";
 
 async function getTransactions() {
-  const transactions = await prisma.transaction.findMany();
+  const transactions = await db.transaction.findMany();
   return transactions;
 }
 export default async function DashboardPage() {

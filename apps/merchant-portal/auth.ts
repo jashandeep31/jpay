@@ -1,6 +1,6 @@
 import NextAuth, { DefaultSession } from "next-auth";
 import Google from "next-auth/providers/google";
-import { prisma } from "@repo/db";
+import { db } from "@/db";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 
 declare module "next-auth" {
@@ -9,6 +9,7 @@ declare module "next-auth" {
    */
   interface Session {
     user: {
+      id: string;
       /** The user's postal address. */
       address: string;
       /**
@@ -22,7 +23,7 @@ declare module "next-auth" {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(db),
   providers: [Google],
   session: {
     strategy: "jwt",
@@ -31,19 +32,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: "/auth/login",
   },
   callbacks: {
-    // async session({ session, user, token }) {
-    //   console.log(`user ${user}`);
-    //   console.log(`session ${session}`);
-    //   console.log(`token ${token}`);
-    //   return session;
-    // },
-    // async jwt({ token, user, account, profile, isNewUser }) {
-    //   console.log(`token ${token}`);
-    //   console.log(`user ${user}`);
-    //   console.log(`account ${account}`);
-    //   console.log(`profile ${profile}`);
-    //   console.log(`isNewUser ${isNewUser}`);
-    //   return token;
-    // },
+    async session({ session, user, token }) {
+      console.log(token);
+      if (session.user && token.sub) {
+        session.user.id = token.sub;
+      }
+      return session;
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      if (user) {
+        token.sub = user.id;
+      }
+      return token;
+    },
   },
 });

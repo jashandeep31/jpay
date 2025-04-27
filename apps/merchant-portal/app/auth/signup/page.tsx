@@ -10,9 +10,15 @@ import {
 
 import GoogleButton from "@/components/auth/google-button";
 import { Check } from "lucide-react";
-import { signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
+import { redirect } from "next/navigation";
 
-export default function SignupPage() {
+export default async function SignupPage() {
+  const session = await auth();
+  if (session) {
+    redirect("/dashboard");
+  }
+
   return (
     <Card className="w-full shadow-lg border-gray-200">
       <CardHeader className="space-y-1 text-center">
