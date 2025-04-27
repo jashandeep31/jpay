@@ -68,7 +68,8 @@ export default function DashboardHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   // const { unreadCount } = useNotifications();
-  const { toggleSidebar, collapsed } = useSidebar();
+  const { toggleSidebar } = useSidebar();
+  // const { toggleSidebar, collapsed } = useSidebar();
 
   // Get current page title
   const getCurrentPageTitle = () => {

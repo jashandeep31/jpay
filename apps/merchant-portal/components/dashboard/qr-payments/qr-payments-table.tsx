@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -46,7 +45,7 @@ export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
     window.open(linkUrl, "_blank");
   };
 
-  const handleCancelLink = async (id: string) => {};
+  // const handleCancelLink = async (id: string) => {};
 
   const getStatusBadge = (status: QRPayment["status"]) => {
     switch (status) {

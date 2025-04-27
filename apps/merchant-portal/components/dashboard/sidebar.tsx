@@ -92,6 +92,7 @@ const bottomLinks = [
 export default function DashboardSidebar() {
   const pathname = usePathname();
   const { collapsed, toggleSidebar } = useSidebar();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   return (

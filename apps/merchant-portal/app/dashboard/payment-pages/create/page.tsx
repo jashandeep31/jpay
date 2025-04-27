@@ -85,7 +85,7 @@ export default function CreatePaymentPage() {
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to create payment page",
+        description: error instanceof Error ? error.message : "Unknown error",
         variant: "destructive",
       });
     } finally {
@@ -93,12 +93,12 @@ export default function CreatePaymentPage() {
     }
   };
 
-  const handlePreview = () => {
-    const isValid = form.trigger();
-    // if (isValid) {
-    //   setPreviewData(form.getValues());
-    // }
-  };
+  // const handlePreview = () => {
+  //   const isValid = form.trigger();
+  //   // if (isValid) {
+  //   //   setPreviewData(form.getValues());
+  //   // }
+  // };
 
   return (
     <div className="container mx-auto py-6">
@@ -245,13 +245,13 @@ export default function CreatePaymentPage() {
                   />
 
                   <div className="flex gap-4">
-                    <Button
+                    {/* <Button
                       type="button"
                       variant="outline"
                       onClick={handlePreview}
                     >
                       Preview
-                    </Button>
+                    </Button> */}
                     <Button type="submit" disabled={isSubmitting}>
                       {isSubmitting ? "Creating..." : "Create Payment Page"}
                     </Button>

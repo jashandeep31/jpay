@@ -6,7 +6,7 @@ import type React from "react";
 import { useState, useCallback } from "react";
 
 const TOAST_LIMIT = 5;
-const TOAST_REMOVE_DELAY = 1000000;
+// const TOAST_REMOVE_DELAY = 1000000;
 
 type ToasterToast = {
   id: string;
@@ -29,6 +29,7 @@ type UseToastOptions = {
   duration?: number;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function useToast(options?: UseToastOptions) {
   const [toasts, setToasts] = useState<ToasterToast[]>([]);
 
@@ -41,26 +42,23 @@ export function useToast(options?: UseToastOptions) {
     });
   }, []);
 
-  const toast = useCallback(
-    ({ ...props }: Toast) => {
-      const id = genId();
+  const toast = useCallback(({ ...props }: Toast) => {
+    const id = genId();
 
-      const newToast = {
-        ...props,
-        id,
-      };
+    const newToast = {
+      ...props,
+      id,
+    };
 
-      setToasts((toasts) => {
-        if (toasts.length >= TOAST_LIMIT) {
-          toasts.pop();
-        }
-        return [newToast, ...toasts];
-      });
+    setToasts((toasts) => {
+      if (toasts.length >= TOAST_LIMIT) {
+        toasts.pop();
+      }
+      return [newToast, ...toasts];
+    });
 
-      return id;
-    },
-    [options?.duration]
-  );
+    return id;
+  }, []);
 
   return {
     toast,
