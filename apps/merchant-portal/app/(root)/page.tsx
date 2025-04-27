@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import ErrorBoundary from "@/components/error-boundary";
 import LoadingFallback from "@/components/loading-fallback";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 // Dynamically import components with lazy loading
 const Hero = dynamic(() => import("@/components/hero"), {
@@ -38,7 +40,11 @@ const Footer = dynamic(() => import("@/components/footer"), {
   loading: () => <LoadingFallback height="sm" />,
 });
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+  if (session) {
+    redirect("/dashboard");
+  }
   const ErrorFallback = () => (
     <div className="py-12 text-center">
       <p className="text-gray-500">This section is currently unavailable.</p>

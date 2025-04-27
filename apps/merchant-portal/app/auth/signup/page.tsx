@@ -1,7 +1,3 @@
-"use client";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   Card,
@@ -11,23 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/ui/card";
-import { Alert, AlertDescription } from "@repo/ui/components/ui/alert";
-import { AlertCircle, Check } from "lucide-react";
+
 import GoogleButton from "@/components/auth/google-button";
+import { Check } from "lucide-react";
+import { signIn } from "@/auth";
 
 export default function SignupPage() {
-  const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSuccess = () => {
-    router.push("/dashboard");
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleError = (error: Error) => {
-    setError("Failed to sign up with Google. Please try again.");
-  };
-
   return (
     <Card className="w-full shadow-lg border-gray-200">
       <CardHeader className="space-y-1 text-center">
@@ -35,20 +20,17 @@ export default function SignupPage() {
         <CardDescription>Sign up for JPay to get started</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {error && (
-          <Alert variant="destructive" className="mb-4">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
-
         <div className="space-y-4">
-          <GoogleButton
-            text="Sign up with Google"
-            isSignUp={true}
-            onSuccess={handleSuccess}
-            onError={handleError}
-          />
+          <form
+            action={async () => {
+              "use server";
+              await signIn("google");
+            }}
+          >
+            <button type="submit" className="block w-full">
+              <GoogleButton text="Sign up with Google" isSignUp={true} />
+            </button>
+          </form>
         </div>
 
         <div className="space-y-4 pt-4">

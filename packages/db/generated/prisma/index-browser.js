@@ -119,9 +119,122 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  createdAt: 'createdAt',
+  name: 'name',
   email: 'email',
-  name: 'name'
+  emailVerified: 'emailVerified',
+  image: 'image',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AccountScalarFieldEnum = {
+  userId: 'userId',
+  type: 'type',
+  provider: 'provider',
+  providerAccountId: 'providerAccountId',
+  refresh_token: 'refresh_token',
+  access_token: 'access_token',
+  expires_at: 'expires_at',
+  token_type: 'token_type',
+  scope: 'scope',
+  id_token: 'id_token',
+  session_state: 'session_state',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.SessionScalarFieldEnum = {
+  sessionToken: 'sessionToken',
+  userId: 'userId',
+  expires: 'expires',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.VerificationTokenScalarFieldEnum = {
+  identifier: 'identifier',
+  token: 'token',
+  expires: 'expires'
+};
+
+exports.Prisma.AuthenticatorScalarFieldEnum = {
+  credentialID: 'credentialID',
+  userId: 'userId',
+  providerAccountId: 'providerAccountId',
+  credentialPublicKey: 'credentialPublicKey',
+  counter: 'counter',
+  credentialDeviceType: 'credentialDeviceType',
+  credentialBackedUp: 'credentialBackedUp',
+  transports: 'transports'
+};
+
+exports.Prisma.WalletScalarFieldEnum = {
+  id: 'id',
+  balance: 'balance',
+  userId: 'userId',
+  stableCoinId: 'stableCoinId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StableCoinScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  symbol: 'symbol',
+  logoUrl: 'logoUrl',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentLinkScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  expiresAt: 'expiresAt',
+  stableCoinId: 'stableCoinId',
+  userId: 'userId'
+};
+
+exports.Prisma.PaymentPageScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  logoUrl: 'logoUrl',
+  amount: 'amount',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.IntiatedPaymentScalarFieldEnum = {
+  id: 'id',
+  initiatedFrom: 'initiatedFrom',
+  status: 'status',
+  index: 'index',
+  walletAddress: 'walletAddress',
+  amount: 'amount',
+  paymentPageId: 'paymentPageId',
+  paymentLinkId: 'paymentLinkId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TransactionScalarFieldEnum = {
+  id: 'id',
+  status: 'status',
+  amount: 'amount',
+  intiatedPaymentId: 'intiatedPaymentId',
+  initiatedFrom: 'initiatedFrom',
+  toAddress: 'toAddress',
+  fromAddress: 'fromAddress',
+  settled: 'settled',
+  settledAt: 'settledAt',
+  settledTo: 'settledTo',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -138,10 +251,44 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.PaymentLinkStatus = exports.$Enums.PaymentLinkStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  EXPIRED: 'EXPIRED'
+};
 
+exports.IntiatedFrom = exports.$Enums.IntiatedFrom = {
+  PAYMENT_PAGE: 'PAYMENT_PAGE',
+  PAYMENT_LINK: 'PAYMENT_LINK'
+};
+
+exports.IntiatedPaymentStatus = exports.$Enums.IntiatedPaymentStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  CANCELLED: 'CANCELLED'
+};
+
+exports.TransactionStatus = exports.$Enums.TransactionStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  REFUNDED: 'REFUNDED',
+  FAILED: 'FAILED'
+};
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  Account: 'Account',
+  Session: 'Session',
+  VerificationToken: 'VerificationToken',
+  Authenticator: 'Authenticator',
+  Wallet: 'Wallet',
+  StableCoin: 'StableCoin',
+  PaymentLink: 'PaymentLink',
+  PaymentPage: 'PaymentPage',
+  IntiatedPayment: 'IntiatedPayment',
+  Transaction: 'Transaction'
 };
 
 /**

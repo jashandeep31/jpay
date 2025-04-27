@@ -17,8 +17,15 @@ import {
   LinkIcon,
 } from "lucide-react";
 import RecentPayments from "@/components/dashboard/recent-payments";
+import { prisma } from "@repo/db";
 
-export default function DashboardPage() {
+async function getTransactions() {
+  const transactions = await prisma.transaction.findMany();
+  return transactions;
+}
+export default async function DashboardPage() {
+  const transactions = await getTransactions();
+  console.log(transactions.length);
   return (
     <div className="flex flex-col gap-5 pt-1">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
