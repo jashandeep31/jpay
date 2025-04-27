@@ -268,6 +268,23 @@ exports.Prisma.PaymentPageFormFieldScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.PaymentPageFormFieldValueScalarFieldEnum = {
+  id: 'id',
+  paymentPageFormFieldId: 'paymentPageFormFieldId',
+  value: 'value',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.QRPaymentScalarFieldEnum = {
+  id: 'id',
+  amount: 'amount',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -332,6 +349,12 @@ exports.PaymentPageFormFieldType = exports.$Enums.PaymentPageFormFieldType = {
   PHONE: 'PHONE'
 };
 
+exports.QRPaymentStatus = exports.$Enums.QRPaymentStatus = {
+  USED: 'USED',
+  ACTIVE: 'ACTIVE',
+  EXPIRED: 'EXPIRED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Account: 'Account',
@@ -346,7 +369,9 @@ exports.Prisma.ModelName = {
   Transaction: 'Transaction',
   PaymentButton: 'PaymentButton',
   PaymentPageForm: 'PaymentPageForm',
-  PaymentPageFormField: 'PaymentPageFormField'
+  PaymentPageFormField: 'PaymentPageFormField',
+  PaymentPageFormFieldValue: 'PaymentPageFormFieldValue',
+  QRPayment: 'QRPayment'
 };
 
 /**

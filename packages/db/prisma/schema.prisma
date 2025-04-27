@@ -30,6 +30,7 @@ model User {
   PaymentLink PaymentLink[]
   Wallet      Wallet[]
   PaymentPage PaymentPage[]
+  QRPayment   QRPayment[]
 }
 
 model Account {
@@ -282,4 +283,22 @@ model PaymentPageFormFieldValue {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model QRPayment {
+  id String @id @default(uuid())
+
+  amount Decimal         @db.Decimal(10, 2)
+  status QRPaymentStatus @default(ACTIVE)
+  user   User            @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+}
+
+enum QRPaymentStatus {
+  USED
+  ACTIVE
+  EXPIRED
 }

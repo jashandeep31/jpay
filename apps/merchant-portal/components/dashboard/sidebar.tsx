@@ -70,8 +70,8 @@ const sidebarLinks = [
     icon: Webhook,
   },
   {
-    name: "@jpay-js",
-    href: "/dashboard/jpay-js",
+    name: "@jpay-links",
+    href: "/dashboard/jpay-links",
     icon: ArrowDownToLine,
   },
 ];
