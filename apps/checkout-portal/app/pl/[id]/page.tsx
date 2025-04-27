@@ -1,0 +1,96 @@
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@repo/ui/components/ui/card";
+import { PaymentMethodCard } from "@/app/components/payment-method-card";
+import { MerchantInfo } from "@/app/components/merchant-info";
+import { db } from "@/lib/db";
+
+export default async function SelectPaymentMethod({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const id = (await params).id;
+  const paymentLink = await db.paymentLink.findUnique({
+    where: {
+      id,
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+  if (!paymentLink) {
+    return <div>Payment link not found</div>;
+  }
+
+  return (
+    <div className="container max-w-4xl px-4 py-8 md:py-12">
+      <div className="mb-6 md:mb-8">
+        <Link
+          href="/"
+          className="flex items-center text-sm text-muted-foreground hover:text-foreground"
+        >
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back to Home
+        </Link>
+      </div>
+
+      <div className="space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
+              Select Payment Method
+            </h1>
+            <p className="text-muted-foreground mt-1 md:mt-2">
+              Choose how you'd like to pay for your transaction.
+            </p>
+          </div>
+          <MerchantInfo name={paymentLink.user.name || ""} />
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Payment Details</CardTitle>
+            <CardDescription>
+              You're paying for: Premium Subscription
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex justify-between items-center py-2">
+              <span className="font-medium">Amount:</span>
+              <span className="text-xl font-bold">
+                ${paymentLink.amount.toFixed(2)}
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <PaymentMethodCard
+            title="USDT (Tether)"
+            description="Pay with USDT on Ethereum, Tron, or Binance Smart Chain"
+            icon="usdt"
+            href={`/pl/${id}/pay`}
+          />
+
+          <PaymentMethodCard
+            title="USD (Credit Card)"
+            description="Pay with your credit or debit card"
+            icon="usd"
+            href={`/pl/${id}/pay`}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
