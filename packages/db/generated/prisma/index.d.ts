@@ -85,6 +85,18 @@ export namespace $Enums {
 export type PaymentLinkStatus = (typeof PaymentLinkStatus)[keyof typeof PaymentLinkStatus]
 
 
+export const PaymentPageStatus: {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  ACTIVE: 'ACTIVE',
+  CANCELLED: 'CANCELLED',
+  EXPIRED: 'EXPIRED'
+};
+
+export type PaymentPageStatus = (typeof PaymentPageStatus)[keyof typeof PaymentPageStatus]
+
+
 export const IntiatedFrom: {
   PAYMENT_PAGE: 'PAYMENT_PAGE',
   PAYMENT_LINK: 'PAYMENT_LINK'
@@ -117,6 +129,10 @@ export type TransactionStatus = (typeof TransactionStatus)[keyof typeof Transact
 export type PaymentLinkStatus = $Enums.PaymentLinkStatus
 
 export const PaymentLinkStatus: typeof $Enums.PaymentLinkStatus
+
+export type PaymentPageStatus = $Enums.PaymentPageStatus
+
+export const PaymentPageStatus: typeof $Enums.PaymentPageStatus
 
 export type IntiatedFrom = $Enums.IntiatedFrom
 
@@ -1845,6 +1861,7 @@ export namespace Prisma {
     Authenticator: number
     PaymentLink: number
     Wallet: number
+    PaymentPage: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1853,6 +1870,7 @@ export namespace Prisma {
     Authenticator?: boolean | UserCountOutputTypeCountAuthenticatorArgs
     PaymentLink?: boolean | UserCountOutputTypeCountPaymentLinkArgs
     Wallet?: boolean | UserCountOutputTypeCountWalletArgs
+    PaymentPage?: boolean | UserCountOutputTypeCountPaymentPageArgs
   }
 
   // Custom InputTypes
@@ -1899,6 +1917,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountWalletArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WalletWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPaymentPageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentPageWhereInput
   }
 
 
@@ -2215,6 +2240,7 @@ export namespace Prisma {
     Authenticator?: boolean | User$AuthenticatorArgs<ExtArgs>
     PaymentLink?: boolean | User$PaymentLinkArgs<ExtArgs>
     Wallet?: boolean | User$WalletArgs<ExtArgs>
+    PaymentPage?: boolean | User$PaymentPageArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2255,6 +2281,7 @@ export namespace Prisma {
     Authenticator?: boolean | User$AuthenticatorArgs<ExtArgs>
     PaymentLink?: boolean | User$PaymentLinkArgs<ExtArgs>
     Wallet?: boolean | User$WalletArgs<ExtArgs>
+    PaymentPage?: boolean | User$PaymentPageArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2268,6 +2295,7 @@ export namespace Prisma {
       Authenticator: Prisma.$AuthenticatorPayload<ExtArgs>[]
       PaymentLink: Prisma.$PaymentLinkPayload<ExtArgs>[]
       Wallet: Prisma.$WalletPayload<ExtArgs>[]
+      PaymentPage: Prisma.$PaymentPagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2676,6 +2704,7 @@ export namespace Prisma {
     Authenticator<T extends User$AuthenticatorArgs<ExtArgs> = {}>(args?: Subset<T, User$AuthenticatorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthenticatorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     PaymentLink<T extends User$PaymentLinkArgs<ExtArgs> = {}>(args?: Subset<T, User$PaymentLinkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Wallet<T extends User$WalletArgs<ExtArgs> = {}>(args?: Subset<T, User$WalletArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    PaymentPage<T extends User$PaymentPageArgs<ExtArgs> = {}>(args?: Subset<T, User$PaymentPageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3217,6 +3246,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: WalletScalarFieldEnum | WalletScalarFieldEnum[]
+  }
+
+  /**
+   * User.PaymentPage
+   */
+  export type User$PaymentPageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPage
+     */
+    select?: PaymentPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPage
+     */
+    omit?: PaymentPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageInclude<ExtArgs> | null
+    where?: PaymentPageWhereInput
+    orderBy?: PaymentPageOrderByWithRelationInput | PaymentPageOrderByWithRelationInput[]
+    cursor?: PaymentPageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PaymentPageScalarFieldEnum | PaymentPageScalarFieldEnum[]
   }
 
   /**
@@ -10988,9 +11041,11 @@ export namespace Prisma {
     description: string | null
     logoUrl: string | null
     amount: Decimal | null
+    userId: string | null
     expiresAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    status: $Enums.PaymentPageStatus | null
   }
 
   export type PaymentPageMaxAggregateOutputType = {
@@ -10999,9 +11054,11 @@ export namespace Prisma {
     description: string | null
     logoUrl: string | null
     amount: Decimal | null
+    userId: string | null
     expiresAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
+    status: $Enums.PaymentPageStatus | null
   }
 
   export type PaymentPageCountAggregateOutputType = {
@@ -11010,9 +11067,11 @@ export namespace Prisma {
     description: number
     logoUrl: number
     amount: number
+    userId: number
     expiresAt: number
     createdAt: number
     updatedAt: number
+    status: number
     _all: number
   }
 
@@ -11031,9 +11090,11 @@ export namespace Prisma {
     description?: true
     logoUrl?: true
     amount?: true
+    userId?: true
     expiresAt?: true
     createdAt?: true
     updatedAt?: true
+    status?: true
   }
 
   export type PaymentPageMaxAggregateInputType = {
@@ -11042,9 +11103,11 @@ export namespace Prisma {
     description?: true
     logoUrl?: true
     amount?: true
+    userId?: true
     expiresAt?: true
     createdAt?: true
     updatedAt?: true
+    status?: true
   }
 
   export type PaymentPageCountAggregateInputType = {
@@ -11053,9 +11116,11 @@ export namespace Prisma {
     description?: true
     logoUrl?: true
     amount?: true
+    userId?: true
     expiresAt?: true
     createdAt?: true
     updatedAt?: true
+    status?: true
     _all?: true
   }
 
@@ -11151,9 +11216,11 @@ export namespace Prisma {
     description: string | null
     logoUrl: string
     amount: Decimal
+    userId: string
     expiresAt: Date | null
     createdAt: Date
     updatedAt: Date
+    status: $Enums.PaymentPageStatus
     _count: PaymentPageCountAggregateOutputType | null
     _avg: PaymentPageAvgAggregateOutputType | null
     _sum: PaymentPageSumAggregateOutputType | null
@@ -11181,9 +11248,12 @@ export namespace Prisma {
     description?: boolean
     logoUrl?: boolean
     amount?: boolean
+    userId?: boolean
     expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    status?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
     IntiatedPayment?: boolean | PaymentPage$IntiatedPaymentArgs<ExtArgs>
     _count?: boolean | PaymentPageCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["paymentPage"]>
@@ -11194,9 +11264,12 @@ export namespace Prisma {
     description?: boolean
     logoUrl?: boolean
     amount?: boolean
+    userId?: boolean
     expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    status?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["paymentPage"]>
 
   export type PaymentPageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11205,9 +11278,12 @@ export namespace Prisma {
     description?: boolean
     logoUrl?: boolean
     amount?: boolean
+    userId?: boolean
     expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    status?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["paymentPage"]>
 
   export type PaymentPageSelectScalar = {
@@ -11216,22 +11292,30 @@ export namespace Prisma {
     description?: boolean
     logoUrl?: boolean
     amount?: boolean
+    userId?: boolean
     expiresAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    status?: boolean
   }
 
-  export type PaymentPageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "logoUrl" | "amount" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["paymentPage"]>
+  export type PaymentPageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "logoUrl" | "amount" | "userId" | "expiresAt" | "createdAt" | "updatedAt" | "status", ExtArgs["result"]["paymentPage"]>
   export type PaymentPageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
     IntiatedPayment?: boolean | PaymentPage$IntiatedPaymentArgs<ExtArgs>
     _count?: boolean | PaymentPageCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type PaymentPageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type PaymentPageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type PaymentPageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PaymentPageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
 
   export type $PaymentPagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "PaymentPage"
     objects: {
+      user: Prisma.$UserPayload<ExtArgs>
       IntiatedPayment: Prisma.$IntiatedPaymentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -11240,9 +11324,11 @@ export namespace Prisma {
       description: string | null
       logoUrl: string
       amount: Prisma.Decimal
+      userId: string
       expiresAt: Date | null
       createdAt: Date
       updatedAt: Date
+      status: $Enums.PaymentPageStatus
     }, ExtArgs["result"]["paymentPage"]>
     composites: {}
   }
@@ -11637,6 +11723,7 @@ export namespace Prisma {
    */
   export interface Prisma__PaymentPageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     IntiatedPayment<T extends PaymentPage$IntiatedPaymentArgs<ExtArgs> = {}>(args?: Subset<T, PaymentPage$IntiatedPaymentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntiatedPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -11672,9 +11759,11 @@ export namespace Prisma {
     readonly description: FieldRef<"PaymentPage", 'String'>
     readonly logoUrl: FieldRef<"PaymentPage", 'String'>
     readonly amount: FieldRef<"PaymentPage", 'Decimal'>
+    readonly userId: FieldRef<"PaymentPage", 'String'>
     readonly expiresAt: FieldRef<"PaymentPage", 'DateTime'>
     readonly createdAt: FieldRef<"PaymentPage", 'DateTime'>
     readonly updatedAt: FieldRef<"PaymentPage", 'DateTime'>
+    readonly status: FieldRef<"PaymentPage", 'PaymentPageStatus'>
   }
     
 
@@ -11924,6 +12013,10 @@ export namespace Prisma {
      */
     data: PaymentPageCreateManyInput | PaymentPageCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -11994,6 +12087,10 @@ export namespace Prisma {
      * Limit how many PaymentPages to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -14650,9 +14747,11 @@ export namespace Prisma {
     description: 'description',
     logoUrl: 'logoUrl',
     amount: 'amount',
+    userId: 'userId',
     expiresAt: 'expiresAt',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    status: 'status'
   };
 
   export type PaymentPageScalarFieldEnum = (typeof PaymentPageScalarFieldEnum)[keyof typeof PaymentPageScalarFieldEnum]
@@ -14799,6 +14898,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'PaymentPageStatus'
+   */
+  export type EnumPaymentPageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentPageStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'PaymentPageStatus[]'
+   */
+  export type ListEnumPaymentPageStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentPageStatus[]'>
+    
+
+
+  /**
    * Reference to a field of type 'IntiatedFrom'
    */
   export type EnumIntiatedFromFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'IntiatedFrom'>
@@ -14873,6 +14986,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorListRelationFilter
     PaymentLink?: PaymentLinkListRelationFilter
     Wallet?: WalletListRelationFilter
+    PaymentPage?: PaymentPageListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -14888,6 +15002,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorOrderByRelationAggregateInput
     PaymentLink?: PaymentLinkOrderByRelationAggregateInput
     Wallet?: WalletOrderByRelationAggregateInput
+    PaymentPage?: PaymentPageOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -14906,6 +15021,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorListRelationFilter
     PaymentLink?: PaymentLinkListRelationFilter
     Wallet?: WalletListRelationFilter
+    PaymentPage?: PaymentPageListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -15417,9 +15533,12 @@ export namespace Prisma {
     description?: StringNullableFilter<"PaymentPage"> | string | null
     logoUrl?: StringFilter<"PaymentPage"> | string
     amount?: DecimalFilter<"PaymentPage"> | Decimal | DecimalJsLike | number | string
+    userId?: StringFilter<"PaymentPage"> | string
     expiresAt?: DateTimeNullableFilter<"PaymentPage"> | Date | string | null
     createdAt?: DateTimeFilter<"PaymentPage"> | Date | string
     updatedAt?: DateTimeFilter<"PaymentPage"> | Date | string
+    status?: EnumPaymentPageStatusFilter<"PaymentPage"> | $Enums.PaymentPageStatus
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     IntiatedPayment?: IntiatedPaymentListRelationFilter
   }
 
@@ -15429,9 +15548,12 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     logoUrl?: SortOrder
     amount?: SortOrder
+    userId?: SortOrder
     expiresAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    status?: SortOrder
+    user?: UserOrderByWithRelationInput
     IntiatedPayment?: IntiatedPaymentOrderByRelationAggregateInput
   }
 
@@ -15444,9 +15566,12 @@ export namespace Prisma {
     description?: StringNullableFilter<"PaymentPage"> | string | null
     logoUrl?: StringFilter<"PaymentPage"> | string
     amount?: DecimalFilter<"PaymentPage"> | Decimal | DecimalJsLike | number | string
+    userId?: StringFilter<"PaymentPage"> | string
     expiresAt?: DateTimeNullableFilter<"PaymentPage"> | Date | string | null
     createdAt?: DateTimeFilter<"PaymentPage"> | Date | string
     updatedAt?: DateTimeFilter<"PaymentPage"> | Date | string
+    status?: EnumPaymentPageStatusFilter<"PaymentPage"> | $Enums.PaymentPageStatus
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
     IntiatedPayment?: IntiatedPaymentListRelationFilter
   }, "id">
 
@@ -15456,9 +15581,11 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     logoUrl?: SortOrder
     amount?: SortOrder
+    userId?: SortOrder
     expiresAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    status?: SortOrder
     _count?: PaymentPageCountOrderByAggregateInput
     _avg?: PaymentPageAvgOrderByAggregateInput
     _max?: PaymentPageMaxOrderByAggregateInput
@@ -15475,9 +15602,11 @@ export namespace Prisma {
     description?: StringNullableWithAggregatesFilter<"PaymentPage"> | string | null
     logoUrl?: StringWithAggregatesFilter<"PaymentPage"> | string
     amount?: DecimalWithAggregatesFilter<"PaymentPage"> | Decimal | DecimalJsLike | number | string
+    userId?: StringWithAggregatesFilter<"PaymentPage"> | string
     expiresAt?: DateTimeNullableWithAggregatesFilter<"PaymentPage"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"PaymentPage"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"PaymentPage"> | Date | string
+    status?: EnumPaymentPageStatusWithAggregatesFilter<"PaymentPage"> | $Enums.PaymentPageStatus
   }
 
   export type IntiatedPaymentWhereInput = {
@@ -15673,6 +15802,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorCreateNestedManyWithoutUserInput
     PaymentLink?: PaymentLinkCreateNestedManyWithoutUserInput
     Wallet?: WalletCreateNestedManyWithoutUserInput
+    PaymentPage?: PaymentPageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -15688,6 +15818,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorUncheckedCreateNestedManyWithoutUserInput
     PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutUserInput
     Wallet?: WalletUncheckedCreateNestedManyWithoutUserInput
+    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -15703,6 +15834,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorUpdateManyWithoutUserNestedInput
     PaymentLink?: PaymentLinkUpdateManyWithoutUserNestedInput
     Wallet?: WalletUpdateManyWithoutUserNestedInput
+    PaymentPage?: PaymentPageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -15718,6 +15850,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
     PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutUserNestedInput
     Wallet?: WalletUncheckedUpdateManyWithoutUserNestedInput
+    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -16258,6 +16391,8 @@ export namespace Prisma {
     expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    status?: $Enums.PaymentPageStatus
+    user: UserCreateNestedOneWithoutPaymentPageInput
     IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutPaymentPageInput
   }
 
@@ -16267,9 +16402,11 @@ export namespace Prisma {
     description?: string | null
     logoUrl: string
     amount: Decimal | DecimalJsLike | number | string
+    userId: string
     expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    status?: $Enums.PaymentPageStatus
     IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutPaymentPageInput
   }
 
@@ -16282,6 +16419,8 @@ export namespace Prisma {
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
+    user?: UserUpdateOneRequiredWithoutPaymentPageNestedInput
     IntiatedPayment?: IntiatedPaymentUpdateManyWithoutPaymentPageNestedInput
   }
 
@@ -16291,9 +16430,11 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    userId?: StringFieldUpdateOperationsInput | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
     IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutPaymentPageNestedInput
   }
 
@@ -16303,9 +16444,11 @@ export namespace Prisma {
     description?: string | null
     logoUrl: string
     amount: Decimal | DecimalJsLike | number | string
+    userId: string
     expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    status?: $Enums.PaymentPageStatus
   }
 
   export type PaymentPageUpdateManyMutationInput = {
@@ -16317,6 +16460,7 @@ export namespace Prisma {
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
   }
 
   export type PaymentPageUncheckedUpdateManyInput = {
@@ -16325,9 +16469,11 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    userId?: StringFieldUpdateOperationsInput | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
   }
 
   export type IntiatedPaymentCreateInput = {
@@ -16609,6 +16755,12 @@ export namespace Prisma {
     none?: WalletWhereInput
   }
 
+  export type PaymentPageListRelationFilter = {
+    every?: PaymentPageWhereInput
+    some?: PaymentPageWhereInput
+    none?: PaymentPageWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -16631,6 +16783,10 @@ export namespace Prisma {
   }
 
   export type WalletOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PaymentPageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -17119,15 +17275,24 @@ export namespace Prisma {
     _max?: NestedEnumPaymentLinkStatusFilter<$PrismaModel>
   }
 
+  export type EnumPaymentPageStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentPageStatus | EnumPaymentPageStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentPageStatus[] | ListEnumPaymentPageStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentPageStatus[] | ListEnumPaymentPageStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentPageStatusFilter<$PrismaModel> | $Enums.PaymentPageStatus
+  }
+
   export type PaymentPageCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     description?: SortOrder
     logoUrl?: SortOrder
     amount?: SortOrder
+    userId?: SortOrder
     expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type PaymentPageAvgOrderByAggregateInput = {
@@ -17140,9 +17305,11 @@ export namespace Prisma {
     description?: SortOrder
     logoUrl?: SortOrder
     amount?: SortOrder
+    userId?: SortOrder
     expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type PaymentPageMinOrderByAggregateInput = {
@@ -17151,13 +17318,25 @@ export namespace Prisma {
     description?: SortOrder
     logoUrl?: SortOrder
     amount?: SortOrder
+    userId?: SortOrder
     expiresAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    status?: SortOrder
   }
 
   export type PaymentPageSumOrderByAggregateInput = {
     amount?: SortOrder
+  }
+
+  export type EnumPaymentPageStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentPageStatus | EnumPaymentPageStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentPageStatus[] | ListEnumPaymentPageStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentPageStatus[] | ListEnumPaymentPageStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentPageStatusWithAggregatesFilter<$PrismaModel> | $Enums.PaymentPageStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentPageStatusFilter<$PrismaModel>
+    _max?: NestedEnumPaymentPageStatusFilter<$PrismaModel>
   }
 
   export type EnumIntiatedFromFilter<$PrismaModel = never> = {
@@ -17373,6 +17552,13 @@ export namespace Prisma {
     connect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
   }
 
+  export type PaymentPageCreateNestedManyWithoutUserInput = {
+    create?: XOR<PaymentPageCreateWithoutUserInput, PaymentPageUncheckedCreateWithoutUserInput> | PaymentPageCreateWithoutUserInput[] | PaymentPageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PaymentPageCreateOrConnectWithoutUserInput | PaymentPageCreateOrConnectWithoutUserInput[]
+    createMany?: PaymentPageCreateManyUserInputEnvelope
+    connect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -17406,6 +17592,13 @@ export namespace Prisma {
     connectOrCreate?: WalletCreateOrConnectWithoutUserInput | WalletCreateOrConnectWithoutUserInput[]
     createMany?: WalletCreateManyUserInputEnvelope
     connect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
+  }
+
+  export type PaymentPageUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PaymentPageCreateWithoutUserInput, PaymentPageUncheckedCreateWithoutUserInput> | PaymentPageCreateWithoutUserInput[] | PaymentPageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PaymentPageCreateOrConnectWithoutUserInput | PaymentPageCreateOrConnectWithoutUserInput[]
+    createMany?: PaymentPageCreateManyUserInputEnvelope
+    connect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -17494,6 +17687,20 @@ export namespace Prisma {
     deleteMany?: WalletScalarWhereInput | WalletScalarWhereInput[]
   }
 
+  export type PaymentPageUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PaymentPageCreateWithoutUserInput, PaymentPageUncheckedCreateWithoutUserInput> | PaymentPageCreateWithoutUserInput[] | PaymentPageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PaymentPageCreateOrConnectWithoutUserInput | PaymentPageCreateOrConnectWithoutUserInput[]
+    upsert?: PaymentPageUpsertWithWhereUniqueWithoutUserInput | PaymentPageUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PaymentPageCreateManyUserInputEnvelope
+    set?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+    disconnect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+    delete?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+    connect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+    update?: PaymentPageUpdateWithWhereUniqueWithoutUserInput | PaymentPageUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PaymentPageUpdateManyWithWhereWithoutUserInput | PaymentPageUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PaymentPageScalarWhereInput | PaymentPageScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -17562,6 +17769,20 @@ export namespace Prisma {
     update?: WalletUpdateWithWhereUniqueWithoutUserInput | WalletUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: WalletUpdateManyWithWhereWithoutUserInput | WalletUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: WalletScalarWhereInput | WalletScalarWhereInput[]
+  }
+
+  export type PaymentPageUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PaymentPageCreateWithoutUserInput, PaymentPageUncheckedCreateWithoutUserInput> | PaymentPageCreateWithoutUserInput[] | PaymentPageUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PaymentPageCreateOrConnectWithoutUserInput | PaymentPageCreateOrConnectWithoutUserInput[]
+    upsert?: PaymentPageUpsertWithWhereUniqueWithoutUserInput | PaymentPageUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PaymentPageCreateManyUserInputEnvelope
+    set?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+    disconnect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+    delete?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+    connect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+    update?: PaymentPageUpdateWithWhereUniqueWithoutUserInput | PaymentPageUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PaymentPageUpdateManyWithWhereWithoutUserInput | PaymentPageUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PaymentPageScalarWhereInput | PaymentPageScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -17764,6 +17985,12 @@ export namespace Prisma {
     deleteMany?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
   }
 
+  export type UserCreateNestedOneWithoutPaymentPageInput = {
+    create?: XOR<UserCreateWithoutPaymentPageInput, UserUncheckedCreateWithoutPaymentPageInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPaymentPageInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type IntiatedPaymentCreateNestedManyWithoutPaymentPageInput = {
     create?: XOR<IntiatedPaymentCreateWithoutPaymentPageInput, IntiatedPaymentUncheckedCreateWithoutPaymentPageInput> | IntiatedPaymentCreateWithoutPaymentPageInput[] | IntiatedPaymentUncheckedCreateWithoutPaymentPageInput[]
     connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutPaymentPageInput | IntiatedPaymentCreateOrConnectWithoutPaymentPageInput[]
@@ -17776,6 +18003,18 @@ export namespace Prisma {
     connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutPaymentPageInput | IntiatedPaymentCreateOrConnectWithoutPaymentPageInput[]
     createMany?: IntiatedPaymentCreateManyPaymentPageInputEnvelope
     connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+  }
+
+  export type EnumPaymentPageStatusFieldUpdateOperationsInput = {
+    set?: $Enums.PaymentPageStatus
+  }
+
+  export type UserUpdateOneRequiredWithoutPaymentPageNestedInput = {
+    create?: XOR<UserCreateWithoutPaymentPageInput, UserUncheckedCreateWithoutPaymentPageInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPaymentPageInput
+    upsert?: UserUpsertWithoutPaymentPageInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPaymentPageInput, UserUpdateWithoutPaymentPageInput>, UserUncheckedUpdateWithoutPaymentPageInput>
   }
 
   export type IntiatedPaymentUpdateManyWithoutPaymentPageNestedInput = {
@@ -18151,6 +18390,23 @@ export namespace Prisma {
     _max?: NestedEnumPaymentLinkStatusFilter<$PrismaModel>
   }
 
+  export type NestedEnumPaymentPageStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentPageStatus | EnumPaymentPageStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentPageStatus[] | ListEnumPaymentPageStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentPageStatus[] | ListEnumPaymentPageStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentPageStatusFilter<$PrismaModel> | $Enums.PaymentPageStatus
+  }
+
+  export type NestedEnumPaymentPageStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PaymentPageStatus | EnumPaymentPageStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.PaymentPageStatus[] | ListEnumPaymentPageStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PaymentPageStatus[] | ListEnumPaymentPageStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumPaymentPageStatusWithAggregatesFilter<$PrismaModel> | $Enums.PaymentPageStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPaymentPageStatusFilter<$PrismaModel>
+    _max?: NestedEnumPaymentPageStatusFilter<$PrismaModel>
+  }
+
   export type NestedEnumIntiatedFromFilter<$PrismaModel = never> = {
     equals?: $Enums.IntiatedFrom | EnumIntiatedFromFieldRefInput<$PrismaModel>
     in?: $Enums.IntiatedFrom[] | ListEnumIntiatedFromFieldRefInput<$PrismaModel>
@@ -18354,6 +18610,42 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PaymentPageCreateWithoutUserInput = {
+    id?: string
+    title: string
+    description?: string | null
+    logoUrl: string
+    amount: Decimal | DecimalJsLike | number | string
+    expiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.PaymentPageStatus
+    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutPaymentPageInput
+  }
+
+  export type PaymentPageUncheckedCreateWithoutUserInput = {
+    id?: string
+    title: string
+    description?: string | null
+    logoUrl: string
+    amount: Decimal | DecimalJsLike | number | string
+    expiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.PaymentPageStatus
+    IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutPaymentPageInput
+  }
+
+  export type PaymentPageCreateOrConnectWithoutUserInput = {
+    where: PaymentPageWhereUniqueInput
+    create: XOR<PaymentPageCreateWithoutUserInput, PaymentPageUncheckedCreateWithoutUserInput>
+  }
+
+  export type PaymentPageCreateManyUserInputEnvelope = {
+    data: PaymentPageCreateManyUserInput | PaymentPageCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -18504,6 +18796,38 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Wallet"> | Date | string
   }
 
+  export type PaymentPageUpsertWithWhereUniqueWithoutUserInput = {
+    where: PaymentPageWhereUniqueInput
+    update: XOR<PaymentPageUpdateWithoutUserInput, PaymentPageUncheckedUpdateWithoutUserInput>
+    create: XOR<PaymentPageCreateWithoutUserInput, PaymentPageUncheckedCreateWithoutUserInput>
+  }
+
+  export type PaymentPageUpdateWithWhereUniqueWithoutUserInput = {
+    where: PaymentPageWhereUniqueInput
+    data: XOR<PaymentPageUpdateWithoutUserInput, PaymentPageUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PaymentPageUpdateManyWithWhereWithoutUserInput = {
+    where: PaymentPageScalarWhereInput
+    data: XOR<PaymentPageUpdateManyMutationInput, PaymentPageUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PaymentPageScalarWhereInput = {
+    AND?: PaymentPageScalarWhereInput | PaymentPageScalarWhereInput[]
+    OR?: PaymentPageScalarWhereInput[]
+    NOT?: PaymentPageScalarWhereInput | PaymentPageScalarWhereInput[]
+    id?: StringFilter<"PaymentPage"> | string
+    title?: StringFilter<"PaymentPage"> | string
+    description?: StringNullableFilter<"PaymentPage"> | string | null
+    logoUrl?: StringFilter<"PaymentPage"> | string
+    amount?: DecimalFilter<"PaymentPage"> | Decimal | DecimalJsLike | number | string
+    userId?: StringFilter<"PaymentPage"> | string
+    expiresAt?: DateTimeNullableFilter<"PaymentPage"> | Date | string | null
+    createdAt?: DateTimeFilter<"PaymentPage"> | Date | string
+    updatedAt?: DateTimeFilter<"PaymentPage"> | Date | string
+    status?: EnumPaymentPageStatusFilter<"PaymentPage"> | $Enums.PaymentPageStatus
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     name?: string | null
@@ -18516,6 +18840,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorCreateNestedManyWithoutUserInput
     PaymentLink?: PaymentLinkCreateNestedManyWithoutUserInput
     Wallet?: WalletCreateNestedManyWithoutUserInput
+    PaymentPage?: PaymentPageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -18530,6 +18855,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorUncheckedCreateNestedManyWithoutUserInput
     PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutUserInput
     Wallet?: WalletUncheckedCreateNestedManyWithoutUserInput
+    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -18560,6 +18886,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorUpdateManyWithoutUserNestedInput
     PaymentLink?: PaymentLinkUpdateManyWithoutUserNestedInput
     Wallet?: WalletUpdateManyWithoutUserNestedInput
+    PaymentPage?: PaymentPageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -18574,6 +18901,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
     PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutUserNestedInput
     Wallet?: WalletUncheckedUpdateManyWithoutUserNestedInput
+    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -18588,6 +18916,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorCreateNestedManyWithoutUserInput
     PaymentLink?: PaymentLinkCreateNestedManyWithoutUserInput
     Wallet?: WalletCreateNestedManyWithoutUserInput
+    PaymentPage?: PaymentPageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -18602,6 +18931,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorUncheckedCreateNestedManyWithoutUserInput
     PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutUserInput
     Wallet?: WalletUncheckedCreateNestedManyWithoutUserInput
+    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -18632,6 +18962,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorUpdateManyWithoutUserNestedInput
     PaymentLink?: PaymentLinkUpdateManyWithoutUserNestedInput
     Wallet?: WalletUpdateManyWithoutUserNestedInput
+    PaymentPage?: PaymentPageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -18646,6 +18977,7 @@ export namespace Prisma {
     Authenticator?: AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
     PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutUserNestedInput
     Wallet?: WalletUncheckedUpdateManyWithoutUserNestedInput
+    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAuthenticatorInput = {
@@ -18660,6 +18992,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     PaymentLink?: PaymentLinkCreateNestedManyWithoutUserInput
     Wallet?: WalletCreateNestedManyWithoutUserInput
+    PaymentPage?: PaymentPageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAuthenticatorInput = {
@@ -18674,6 +19007,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutUserInput
     Wallet?: WalletUncheckedCreateNestedManyWithoutUserInput
+    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAuthenticatorInput = {
@@ -18704,6 +19038,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     PaymentLink?: PaymentLinkUpdateManyWithoutUserNestedInput
     Wallet?: WalletUpdateManyWithoutUserNestedInput
+    PaymentPage?: PaymentPageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuthenticatorInput = {
@@ -18718,6 +19053,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutUserNestedInput
     Wallet?: WalletUncheckedUpdateManyWithoutUserNestedInput
+    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutWalletInput = {
@@ -18732,6 +19068,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     Authenticator?: AuthenticatorCreateNestedManyWithoutUserInput
     PaymentLink?: PaymentLinkCreateNestedManyWithoutUserInput
+    PaymentPage?: PaymentPageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutWalletInput = {
@@ -18746,6 +19083,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     Authenticator?: AuthenticatorUncheckedCreateNestedManyWithoutUserInput
     PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutUserInput
+    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutWalletInput = {
@@ -18801,6 +19139,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     Authenticator?: AuthenticatorUpdateManyWithoutUserNestedInput
     PaymentLink?: PaymentLinkUpdateManyWithoutUserNestedInput
+    PaymentPage?: PaymentPageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutWalletInput = {
@@ -18815,6 +19154,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     Authenticator?: AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
     PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutUserNestedInput
+    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type StableCoinUpsertWithoutWalletInput = {
@@ -18902,6 +19242,7 @@ export namespace Prisma {
     sessions?: SessionCreateNestedManyWithoutUserInput
     Authenticator?: AuthenticatorCreateNestedManyWithoutUserInput
     Wallet?: WalletCreateNestedManyWithoutUserInput
+    PaymentPage?: PaymentPageCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPaymentLinkInput = {
@@ -18916,6 +19257,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     Authenticator?: AuthenticatorUncheckedCreateNestedManyWithoutUserInput
     Wallet?: WalletUncheckedCreateNestedManyWithoutUserInput
+    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPaymentLinkInput = {
@@ -18982,6 +19324,7 @@ export namespace Prisma {
     sessions?: SessionUpdateManyWithoutUserNestedInput
     Authenticator?: AuthenticatorUpdateManyWithoutUserNestedInput
     Wallet?: WalletUpdateManyWithoutUserNestedInput
+    PaymentPage?: PaymentPageUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPaymentLinkInput = {
@@ -18996,6 +19339,7 @@ export namespace Prisma {
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     Authenticator?: AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
     Wallet?: WalletUncheckedUpdateManyWithoutUserNestedInput
+    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type IntiatedPaymentUpsertWithWhereUniqueWithoutPaymentLinkInput = {
@@ -19028,6 +19372,41 @@ export namespace Prisma {
     paymentLinkId?: StringNullableFilter<"IntiatedPayment"> | string | null
     createdAt?: DateTimeFilter<"IntiatedPayment"> | Date | string
     updatedAt?: DateTimeFilter<"IntiatedPayment"> | Date | string
+  }
+
+  export type UserCreateWithoutPaymentPageInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    Authenticator?: AuthenticatorCreateNestedManyWithoutUserInput
+    PaymentLink?: PaymentLinkCreateNestedManyWithoutUserInput
+    Wallet?: WalletCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutPaymentPageInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    Authenticator?: AuthenticatorUncheckedCreateNestedManyWithoutUserInput
+    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutUserInput
+    Wallet?: WalletUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutPaymentPageInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPaymentPageInput, UserUncheckedCreateWithoutPaymentPageInput>
   }
 
   export type IntiatedPaymentCreateWithoutPaymentPageInput = {
@@ -19066,6 +19445,47 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserUpsertWithoutPaymentPageInput = {
+    update: XOR<UserUpdateWithoutPaymentPageInput, UserUncheckedUpdateWithoutPaymentPageInput>
+    create: XOR<UserCreateWithoutPaymentPageInput, UserUncheckedCreateWithoutPaymentPageInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPaymentPageInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPaymentPageInput, UserUncheckedUpdateWithoutPaymentPageInput>
+  }
+
+  export type UserUpdateWithoutPaymentPageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    Authenticator?: AuthenticatorUpdateManyWithoutUserNestedInput
+    PaymentLink?: PaymentLinkUpdateManyWithoutUserNestedInput
+    Wallet?: WalletUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPaymentPageInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    Authenticator?: AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
+    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutUserNestedInput
+    Wallet?: WalletUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type IntiatedPaymentUpsertWithWhereUniqueWithoutPaymentPageInput = {
     where: IntiatedPaymentWhereUniqueInput
     update: XOR<IntiatedPaymentUpdateWithoutPaymentPageInput, IntiatedPaymentUncheckedUpdateWithoutPaymentPageInput>
@@ -19091,6 +19511,8 @@ export namespace Prisma {
     expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    status?: $Enums.PaymentPageStatus
+    user: UserCreateNestedOneWithoutPaymentPageInput
   }
 
   export type PaymentPageUncheckedCreateWithoutIntiatedPaymentInput = {
@@ -19099,9 +19521,11 @@ export namespace Prisma {
     description?: string | null
     logoUrl: string
     amount: Decimal | DecimalJsLike | number | string
+    userId: string
     expiresAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    status?: $Enums.PaymentPageStatus
   }
 
   export type PaymentPageCreateOrConnectWithoutIntiatedPaymentInput = {
@@ -19194,6 +19618,8 @@ export namespace Prisma {
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
+    user?: UserUpdateOneRequiredWithoutPaymentPageNestedInput
   }
 
   export type PaymentPageUncheckedUpdateWithoutIntiatedPaymentInput = {
@@ -19202,9 +19628,11 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    userId?: StringFieldUpdateOperationsInput | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
   }
 
   export type PaymentLinkUpsertWithoutIntiatedPaymentInput = {
@@ -19392,6 +19820,18 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type PaymentPageCreateManyUserInput = {
+    id?: string
+    title: string
+    description?: string | null
+    logoUrl: string
+    amount: Decimal | DecimalJsLike | number | string
+    expiresAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    status?: $Enums.PaymentPageStatus
+  }
+
   export type AccountUpdateWithoutUserInput = {
     type?: StringFieldUpdateOperationsInput | string
     provider?: StringFieldUpdateOperationsInput | string
@@ -19542,6 +19982,44 @@ export namespace Prisma {
     stableCoinId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PaymentPageUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
+    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutPaymentPageNestedInput
+  }
+
+  export type PaymentPageUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
+    IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutPaymentPageNestedInput
+  }
+
+  export type PaymentPageUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
   }
 
   export type WalletCreateManyStableCoinInput = {

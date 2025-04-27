@@ -29,6 +29,7 @@ model User {
   updatedAt   DateTime      @updatedAt
   PaymentLink PaymentLink[]
   Wallet      Wallet[]
+  PaymentPage PaymentPage[]
 }
 
 model Account {
@@ -141,11 +142,24 @@ model PaymentPage {
   description String?
   logoUrl     String
   amount      Decimal @db.Decimal(10, 2)
+  userId      String
+  user        User    @relation(fields: [userId], references: [id])
 
   expiresAt       DateTime?
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   IntiatedPayment IntiatedPayment[]
+  status          PaymentPageStatus @default(PENDING)
+  PaymentPageForm PaymentPageForm[]
+}
+
+enum PaymentPageStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  ACTIVE
+  CANCELLED
+  EXPIRED
 }
 
 model IntiatedPayment {
@@ -204,4 +218,55 @@ enum TransactionStatus {
   COMPLETED
   REFUNDED
   FAILED
+}
+
+model PaymentButton {
+  id          String            @id @default(uuid())
+  title       String
+  type        PaymentButtonType
+  description String?
+
+  amount Decimal @db.Decimal(10, 2)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum PaymentButtonType {
+  QUICK_PAYMENT
+  DONATION
+  OTHER
+}
+
+model PaymentPageForm {
+  id String @id @default(uuid())
+
+  paymentPage   PaymentPage @relation(fields: [paymentPageId], references: [id])
+  paymentPageId String
+
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  PaymentPageFormField PaymentPageFormField[]
+}
+
+model PaymentPageFormField {
+  id String @id @default(uuid())
+
+  type        PaymentPageFormFieldType
+  label       String
+  placeholder String?
+  required    Boolean                  @default(false)
+  value       String?
+
+  paymentPageForm   PaymentPageForm @relation(fields: [paymentPageFormId], references: [id])
+  paymentPageFormId String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+}
+
+enum PaymentPageFormFieldType {
+  TEXT
+  NUMBER
+  EMAIL
+  PHONE
 }

@@ -35,9 +35,9 @@ export default function CreateLinkPage() {
       <div className="grid mt-6">
         <Card>
           <CardHeader>
-            <CardTitle>Create Payment Link</CardTitle>
+            <CardTitle>Create Payment Page</CardTitle>
             <CardDescription>
-              Generate a payment link that you can share with your customers.
+              Generate a payment pages that you can share with your customers.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

@@ -204,9 +204,11 @@ exports.Prisma.PaymentPageScalarFieldEnum = {
   description: 'description',
   logoUrl: 'logoUrl',
   amount: 'amount',
+  userId: 'userId',
   expiresAt: 'expiresAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  status: 'status'
 };
 
 exports.Prisma.IntiatedPaymentScalarFieldEnum = {
@@ -252,6 +254,15 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 exports.PaymentLinkStatus = exports.$Enums.PaymentLinkStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED',
+  ACTIVE: 'ACTIVE',
+  CANCELLED: 'CANCELLED',
+  EXPIRED: 'EXPIRED'
+};
+
+exports.PaymentPageStatus = exports.$Enums.PaymentPageStatus = {
   PENDING: 'PENDING',
   COMPLETED: 'COMPLETED',
   FAILED: 'FAILED',

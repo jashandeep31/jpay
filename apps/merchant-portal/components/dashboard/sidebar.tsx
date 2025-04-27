@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   LinkIcon,
-  CreditCard,
   FileText,
   ArrowDownToLine,
   Settings,
@@ -35,15 +34,11 @@ const sidebarLinks = [
     icon: LinkIcon,
   },
   {
-    name: "Payments",
-    href: "/dashboard/payments",
-    icon: CreditCard,
-  },
-  {
-    name: "Invoices & Subscriptions",
-    href: "/dashboard/invoices",
+    name: "Payments Pages",
+    href: "/dashboard/payment-pages",
     icon: FileText,
   },
+
   {
     name: "Payouts",
     href: "/dashboard/payouts",
