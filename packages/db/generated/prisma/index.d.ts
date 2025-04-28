@@ -2453,21 +2453,21 @@ export namespace Prisma {
    */
 
   export type MerchantCountOutputType = {
-    PaymentLink: number
-    Wallet: number
-    PaymentPage: number
     IntiatedPayment: number
-    Transaction: number
+    PaymentLink: number
+    PaymentPage: number
     QRPayment: number
+    Transaction: number
+    Wallet: number
   }
 
   export type MerchantCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    PaymentLink?: boolean | MerchantCountOutputTypeCountPaymentLinkArgs
-    Wallet?: boolean | MerchantCountOutputTypeCountWalletArgs
-    PaymentPage?: boolean | MerchantCountOutputTypeCountPaymentPageArgs
     IntiatedPayment?: boolean | MerchantCountOutputTypeCountIntiatedPaymentArgs
-    Transaction?: boolean | MerchantCountOutputTypeCountTransactionArgs
+    PaymentLink?: boolean | MerchantCountOutputTypeCountPaymentLinkArgs
+    PaymentPage?: boolean | MerchantCountOutputTypeCountPaymentPageArgs
     QRPayment?: boolean | MerchantCountOutputTypeCountQRPaymentArgs
+    Transaction?: boolean | MerchantCountOutputTypeCountTransactionArgs
+    Wallet?: boolean | MerchantCountOutputTypeCountWalletArgs
   }
 
   // Custom InputTypes
@@ -2484,15 +2484,15 @@ export namespace Prisma {
   /**
    * MerchantCountOutputType without action
    */
-  export type MerchantCountOutputTypeCountPaymentLinkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PaymentLinkWhereInput
+  export type MerchantCountOutputTypeCountIntiatedPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IntiatedPaymentWhereInput
   }
 
   /**
    * MerchantCountOutputType without action
    */
-  export type MerchantCountOutputTypeCountWalletArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WalletWhereInput
+  export type MerchantCountOutputTypeCountPaymentLinkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PaymentLinkWhereInput
   }
 
   /**
@@ -2505,8 +2505,8 @@ export namespace Prisma {
   /**
    * MerchantCountOutputType without action
    */
-  export type MerchantCountOutputTypeCountIntiatedPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: IntiatedPaymentWhereInput
+  export type MerchantCountOutputTypeCountQRPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QRPaymentWhereInput
   }
 
   /**
@@ -2519,8 +2519,8 @@ export namespace Prisma {
   /**
    * MerchantCountOutputType without action
    */
-  export type MerchantCountOutputTypeCountQRPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: QRPaymentWhereInput
+  export type MerchantCountOutputTypeCountWalletArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WalletWhereInput
   }
 
 
@@ -2530,14 +2530,14 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     accounts: number
-    sessions: number
     Authenticator: number
+    sessions: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | UserCountOutputTypeCountAccountsArgs
-    sessions?: boolean | UserCountOutputTypeCountSessionsArgs
     Authenticator?: boolean | UserCountOutputTypeCountAuthenticatorArgs
+    sessions?: boolean | UserCountOutputTypeCountSessionsArgs
   }
 
   // Custom InputTypes
@@ -2561,15 +2561,15 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: SessionWhereInput
+  export type UserCountOutputTypeCountAuthenticatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AuthenticatorWhereInput
   }
 
   /**
    * UserCountOutputType without action
    */
-  export type UserCountOutputTypeCountAuthenticatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AuthenticatorWhereInput
+  export type UserCountOutputTypeCountSessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SessionWhereInput
   }
 
 
@@ -2579,10 +2579,12 @@ export namespace Prisma {
 
   export type StableCoinCountOutputType = {
     Wallet: number
+    IntiatedPayment: number
   }
 
   export type StableCoinCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Wallet?: boolean | StableCoinCountOutputTypeCountWalletArgs
+    IntiatedPayment?: boolean | StableCoinCountOutputTypeCountIntiatedPaymentArgs
   }
 
   // Custom InputTypes
@@ -2601,6 +2603,13 @@ export namespace Prisma {
    */
   export type StableCoinCountOutputTypeCountWalletArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: WalletWhereInput
+  }
+
+  /**
+   * StableCoinCountOutputType without action
+   */
+  export type StableCoinCountOutputTypeCountIntiatedPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IntiatedPaymentWhereInput
   }
 
 
@@ -2976,13 +2985,13 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
+    IntiatedPayment?: boolean | Merchant$IntiatedPaymentArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     PaymentLink?: boolean | Merchant$PaymentLinkArgs<ExtArgs>
-    Wallet?: boolean | Merchant$WalletArgs<ExtArgs>
     PaymentPage?: boolean | Merchant$PaymentPageArgs<ExtArgs>
-    IntiatedPayment?: boolean | Merchant$IntiatedPaymentArgs<ExtArgs>
-    Transaction?: boolean | Merchant$TransactionArgs<ExtArgs>
     QRPayment?: boolean | Merchant$QRPaymentArgs<ExtArgs>
+    Transaction?: boolean | Merchant$TransactionArgs<ExtArgs>
+    Wallet?: boolean | Merchant$WalletArgs<ExtArgs>
     _count?: boolean | MerchantCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["merchant"]>
 
@@ -3029,13 +3038,13 @@ export namespace Prisma {
 
   export type MerchantOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "phoneNumber" | "address" | "logoUrl" | "description" | "createdAt" | "updatedAt" | "userId", ExtArgs["result"]["merchant"]>
   export type MerchantInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    IntiatedPayment?: boolean | Merchant$IntiatedPaymentArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
     PaymentLink?: boolean | Merchant$PaymentLinkArgs<ExtArgs>
-    Wallet?: boolean | Merchant$WalletArgs<ExtArgs>
     PaymentPage?: boolean | Merchant$PaymentPageArgs<ExtArgs>
-    IntiatedPayment?: boolean | Merchant$IntiatedPaymentArgs<ExtArgs>
-    Transaction?: boolean | Merchant$TransactionArgs<ExtArgs>
     QRPayment?: boolean | Merchant$QRPaymentArgs<ExtArgs>
+    Transaction?: boolean | Merchant$TransactionArgs<ExtArgs>
+    Wallet?: boolean | Merchant$WalletArgs<ExtArgs>
     _count?: boolean | MerchantCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MerchantIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3048,13 +3057,13 @@ export namespace Prisma {
   export type $MerchantPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Merchant"
     objects: {
+      IntiatedPayment: Prisma.$IntiatedPaymentPayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs>
       PaymentLink: Prisma.$PaymentLinkPayload<ExtArgs>[]
-      Wallet: Prisma.$WalletPayload<ExtArgs>[]
       PaymentPage: Prisma.$PaymentPagePayload<ExtArgs>[]
-      IntiatedPayment: Prisma.$IntiatedPaymentPayload<ExtArgs>[]
-      Transaction: Prisma.$TransactionPayload<ExtArgs>[]
       QRPayment: Prisma.$QRPaymentPayload<ExtArgs>[]
+      Transaction: Prisma.$TransactionPayload<ExtArgs>[]
+      Wallet: Prisma.$WalletPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3461,13 +3470,13 @@ export namespace Prisma {
    */
   export interface Prisma__MerchantClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    IntiatedPayment<T extends Merchant$IntiatedPaymentArgs<ExtArgs> = {}>(args?: Subset<T, Merchant$IntiatedPaymentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntiatedPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     PaymentLink<T extends Merchant$PaymentLinkArgs<ExtArgs> = {}>(args?: Subset<T, Merchant$PaymentLinkArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentLinkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Wallet<T extends Merchant$WalletArgs<ExtArgs> = {}>(args?: Subset<T, Merchant$WalletArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     PaymentPage<T extends Merchant$PaymentPageArgs<ExtArgs> = {}>(args?: Subset<T, Merchant$PaymentPageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    IntiatedPayment<T extends Merchant$IntiatedPaymentArgs<ExtArgs> = {}>(args?: Subset<T, Merchant$IntiatedPaymentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntiatedPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    Transaction<T extends Merchant$TransactionArgs<ExtArgs> = {}>(args?: Subset<T, Merchant$TransactionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     QRPayment<T extends Merchant$QRPaymentArgs<ExtArgs> = {}>(args?: Subset<T, Merchant$QRPaymentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QRPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Transaction<T extends Merchant$TransactionArgs<ExtArgs> = {}>(args?: Subset<T, Merchant$TransactionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Wallet<T extends Merchant$WalletArgs<ExtArgs> = {}>(args?: Subset<T, Merchant$WalletArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3903,6 +3912,30 @@ export namespace Prisma {
   }
 
   /**
+   * Merchant.IntiatedPayment
+   */
+  export type Merchant$IntiatedPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntiatedPayment
+     */
+    select?: IntiatedPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntiatedPayment
+     */
+    omit?: IntiatedPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntiatedPaymentInclude<ExtArgs> | null
+    where?: IntiatedPaymentWhereInput
+    orderBy?: IntiatedPaymentOrderByWithRelationInput | IntiatedPaymentOrderByWithRelationInput[]
+    cursor?: IntiatedPaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IntiatedPaymentScalarFieldEnum | IntiatedPaymentScalarFieldEnum[]
+  }
+
+  /**
    * Merchant.PaymentLink
    */
   export type Merchant$PaymentLinkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3924,30 +3957,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PaymentLinkScalarFieldEnum | PaymentLinkScalarFieldEnum[]
-  }
-
-  /**
-   * Merchant.Wallet
-   */
-  export type Merchant$WalletArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Wallet
-     */
-    select?: WalletSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Wallet
-     */
-    omit?: WalletOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WalletInclude<ExtArgs> | null
-    where?: WalletWhereInput
-    orderBy?: WalletOrderByWithRelationInput | WalletOrderByWithRelationInput[]
-    cursor?: WalletWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: WalletScalarFieldEnum | WalletScalarFieldEnum[]
   }
 
   /**
@@ -3975,27 +3984,27 @@ export namespace Prisma {
   }
 
   /**
-   * Merchant.IntiatedPayment
+   * Merchant.QRPayment
    */
-  export type Merchant$IntiatedPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Merchant$QRPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the IntiatedPayment
+     * Select specific fields to fetch from the QRPayment
      */
-    select?: IntiatedPaymentSelect<ExtArgs> | null
+    select?: QRPaymentSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the IntiatedPayment
+     * Omit specific fields from the QRPayment
      */
-    omit?: IntiatedPaymentOmit<ExtArgs> | null
+    omit?: QRPaymentOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: IntiatedPaymentInclude<ExtArgs> | null
-    where?: IntiatedPaymentWhereInput
-    orderBy?: IntiatedPaymentOrderByWithRelationInput | IntiatedPaymentOrderByWithRelationInput[]
-    cursor?: IntiatedPaymentWhereUniqueInput
+    include?: QRPaymentInclude<ExtArgs> | null
+    where?: QRPaymentWhereInput
+    orderBy?: QRPaymentOrderByWithRelationInput | QRPaymentOrderByWithRelationInput[]
+    cursor?: QRPaymentWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: IntiatedPaymentScalarFieldEnum | IntiatedPaymentScalarFieldEnum[]
+    distinct?: QRPaymentScalarFieldEnum | QRPaymentScalarFieldEnum[]
   }
 
   /**
@@ -4023,27 +4032,27 @@ export namespace Prisma {
   }
 
   /**
-   * Merchant.QRPayment
+   * Merchant.Wallet
    */
-  export type Merchant$QRPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Merchant$WalletArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the QRPayment
+     * Select specific fields to fetch from the Wallet
      */
-    select?: QRPaymentSelect<ExtArgs> | null
+    select?: WalletSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the QRPayment
+     * Omit specific fields from the Wallet
      */
-    omit?: QRPaymentOmit<ExtArgs> | null
+    omit?: WalletOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: QRPaymentInclude<ExtArgs> | null
-    where?: QRPaymentWhereInput
-    orderBy?: QRPaymentOrderByWithRelationInput | QRPaymentOrderByWithRelationInput[]
-    cursor?: QRPaymentWhereUniqueInput
+    include?: WalletInclude<ExtArgs> | null
+    where?: WalletWhereInput
+    orderBy?: WalletOrderByWithRelationInput | WalletOrderByWithRelationInput[]
+    cursor?: WalletWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: QRPaymentScalarFieldEnum | QRPaymentScalarFieldEnum[]
+    distinct?: WalletScalarFieldEnum | WalletScalarFieldEnum[]
   }
 
   /**
@@ -4246,9 +4255,9 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     accounts?: boolean | User$accountsArgs<ExtArgs>
-    sessions?: boolean | User$sessionsArgs<ExtArgs>
     Authenticator?: boolean | User$AuthenticatorArgs<ExtArgs>
     Merchant?: boolean | User$MerchantArgs<ExtArgs>
+    sessions?: boolean | User$sessionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4285,9 +4294,9 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     accounts?: boolean | User$accountsArgs<ExtArgs>
-    sessions?: boolean | User$sessionsArgs<ExtArgs>
     Authenticator?: boolean | User$AuthenticatorArgs<ExtArgs>
     Merchant?: boolean | User$MerchantArgs<ExtArgs>
+    sessions?: boolean | User$sessionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4297,9 +4306,9 @@ export namespace Prisma {
     name: "User"
     objects: {
       accounts: Prisma.$AccountPayload<ExtArgs>[]
-      sessions: Prisma.$SessionPayload<ExtArgs>[]
       Authenticator: Prisma.$AuthenticatorPayload<ExtArgs>[]
       Merchant: Prisma.$MerchantPayload<ExtArgs> | null
+      sessions: Prisma.$SessionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4704,9 +4713,9 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     accounts<T extends User$accountsArgs<ExtArgs> = {}>(args?: Subset<T, User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Authenticator<T extends User$AuthenticatorArgs<ExtArgs> = {}>(args?: Subset<T, User$AuthenticatorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthenticatorPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     Merchant<T extends User$MerchantArgs<ExtArgs> = {}>(args?: Subset<T, User$MerchantArgs<ExtArgs>>): Prisma__MerchantClient<$Result.GetResult<Prisma.$MerchantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5155,30 +5164,6 @@ export namespace Prisma {
   }
 
   /**
-   * User.sessions
-   */
-  export type User$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Session
-     */
-    select?: SessionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Session
-     */
-    omit?: SessionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: SessionInclude<ExtArgs> | null
-    where?: SessionWhereInput
-    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
-    cursor?: SessionWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
-  }
-
-  /**
    * User.Authenticator
    */
   export type User$AuthenticatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5219,6 +5204,30 @@ export namespace Prisma {
      */
     include?: MerchantInclude<ExtArgs> | null
     where?: MerchantWhereInput
+  }
+
+  /**
+   * User.sessions
+   */
+  export type User$sessionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Session
+     */
+    select?: SessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Session
+     */
+    omit?: SessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SessionInclude<ExtArgs> | null
+    where?: SessionWhereInput
+    orderBy?: SessionOrderByWithRelationInput | SessionOrderByWithRelationInput[]
+    cursor?: SessionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SessionScalarFieldEnum | SessionScalarFieldEnum[]
   }
 
   /**
@@ -9800,8 +9809,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     merchantId?: boolean
-    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     merchant?: boolean | MerchantDefaultArgs<ExtArgs>
+    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["wallet"]>
 
   export type WalletSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9811,8 +9820,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     merchantId?: boolean
-    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     merchant?: boolean | MerchantDefaultArgs<ExtArgs>
+    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["wallet"]>
 
   export type WalletSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9822,8 +9831,8 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     merchantId?: boolean
-    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     merchant?: boolean | MerchantDefaultArgs<ExtArgs>
+    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["wallet"]>
 
   export type WalletSelectScalar = {
@@ -9837,23 +9846,23 @@ export namespace Prisma {
 
   export type WalletOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "balance" | "stableCoinId" | "createdAt" | "updatedAt" | "merchantId", ExtArgs["result"]["wallet"]>
   export type WalletInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     merchant?: boolean | MerchantDefaultArgs<ExtArgs>
+    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
   }
   export type WalletIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     merchant?: boolean | MerchantDefaultArgs<ExtArgs>
+    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
   }
   export type WalletIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     merchant?: boolean | MerchantDefaultArgs<ExtArgs>
+    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
   }
 
   export type $WalletPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Wallet"
     objects: {
-      stableCoin: Prisma.$StableCoinPayload<ExtArgs>
       merchant: Prisma.$MerchantPayload<ExtArgs>
+      stableCoin: Prisma.$StableCoinPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -10256,8 +10265,8 @@ export namespace Prisma {
    */
   export interface Prisma__WalletClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    stableCoin<T extends StableCoinDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StableCoinDefaultArgs<ExtArgs>>): Prisma__StableCoinClient<$Result.GetResult<Prisma.$StableCoinPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     merchant<T extends MerchantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MerchantDefaultArgs<ExtArgs>>): Prisma__MerchantClient<$Result.GetResult<Prisma.$MerchantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    stableCoin<T extends StableCoinDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StableCoinDefaultArgs<ExtArgs>>): Prisma__StableCoinClient<$Result.GetResult<Prisma.$StableCoinPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10888,6 +10897,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     Wallet?: boolean | StableCoin$WalletArgs<ExtArgs>
+    IntiatedPayment?: boolean | StableCoin$IntiatedPaymentArgs<ExtArgs>
     _count?: boolean | StableCoinCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stableCoin"]>
 
@@ -10924,6 +10934,7 @@ export namespace Prisma {
   export type StableCoinOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "symbol" | "logoUrl" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["stableCoin"]>
   export type StableCoinInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Wallet?: boolean | StableCoin$WalletArgs<ExtArgs>
+    IntiatedPayment?: boolean | StableCoin$IntiatedPaymentArgs<ExtArgs>
     _count?: boolean | StableCoinCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type StableCoinIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -10933,6 +10944,7 @@ export namespace Prisma {
     name: "StableCoin"
     objects: {
       Wallet: Prisma.$WalletPayload<ExtArgs>[]
+      IntiatedPayment: Prisma.$IntiatedPaymentPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -11337,6 +11349,7 @@ export namespace Prisma {
   export interface Prisma__StableCoinClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     Wallet<T extends StableCoin$WalletArgs<ExtArgs> = {}>(args?: Subset<T, StableCoin$WalletArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WalletPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    IntiatedPayment<T extends StableCoin$IntiatedPaymentArgs<ExtArgs> = {}>(args?: Subset<T, StableCoin$IntiatedPaymentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntiatedPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11785,6 +11798,30 @@ export namespace Prisma {
   }
 
   /**
+   * StableCoin.IntiatedPayment
+   */
+  export type StableCoin$IntiatedPaymentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IntiatedPayment
+     */
+    select?: IntiatedPaymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IntiatedPayment
+     */
+    omit?: IntiatedPaymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IntiatedPaymentInclude<ExtArgs> | null
+    where?: IntiatedPaymentWhereInput
+    orderBy?: IntiatedPaymentOrderByWithRelationInput | IntiatedPaymentOrderByWithRelationInput[]
+    cursor?: IntiatedPaymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IntiatedPaymentScalarFieldEnum | IntiatedPaymentScalarFieldEnum[]
+  }
+
+  /**
    * StableCoin without action
    */
   export type StableCoinDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12025,8 +12062,8 @@ export namespace Prisma {
     expiresAt?: boolean
     description?: boolean
     merchantId?: boolean
-    merchant?: boolean | MerchantDefaultArgs<ExtArgs>
     IntiatedPayment?: boolean | PaymentLink$IntiatedPaymentArgs<ExtArgs>
+    merchant?: boolean | MerchantDefaultArgs<ExtArgs>
     _count?: boolean | PaymentLinkCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["paymentLink"]>
 
@@ -12067,8 +12104,8 @@ export namespace Prisma {
 
   export type PaymentLinkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "amount" | "status" | "createdAt" | "updatedAt" | "expiresAt" | "description" | "merchantId", ExtArgs["result"]["paymentLink"]>
   export type PaymentLinkInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    merchant?: boolean | MerchantDefaultArgs<ExtArgs>
     IntiatedPayment?: boolean | PaymentLink$IntiatedPaymentArgs<ExtArgs>
+    merchant?: boolean | MerchantDefaultArgs<ExtArgs>
     _count?: boolean | PaymentLinkCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PaymentLinkIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -12081,8 +12118,8 @@ export namespace Prisma {
   export type $PaymentLinkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "PaymentLink"
     objects: {
-      merchant: Prisma.$MerchantPayload<ExtArgs>
       IntiatedPayment: Prisma.$IntiatedPaymentPayload<ExtArgs>[]
+      merchant: Prisma.$MerchantPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -12487,8 +12524,8 @@ export namespace Prisma {
    */
   export interface Prisma__PaymentLinkClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    merchant<T extends MerchantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MerchantDefaultArgs<ExtArgs>>): Prisma__MerchantClient<$Result.GetResult<Prisma.$MerchantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     IntiatedPayment<T extends PaymentLink$IntiatedPaymentArgs<ExtArgs> = {}>(args?: Subset<T, PaymentLink$IntiatedPaymentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntiatedPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    merchant<T extends MerchantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MerchantDefaultArgs<ExtArgs>>): Prisma__MerchantClient<$Result.GetResult<Prisma.$MerchantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -13202,8 +13239,8 @@ export namespace Prisma {
     updatedAt?: boolean
     status?: boolean
     merchantId?: boolean
-    merchant?: boolean | MerchantDefaultArgs<ExtArgs>
     IntiatedPayment?: boolean | PaymentPage$IntiatedPaymentArgs<ExtArgs>
+    merchant?: boolean | MerchantDefaultArgs<ExtArgs>
     PaymentPageForm?: boolean | PaymentPage$PaymentPageFormArgs<ExtArgs>
     _count?: boolean | PaymentPageCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["paymentPage"]>
@@ -13251,8 +13288,8 @@ export namespace Prisma {
 
   export type PaymentPageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "description" | "logoUrl" | "amount" | "expiresAt" | "createdAt" | "updatedAt" | "status" | "merchantId", ExtArgs["result"]["paymentPage"]>
   export type PaymentPageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    merchant?: boolean | MerchantDefaultArgs<ExtArgs>
     IntiatedPayment?: boolean | PaymentPage$IntiatedPaymentArgs<ExtArgs>
+    merchant?: boolean | MerchantDefaultArgs<ExtArgs>
     PaymentPageForm?: boolean | PaymentPage$PaymentPageFormArgs<ExtArgs>
     _count?: boolean | PaymentPageCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -13266,8 +13303,8 @@ export namespace Prisma {
   export type $PaymentPagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "PaymentPage"
     objects: {
-      merchant: Prisma.$MerchantPayload<ExtArgs>
       IntiatedPayment: Prisma.$IntiatedPaymentPayload<ExtArgs>[]
+      merchant: Prisma.$MerchantPayload<ExtArgs>
       PaymentPageForm: Prisma.$PaymentPageFormPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -13675,8 +13712,8 @@ export namespace Prisma {
    */
   export interface Prisma__PaymentPageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    merchant<T extends MerchantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MerchantDefaultArgs<ExtArgs>>): Prisma__MerchantClient<$Result.GetResult<Prisma.$MerchantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     IntiatedPayment<T extends PaymentPage$IntiatedPaymentArgs<ExtArgs> = {}>(args?: Subset<T, PaymentPage$IntiatedPaymentArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IntiatedPaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    merchant<T extends MerchantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MerchantDefaultArgs<ExtArgs>>): Prisma__MerchantClient<$Result.GetResult<Prisma.$MerchantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     PaymentPageForm<T extends PaymentPage$PaymentPageFormArgs<ExtArgs> = {}>(args?: Subset<T, PaymentPage$PaymentPageFormArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PaymentPageFormPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -14210,6 +14247,7 @@ export namespace Prisma {
     amount: Decimal | null
     paymentPageId: string | null
     paymentLinkId: string | null
+    stableCoinId: string | null
     createdAt: Date | null
     updatedAt: Date | null
     merchantId: string | null
@@ -14224,6 +14262,7 @@ export namespace Prisma {
     amount: Decimal | null
     paymentPageId: string | null
     paymentLinkId: string | null
+    stableCoinId: string | null
     createdAt: Date | null
     updatedAt: Date | null
     merchantId: string | null
@@ -14238,6 +14277,7 @@ export namespace Prisma {
     amount: number
     paymentPageId: number
     paymentLinkId: number
+    stableCoinId: number
     createdAt: number
     updatedAt: number
     merchantId: number
@@ -14264,6 +14304,7 @@ export namespace Prisma {
     amount?: true
     paymentPageId?: true
     paymentLinkId?: true
+    stableCoinId?: true
     createdAt?: true
     updatedAt?: true
     merchantId?: true
@@ -14278,6 +14319,7 @@ export namespace Prisma {
     amount?: true
     paymentPageId?: true
     paymentLinkId?: true
+    stableCoinId?: true
     createdAt?: true
     updatedAt?: true
     merchantId?: true
@@ -14292,6 +14334,7 @@ export namespace Prisma {
     amount?: true
     paymentPageId?: true
     paymentLinkId?: true
+    stableCoinId?: true
     createdAt?: true
     updatedAt?: true
     merchantId?: true
@@ -14393,6 +14436,7 @@ export namespace Prisma {
     amount: Decimal
     paymentPageId: string | null
     paymentLinkId: string | null
+    stableCoinId: string
     createdAt: Date
     updatedAt: Date
     merchantId: string
@@ -14426,13 +14470,15 @@ export namespace Prisma {
     amount?: boolean
     paymentPageId?: boolean
     paymentLinkId?: boolean
+    stableCoinId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     merchantId?: boolean
-    paymentPage?: boolean | IntiatedPayment$paymentPageArgs<ExtArgs>
-    paymentLink?: boolean | IntiatedPayment$paymentLinkArgs<ExtArgs>
-    Transaction?: boolean | IntiatedPayment$TransactionArgs<ExtArgs>
+    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     merchant?: boolean | MerchantDefaultArgs<ExtArgs>
+    paymentLink?: boolean | IntiatedPayment$paymentLinkArgs<ExtArgs>
+    paymentPage?: boolean | IntiatedPayment$paymentPageArgs<ExtArgs>
+    Transaction?: boolean | IntiatedPayment$TransactionArgs<ExtArgs>
     _count?: boolean | IntiatedPaymentCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["intiatedPayment"]>
 
@@ -14445,12 +14491,14 @@ export namespace Prisma {
     amount?: boolean
     paymentPageId?: boolean
     paymentLinkId?: boolean
+    stableCoinId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     merchantId?: boolean
-    paymentPage?: boolean | IntiatedPayment$paymentPageArgs<ExtArgs>
-    paymentLink?: boolean | IntiatedPayment$paymentLinkArgs<ExtArgs>
+    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     merchant?: boolean | MerchantDefaultArgs<ExtArgs>
+    paymentLink?: boolean | IntiatedPayment$paymentLinkArgs<ExtArgs>
+    paymentPage?: boolean | IntiatedPayment$paymentPageArgs<ExtArgs>
   }, ExtArgs["result"]["intiatedPayment"]>
 
   export type IntiatedPaymentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14462,12 +14510,14 @@ export namespace Prisma {
     amount?: boolean
     paymentPageId?: boolean
     paymentLinkId?: boolean
+    stableCoinId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     merchantId?: boolean
-    paymentPage?: boolean | IntiatedPayment$paymentPageArgs<ExtArgs>
-    paymentLink?: boolean | IntiatedPayment$paymentLinkArgs<ExtArgs>
+    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     merchant?: boolean | MerchantDefaultArgs<ExtArgs>
+    paymentLink?: boolean | IntiatedPayment$paymentLinkArgs<ExtArgs>
+    paymentPage?: boolean | IntiatedPayment$paymentPageArgs<ExtArgs>
   }, ExtArgs["result"]["intiatedPayment"]>
 
   export type IntiatedPaymentSelectScalar = {
@@ -14479,37 +14529,42 @@ export namespace Prisma {
     amount?: boolean
     paymentPageId?: boolean
     paymentLinkId?: boolean
+    stableCoinId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     merchantId?: boolean
   }
 
-  export type IntiatedPaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "initiatedFrom" | "status" | "index" | "walletAddress" | "amount" | "paymentPageId" | "paymentLinkId" | "createdAt" | "updatedAt" | "merchantId", ExtArgs["result"]["intiatedPayment"]>
+  export type IntiatedPaymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "initiatedFrom" | "status" | "index" | "walletAddress" | "amount" | "paymentPageId" | "paymentLinkId" | "stableCoinId" | "createdAt" | "updatedAt" | "merchantId", ExtArgs["result"]["intiatedPayment"]>
   export type IntiatedPaymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    paymentPage?: boolean | IntiatedPayment$paymentPageArgs<ExtArgs>
-    paymentLink?: boolean | IntiatedPayment$paymentLinkArgs<ExtArgs>
-    Transaction?: boolean | IntiatedPayment$TransactionArgs<ExtArgs>
+    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     merchant?: boolean | MerchantDefaultArgs<ExtArgs>
+    paymentLink?: boolean | IntiatedPayment$paymentLinkArgs<ExtArgs>
+    paymentPage?: boolean | IntiatedPayment$paymentPageArgs<ExtArgs>
+    Transaction?: boolean | IntiatedPayment$TransactionArgs<ExtArgs>
     _count?: boolean | IntiatedPaymentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type IntiatedPaymentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    paymentPage?: boolean | IntiatedPayment$paymentPageArgs<ExtArgs>
-    paymentLink?: boolean | IntiatedPayment$paymentLinkArgs<ExtArgs>
+    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     merchant?: boolean | MerchantDefaultArgs<ExtArgs>
+    paymentLink?: boolean | IntiatedPayment$paymentLinkArgs<ExtArgs>
+    paymentPage?: boolean | IntiatedPayment$paymentPageArgs<ExtArgs>
   }
   export type IntiatedPaymentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    paymentPage?: boolean | IntiatedPayment$paymentPageArgs<ExtArgs>
-    paymentLink?: boolean | IntiatedPayment$paymentLinkArgs<ExtArgs>
+    stableCoin?: boolean | StableCoinDefaultArgs<ExtArgs>
     merchant?: boolean | MerchantDefaultArgs<ExtArgs>
+    paymentLink?: boolean | IntiatedPayment$paymentLinkArgs<ExtArgs>
+    paymentPage?: boolean | IntiatedPayment$paymentPageArgs<ExtArgs>
   }
 
   export type $IntiatedPaymentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "IntiatedPayment"
     objects: {
-      paymentPage: Prisma.$PaymentPagePayload<ExtArgs> | null
-      paymentLink: Prisma.$PaymentLinkPayload<ExtArgs> | null
-      Transaction: Prisma.$TransactionPayload<ExtArgs>[]
+      stableCoin: Prisma.$StableCoinPayload<ExtArgs>
       merchant: Prisma.$MerchantPayload<ExtArgs>
+      paymentLink: Prisma.$PaymentLinkPayload<ExtArgs> | null
+      paymentPage: Prisma.$PaymentPagePayload<ExtArgs> | null
+      Transaction: Prisma.$TransactionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -14520,6 +14575,7 @@ export namespace Prisma {
       amount: Prisma.Decimal
       paymentPageId: string | null
       paymentLinkId: string | null
+      stableCoinId: string
       createdAt: Date
       updatedAt: Date
       merchantId: string
@@ -14917,10 +14973,11 @@ export namespace Prisma {
    */
   export interface Prisma__IntiatedPaymentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    paymentPage<T extends IntiatedPayment$paymentPageArgs<ExtArgs> = {}>(args?: Subset<T, IntiatedPayment$paymentPageArgs<ExtArgs>>): Prisma__PaymentPageClient<$Result.GetResult<Prisma.$PaymentPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    paymentLink<T extends IntiatedPayment$paymentLinkArgs<ExtArgs> = {}>(args?: Subset<T, IntiatedPayment$paymentLinkArgs<ExtArgs>>): Prisma__PaymentLinkClient<$Result.GetResult<Prisma.$PaymentLinkPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    Transaction<T extends IntiatedPayment$TransactionArgs<ExtArgs> = {}>(args?: Subset<T, IntiatedPayment$TransactionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    stableCoin<T extends StableCoinDefaultArgs<ExtArgs> = {}>(args?: Subset<T, StableCoinDefaultArgs<ExtArgs>>): Prisma__StableCoinClient<$Result.GetResult<Prisma.$StableCoinPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     merchant<T extends MerchantDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MerchantDefaultArgs<ExtArgs>>): Prisma__MerchantClient<$Result.GetResult<Prisma.$MerchantPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    paymentLink<T extends IntiatedPayment$paymentLinkArgs<ExtArgs> = {}>(args?: Subset<T, IntiatedPayment$paymentLinkArgs<ExtArgs>>): Prisma__PaymentLinkClient<$Result.GetResult<Prisma.$PaymentLinkPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    paymentPage<T extends IntiatedPayment$paymentPageArgs<ExtArgs> = {}>(args?: Subset<T, IntiatedPayment$paymentPageArgs<ExtArgs>>): Prisma__PaymentPageClient<$Result.GetResult<Prisma.$PaymentPagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    Transaction<T extends IntiatedPayment$TransactionArgs<ExtArgs> = {}>(args?: Subset<T, IntiatedPayment$TransactionArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14958,6 +15015,7 @@ export namespace Prisma {
     readonly amount: FieldRef<"IntiatedPayment", 'Decimal'>
     readonly paymentPageId: FieldRef<"IntiatedPayment", 'String'>
     readonly paymentLinkId: FieldRef<"IntiatedPayment", 'String'>
+    readonly stableCoinId: FieldRef<"IntiatedPayment", 'String'>
     readonly createdAt: FieldRef<"IntiatedPayment", 'DateTime'>
     readonly updatedAt: FieldRef<"IntiatedPayment", 'DateTime'>
     readonly merchantId: FieldRef<"IntiatedPayment", 'String'>
@@ -15357,25 +15415,6 @@ export namespace Prisma {
   }
 
   /**
-   * IntiatedPayment.paymentPage
-   */
-  export type IntiatedPayment$paymentPageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the PaymentPage
-     */
-    select?: PaymentPageSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the PaymentPage
-     */
-    omit?: PaymentPageOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PaymentPageInclude<ExtArgs> | null
-    where?: PaymentPageWhereInput
-  }
-
-  /**
    * IntiatedPayment.paymentLink
    */
   export type IntiatedPayment$paymentLinkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15392,6 +15431,25 @@ export namespace Prisma {
      */
     include?: PaymentLinkInclude<ExtArgs> | null
     where?: PaymentLinkWhereInput
+  }
+
+  /**
+   * IntiatedPayment.paymentPage
+   */
+  export type IntiatedPayment$paymentPageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PaymentPage
+     */
+    select?: PaymentPageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PaymentPage
+     */
+    omit?: PaymentPageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PaymentPageInclude<ExtArgs> | null
+    where?: PaymentPageWhereInput
   }
 
   /**
@@ -22273,6 +22331,7 @@ export namespace Prisma {
     amount: 'amount',
     paymentPageId: 'paymentPageId',
     paymentLinkId: 'paymentLinkId',
+    stableCoinId: 'stableCoinId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     merchantId: 'merchantId'
@@ -22613,13 +22672,13 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Merchant"> | Date | string
     updatedAt?: DateTimeFilter<"Merchant"> | Date | string
     userId?: StringFilter<"Merchant"> | string
+    IntiatedPayment?: IntiatedPaymentListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     PaymentLink?: PaymentLinkListRelationFilter
-    Wallet?: WalletListRelationFilter
     PaymentPage?: PaymentPageListRelationFilter
-    IntiatedPayment?: IntiatedPaymentListRelationFilter
-    Transaction?: TransactionListRelationFilter
     QRPayment?: QRPaymentListRelationFilter
+    Transaction?: TransactionListRelationFilter
+    Wallet?: WalletListRelationFilter
   }
 
   export type MerchantOrderByWithRelationInput = {
@@ -22633,13 +22692,13 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
+    IntiatedPayment?: IntiatedPaymentOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
     PaymentLink?: PaymentLinkOrderByRelationAggregateInput
-    Wallet?: WalletOrderByRelationAggregateInput
     PaymentPage?: PaymentPageOrderByRelationAggregateInput
-    IntiatedPayment?: IntiatedPaymentOrderByRelationAggregateInput
-    Transaction?: TransactionOrderByRelationAggregateInput
     QRPayment?: QRPaymentOrderByRelationAggregateInput
+    Transaction?: TransactionOrderByRelationAggregateInput
+    Wallet?: WalletOrderByRelationAggregateInput
   }
 
   export type MerchantWhereUniqueInput = Prisma.AtLeast<{
@@ -22656,13 +22715,13 @@ export namespace Prisma {
     description?: StringNullableFilter<"Merchant"> | string | null
     createdAt?: DateTimeFilter<"Merchant"> | Date | string
     updatedAt?: DateTimeFilter<"Merchant"> | Date | string
+    IntiatedPayment?: IntiatedPaymentListRelationFilter
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     PaymentLink?: PaymentLinkListRelationFilter
-    Wallet?: WalletListRelationFilter
     PaymentPage?: PaymentPageListRelationFilter
-    IntiatedPayment?: IntiatedPaymentListRelationFilter
-    Transaction?: TransactionListRelationFilter
     QRPayment?: QRPaymentListRelationFilter
+    Transaction?: TransactionListRelationFilter
+    Wallet?: WalletListRelationFilter
   }, "id" | "email" | "userId">
 
   export type MerchantOrderByWithAggregationInput = {
@@ -22709,9 +22768,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
-    sessions?: SessionListRelationFilter
     Authenticator?: AuthenticatorListRelationFilter
     Merchant?: XOR<MerchantNullableScalarRelationFilter, MerchantWhereInput> | null
+    sessions?: SessionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -22723,9 +22782,9 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     accounts?: AccountOrderByRelationAggregateInput
-    sessions?: SessionOrderByRelationAggregateInput
     Authenticator?: AuthenticatorOrderByRelationAggregateInput
     Merchant?: MerchantOrderByWithRelationInput
+    sessions?: SessionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -22740,9 +22799,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     accounts?: AccountListRelationFilter
-    sessions?: SessionListRelationFilter
     Authenticator?: AuthenticatorListRelationFilter
     Merchant?: XOR<MerchantNullableScalarRelationFilter, MerchantWhereInput> | null
+    sessions?: SessionListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -23050,8 +23109,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Wallet"> | Date | string
     updatedAt?: DateTimeFilter<"Wallet"> | Date | string
     merchantId?: StringFilter<"Wallet"> | string
-    stableCoin?: XOR<StableCoinScalarRelationFilter, StableCoinWhereInput>
     merchant?: XOR<MerchantScalarRelationFilter, MerchantWhereInput>
+    stableCoin?: XOR<StableCoinScalarRelationFilter, StableCoinWhereInput>
   }
 
   export type WalletOrderByWithRelationInput = {
@@ -23061,8 +23120,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     merchantId?: SortOrder
-    stableCoin?: StableCoinOrderByWithRelationInput
     merchant?: MerchantOrderByWithRelationInput
+    stableCoin?: StableCoinOrderByWithRelationInput
   }
 
   export type WalletWhereUniqueInput = Prisma.AtLeast<{
@@ -23075,8 +23134,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Wallet"> | Date | string
     updatedAt?: DateTimeFilter<"Wallet"> | Date | string
     merchantId?: StringFilter<"Wallet"> | string
-    stableCoin?: XOR<StableCoinScalarRelationFilter, StableCoinWhereInput>
     merchant?: XOR<MerchantScalarRelationFilter, MerchantWhereInput>
+    stableCoin?: XOR<StableCoinScalarRelationFilter, StableCoinWhereInput>
   }, "id">
 
   export type WalletOrderByWithAggregationInput = {
@@ -23117,6 +23176,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"StableCoin"> | Date | string
     updatedAt?: DateTimeFilter<"StableCoin"> | Date | string
     Wallet?: WalletListRelationFilter
+    IntiatedPayment?: IntiatedPaymentListRelationFilter
   }
 
   export type StableCoinOrderByWithRelationInput = {
@@ -23128,6 +23188,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     Wallet?: WalletOrderByRelationAggregateInput
+    IntiatedPayment?: IntiatedPaymentOrderByRelationAggregateInput
   }
 
   export type StableCoinWhereUniqueInput = Prisma.AtLeast<{
@@ -23142,6 +23203,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"StableCoin"> | Date | string
     updatedAt?: DateTimeFilter<"StableCoin"> | Date | string
     Wallet?: WalletListRelationFilter
+    IntiatedPayment?: IntiatedPaymentListRelationFilter
   }, "id" | "symbol">
 
   export type StableCoinOrderByWithAggregationInput = {
@@ -23182,8 +23244,8 @@ export namespace Prisma {
     expiresAt?: DateTimeNullableFilter<"PaymentLink"> | Date | string | null
     description?: StringNullableFilter<"PaymentLink"> | string | null
     merchantId?: StringFilter<"PaymentLink"> | string
-    merchant?: XOR<MerchantScalarRelationFilter, MerchantWhereInput>
     IntiatedPayment?: IntiatedPaymentListRelationFilter
+    merchant?: XOR<MerchantScalarRelationFilter, MerchantWhereInput>
   }
 
   export type PaymentLinkOrderByWithRelationInput = {
@@ -23195,8 +23257,8 @@ export namespace Prisma {
     expiresAt?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     merchantId?: SortOrder
-    merchant?: MerchantOrderByWithRelationInput
     IntiatedPayment?: IntiatedPaymentOrderByRelationAggregateInput
+    merchant?: MerchantOrderByWithRelationInput
   }
 
   export type PaymentLinkWhereUniqueInput = Prisma.AtLeast<{
@@ -23211,8 +23273,8 @@ export namespace Prisma {
     expiresAt?: DateTimeNullableFilter<"PaymentLink"> | Date | string | null
     description?: StringNullableFilter<"PaymentLink"> | string | null
     merchantId?: StringFilter<"PaymentLink"> | string
-    merchant?: XOR<MerchantScalarRelationFilter, MerchantWhereInput>
     IntiatedPayment?: IntiatedPaymentListRelationFilter
+    merchant?: XOR<MerchantScalarRelationFilter, MerchantWhereInput>
   }, "id">
 
   export type PaymentLinkOrderByWithAggregationInput = {
@@ -23259,8 +23321,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"PaymentPage"> | Date | string
     status?: EnumPaymentPageStatusFilter<"PaymentPage"> | $Enums.PaymentPageStatus
     merchantId?: StringFilter<"PaymentPage"> | string
-    merchant?: XOR<MerchantScalarRelationFilter, MerchantWhereInput>
     IntiatedPayment?: IntiatedPaymentListRelationFilter
+    merchant?: XOR<MerchantScalarRelationFilter, MerchantWhereInput>
     PaymentPageForm?: PaymentPageFormListRelationFilter
   }
 
@@ -23275,8 +23337,8 @@ export namespace Prisma {
     updatedAt?: SortOrder
     status?: SortOrder
     merchantId?: SortOrder
-    merchant?: MerchantOrderByWithRelationInput
     IntiatedPayment?: IntiatedPaymentOrderByRelationAggregateInput
+    merchant?: MerchantOrderByWithRelationInput
     PaymentPageForm?: PaymentPageFormOrderByRelationAggregateInput
   }
 
@@ -23294,8 +23356,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"PaymentPage"> | Date | string
     status?: EnumPaymentPageStatusFilter<"PaymentPage"> | $Enums.PaymentPageStatus
     merchantId?: StringFilter<"PaymentPage"> | string
-    merchant?: XOR<MerchantScalarRelationFilter, MerchantWhereInput>
     IntiatedPayment?: IntiatedPaymentListRelationFilter
+    merchant?: XOR<MerchantScalarRelationFilter, MerchantWhereInput>
     PaymentPageForm?: PaymentPageFormListRelationFilter
   }, "id">
 
@@ -23345,13 +23407,15 @@ export namespace Prisma {
     amount?: DecimalFilter<"IntiatedPayment"> | Decimal | DecimalJsLike | number | string
     paymentPageId?: StringNullableFilter<"IntiatedPayment"> | string | null
     paymentLinkId?: StringNullableFilter<"IntiatedPayment"> | string | null
+    stableCoinId?: StringFilter<"IntiatedPayment"> | string
     createdAt?: DateTimeFilter<"IntiatedPayment"> | Date | string
     updatedAt?: DateTimeFilter<"IntiatedPayment"> | Date | string
     merchantId?: StringFilter<"IntiatedPayment"> | string
-    paymentPage?: XOR<PaymentPageNullableScalarRelationFilter, PaymentPageWhereInput> | null
-    paymentLink?: XOR<PaymentLinkNullableScalarRelationFilter, PaymentLinkWhereInput> | null
-    Transaction?: TransactionListRelationFilter
+    stableCoin?: XOR<StableCoinScalarRelationFilter, StableCoinWhereInput>
     merchant?: XOR<MerchantScalarRelationFilter, MerchantWhereInput>
+    paymentLink?: XOR<PaymentLinkNullableScalarRelationFilter, PaymentLinkWhereInput> | null
+    paymentPage?: XOR<PaymentPageNullableScalarRelationFilter, PaymentPageWhereInput> | null
+    Transaction?: TransactionListRelationFilter
   }
 
   export type IntiatedPaymentOrderByWithRelationInput = {
@@ -23363,13 +23427,15 @@ export namespace Prisma {
     amount?: SortOrder
     paymentPageId?: SortOrderInput | SortOrder
     paymentLinkId?: SortOrderInput | SortOrder
+    stableCoinId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     merchantId?: SortOrder
-    paymentPage?: PaymentPageOrderByWithRelationInput
-    paymentLink?: PaymentLinkOrderByWithRelationInput
-    Transaction?: TransactionOrderByRelationAggregateInput
+    stableCoin?: StableCoinOrderByWithRelationInput
     merchant?: MerchantOrderByWithRelationInput
+    paymentLink?: PaymentLinkOrderByWithRelationInput
+    paymentPage?: PaymentPageOrderByWithRelationInput
+    Transaction?: TransactionOrderByRelationAggregateInput
   }
 
   export type IntiatedPaymentWhereUniqueInput = Prisma.AtLeast<{
@@ -23384,13 +23450,15 @@ export namespace Prisma {
     amount?: DecimalFilter<"IntiatedPayment"> | Decimal | DecimalJsLike | number | string
     paymentPageId?: StringNullableFilter<"IntiatedPayment"> | string | null
     paymentLinkId?: StringNullableFilter<"IntiatedPayment"> | string | null
+    stableCoinId?: StringFilter<"IntiatedPayment"> | string
     createdAt?: DateTimeFilter<"IntiatedPayment"> | Date | string
     updatedAt?: DateTimeFilter<"IntiatedPayment"> | Date | string
     merchantId?: StringFilter<"IntiatedPayment"> | string
-    paymentPage?: XOR<PaymentPageNullableScalarRelationFilter, PaymentPageWhereInput> | null
-    paymentLink?: XOR<PaymentLinkNullableScalarRelationFilter, PaymentLinkWhereInput> | null
-    Transaction?: TransactionListRelationFilter
+    stableCoin?: XOR<StableCoinScalarRelationFilter, StableCoinWhereInput>
     merchant?: XOR<MerchantScalarRelationFilter, MerchantWhereInput>
+    paymentLink?: XOR<PaymentLinkNullableScalarRelationFilter, PaymentLinkWhereInput> | null
+    paymentPage?: XOR<PaymentPageNullableScalarRelationFilter, PaymentPageWhereInput> | null
+    Transaction?: TransactionListRelationFilter
   }, "id">
 
   export type IntiatedPaymentOrderByWithAggregationInput = {
@@ -23402,6 +23470,7 @@ export namespace Prisma {
     amount?: SortOrder
     paymentPageId?: SortOrderInput | SortOrder
     paymentLinkId?: SortOrderInput | SortOrder
+    stableCoinId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     merchantId?: SortOrder
@@ -23424,6 +23493,7 @@ export namespace Prisma {
     amount?: DecimalWithAggregatesFilter<"IntiatedPayment"> | Decimal | DecimalJsLike | number | string
     paymentPageId?: StringNullableWithAggregatesFilter<"IntiatedPayment"> | string | null
     paymentLinkId?: StringNullableWithAggregatesFilter<"IntiatedPayment"> | string | null
+    stableCoinId?: StringWithAggregatesFilter<"IntiatedPayment"> | string
     createdAt?: DateTimeWithAggregatesFilter<"IntiatedPayment"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"IntiatedPayment"> | Date | string
     merchantId?: StringWithAggregatesFilter<"IntiatedPayment"> | string
@@ -23866,13 +23936,13 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
     user: UserCreateNestedOneWithoutMerchantInput
     PaymentLink?: PaymentLinkCreateNestedManyWithoutMerchantInput
-    Wallet?: WalletCreateNestedManyWithoutMerchantInput
     PaymentPage?: PaymentPageCreateNestedManyWithoutMerchantInput
-    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
-    Transaction?: TransactionCreateNestedManyWithoutMerchantInput
     QRPayment?: QRPaymentCreateNestedManyWithoutMerchantInput
+    Transaction?: TransactionCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletCreateNestedManyWithoutMerchantInput
   }
 
   export type MerchantUncheckedCreateInput = {
@@ -23886,12 +23956,12 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
-    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
-    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
     IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutMerchantInput
-    Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
+    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
+    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
     QRPayment?: QRPaymentUncheckedCreateNestedManyWithoutMerchantInput
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
   }
 
   export type MerchantUpdateInput = {
@@ -23904,13 +23974,13 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutMerchantNestedInput
     user?: UserUpdateOneRequiredWithoutMerchantNestedInput
     PaymentLink?: PaymentLinkUpdateManyWithoutMerchantNestedInput
-    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
     PaymentPage?: PaymentPageUpdateManyWithoutMerchantNestedInput
-    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutMerchantNestedInput
-    Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
     QRPayment?: QRPaymentUpdateManyWithoutMerchantNestedInput
+    Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
   }
 
   export type MerchantUncheckedUpdateInput = {
@@ -23924,12 +23994,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
-    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
-    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
     IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutMerchantNestedInput
-    Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
+    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
+    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
     QRPayment?: QRPaymentUncheckedUpdateManyWithoutMerchantNestedInput
+    Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
   }
 
   export type MerchantCreateManyInput = {
@@ -23979,9 +24049,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
-    sessions?: SessionCreateNestedManyWithoutUserInput
     Authenticator?: AuthenticatorCreateNestedManyWithoutUserInput
     Merchant?: MerchantCreateNestedOneWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -23993,9 +24063,9 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     Authenticator?: AuthenticatorUncheckedCreateNestedManyWithoutUserInput
     Merchant?: MerchantUncheckedCreateNestedOneWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -24007,9 +24077,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
-    sessions?: SessionUpdateManyWithoutUserNestedInput
     Authenticator?: AuthenticatorUpdateManyWithoutUserNestedInput
     Merchant?: MerchantUpdateOneWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -24021,9 +24091,9 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     Authenticator?: AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
     Merchant?: MerchantUncheckedUpdateOneWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -24345,8 +24415,8 @@ export namespace Prisma {
     balance: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    stableCoin: StableCoinCreateNestedOneWithoutWalletInput
     merchant: MerchantCreateNestedOneWithoutWalletInput
+    stableCoin: StableCoinCreateNestedOneWithoutWalletInput
   }
 
   export type WalletUncheckedCreateInput = {
@@ -24363,8 +24433,8 @@ export namespace Prisma {
     balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    stableCoin?: StableCoinUpdateOneRequiredWithoutWalletNestedInput
     merchant?: MerchantUpdateOneRequiredWithoutWalletNestedInput
+    stableCoin?: StableCoinUpdateOneRequiredWithoutWalletNestedInput
   }
 
   export type WalletUncheckedUpdateInput = {
@@ -24410,6 +24480,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     Wallet?: WalletCreateNestedManyWithoutStableCoinInput
+    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutStableCoinInput
   }
 
   export type StableCoinUncheckedCreateInput = {
@@ -24421,6 +24492,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     Wallet?: WalletUncheckedCreateNestedManyWithoutStableCoinInput
+    IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutStableCoinInput
   }
 
   export type StableCoinUpdateInput = {
@@ -24432,6 +24504,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Wallet?: WalletUpdateManyWithoutStableCoinNestedInput
+    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutStableCoinNestedInput
   }
 
   export type StableCoinUncheckedUpdateInput = {
@@ -24443,6 +24516,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Wallet?: WalletUncheckedUpdateManyWithoutStableCoinNestedInput
+    IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutStableCoinNestedInput
   }
 
   export type StableCoinCreateManyInput = {
@@ -24483,8 +24557,8 @@ export namespace Prisma {
     updatedAt?: Date | string
     expiresAt?: Date | string | null
     description?: string | null
-    merchant: MerchantCreateNestedOneWithoutPaymentLinkInput
     IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutPaymentLinkInput
+    merchant: MerchantCreateNestedOneWithoutPaymentLinkInput
   }
 
   export type PaymentLinkUncheckedCreateInput = {
@@ -24507,8 +24581,8 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    merchant?: MerchantUpdateOneRequiredWithoutPaymentLinkNestedInput
     IntiatedPayment?: IntiatedPaymentUpdateManyWithoutPaymentLinkNestedInput
+    merchant?: MerchantUpdateOneRequiredWithoutPaymentLinkNestedInput
   }
 
   export type PaymentLinkUncheckedUpdateInput = {
@@ -24565,8 +24639,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     status?: $Enums.PaymentPageStatus
-    merchant: MerchantCreateNestedOneWithoutPaymentPageInput
     IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutPaymentPageInput
+    merchant: MerchantCreateNestedOneWithoutPaymentPageInput
     PaymentPageForm?: PaymentPageFormCreateNestedManyWithoutPaymentPageInput
   }
 
@@ -24595,8 +24669,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
-    merchant?: MerchantUpdateOneRequiredWithoutPaymentPageNestedInput
     IntiatedPayment?: IntiatedPaymentUpdateManyWithoutPaymentPageNestedInput
+    merchant?: MerchantUpdateOneRequiredWithoutPaymentPageNestedInput
     PaymentPageForm?: PaymentPageFormUpdateManyWithoutPaymentPageNestedInput
   }
 
@@ -24662,10 +24736,11 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    paymentPage?: PaymentPageCreateNestedOneWithoutIntiatedPaymentInput
-    paymentLink?: PaymentLinkCreateNestedOneWithoutIntiatedPaymentInput
-    Transaction?: TransactionCreateNestedManyWithoutIntiatedPaymentInput
+    stableCoin: StableCoinCreateNestedOneWithoutIntiatedPaymentInput
     merchant: MerchantCreateNestedOneWithoutIntiatedPaymentInput
+    paymentLink?: PaymentLinkCreateNestedOneWithoutIntiatedPaymentInput
+    paymentPage?: PaymentPageCreateNestedOneWithoutIntiatedPaymentInput
+    Transaction?: TransactionCreateNestedManyWithoutIntiatedPaymentInput
   }
 
   export type IntiatedPaymentUncheckedCreateInput = {
@@ -24677,6 +24752,7 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     paymentPageId?: string | null
     paymentLinkId?: string | null
+    stableCoinId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     merchantId: string
@@ -24692,10 +24768,11 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    paymentPage?: PaymentPageUpdateOneWithoutIntiatedPaymentNestedInput
-    paymentLink?: PaymentLinkUpdateOneWithoutIntiatedPaymentNestedInput
-    Transaction?: TransactionUpdateManyWithoutIntiatedPaymentNestedInput
+    stableCoin?: StableCoinUpdateOneRequiredWithoutIntiatedPaymentNestedInput
     merchant?: MerchantUpdateOneRequiredWithoutIntiatedPaymentNestedInput
+    paymentLink?: PaymentLinkUpdateOneWithoutIntiatedPaymentNestedInput
+    paymentPage?: PaymentPageUpdateOneWithoutIntiatedPaymentNestedInput
+    Transaction?: TransactionUpdateManyWithoutIntiatedPaymentNestedInput
   }
 
   export type IntiatedPaymentUncheckedUpdateInput = {
@@ -24707,6 +24784,7 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paymentPageId?: NullableStringFieldUpdateOperationsInput | string | null
     paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    stableCoinId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     merchantId?: StringFieldUpdateOperationsInput | string
@@ -24722,6 +24800,7 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     paymentPageId?: string | null
     paymentLinkId?: string | null
+    stableCoinId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     merchantId: string
@@ -24747,6 +24826,7 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paymentPageId?: NullableStringFieldUpdateOperationsInput | string | null
     paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    stableCoinId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     merchantId?: StringFieldUpdateOperationsInput | string
@@ -25250,6 +25330,12 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type IntiatedPaymentListRelationFilter = {
+    every?: IntiatedPaymentWhereInput
+    some?: IntiatedPaymentWhereInput
+    none?: IntiatedPaymentWhereInput
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -25261,28 +25347,10 @@ export namespace Prisma {
     none?: PaymentLinkWhereInput
   }
 
-  export type WalletListRelationFilter = {
-    every?: WalletWhereInput
-    some?: WalletWhereInput
-    none?: WalletWhereInput
-  }
-
   export type PaymentPageListRelationFilter = {
     every?: PaymentPageWhereInput
     some?: PaymentPageWhereInput
     none?: PaymentPageWhereInput
-  }
-
-  export type IntiatedPaymentListRelationFilter = {
-    every?: IntiatedPaymentWhereInput
-    some?: IntiatedPaymentWhereInput
-    none?: IntiatedPaymentWhereInput
-  }
-
-  export type TransactionListRelationFilter = {
-    every?: TransactionWhereInput
-    some?: TransactionWhereInput
-    none?: TransactionWhereInput
   }
 
   export type QRPaymentListRelationFilter = {
@@ -25291,16 +25359,28 @@ export namespace Prisma {
     none?: QRPaymentWhereInput
   }
 
+  export type TransactionListRelationFilter = {
+    every?: TransactionWhereInput
+    some?: TransactionWhereInput
+    none?: TransactionWhereInput
+  }
+
+  export type WalletListRelationFilter = {
+    every?: WalletWhereInput
+    some?: WalletWhereInput
+    none?: WalletWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
-  export type PaymentLinkOrderByRelationAggregateInput = {
+  export type IntiatedPaymentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type WalletOrderByRelationAggregateInput = {
+  export type PaymentLinkOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -25308,7 +25388,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type IntiatedPaymentOrderByRelationAggregateInput = {
+  export type QRPaymentOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -25316,7 +25396,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type QRPaymentOrderByRelationAggregateInput = {
+  export type WalletOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -25426,12 +25506,6 @@ export namespace Prisma {
     none?: AccountWhereInput
   }
 
-  export type SessionListRelationFilter = {
-    every?: SessionWhereInput
-    some?: SessionWhereInput
-    none?: SessionWhereInput
-  }
-
   export type AuthenticatorListRelationFilter = {
     every?: AuthenticatorWhereInput
     some?: AuthenticatorWhereInput
@@ -25443,15 +25517,21 @@ export namespace Prisma {
     isNot?: MerchantWhereInput | null
   }
 
+  export type SessionListRelationFilter = {
+    every?: SessionWhereInput
+    some?: SessionWhereInput
+    none?: SessionWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type SessionOrderByRelationAggregateInput = {
+  export type AuthenticatorOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type AuthenticatorOrderByRelationAggregateInput = {
+  export type SessionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -25731,14 +25811,14 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
-  export type StableCoinScalarRelationFilter = {
-    is?: StableCoinWhereInput
-    isNot?: StableCoinWhereInput
-  }
-
   export type MerchantScalarRelationFilter = {
     is?: MerchantWhereInput
     isNot?: MerchantWhereInput
+  }
+
+  export type StableCoinScalarRelationFilter = {
+    is?: StableCoinWhereInput
+    isNot?: StableCoinWhereInput
   }
 
   export type WalletCountOrderByAggregateInput = {
@@ -25968,14 +26048,14 @@ export namespace Prisma {
     not?: NestedEnumIntiatedPaymentStatusFilter<$PrismaModel> | $Enums.IntiatedPaymentStatus
   }
 
-  export type PaymentPageNullableScalarRelationFilter = {
-    is?: PaymentPageWhereInput | null
-    isNot?: PaymentPageWhereInput | null
-  }
-
   export type PaymentLinkNullableScalarRelationFilter = {
     is?: PaymentLinkWhereInput | null
     isNot?: PaymentLinkWhereInput | null
+  }
+
+  export type PaymentPageNullableScalarRelationFilter = {
+    is?: PaymentPageWhereInput | null
+    isNot?: PaymentPageWhereInput | null
   }
 
   export type IntiatedPaymentCountOrderByAggregateInput = {
@@ -25987,6 +26067,7 @@ export namespace Prisma {
     amount?: SortOrder
     paymentPageId?: SortOrder
     paymentLinkId?: SortOrder
+    stableCoinId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     merchantId?: SortOrder
@@ -26006,6 +26087,7 @@ export namespace Prisma {
     amount?: SortOrder
     paymentPageId?: SortOrder
     paymentLinkId?: SortOrder
+    stableCoinId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     merchantId?: SortOrder
@@ -26020,6 +26102,7 @@ export namespace Prisma {
     amount?: SortOrder
     paymentPageId?: SortOrder
     paymentLinkId?: SortOrder
+    stableCoinId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     merchantId?: SortOrder
@@ -26394,6 +26477,13 @@ export namespace Prisma {
     _max?: NestedEnumQRPaymentTypeFilter<$PrismaModel>
   }
 
+  export type IntiatedPaymentCreateNestedManyWithoutMerchantInput = {
+    create?: XOR<IntiatedPaymentCreateWithoutMerchantInput, IntiatedPaymentUncheckedCreateWithoutMerchantInput> | IntiatedPaymentCreateWithoutMerchantInput[] | IntiatedPaymentUncheckedCreateWithoutMerchantInput[]
+    connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutMerchantInput | IntiatedPaymentCreateOrConnectWithoutMerchantInput[]
+    createMany?: IntiatedPaymentCreateManyMerchantInputEnvelope
+    connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+  }
+
   export type UserCreateNestedOneWithoutMerchantInput = {
     create?: XOR<UserCreateWithoutMerchantInput, UserUncheckedCreateWithoutMerchantInput>
     connectOrCreate?: UserCreateOrConnectWithoutMerchantInput
@@ -26407,32 +26497,11 @@ export namespace Prisma {
     connect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
   }
 
-  export type WalletCreateNestedManyWithoutMerchantInput = {
-    create?: XOR<WalletCreateWithoutMerchantInput, WalletUncheckedCreateWithoutMerchantInput> | WalletCreateWithoutMerchantInput[] | WalletUncheckedCreateWithoutMerchantInput[]
-    connectOrCreate?: WalletCreateOrConnectWithoutMerchantInput | WalletCreateOrConnectWithoutMerchantInput[]
-    createMany?: WalletCreateManyMerchantInputEnvelope
-    connect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
-  }
-
   export type PaymentPageCreateNestedManyWithoutMerchantInput = {
     create?: XOR<PaymentPageCreateWithoutMerchantInput, PaymentPageUncheckedCreateWithoutMerchantInput> | PaymentPageCreateWithoutMerchantInput[] | PaymentPageUncheckedCreateWithoutMerchantInput[]
     connectOrCreate?: PaymentPageCreateOrConnectWithoutMerchantInput | PaymentPageCreateOrConnectWithoutMerchantInput[]
     createMany?: PaymentPageCreateManyMerchantInputEnvelope
     connect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
-  }
-
-  export type IntiatedPaymentCreateNestedManyWithoutMerchantInput = {
-    create?: XOR<IntiatedPaymentCreateWithoutMerchantInput, IntiatedPaymentUncheckedCreateWithoutMerchantInput> | IntiatedPaymentCreateWithoutMerchantInput[] | IntiatedPaymentUncheckedCreateWithoutMerchantInput[]
-    connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutMerchantInput | IntiatedPaymentCreateOrConnectWithoutMerchantInput[]
-    createMany?: IntiatedPaymentCreateManyMerchantInputEnvelope
-    connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
-  }
-
-  export type TransactionCreateNestedManyWithoutMerchantInput = {
-    create?: XOR<TransactionCreateWithoutMerchantInput, TransactionUncheckedCreateWithoutMerchantInput> | TransactionCreateWithoutMerchantInput[] | TransactionUncheckedCreateWithoutMerchantInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutMerchantInput | TransactionCreateOrConnectWithoutMerchantInput[]
-    createMany?: TransactionCreateManyMerchantInputEnvelope
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
   }
 
   export type QRPaymentCreateNestedManyWithoutMerchantInput = {
@@ -26442,25 +26511,18 @@ export namespace Prisma {
     connect?: QRPaymentWhereUniqueInput | QRPaymentWhereUniqueInput[]
   }
 
-  export type PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput = {
-    create?: XOR<PaymentLinkCreateWithoutMerchantInput, PaymentLinkUncheckedCreateWithoutMerchantInput> | PaymentLinkCreateWithoutMerchantInput[] | PaymentLinkUncheckedCreateWithoutMerchantInput[]
-    connectOrCreate?: PaymentLinkCreateOrConnectWithoutMerchantInput | PaymentLinkCreateOrConnectWithoutMerchantInput[]
-    createMany?: PaymentLinkCreateManyMerchantInputEnvelope
-    connect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
+  export type TransactionCreateNestedManyWithoutMerchantInput = {
+    create?: XOR<TransactionCreateWithoutMerchantInput, TransactionUncheckedCreateWithoutMerchantInput> | TransactionCreateWithoutMerchantInput[] | TransactionUncheckedCreateWithoutMerchantInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutMerchantInput | TransactionCreateOrConnectWithoutMerchantInput[]
+    createMany?: TransactionCreateManyMerchantInputEnvelope
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
   }
 
-  export type WalletUncheckedCreateNestedManyWithoutMerchantInput = {
+  export type WalletCreateNestedManyWithoutMerchantInput = {
     create?: XOR<WalletCreateWithoutMerchantInput, WalletUncheckedCreateWithoutMerchantInput> | WalletCreateWithoutMerchantInput[] | WalletUncheckedCreateWithoutMerchantInput[]
     connectOrCreate?: WalletCreateOrConnectWithoutMerchantInput | WalletCreateOrConnectWithoutMerchantInput[]
     createMany?: WalletCreateManyMerchantInputEnvelope
     connect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
-  }
-
-  export type PaymentPageUncheckedCreateNestedManyWithoutMerchantInput = {
-    create?: XOR<PaymentPageCreateWithoutMerchantInput, PaymentPageUncheckedCreateWithoutMerchantInput> | PaymentPageCreateWithoutMerchantInput[] | PaymentPageUncheckedCreateWithoutMerchantInput[]
-    connectOrCreate?: PaymentPageCreateOrConnectWithoutMerchantInput | PaymentPageCreateOrConnectWithoutMerchantInput[]
-    createMany?: PaymentPageCreateManyMerchantInputEnvelope
-    connect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
   }
 
   export type IntiatedPaymentUncheckedCreateNestedManyWithoutMerchantInput = {
@@ -26470,11 +26532,18 @@ export namespace Prisma {
     connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
   }
 
-  export type TransactionUncheckedCreateNestedManyWithoutMerchantInput = {
-    create?: XOR<TransactionCreateWithoutMerchantInput, TransactionUncheckedCreateWithoutMerchantInput> | TransactionCreateWithoutMerchantInput[] | TransactionUncheckedCreateWithoutMerchantInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutMerchantInput | TransactionCreateOrConnectWithoutMerchantInput[]
-    createMany?: TransactionCreateManyMerchantInputEnvelope
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  export type PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput = {
+    create?: XOR<PaymentLinkCreateWithoutMerchantInput, PaymentLinkUncheckedCreateWithoutMerchantInput> | PaymentLinkCreateWithoutMerchantInput[] | PaymentLinkUncheckedCreateWithoutMerchantInput[]
+    connectOrCreate?: PaymentLinkCreateOrConnectWithoutMerchantInput | PaymentLinkCreateOrConnectWithoutMerchantInput[]
+    createMany?: PaymentLinkCreateManyMerchantInputEnvelope
+    connect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
+  }
+
+  export type PaymentPageUncheckedCreateNestedManyWithoutMerchantInput = {
+    create?: XOR<PaymentPageCreateWithoutMerchantInput, PaymentPageUncheckedCreateWithoutMerchantInput> | PaymentPageCreateWithoutMerchantInput[] | PaymentPageUncheckedCreateWithoutMerchantInput[]
+    connectOrCreate?: PaymentPageCreateOrConnectWithoutMerchantInput | PaymentPageCreateOrConnectWithoutMerchantInput[]
+    createMany?: PaymentPageCreateManyMerchantInputEnvelope
+    connect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
   }
 
   export type QRPaymentUncheckedCreateNestedManyWithoutMerchantInput = {
@@ -26482,6 +26551,20 @@ export namespace Prisma {
     connectOrCreate?: QRPaymentCreateOrConnectWithoutMerchantInput | QRPaymentCreateOrConnectWithoutMerchantInput[]
     createMany?: QRPaymentCreateManyMerchantInputEnvelope
     connect?: QRPaymentWhereUniqueInput | QRPaymentWhereUniqueInput[]
+  }
+
+  export type TransactionUncheckedCreateNestedManyWithoutMerchantInput = {
+    create?: XOR<TransactionCreateWithoutMerchantInput, TransactionUncheckedCreateWithoutMerchantInput> | TransactionCreateWithoutMerchantInput[] | TransactionUncheckedCreateWithoutMerchantInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutMerchantInput | TransactionCreateOrConnectWithoutMerchantInput[]
+    createMany?: TransactionCreateManyMerchantInputEnvelope
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+  }
+
+  export type WalletUncheckedCreateNestedManyWithoutMerchantInput = {
+    create?: XOR<WalletCreateWithoutMerchantInput, WalletUncheckedCreateWithoutMerchantInput> | WalletCreateWithoutMerchantInput[] | WalletUncheckedCreateWithoutMerchantInput[]
+    connectOrCreate?: WalletCreateOrConnectWithoutMerchantInput | WalletCreateOrConnectWithoutMerchantInput[]
+    createMany?: WalletCreateManyMerchantInputEnvelope
+    connect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -26494,6 +26577,20 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type IntiatedPaymentUpdateManyWithoutMerchantNestedInput = {
+    create?: XOR<IntiatedPaymentCreateWithoutMerchantInput, IntiatedPaymentUncheckedCreateWithoutMerchantInput> | IntiatedPaymentCreateWithoutMerchantInput[] | IntiatedPaymentUncheckedCreateWithoutMerchantInput[]
+    connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutMerchantInput | IntiatedPaymentCreateOrConnectWithoutMerchantInput[]
+    upsert?: IntiatedPaymentUpsertWithWhereUniqueWithoutMerchantInput | IntiatedPaymentUpsertWithWhereUniqueWithoutMerchantInput[]
+    createMany?: IntiatedPaymentCreateManyMerchantInputEnvelope
+    set?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+    disconnect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+    delete?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+    connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+    update?: IntiatedPaymentUpdateWithWhereUniqueWithoutMerchantInput | IntiatedPaymentUpdateWithWhereUniqueWithoutMerchantInput[]
+    updateMany?: IntiatedPaymentUpdateManyWithWhereWithoutMerchantInput | IntiatedPaymentUpdateManyWithWhereWithoutMerchantInput[]
+    deleteMany?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
   }
 
   export type UserUpdateOneRequiredWithoutMerchantNestedInput = {
@@ -26518,20 +26615,6 @@ export namespace Prisma {
     deleteMany?: PaymentLinkScalarWhereInput | PaymentLinkScalarWhereInput[]
   }
 
-  export type WalletUpdateManyWithoutMerchantNestedInput = {
-    create?: XOR<WalletCreateWithoutMerchantInput, WalletUncheckedCreateWithoutMerchantInput> | WalletCreateWithoutMerchantInput[] | WalletUncheckedCreateWithoutMerchantInput[]
-    connectOrCreate?: WalletCreateOrConnectWithoutMerchantInput | WalletCreateOrConnectWithoutMerchantInput[]
-    upsert?: WalletUpsertWithWhereUniqueWithoutMerchantInput | WalletUpsertWithWhereUniqueWithoutMerchantInput[]
-    createMany?: WalletCreateManyMerchantInputEnvelope
-    set?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
-    disconnect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
-    delete?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
-    connect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
-    update?: WalletUpdateWithWhereUniqueWithoutMerchantInput | WalletUpdateWithWhereUniqueWithoutMerchantInput[]
-    updateMany?: WalletUpdateManyWithWhereWithoutMerchantInput | WalletUpdateManyWithWhereWithoutMerchantInput[]
-    deleteMany?: WalletScalarWhereInput | WalletScalarWhereInput[]
-  }
-
   export type PaymentPageUpdateManyWithoutMerchantNestedInput = {
     create?: XOR<PaymentPageCreateWithoutMerchantInput, PaymentPageUncheckedCreateWithoutMerchantInput> | PaymentPageCreateWithoutMerchantInput[] | PaymentPageUncheckedCreateWithoutMerchantInput[]
     connectOrCreate?: PaymentPageCreateOrConnectWithoutMerchantInput | PaymentPageCreateOrConnectWithoutMerchantInput[]
@@ -26544,34 +26627,6 @@ export namespace Prisma {
     update?: PaymentPageUpdateWithWhereUniqueWithoutMerchantInput | PaymentPageUpdateWithWhereUniqueWithoutMerchantInput[]
     updateMany?: PaymentPageUpdateManyWithWhereWithoutMerchantInput | PaymentPageUpdateManyWithWhereWithoutMerchantInput[]
     deleteMany?: PaymentPageScalarWhereInput | PaymentPageScalarWhereInput[]
-  }
-
-  export type IntiatedPaymentUpdateManyWithoutMerchantNestedInput = {
-    create?: XOR<IntiatedPaymentCreateWithoutMerchantInput, IntiatedPaymentUncheckedCreateWithoutMerchantInput> | IntiatedPaymentCreateWithoutMerchantInput[] | IntiatedPaymentUncheckedCreateWithoutMerchantInput[]
-    connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutMerchantInput | IntiatedPaymentCreateOrConnectWithoutMerchantInput[]
-    upsert?: IntiatedPaymentUpsertWithWhereUniqueWithoutMerchantInput | IntiatedPaymentUpsertWithWhereUniqueWithoutMerchantInput[]
-    createMany?: IntiatedPaymentCreateManyMerchantInputEnvelope
-    set?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
-    disconnect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
-    delete?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
-    connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
-    update?: IntiatedPaymentUpdateWithWhereUniqueWithoutMerchantInput | IntiatedPaymentUpdateWithWhereUniqueWithoutMerchantInput[]
-    updateMany?: IntiatedPaymentUpdateManyWithWhereWithoutMerchantInput | IntiatedPaymentUpdateManyWithWhereWithoutMerchantInput[]
-    deleteMany?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
-  }
-
-  export type TransactionUpdateManyWithoutMerchantNestedInput = {
-    create?: XOR<TransactionCreateWithoutMerchantInput, TransactionUncheckedCreateWithoutMerchantInput> | TransactionCreateWithoutMerchantInput[] | TransactionUncheckedCreateWithoutMerchantInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutMerchantInput | TransactionCreateOrConnectWithoutMerchantInput[]
-    upsert?: TransactionUpsertWithWhereUniqueWithoutMerchantInput | TransactionUpsertWithWhereUniqueWithoutMerchantInput[]
-    createMany?: TransactionCreateManyMerchantInputEnvelope
-    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    update?: TransactionUpdateWithWhereUniqueWithoutMerchantInput | TransactionUpdateWithWhereUniqueWithoutMerchantInput[]
-    updateMany?: TransactionUpdateManyWithWhereWithoutMerchantInput | TransactionUpdateManyWithWhereWithoutMerchantInput[]
-    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
   export type QRPaymentUpdateManyWithoutMerchantNestedInput = {
@@ -26588,21 +26643,21 @@ export namespace Prisma {
     deleteMany?: QRPaymentScalarWhereInput | QRPaymentScalarWhereInput[]
   }
 
-  export type PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput = {
-    create?: XOR<PaymentLinkCreateWithoutMerchantInput, PaymentLinkUncheckedCreateWithoutMerchantInput> | PaymentLinkCreateWithoutMerchantInput[] | PaymentLinkUncheckedCreateWithoutMerchantInput[]
-    connectOrCreate?: PaymentLinkCreateOrConnectWithoutMerchantInput | PaymentLinkCreateOrConnectWithoutMerchantInput[]
-    upsert?: PaymentLinkUpsertWithWhereUniqueWithoutMerchantInput | PaymentLinkUpsertWithWhereUniqueWithoutMerchantInput[]
-    createMany?: PaymentLinkCreateManyMerchantInputEnvelope
-    set?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-    disconnect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-    delete?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-    connect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
-    update?: PaymentLinkUpdateWithWhereUniqueWithoutMerchantInput | PaymentLinkUpdateWithWhereUniqueWithoutMerchantInput[]
-    updateMany?: PaymentLinkUpdateManyWithWhereWithoutMerchantInput | PaymentLinkUpdateManyWithWhereWithoutMerchantInput[]
-    deleteMany?: PaymentLinkScalarWhereInput | PaymentLinkScalarWhereInput[]
+  export type TransactionUpdateManyWithoutMerchantNestedInput = {
+    create?: XOR<TransactionCreateWithoutMerchantInput, TransactionUncheckedCreateWithoutMerchantInput> | TransactionCreateWithoutMerchantInput[] | TransactionUncheckedCreateWithoutMerchantInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutMerchantInput | TransactionCreateOrConnectWithoutMerchantInput[]
+    upsert?: TransactionUpsertWithWhereUniqueWithoutMerchantInput | TransactionUpsertWithWhereUniqueWithoutMerchantInput[]
+    createMany?: TransactionCreateManyMerchantInputEnvelope
+    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    update?: TransactionUpdateWithWhereUniqueWithoutMerchantInput | TransactionUpdateWithWhereUniqueWithoutMerchantInput[]
+    updateMany?: TransactionUpdateManyWithWhereWithoutMerchantInput | TransactionUpdateManyWithWhereWithoutMerchantInput[]
+    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
   }
 
-  export type WalletUncheckedUpdateManyWithoutMerchantNestedInput = {
+  export type WalletUpdateManyWithoutMerchantNestedInput = {
     create?: XOR<WalletCreateWithoutMerchantInput, WalletUncheckedCreateWithoutMerchantInput> | WalletCreateWithoutMerchantInput[] | WalletUncheckedCreateWithoutMerchantInput[]
     connectOrCreate?: WalletCreateOrConnectWithoutMerchantInput | WalletCreateOrConnectWithoutMerchantInput[]
     upsert?: WalletUpsertWithWhereUniqueWithoutMerchantInput | WalletUpsertWithWhereUniqueWithoutMerchantInput[]
@@ -26614,20 +26669,6 @@ export namespace Prisma {
     update?: WalletUpdateWithWhereUniqueWithoutMerchantInput | WalletUpdateWithWhereUniqueWithoutMerchantInput[]
     updateMany?: WalletUpdateManyWithWhereWithoutMerchantInput | WalletUpdateManyWithWhereWithoutMerchantInput[]
     deleteMany?: WalletScalarWhereInput | WalletScalarWhereInput[]
-  }
-
-  export type PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput = {
-    create?: XOR<PaymentPageCreateWithoutMerchantInput, PaymentPageUncheckedCreateWithoutMerchantInput> | PaymentPageCreateWithoutMerchantInput[] | PaymentPageUncheckedCreateWithoutMerchantInput[]
-    connectOrCreate?: PaymentPageCreateOrConnectWithoutMerchantInput | PaymentPageCreateOrConnectWithoutMerchantInput[]
-    upsert?: PaymentPageUpsertWithWhereUniqueWithoutMerchantInput | PaymentPageUpsertWithWhereUniqueWithoutMerchantInput[]
-    createMany?: PaymentPageCreateManyMerchantInputEnvelope
-    set?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
-    disconnect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
-    delete?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
-    connect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
-    update?: PaymentPageUpdateWithWhereUniqueWithoutMerchantInput | PaymentPageUpdateWithWhereUniqueWithoutMerchantInput[]
-    updateMany?: PaymentPageUpdateManyWithWhereWithoutMerchantInput | PaymentPageUpdateManyWithWhereWithoutMerchantInput[]
-    deleteMany?: PaymentPageScalarWhereInput | PaymentPageScalarWhereInput[]
   }
 
   export type IntiatedPaymentUncheckedUpdateManyWithoutMerchantNestedInput = {
@@ -26644,18 +26685,32 @@ export namespace Prisma {
     deleteMany?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
   }
 
-  export type TransactionUncheckedUpdateManyWithoutMerchantNestedInput = {
-    create?: XOR<TransactionCreateWithoutMerchantInput, TransactionUncheckedCreateWithoutMerchantInput> | TransactionCreateWithoutMerchantInput[] | TransactionUncheckedCreateWithoutMerchantInput[]
-    connectOrCreate?: TransactionCreateOrConnectWithoutMerchantInput | TransactionCreateOrConnectWithoutMerchantInput[]
-    upsert?: TransactionUpsertWithWhereUniqueWithoutMerchantInput | TransactionUpsertWithWhereUniqueWithoutMerchantInput[]
-    createMany?: TransactionCreateManyMerchantInputEnvelope
-    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-    update?: TransactionUpdateWithWhereUniqueWithoutMerchantInput | TransactionUpdateWithWhereUniqueWithoutMerchantInput[]
-    updateMany?: TransactionUpdateManyWithWhereWithoutMerchantInput | TransactionUpdateManyWithWhereWithoutMerchantInput[]
-    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  export type PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput = {
+    create?: XOR<PaymentLinkCreateWithoutMerchantInput, PaymentLinkUncheckedCreateWithoutMerchantInput> | PaymentLinkCreateWithoutMerchantInput[] | PaymentLinkUncheckedCreateWithoutMerchantInput[]
+    connectOrCreate?: PaymentLinkCreateOrConnectWithoutMerchantInput | PaymentLinkCreateOrConnectWithoutMerchantInput[]
+    upsert?: PaymentLinkUpsertWithWhereUniqueWithoutMerchantInput | PaymentLinkUpsertWithWhereUniqueWithoutMerchantInput[]
+    createMany?: PaymentLinkCreateManyMerchantInputEnvelope
+    set?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
+    disconnect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
+    delete?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
+    connect?: PaymentLinkWhereUniqueInput | PaymentLinkWhereUniqueInput[]
+    update?: PaymentLinkUpdateWithWhereUniqueWithoutMerchantInput | PaymentLinkUpdateWithWhereUniqueWithoutMerchantInput[]
+    updateMany?: PaymentLinkUpdateManyWithWhereWithoutMerchantInput | PaymentLinkUpdateManyWithWhereWithoutMerchantInput[]
+    deleteMany?: PaymentLinkScalarWhereInput | PaymentLinkScalarWhereInput[]
+  }
+
+  export type PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput = {
+    create?: XOR<PaymentPageCreateWithoutMerchantInput, PaymentPageUncheckedCreateWithoutMerchantInput> | PaymentPageCreateWithoutMerchantInput[] | PaymentPageUncheckedCreateWithoutMerchantInput[]
+    connectOrCreate?: PaymentPageCreateOrConnectWithoutMerchantInput | PaymentPageCreateOrConnectWithoutMerchantInput[]
+    upsert?: PaymentPageUpsertWithWhereUniqueWithoutMerchantInput | PaymentPageUpsertWithWhereUniqueWithoutMerchantInput[]
+    createMany?: PaymentPageCreateManyMerchantInputEnvelope
+    set?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+    disconnect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+    delete?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+    connect?: PaymentPageWhereUniqueInput | PaymentPageWhereUniqueInput[]
+    update?: PaymentPageUpdateWithWhereUniqueWithoutMerchantInput | PaymentPageUpdateWithWhereUniqueWithoutMerchantInput[]
+    updateMany?: PaymentPageUpdateManyWithWhereWithoutMerchantInput | PaymentPageUpdateManyWithWhereWithoutMerchantInput[]
+    deleteMany?: PaymentPageScalarWhereInput | PaymentPageScalarWhereInput[]
   }
 
   export type QRPaymentUncheckedUpdateManyWithoutMerchantNestedInput = {
@@ -26672,18 +26727,39 @@ export namespace Prisma {
     deleteMany?: QRPaymentScalarWhereInput | QRPaymentScalarWhereInput[]
   }
 
+  export type TransactionUncheckedUpdateManyWithoutMerchantNestedInput = {
+    create?: XOR<TransactionCreateWithoutMerchantInput, TransactionUncheckedCreateWithoutMerchantInput> | TransactionCreateWithoutMerchantInput[] | TransactionUncheckedCreateWithoutMerchantInput[]
+    connectOrCreate?: TransactionCreateOrConnectWithoutMerchantInput | TransactionCreateOrConnectWithoutMerchantInput[]
+    upsert?: TransactionUpsertWithWhereUniqueWithoutMerchantInput | TransactionUpsertWithWhereUniqueWithoutMerchantInput[]
+    createMany?: TransactionCreateManyMerchantInputEnvelope
+    set?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    disconnect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    delete?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
+    update?: TransactionUpdateWithWhereUniqueWithoutMerchantInput | TransactionUpdateWithWhereUniqueWithoutMerchantInput[]
+    updateMany?: TransactionUpdateManyWithWhereWithoutMerchantInput | TransactionUpdateManyWithWhereWithoutMerchantInput[]
+    deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
+  }
+
+  export type WalletUncheckedUpdateManyWithoutMerchantNestedInput = {
+    create?: XOR<WalletCreateWithoutMerchantInput, WalletUncheckedCreateWithoutMerchantInput> | WalletCreateWithoutMerchantInput[] | WalletUncheckedCreateWithoutMerchantInput[]
+    connectOrCreate?: WalletCreateOrConnectWithoutMerchantInput | WalletCreateOrConnectWithoutMerchantInput[]
+    upsert?: WalletUpsertWithWhereUniqueWithoutMerchantInput | WalletUpsertWithWhereUniqueWithoutMerchantInput[]
+    createMany?: WalletCreateManyMerchantInputEnvelope
+    set?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
+    disconnect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
+    delete?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
+    connect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
+    update?: WalletUpdateWithWhereUniqueWithoutMerchantInput | WalletUpdateWithWhereUniqueWithoutMerchantInput[]
+    updateMany?: WalletUpdateManyWithWhereWithoutMerchantInput | WalletUpdateManyWithWhereWithoutMerchantInput[]
+    deleteMany?: WalletScalarWhereInput | WalletScalarWhereInput[]
+  }
+
   export type AccountCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
     createMany?: AccountCreateManyUserInputEnvelope
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
-  }
-
-  export type SessionCreateNestedManyWithoutUserInput = {
-    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
-    createMany?: SessionCreateManyUserInputEnvelope
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
   export type AuthenticatorCreateNestedManyWithoutUserInput = {
@@ -26699,18 +26775,18 @@ export namespace Prisma {
     connect?: MerchantWhereUniqueInput
   }
 
+  export type SessionCreateNestedManyWithoutUserInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
     createMany?: AccountCreateManyUserInputEnvelope
     connect?: AccountWhereUniqueInput | AccountWhereUniqueInput[]
-  }
-
-  export type SessionUncheckedCreateNestedManyWithoutUserInput = {
-    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
-    createMany?: SessionCreateManyUserInputEnvelope
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
   export type AuthenticatorUncheckedCreateNestedManyWithoutUserInput = {
@@ -26724,6 +26800,13 @@ export namespace Prisma {
     create?: XOR<MerchantCreateWithoutUserInput, MerchantUncheckedCreateWithoutUserInput>
     connectOrCreate?: MerchantCreateOrConnectWithoutUserInput
     connect?: MerchantWhereUniqueInput
+  }
+
+  export type SessionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -26742,20 +26825,6 @@ export namespace Prisma {
     update?: AccountUpdateWithWhereUniqueWithoutUserInput | AccountUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: AccountUpdateManyWithWhereWithoutUserInput | AccountUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
-  }
-
-  export type SessionUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
-    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SessionCreateManyUserInputEnvelope
-    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
   export type AuthenticatorUpdateManyWithoutUserNestedInput = {
@@ -26782,6 +26851,20 @@ export namespace Prisma {
     update?: XOR<XOR<MerchantUpdateToOneWithWhereWithoutUserInput, MerchantUpdateWithoutUserInput>, MerchantUncheckedUpdateWithoutUserInput>
   }
 
+  export type SessionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -26794,20 +26877,6 @@ export namespace Prisma {
     update?: AccountUpdateWithWhereUniqueWithoutUserInput | AccountUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: AccountUpdateManyWithWhereWithoutUserInput | AccountUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: AccountScalarWhereInput | AccountScalarWhereInput[]
-  }
-
-  export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
-    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
-    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
-    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
-    createMany?: SessionCreateManyUserInputEnvelope
-    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
-    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
-    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
-    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
   export type AuthenticatorUncheckedUpdateManyWithoutUserNestedInput = {
@@ -26832,6 +26901,20 @@ export namespace Prisma {
     delete?: MerchantWhereInput | boolean
     connect?: MerchantWhereUniqueInput
     update?: XOR<XOR<MerchantUpdateToOneWithWhereWithoutUserInput, MerchantUpdateWithoutUserInput>, MerchantUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
+    upsert?: SessionUpsertWithWhereUniqueWithoutUserInput | SessionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SessionCreateManyUserInputEnvelope
+    set?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    disconnect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    delete?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    connect?: SessionWhereUniqueInput | SessionWhereUniqueInput[]
+    update?: SessionUpdateWithWhereUniqueWithoutUserInput | SessionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SessionUpdateManyWithWhereWithoutUserInput | SessionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SessionScalarWhereInput | SessionScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutAccountsInput = {
@@ -26896,16 +26979,16 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAuthenticatorInput, UserUpdateWithoutAuthenticatorInput>, UserUncheckedUpdateWithoutAuthenticatorInput>
   }
 
-  export type StableCoinCreateNestedOneWithoutWalletInput = {
-    create?: XOR<StableCoinCreateWithoutWalletInput, StableCoinUncheckedCreateWithoutWalletInput>
-    connectOrCreate?: StableCoinCreateOrConnectWithoutWalletInput
-    connect?: StableCoinWhereUniqueInput
-  }
-
   export type MerchantCreateNestedOneWithoutWalletInput = {
     create?: XOR<MerchantCreateWithoutWalletInput, MerchantUncheckedCreateWithoutWalletInput>
     connectOrCreate?: MerchantCreateOrConnectWithoutWalletInput
     connect?: MerchantWhereUniqueInput
+  }
+
+  export type StableCoinCreateNestedOneWithoutWalletInput = {
+    create?: XOR<StableCoinCreateWithoutWalletInput, StableCoinUncheckedCreateWithoutWalletInput>
+    connectOrCreate?: StableCoinCreateOrConnectWithoutWalletInput
+    connect?: StableCoinWhereUniqueInput
   }
 
   export type DecimalFieldUpdateOperationsInput = {
@@ -26916,20 +26999,20 @@ export namespace Prisma {
     divide?: Decimal | DecimalJsLike | number | string
   }
 
-  export type StableCoinUpdateOneRequiredWithoutWalletNestedInput = {
-    create?: XOR<StableCoinCreateWithoutWalletInput, StableCoinUncheckedCreateWithoutWalletInput>
-    connectOrCreate?: StableCoinCreateOrConnectWithoutWalletInput
-    upsert?: StableCoinUpsertWithoutWalletInput
-    connect?: StableCoinWhereUniqueInput
-    update?: XOR<XOR<StableCoinUpdateToOneWithWhereWithoutWalletInput, StableCoinUpdateWithoutWalletInput>, StableCoinUncheckedUpdateWithoutWalletInput>
-  }
-
   export type MerchantUpdateOneRequiredWithoutWalletNestedInput = {
     create?: XOR<MerchantCreateWithoutWalletInput, MerchantUncheckedCreateWithoutWalletInput>
     connectOrCreate?: MerchantCreateOrConnectWithoutWalletInput
     upsert?: MerchantUpsertWithoutWalletInput
     connect?: MerchantWhereUniqueInput
     update?: XOR<XOR<MerchantUpdateToOneWithWhereWithoutWalletInput, MerchantUpdateWithoutWalletInput>, MerchantUncheckedUpdateWithoutWalletInput>
+  }
+
+  export type StableCoinUpdateOneRequiredWithoutWalletNestedInput = {
+    create?: XOR<StableCoinCreateWithoutWalletInput, StableCoinUncheckedCreateWithoutWalletInput>
+    connectOrCreate?: StableCoinCreateOrConnectWithoutWalletInput
+    upsert?: StableCoinUpsertWithoutWalletInput
+    connect?: StableCoinWhereUniqueInput
+    update?: XOR<XOR<StableCoinUpdateToOneWithWhereWithoutWalletInput, StableCoinUpdateWithoutWalletInput>, StableCoinUncheckedUpdateWithoutWalletInput>
   }
 
   export type WalletCreateNestedManyWithoutStableCoinInput = {
@@ -26939,11 +27022,25 @@ export namespace Prisma {
     connect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
   }
 
+  export type IntiatedPaymentCreateNestedManyWithoutStableCoinInput = {
+    create?: XOR<IntiatedPaymentCreateWithoutStableCoinInput, IntiatedPaymentUncheckedCreateWithoutStableCoinInput> | IntiatedPaymentCreateWithoutStableCoinInput[] | IntiatedPaymentUncheckedCreateWithoutStableCoinInput[]
+    connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutStableCoinInput | IntiatedPaymentCreateOrConnectWithoutStableCoinInput[]
+    createMany?: IntiatedPaymentCreateManyStableCoinInputEnvelope
+    connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+  }
+
   export type WalletUncheckedCreateNestedManyWithoutStableCoinInput = {
     create?: XOR<WalletCreateWithoutStableCoinInput, WalletUncheckedCreateWithoutStableCoinInput> | WalletCreateWithoutStableCoinInput[] | WalletUncheckedCreateWithoutStableCoinInput[]
     connectOrCreate?: WalletCreateOrConnectWithoutStableCoinInput | WalletCreateOrConnectWithoutStableCoinInput[]
     createMany?: WalletCreateManyStableCoinInputEnvelope
     connect?: WalletWhereUniqueInput | WalletWhereUniqueInput[]
+  }
+
+  export type IntiatedPaymentUncheckedCreateNestedManyWithoutStableCoinInput = {
+    create?: XOR<IntiatedPaymentCreateWithoutStableCoinInput, IntiatedPaymentUncheckedCreateWithoutStableCoinInput> | IntiatedPaymentCreateWithoutStableCoinInput[] | IntiatedPaymentUncheckedCreateWithoutStableCoinInput[]
+    connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutStableCoinInput | IntiatedPaymentCreateOrConnectWithoutStableCoinInput[]
+    createMany?: IntiatedPaymentCreateManyStableCoinInputEnvelope
+    connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
   }
 
   export type WalletUpdateManyWithoutStableCoinNestedInput = {
@@ -26960,6 +27057,20 @@ export namespace Prisma {
     deleteMany?: WalletScalarWhereInput | WalletScalarWhereInput[]
   }
 
+  export type IntiatedPaymentUpdateManyWithoutStableCoinNestedInput = {
+    create?: XOR<IntiatedPaymentCreateWithoutStableCoinInput, IntiatedPaymentUncheckedCreateWithoutStableCoinInput> | IntiatedPaymentCreateWithoutStableCoinInput[] | IntiatedPaymentUncheckedCreateWithoutStableCoinInput[]
+    connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutStableCoinInput | IntiatedPaymentCreateOrConnectWithoutStableCoinInput[]
+    upsert?: IntiatedPaymentUpsertWithWhereUniqueWithoutStableCoinInput | IntiatedPaymentUpsertWithWhereUniqueWithoutStableCoinInput[]
+    createMany?: IntiatedPaymentCreateManyStableCoinInputEnvelope
+    set?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+    disconnect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+    delete?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+    connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+    update?: IntiatedPaymentUpdateWithWhereUniqueWithoutStableCoinInput | IntiatedPaymentUpdateWithWhereUniqueWithoutStableCoinInput[]
+    updateMany?: IntiatedPaymentUpdateManyWithWhereWithoutStableCoinInput | IntiatedPaymentUpdateManyWithWhereWithoutStableCoinInput[]
+    deleteMany?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
+  }
+
   export type WalletUncheckedUpdateManyWithoutStableCoinNestedInput = {
     create?: XOR<WalletCreateWithoutStableCoinInput, WalletUncheckedCreateWithoutStableCoinInput> | WalletCreateWithoutStableCoinInput[] | WalletUncheckedCreateWithoutStableCoinInput[]
     connectOrCreate?: WalletCreateOrConnectWithoutStableCoinInput | WalletCreateOrConnectWithoutStableCoinInput[]
@@ -26974,10 +27085,18 @@ export namespace Prisma {
     deleteMany?: WalletScalarWhereInput | WalletScalarWhereInput[]
   }
 
-  export type MerchantCreateNestedOneWithoutPaymentLinkInput = {
-    create?: XOR<MerchantCreateWithoutPaymentLinkInput, MerchantUncheckedCreateWithoutPaymentLinkInput>
-    connectOrCreate?: MerchantCreateOrConnectWithoutPaymentLinkInput
-    connect?: MerchantWhereUniqueInput
+  export type IntiatedPaymentUncheckedUpdateManyWithoutStableCoinNestedInput = {
+    create?: XOR<IntiatedPaymentCreateWithoutStableCoinInput, IntiatedPaymentUncheckedCreateWithoutStableCoinInput> | IntiatedPaymentCreateWithoutStableCoinInput[] | IntiatedPaymentUncheckedCreateWithoutStableCoinInput[]
+    connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutStableCoinInput | IntiatedPaymentCreateOrConnectWithoutStableCoinInput[]
+    upsert?: IntiatedPaymentUpsertWithWhereUniqueWithoutStableCoinInput | IntiatedPaymentUpsertWithWhereUniqueWithoutStableCoinInput[]
+    createMany?: IntiatedPaymentCreateManyStableCoinInputEnvelope
+    set?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+    disconnect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+    delete?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+    connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+    update?: IntiatedPaymentUpdateWithWhereUniqueWithoutStableCoinInput | IntiatedPaymentUpdateWithWhereUniqueWithoutStableCoinInput[]
+    updateMany?: IntiatedPaymentUpdateManyWithWhereWithoutStableCoinInput | IntiatedPaymentUpdateManyWithWhereWithoutStableCoinInput[]
+    deleteMany?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
   }
 
   export type IntiatedPaymentCreateNestedManyWithoutPaymentLinkInput = {
@@ -26985,6 +27104,12 @@ export namespace Prisma {
     connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutPaymentLinkInput | IntiatedPaymentCreateOrConnectWithoutPaymentLinkInput[]
     createMany?: IntiatedPaymentCreateManyPaymentLinkInputEnvelope
     connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+  }
+
+  export type MerchantCreateNestedOneWithoutPaymentLinkInput = {
+    create?: XOR<MerchantCreateWithoutPaymentLinkInput, MerchantUncheckedCreateWithoutPaymentLinkInput>
+    connectOrCreate?: MerchantCreateOrConnectWithoutPaymentLinkInput
+    connect?: MerchantWhereUniqueInput
   }
 
   export type IntiatedPaymentUncheckedCreateNestedManyWithoutPaymentLinkInput = {
@@ -26996,14 +27121,6 @@ export namespace Prisma {
 
   export type EnumPaymentLinkStatusFieldUpdateOperationsInput = {
     set?: $Enums.PaymentLinkStatus
-  }
-
-  export type MerchantUpdateOneRequiredWithoutPaymentLinkNestedInput = {
-    create?: XOR<MerchantCreateWithoutPaymentLinkInput, MerchantUncheckedCreateWithoutPaymentLinkInput>
-    connectOrCreate?: MerchantCreateOrConnectWithoutPaymentLinkInput
-    upsert?: MerchantUpsertWithoutPaymentLinkInput
-    connect?: MerchantWhereUniqueInput
-    update?: XOR<XOR<MerchantUpdateToOneWithWhereWithoutPaymentLinkInput, MerchantUpdateWithoutPaymentLinkInput>, MerchantUncheckedUpdateWithoutPaymentLinkInput>
   }
 
   export type IntiatedPaymentUpdateManyWithoutPaymentLinkNestedInput = {
@@ -27020,6 +27137,14 @@ export namespace Prisma {
     deleteMany?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
   }
 
+  export type MerchantUpdateOneRequiredWithoutPaymentLinkNestedInput = {
+    create?: XOR<MerchantCreateWithoutPaymentLinkInput, MerchantUncheckedCreateWithoutPaymentLinkInput>
+    connectOrCreate?: MerchantCreateOrConnectWithoutPaymentLinkInput
+    upsert?: MerchantUpsertWithoutPaymentLinkInput
+    connect?: MerchantWhereUniqueInput
+    update?: XOR<XOR<MerchantUpdateToOneWithWhereWithoutPaymentLinkInput, MerchantUpdateWithoutPaymentLinkInput>, MerchantUncheckedUpdateWithoutPaymentLinkInput>
+  }
+
   export type IntiatedPaymentUncheckedUpdateManyWithoutPaymentLinkNestedInput = {
     create?: XOR<IntiatedPaymentCreateWithoutPaymentLinkInput, IntiatedPaymentUncheckedCreateWithoutPaymentLinkInput> | IntiatedPaymentCreateWithoutPaymentLinkInput[] | IntiatedPaymentUncheckedCreateWithoutPaymentLinkInput[]
     connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutPaymentLinkInput | IntiatedPaymentCreateOrConnectWithoutPaymentLinkInput[]
@@ -27034,17 +27159,17 @@ export namespace Prisma {
     deleteMany?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
   }
 
-  export type MerchantCreateNestedOneWithoutPaymentPageInput = {
-    create?: XOR<MerchantCreateWithoutPaymentPageInput, MerchantUncheckedCreateWithoutPaymentPageInput>
-    connectOrCreate?: MerchantCreateOrConnectWithoutPaymentPageInput
-    connect?: MerchantWhereUniqueInput
-  }
-
   export type IntiatedPaymentCreateNestedManyWithoutPaymentPageInput = {
     create?: XOR<IntiatedPaymentCreateWithoutPaymentPageInput, IntiatedPaymentUncheckedCreateWithoutPaymentPageInput> | IntiatedPaymentCreateWithoutPaymentPageInput[] | IntiatedPaymentUncheckedCreateWithoutPaymentPageInput[]
     connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutPaymentPageInput | IntiatedPaymentCreateOrConnectWithoutPaymentPageInput[]
     createMany?: IntiatedPaymentCreateManyPaymentPageInputEnvelope
     connect?: IntiatedPaymentWhereUniqueInput | IntiatedPaymentWhereUniqueInput[]
+  }
+
+  export type MerchantCreateNestedOneWithoutPaymentPageInput = {
+    create?: XOR<MerchantCreateWithoutPaymentPageInput, MerchantUncheckedCreateWithoutPaymentPageInput>
+    connectOrCreate?: MerchantCreateOrConnectWithoutPaymentPageInput
+    connect?: MerchantWhereUniqueInput
   }
 
   export type PaymentPageFormCreateNestedManyWithoutPaymentPageInput = {
@@ -27072,14 +27197,6 @@ export namespace Prisma {
     set?: $Enums.PaymentPageStatus
   }
 
-  export type MerchantUpdateOneRequiredWithoutPaymentPageNestedInput = {
-    create?: XOR<MerchantCreateWithoutPaymentPageInput, MerchantUncheckedCreateWithoutPaymentPageInput>
-    connectOrCreate?: MerchantCreateOrConnectWithoutPaymentPageInput
-    upsert?: MerchantUpsertWithoutPaymentPageInput
-    connect?: MerchantWhereUniqueInput
-    update?: XOR<XOR<MerchantUpdateToOneWithWhereWithoutPaymentPageInput, MerchantUpdateWithoutPaymentPageInput>, MerchantUncheckedUpdateWithoutPaymentPageInput>
-  }
-
   export type IntiatedPaymentUpdateManyWithoutPaymentPageNestedInput = {
     create?: XOR<IntiatedPaymentCreateWithoutPaymentPageInput, IntiatedPaymentUncheckedCreateWithoutPaymentPageInput> | IntiatedPaymentCreateWithoutPaymentPageInput[] | IntiatedPaymentUncheckedCreateWithoutPaymentPageInput[]
     connectOrCreate?: IntiatedPaymentCreateOrConnectWithoutPaymentPageInput | IntiatedPaymentCreateOrConnectWithoutPaymentPageInput[]
@@ -27092,6 +27209,14 @@ export namespace Prisma {
     update?: IntiatedPaymentUpdateWithWhereUniqueWithoutPaymentPageInput | IntiatedPaymentUpdateWithWhereUniqueWithoutPaymentPageInput[]
     updateMany?: IntiatedPaymentUpdateManyWithWhereWithoutPaymentPageInput | IntiatedPaymentUpdateManyWithWhereWithoutPaymentPageInput[]
     deleteMany?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
+  }
+
+  export type MerchantUpdateOneRequiredWithoutPaymentPageNestedInput = {
+    create?: XOR<MerchantCreateWithoutPaymentPageInput, MerchantUncheckedCreateWithoutPaymentPageInput>
+    connectOrCreate?: MerchantCreateOrConnectWithoutPaymentPageInput
+    upsert?: MerchantUpsertWithoutPaymentPageInput
+    connect?: MerchantWhereUniqueInput
+    update?: XOR<XOR<MerchantUpdateToOneWithWhereWithoutPaymentPageInput, MerchantUpdateWithoutPaymentPageInput>, MerchantUncheckedUpdateWithoutPaymentPageInput>
   }
 
   export type PaymentPageFormUpdateManyWithoutPaymentPageNestedInput = {
@@ -27136,10 +27261,16 @@ export namespace Prisma {
     deleteMany?: PaymentPageFormScalarWhereInput | PaymentPageFormScalarWhereInput[]
   }
 
-  export type PaymentPageCreateNestedOneWithoutIntiatedPaymentInput = {
-    create?: XOR<PaymentPageCreateWithoutIntiatedPaymentInput, PaymentPageUncheckedCreateWithoutIntiatedPaymentInput>
-    connectOrCreate?: PaymentPageCreateOrConnectWithoutIntiatedPaymentInput
-    connect?: PaymentPageWhereUniqueInput
+  export type StableCoinCreateNestedOneWithoutIntiatedPaymentInput = {
+    create?: XOR<StableCoinCreateWithoutIntiatedPaymentInput, StableCoinUncheckedCreateWithoutIntiatedPaymentInput>
+    connectOrCreate?: StableCoinCreateOrConnectWithoutIntiatedPaymentInput
+    connect?: StableCoinWhereUniqueInput
+  }
+
+  export type MerchantCreateNestedOneWithoutIntiatedPaymentInput = {
+    create?: XOR<MerchantCreateWithoutIntiatedPaymentInput, MerchantUncheckedCreateWithoutIntiatedPaymentInput>
+    connectOrCreate?: MerchantCreateOrConnectWithoutIntiatedPaymentInput
+    connect?: MerchantWhereUniqueInput
   }
 
   export type PaymentLinkCreateNestedOneWithoutIntiatedPaymentInput = {
@@ -27148,17 +27279,17 @@ export namespace Prisma {
     connect?: PaymentLinkWhereUniqueInput
   }
 
+  export type PaymentPageCreateNestedOneWithoutIntiatedPaymentInput = {
+    create?: XOR<PaymentPageCreateWithoutIntiatedPaymentInput, PaymentPageUncheckedCreateWithoutIntiatedPaymentInput>
+    connectOrCreate?: PaymentPageCreateOrConnectWithoutIntiatedPaymentInput
+    connect?: PaymentPageWhereUniqueInput
+  }
+
   export type TransactionCreateNestedManyWithoutIntiatedPaymentInput = {
     create?: XOR<TransactionCreateWithoutIntiatedPaymentInput, TransactionUncheckedCreateWithoutIntiatedPaymentInput> | TransactionCreateWithoutIntiatedPaymentInput[] | TransactionUncheckedCreateWithoutIntiatedPaymentInput[]
     connectOrCreate?: TransactionCreateOrConnectWithoutIntiatedPaymentInput | TransactionCreateOrConnectWithoutIntiatedPaymentInput[]
     createMany?: TransactionCreateManyIntiatedPaymentInputEnvelope
     connect?: TransactionWhereUniqueInput | TransactionWhereUniqueInput[]
-  }
-
-  export type MerchantCreateNestedOneWithoutIntiatedPaymentInput = {
-    create?: XOR<MerchantCreateWithoutIntiatedPaymentInput, MerchantUncheckedCreateWithoutIntiatedPaymentInput>
-    connectOrCreate?: MerchantCreateOrConnectWithoutIntiatedPaymentInput
-    connect?: MerchantWhereUniqueInput
   }
 
   export type TransactionUncheckedCreateNestedManyWithoutIntiatedPaymentInput = {
@@ -27176,14 +27307,20 @@ export namespace Prisma {
     set?: $Enums.IntiatedPaymentStatus
   }
 
-  export type PaymentPageUpdateOneWithoutIntiatedPaymentNestedInput = {
-    create?: XOR<PaymentPageCreateWithoutIntiatedPaymentInput, PaymentPageUncheckedCreateWithoutIntiatedPaymentInput>
-    connectOrCreate?: PaymentPageCreateOrConnectWithoutIntiatedPaymentInput
-    upsert?: PaymentPageUpsertWithoutIntiatedPaymentInput
-    disconnect?: PaymentPageWhereInput | boolean
-    delete?: PaymentPageWhereInput | boolean
-    connect?: PaymentPageWhereUniqueInput
-    update?: XOR<XOR<PaymentPageUpdateToOneWithWhereWithoutIntiatedPaymentInput, PaymentPageUpdateWithoutIntiatedPaymentInput>, PaymentPageUncheckedUpdateWithoutIntiatedPaymentInput>
+  export type StableCoinUpdateOneRequiredWithoutIntiatedPaymentNestedInput = {
+    create?: XOR<StableCoinCreateWithoutIntiatedPaymentInput, StableCoinUncheckedCreateWithoutIntiatedPaymentInput>
+    connectOrCreate?: StableCoinCreateOrConnectWithoutIntiatedPaymentInput
+    upsert?: StableCoinUpsertWithoutIntiatedPaymentInput
+    connect?: StableCoinWhereUniqueInput
+    update?: XOR<XOR<StableCoinUpdateToOneWithWhereWithoutIntiatedPaymentInput, StableCoinUpdateWithoutIntiatedPaymentInput>, StableCoinUncheckedUpdateWithoutIntiatedPaymentInput>
+  }
+
+  export type MerchantUpdateOneRequiredWithoutIntiatedPaymentNestedInput = {
+    create?: XOR<MerchantCreateWithoutIntiatedPaymentInput, MerchantUncheckedCreateWithoutIntiatedPaymentInput>
+    connectOrCreate?: MerchantCreateOrConnectWithoutIntiatedPaymentInput
+    upsert?: MerchantUpsertWithoutIntiatedPaymentInput
+    connect?: MerchantWhereUniqueInput
+    update?: XOR<XOR<MerchantUpdateToOneWithWhereWithoutIntiatedPaymentInput, MerchantUpdateWithoutIntiatedPaymentInput>, MerchantUncheckedUpdateWithoutIntiatedPaymentInput>
   }
 
   export type PaymentLinkUpdateOneWithoutIntiatedPaymentNestedInput = {
@@ -27194,6 +27331,16 @@ export namespace Prisma {
     delete?: PaymentLinkWhereInput | boolean
     connect?: PaymentLinkWhereUniqueInput
     update?: XOR<XOR<PaymentLinkUpdateToOneWithWhereWithoutIntiatedPaymentInput, PaymentLinkUpdateWithoutIntiatedPaymentInput>, PaymentLinkUncheckedUpdateWithoutIntiatedPaymentInput>
+  }
+
+  export type PaymentPageUpdateOneWithoutIntiatedPaymentNestedInput = {
+    create?: XOR<PaymentPageCreateWithoutIntiatedPaymentInput, PaymentPageUncheckedCreateWithoutIntiatedPaymentInput>
+    connectOrCreate?: PaymentPageCreateOrConnectWithoutIntiatedPaymentInput
+    upsert?: PaymentPageUpsertWithoutIntiatedPaymentInput
+    disconnect?: PaymentPageWhereInput | boolean
+    delete?: PaymentPageWhereInput | boolean
+    connect?: PaymentPageWhereUniqueInput
+    update?: XOR<XOR<PaymentPageUpdateToOneWithWhereWithoutIntiatedPaymentInput, PaymentPageUpdateWithoutIntiatedPaymentInput>, PaymentPageUncheckedUpdateWithoutIntiatedPaymentInput>
   }
 
   export type TransactionUpdateManyWithoutIntiatedPaymentNestedInput = {
@@ -27208,14 +27355,6 @@ export namespace Prisma {
     update?: TransactionUpdateWithWhereUniqueWithoutIntiatedPaymentInput | TransactionUpdateWithWhereUniqueWithoutIntiatedPaymentInput[]
     updateMany?: TransactionUpdateManyWithWhereWithoutIntiatedPaymentInput | TransactionUpdateManyWithWhereWithoutIntiatedPaymentInput[]
     deleteMany?: TransactionScalarWhereInput | TransactionScalarWhereInput[]
-  }
-
-  export type MerchantUpdateOneRequiredWithoutIntiatedPaymentNestedInput = {
-    create?: XOR<MerchantCreateWithoutIntiatedPaymentInput, MerchantUncheckedCreateWithoutIntiatedPaymentInput>
-    connectOrCreate?: MerchantCreateOrConnectWithoutIntiatedPaymentInput
-    upsert?: MerchantUpsertWithoutIntiatedPaymentInput
-    connect?: MerchantWhereUniqueInput
-    update?: XOR<XOR<MerchantUpdateToOneWithWhereWithoutIntiatedPaymentInput, MerchantUpdateWithoutIntiatedPaymentInput>, MerchantUncheckedUpdateWithoutIntiatedPaymentInput>
   }
 
   export type TransactionUncheckedUpdateManyWithoutIntiatedPaymentNestedInput = {
@@ -27801,6 +27940,46 @@ export namespace Prisma {
     _max?: NestedEnumQRPaymentTypeFilter<$PrismaModel>
   }
 
+  export type IntiatedPaymentCreateWithoutMerchantInput = {
+    id?: string
+    initiatedFrom: $Enums.IntiatedFrom
+    status?: $Enums.IntiatedPaymentStatus
+    index: number
+    walletAddress: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stableCoin: StableCoinCreateNestedOneWithoutIntiatedPaymentInput
+    paymentLink?: PaymentLinkCreateNestedOneWithoutIntiatedPaymentInput
+    paymentPage?: PaymentPageCreateNestedOneWithoutIntiatedPaymentInput
+    Transaction?: TransactionCreateNestedManyWithoutIntiatedPaymentInput
+  }
+
+  export type IntiatedPaymentUncheckedCreateWithoutMerchantInput = {
+    id?: string
+    initiatedFrom: $Enums.IntiatedFrom
+    status?: $Enums.IntiatedPaymentStatus
+    index: number
+    walletAddress: string
+    amount: Decimal | DecimalJsLike | number | string
+    paymentPageId?: string | null
+    paymentLinkId?: string | null
+    stableCoinId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutIntiatedPaymentInput
+  }
+
+  export type IntiatedPaymentCreateOrConnectWithoutMerchantInput = {
+    where: IntiatedPaymentWhereUniqueInput
+    create: XOR<IntiatedPaymentCreateWithoutMerchantInput, IntiatedPaymentUncheckedCreateWithoutMerchantInput>
+  }
+
+  export type IntiatedPaymentCreateManyMerchantInputEnvelope = {
+    data: IntiatedPaymentCreateManyMerchantInput | IntiatedPaymentCreateManyMerchantInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserCreateWithoutMerchantInput = {
     id?: string
     name?: string | null
@@ -27810,8 +27989,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
-    sessions?: SessionCreateNestedManyWithoutUserInput
     Authenticator?: AuthenticatorCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMerchantInput = {
@@ -27823,8 +28002,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     Authenticator?: AuthenticatorUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMerchantInput = {
@@ -27861,32 +28040,6 @@ export namespace Prisma {
 
   export type PaymentLinkCreateManyMerchantInputEnvelope = {
     data: PaymentLinkCreateManyMerchantInput | PaymentLinkCreateManyMerchantInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type WalletCreateWithoutMerchantInput = {
-    id?: string
-    balance: Decimal | DecimalJsLike | number | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    stableCoin: StableCoinCreateNestedOneWithoutWalletInput
-  }
-
-  export type WalletUncheckedCreateWithoutMerchantInput = {
-    id?: string
-    balance: Decimal | DecimalJsLike | number | string
-    stableCoinId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type WalletCreateOrConnectWithoutMerchantInput = {
-    where: WalletWhereUniqueInput
-    create: XOR<WalletCreateWithoutMerchantInput, WalletUncheckedCreateWithoutMerchantInput>
-  }
-
-  export type WalletCreateManyMerchantInputEnvelope = {
-    data: WalletCreateManyMerchantInput | WalletCreateManyMerchantInput[]
     skipDuplicates?: boolean
   }
 
@@ -27928,41 +28081,35 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type IntiatedPaymentCreateWithoutMerchantInput = {
+  export type QRPaymentCreateWithoutMerchantInput = {
     id?: string
-    initiatedFrom: $Enums.IntiatedFrom
-    status?: $Enums.IntiatedPaymentStatus
-    index: number
-    walletAddress: string
     amount: Decimal | DecimalJsLike | number | string
+    status?: $Enums.QRPaymentStatus
+    type?: $Enums.QRPaymentType
+    expiresAt?: Date | string | null
+    expired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    paymentPage?: PaymentPageCreateNestedOneWithoutIntiatedPaymentInput
-    paymentLink?: PaymentLinkCreateNestedOneWithoutIntiatedPaymentInput
-    Transaction?: TransactionCreateNestedManyWithoutIntiatedPaymentInput
   }
 
-  export type IntiatedPaymentUncheckedCreateWithoutMerchantInput = {
+  export type QRPaymentUncheckedCreateWithoutMerchantInput = {
     id?: string
-    initiatedFrom: $Enums.IntiatedFrom
-    status?: $Enums.IntiatedPaymentStatus
-    index: number
-    walletAddress: string
     amount: Decimal | DecimalJsLike | number | string
-    paymentPageId?: string | null
-    paymentLinkId?: string | null
+    status?: $Enums.QRPaymentStatus
+    type?: $Enums.QRPaymentType
+    expiresAt?: Date | string | null
+    expired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    Transaction?: TransactionUncheckedCreateNestedManyWithoutIntiatedPaymentInput
   }
 
-  export type IntiatedPaymentCreateOrConnectWithoutMerchantInput = {
-    where: IntiatedPaymentWhereUniqueInput
-    create: XOR<IntiatedPaymentCreateWithoutMerchantInput, IntiatedPaymentUncheckedCreateWithoutMerchantInput>
+  export type QRPaymentCreateOrConnectWithoutMerchantInput = {
+    where: QRPaymentWhereUniqueInput
+    create: XOR<QRPaymentCreateWithoutMerchantInput, QRPaymentUncheckedCreateWithoutMerchantInput>
   }
 
-  export type IntiatedPaymentCreateManyMerchantInputEnvelope = {
-    data: IntiatedPaymentCreateManyMerchantInput | IntiatedPaymentCreateManyMerchantInput[]
+  export type QRPaymentCreateManyMerchantInputEnvelope = {
+    data: QRPaymentCreateManyMerchantInput | QRPaymentCreateManyMerchantInput[]
     skipDuplicates?: boolean
   }
 
@@ -28006,36 +28153,64 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type QRPaymentCreateWithoutMerchantInput = {
+  export type WalletCreateWithoutMerchantInput = {
     id?: string
-    amount: Decimal | DecimalJsLike | number | string
-    status?: $Enums.QRPaymentStatus
-    type?: $Enums.QRPaymentType
-    expiresAt?: Date | string | null
-    expired?: boolean
+    balance: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    stableCoin: StableCoinCreateNestedOneWithoutWalletInput
+  }
+
+  export type WalletUncheckedCreateWithoutMerchantInput = {
+    id?: string
+    balance: Decimal | DecimalJsLike | number | string
+    stableCoinId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
 
-  export type QRPaymentUncheckedCreateWithoutMerchantInput = {
-    id?: string
-    amount: Decimal | DecimalJsLike | number | string
-    status?: $Enums.QRPaymentStatus
-    type?: $Enums.QRPaymentType
-    expiresAt?: Date | string | null
-    expired?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+  export type WalletCreateOrConnectWithoutMerchantInput = {
+    where: WalletWhereUniqueInput
+    create: XOR<WalletCreateWithoutMerchantInput, WalletUncheckedCreateWithoutMerchantInput>
   }
 
-  export type QRPaymentCreateOrConnectWithoutMerchantInput = {
-    where: QRPaymentWhereUniqueInput
-    create: XOR<QRPaymentCreateWithoutMerchantInput, QRPaymentUncheckedCreateWithoutMerchantInput>
-  }
-
-  export type QRPaymentCreateManyMerchantInputEnvelope = {
-    data: QRPaymentCreateManyMerchantInput | QRPaymentCreateManyMerchantInput[]
+  export type WalletCreateManyMerchantInputEnvelope = {
+    data: WalletCreateManyMerchantInput | WalletCreateManyMerchantInput[]
     skipDuplicates?: boolean
+  }
+
+  export type IntiatedPaymentUpsertWithWhereUniqueWithoutMerchantInput = {
+    where: IntiatedPaymentWhereUniqueInput
+    update: XOR<IntiatedPaymentUpdateWithoutMerchantInput, IntiatedPaymentUncheckedUpdateWithoutMerchantInput>
+    create: XOR<IntiatedPaymentCreateWithoutMerchantInput, IntiatedPaymentUncheckedCreateWithoutMerchantInput>
+  }
+
+  export type IntiatedPaymentUpdateWithWhereUniqueWithoutMerchantInput = {
+    where: IntiatedPaymentWhereUniqueInput
+    data: XOR<IntiatedPaymentUpdateWithoutMerchantInput, IntiatedPaymentUncheckedUpdateWithoutMerchantInput>
+  }
+
+  export type IntiatedPaymentUpdateManyWithWhereWithoutMerchantInput = {
+    where: IntiatedPaymentScalarWhereInput
+    data: XOR<IntiatedPaymentUpdateManyMutationInput, IntiatedPaymentUncheckedUpdateManyWithoutMerchantInput>
+  }
+
+  export type IntiatedPaymentScalarWhereInput = {
+    AND?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
+    OR?: IntiatedPaymentScalarWhereInput[]
+    NOT?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
+    id?: StringFilter<"IntiatedPayment"> | string
+    initiatedFrom?: EnumIntiatedFromFilter<"IntiatedPayment"> | $Enums.IntiatedFrom
+    status?: EnumIntiatedPaymentStatusFilter<"IntiatedPayment"> | $Enums.IntiatedPaymentStatus
+    index?: IntFilter<"IntiatedPayment"> | number
+    walletAddress?: StringFilter<"IntiatedPayment"> | string
+    amount?: DecimalFilter<"IntiatedPayment"> | Decimal | DecimalJsLike | number | string
+    paymentPageId?: StringNullableFilter<"IntiatedPayment"> | string | null
+    paymentLinkId?: StringNullableFilter<"IntiatedPayment"> | string | null
+    stableCoinId?: StringFilter<"IntiatedPayment"> | string
+    createdAt?: DateTimeFilter<"IntiatedPayment"> | Date | string
+    updatedAt?: DateTimeFilter<"IntiatedPayment"> | Date | string
+    merchantId?: StringFilter<"IntiatedPayment"> | string
   }
 
   export type UserUpsertWithoutMerchantInput = {
@@ -28058,8 +28233,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
-    sessions?: SessionUpdateManyWithoutUserNestedInput
     Authenticator?: AuthenticatorUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMerchantInput = {
@@ -28071,8 +28246,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     Authenticator?: AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type PaymentLinkUpsertWithWhereUniqueWithoutMerchantInput = {
@@ -28103,34 +28278,6 @@ export namespace Prisma {
     expiresAt?: DateTimeNullableFilter<"PaymentLink"> | Date | string | null
     description?: StringNullableFilter<"PaymentLink"> | string | null
     merchantId?: StringFilter<"PaymentLink"> | string
-  }
-
-  export type WalletUpsertWithWhereUniqueWithoutMerchantInput = {
-    where: WalletWhereUniqueInput
-    update: XOR<WalletUpdateWithoutMerchantInput, WalletUncheckedUpdateWithoutMerchantInput>
-    create: XOR<WalletCreateWithoutMerchantInput, WalletUncheckedCreateWithoutMerchantInput>
-  }
-
-  export type WalletUpdateWithWhereUniqueWithoutMerchantInput = {
-    where: WalletWhereUniqueInput
-    data: XOR<WalletUpdateWithoutMerchantInput, WalletUncheckedUpdateWithoutMerchantInput>
-  }
-
-  export type WalletUpdateManyWithWhereWithoutMerchantInput = {
-    where: WalletScalarWhereInput
-    data: XOR<WalletUpdateManyMutationInput, WalletUncheckedUpdateManyWithoutMerchantInput>
-  }
-
-  export type WalletScalarWhereInput = {
-    AND?: WalletScalarWhereInput | WalletScalarWhereInput[]
-    OR?: WalletScalarWhereInput[]
-    NOT?: WalletScalarWhereInput | WalletScalarWhereInput[]
-    id?: StringFilter<"Wallet"> | string
-    balance?: DecimalFilter<"Wallet"> | Decimal | DecimalJsLike | number | string
-    stableCoinId?: StringFilter<"Wallet"> | string
-    createdAt?: DateTimeFilter<"Wallet"> | Date | string
-    updatedAt?: DateTimeFilter<"Wallet"> | Date | string
-    merchantId?: StringFilter<"Wallet"> | string
   }
 
   export type PaymentPageUpsertWithWhereUniqueWithoutMerchantInput = {
@@ -28165,37 +28312,35 @@ export namespace Prisma {
     merchantId?: StringFilter<"PaymentPage"> | string
   }
 
-  export type IntiatedPaymentUpsertWithWhereUniqueWithoutMerchantInput = {
-    where: IntiatedPaymentWhereUniqueInput
-    update: XOR<IntiatedPaymentUpdateWithoutMerchantInput, IntiatedPaymentUncheckedUpdateWithoutMerchantInput>
-    create: XOR<IntiatedPaymentCreateWithoutMerchantInput, IntiatedPaymentUncheckedCreateWithoutMerchantInput>
+  export type QRPaymentUpsertWithWhereUniqueWithoutMerchantInput = {
+    where: QRPaymentWhereUniqueInput
+    update: XOR<QRPaymentUpdateWithoutMerchantInput, QRPaymentUncheckedUpdateWithoutMerchantInput>
+    create: XOR<QRPaymentCreateWithoutMerchantInput, QRPaymentUncheckedCreateWithoutMerchantInput>
   }
 
-  export type IntiatedPaymentUpdateWithWhereUniqueWithoutMerchantInput = {
-    where: IntiatedPaymentWhereUniqueInput
-    data: XOR<IntiatedPaymentUpdateWithoutMerchantInput, IntiatedPaymentUncheckedUpdateWithoutMerchantInput>
+  export type QRPaymentUpdateWithWhereUniqueWithoutMerchantInput = {
+    where: QRPaymentWhereUniqueInput
+    data: XOR<QRPaymentUpdateWithoutMerchantInput, QRPaymentUncheckedUpdateWithoutMerchantInput>
   }
 
-  export type IntiatedPaymentUpdateManyWithWhereWithoutMerchantInput = {
-    where: IntiatedPaymentScalarWhereInput
-    data: XOR<IntiatedPaymentUpdateManyMutationInput, IntiatedPaymentUncheckedUpdateManyWithoutMerchantInput>
+  export type QRPaymentUpdateManyWithWhereWithoutMerchantInput = {
+    where: QRPaymentScalarWhereInput
+    data: XOR<QRPaymentUpdateManyMutationInput, QRPaymentUncheckedUpdateManyWithoutMerchantInput>
   }
 
-  export type IntiatedPaymentScalarWhereInput = {
-    AND?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
-    OR?: IntiatedPaymentScalarWhereInput[]
-    NOT?: IntiatedPaymentScalarWhereInput | IntiatedPaymentScalarWhereInput[]
-    id?: StringFilter<"IntiatedPayment"> | string
-    initiatedFrom?: EnumIntiatedFromFilter<"IntiatedPayment"> | $Enums.IntiatedFrom
-    status?: EnumIntiatedPaymentStatusFilter<"IntiatedPayment"> | $Enums.IntiatedPaymentStatus
-    index?: IntFilter<"IntiatedPayment"> | number
-    walletAddress?: StringFilter<"IntiatedPayment"> | string
-    amount?: DecimalFilter<"IntiatedPayment"> | Decimal | DecimalJsLike | number | string
-    paymentPageId?: StringNullableFilter<"IntiatedPayment"> | string | null
-    paymentLinkId?: StringNullableFilter<"IntiatedPayment"> | string | null
-    createdAt?: DateTimeFilter<"IntiatedPayment"> | Date | string
-    updatedAt?: DateTimeFilter<"IntiatedPayment"> | Date | string
-    merchantId?: StringFilter<"IntiatedPayment"> | string
+  export type QRPaymentScalarWhereInput = {
+    AND?: QRPaymentScalarWhereInput | QRPaymentScalarWhereInput[]
+    OR?: QRPaymentScalarWhereInput[]
+    NOT?: QRPaymentScalarWhereInput | QRPaymentScalarWhereInput[]
+    id?: StringFilter<"QRPayment"> | string
+    amount?: DecimalFilter<"QRPayment"> | Decimal | DecimalJsLike | number | string
+    status?: EnumQRPaymentStatusFilter<"QRPayment"> | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFilter<"QRPayment"> | $Enums.QRPaymentType
+    expiresAt?: DateTimeNullableFilter<"QRPayment"> | Date | string | null
+    expired?: BoolFilter<"QRPayment"> | boolean
+    createdAt?: DateTimeFilter<"QRPayment"> | Date | string
+    updatedAt?: DateTimeFilter<"QRPayment"> | Date | string
+    merchantId?: StringFilter<"QRPayment"> | string
   }
 
   export type TransactionUpsertWithWhereUniqueWithoutMerchantInput = {
@@ -28233,35 +28378,32 @@ export namespace Prisma {
     merchantId?: StringFilter<"Transaction"> | string
   }
 
-  export type QRPaymentUpsertWithWhereUniqueWithoutMerchantInput = {
-    where: QRPaymentWhereUniqueInput
-    update: XOR<QRPaymentUpdateWithoutMerchantInput, QRPaymentUncheckedUpdateWithoutMerchantInput>
-    create: XOR<QRPaymentCreateWithoutMerchantInput, QRPaymentUncheckedCreateWithoutMerchantInput>
+  export type WalletUpsertWithWhereUniqueWithoutMerchantInput = {
+    where: WalletWhereUniqueInput
+    update: XOR<WalletUpdateWithoutMerchantInput, WalletUncheckedUpdateWithoutMerchantInput>
+    create: XOR<WalletCreateWithoutMerchantInput, WalletUncheckedCreateWithoutMerchantInput>
   }
 
-  export type QRPaymentUpdateWithWhereUniqueWithoutMerchantInput = {
-    where: QRPaymentWhereUniqueInput
-    data: XOR<QRPaymentUpdateWithoutMerchantInput, QRPaymentUncheckedUpdateWithoutMerchantInput>
+  export type WalletUpdateWithWhereUniqueWithoutMerchantInput = {
+    where: WalletWhereUniqueInput
+    data: XOR<WalletUpdateWithoutMerchantInput, WalletUncheckedUpdateWithoutMerchantInput>
   }
 
-  export type QRPaymentUpdateManyWithWhereWithoutMerchantInput = {
-    where: QRPaymentScalarWhereInput
-    data: XOR<QRPaymentUpdateManyMutationInput, QRPaymentUncheckedUpdateManyWithoutMerchantInput>
+  export type WalletUpdateManyWithWhereWithoutMerchantInput = {
+    where: WalletScalarWhereInput
+    data: XOR<WalletUpdateManyMutationInput, WalletUncheckedUpdateManyWithoutMerchantInput>
   }
 
-  export type QRPaymentScalarWhereInput = {
-    AND?: QRPaymentScalarWhereInput | QRPaymentScalarWhereInput[]
-    OR?: QRPaymentScalarWhereInput[]
-    NOT?: QRPaymentScalarWhereInput | QRPaymentScalarWhereInput[]
-    id?: StringFilter<"QRPayment"> | string
-    amount?: DecimalFilter<"QRPayment"> | Decimal | DecimalJsLike | number | string
-    status?: EnumQRPaymentStatusFilter<"QRPayment"> | $Enums.QRPaymentStatus
-    type?: EnumQRPaymentTypeFilter<"QRPayment"> | $Enums.QRPaymentType
-    expiresAt?: DateTimeNullableFilter<"QRPayment"> | Date | string | null
-    expired?: BoolFilter<"QRPayment"> | boolean
-    createdAt?: DateTimeFilter<"QRPayment"> | Date | string
-    updatedAt?: DateTimeFilter<"QRPayment"> | Date | string
-    merchantId?: StringFilter<"QRPayment"> | string
+  export type WalletScalarWhereInput = {
+    AND?: WalletScalarWhereInput | WalletScalarWhereInput[]
+    OR?: WalletScalarWhereInput[]
+    NOT?: WalletScalarWhereInput | WalletScalarWhereInput[]
+    id?: StringFilter<"Wallet"> | string
+    balance?: DecimalFilter<"Wallet"> | Decimal | DecimalJsLike | number | string
+    stableCoinId?: StringFilter<"Wallet"> | string
+    createdAt?: DateTimeFilter<"Wallet"> | Date | string
+    updatedAt?: DateTimeFilter<"Wallet"> | Date | string
+    merchantId?: StringFilter<"Wallet"> | string
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -28301,30 +28443,6 @@ export namespace Prisma {
 
   export type AccountCreateManyUserInputEnvelope = {
     data: AccountCreateManyUserInput | AccountCreateManyUserInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type SessionCreateWithoutUserInput = {
-    sessionToken: string
-    expires: Date | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type SessionUncheckedCreateWithoutUserInput = {
-    sessionToken: string
-    expires: Date | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type SessionCreateOrConnectWithoutUserInput = {
-    where: SessionWhereUniqueInput
-    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
-  }
-
-  export type SessionCreateManyUserInputEnvelope = {
-    data: SessionCreateManyUserInput | SessionCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -28368,12 +28486,12 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    PaymentLink?: PaymentLinkCreateNestedManyWithoutMerchantInput
-    Wallet?: WalletCreateNestedManyWithoutMerchantInput
-    PaymentPage?: PaymentPageCreateNestedManyWithoutMerchantInput
     IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
-    Transaction?: TransactionCreateNestedManyWithoutMerchantInput
+    PaymentLink?: PaymentLinkCreateNestedManyWithoutMerchantInput
+    PaymentPage?: PaymentPageCreateNestedManyWithoutMerchantInput
     QRPayment?: QRPaymentCreateNestedManyWithoutMerchantInput
+    Transaction?: TransactionCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletCreateNestedManyWithoutMerchantInput
   }
 
   export type MerchantUncheckedCreateWithoutUserInput = {
@@ -28386,17 +28504,41 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
-    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
-    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
     IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutMerchantInput
-    Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
+    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
+    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
     QRPayment?: QRPaymentUncheckedCreateNestedManyWithoutMerchantInput
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
   }
 
   export type MerchantCreateOrConnectWithoutUserInput = {
     where: MerchantWhereUniqueInput
     create: XOR<MerchantCreateWithoutUserInput, MerchantUncheckedCreateWithoutUserInput>
+  }
+
+  export type SessionCreateWithoutUserInput = {
+    sessionToken: string
+    expires: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionUncheckedCreateWithoutUserInput = {
+    sessionToken: string
+    expires: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SessionCreateOrConnectWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type SessionCreateManyUserInputEnvelope = {
+    data: SessionCreateManyUserInput | SessionCreateManyUserInput[]
+    skipDuplicates?: boolean
   }
 
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
@@ -28432,33 +28574,6 @@ export namespace Prisma {
     session_state?: StringNullableFilter<"Account"> | string | null
     createdAt?: DateTimeFilter<"Account"> | Date | string
     updatedAt?: DateTimeFilter<"Account"> | Date | string
-  }
-
-  export type SessionUpsertWithWhereUniqueWithoutUserInput = {
-    where: SessionWhereUniqueInput
-    update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
-    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
-  }
-
-  export type SessionUpdateWithWhereUniqueWithoutUserInput = {
-    where: SessionWhereUniqueInput
-    data: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
-  }
-
-  export type SessionUpdateManyWithWhereWithoutUserInput = {
-    where: SessionScalarWhereInput
-    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutUserInput>
-  }
-
-  export type SessionScalarWhereInput = {
-    AND?: SessionScalarWhereInput | SessionScalarWhereInput[]
-    OR?: SessionScalarWhereInput[]
-    NOT?: SessionScalarWhereInput | SessionScalarWhereInput[]
-    sessionToken?: StringFilter<"Session"> | string
-    userId?: StringFilter<"Session"> | string
-    expires?: DateTimeFilter<"Session"> | Date | string
-    createdAt?: DateTimeFilter<"Session"> | Date | string
-    updatedAt?: DateTimeFilter<"Session"> | Date | string
   }
 
   export type AuthenticatorUpsertWithWhereUniqueWithoutUserInput = {
@@ -28512,12 +28627,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PaymentLink?: PaymentLinkUpdateManyWithoutMerchantNestedInput
-    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
-    PaymentPage?: PaymentPageUpdateManyWithoutMerchantNestedInput
     IntiatedPayment?: IntiatedPaymentUpdateManyWithoutMerchantNestedInput
-    Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
+    PaymentLink?: PaymentLinkUpdateManyWithoutMerchantNestedInput
+    PaymentPage?: PaymentPageUpdateManyWithoutMerchantNestedInput
     QRPayment?: QRPaymentUpdateManyWithoutMerchantNestedInput
+    Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
   }
 
   export type MerchantUncheckedUpdateWithoutUserInput = {
@@ -28530,12 +28645,39 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
-    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
-    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
     IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutMerchantNestedInput
-    Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
+    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
+    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
     QRPayment?: QRPaymentUncheckedUpdateManyWithoutMerchantNestedInput
+    Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
+  }
+
+  export type SessionUpsertWithWhereUniqueWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    update: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
+    create: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput>
+  }
+
+  export type SessionUpdateWithWhereUniqueWithoutUserInput = {
+    where: SessionWhereUniqueInput
+    data: XOR<SessionUpdateWithoutUserInput, SessionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SessionUpdateManyWithWhereWithoutUserInput = {
+    where: SessionScalarWhereInput
+    data: XOR<SessionUpdateManyMutationInput, SessionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SessionScalarWhereInput = {
+    AND?: SessionScalarWhereInput | SessionScalarWhereInput[]
+    OR?: SessionScalarWhereInput[]
+    NOT?: SessionScalarWhereInput | SessionScalarWhereInput[]
+    sessionToken?: StringFilter<"Session"> | string
+    userId?: StringFilter<"Session"> | string
+    expires?: DateTimeFilter<"Session"> | Date | string
+    createdAt?: DateTimeFilter<"Session"> | Date | string
+    updatedAt?: DateTimeFilter<"Session"> | Date | string
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -28546,9 +28688,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    sessions?: SessionCreateNestedManyWithoutUserInput
     Authenticator?: AuthenticatorCreateNestedManyWithoutUserInput
     Merchant?: MerchantCreateNestedOneWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -28559,9 +28701,9 @@ export namespace Prisma {
     image?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     Authenticator?: AuthenticatorUncheckedCreateNestedManyWithoutUserInput
     Merchant?: MerchantUncheckedCreateNestedOneWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -28588,9 +28730,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUpdateManyWithoutUserNestedInput
     Authenticator?: AuthenticatorUpdateManyWithoutUserNestedInput
     Merchant?: MerchantUpdateOneWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -28601,9 +28743,9 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     Authenticator?: AuthenticatorUncheckedUpdateManyWithoutUserNestedInput
     Merchant?: MerchantUncheckedUpdateOneWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -28683,8 +28825,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountCreateNestedManyWithoutUserInput
-    sessions?: SessionCreateNestedManyWithoutUserInput
     Merchant?: MerchantCreateNestedOneWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAuthenticatorInput = {
@@ -28696,8 +28838,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
-    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     Merchant?: MerchantUncheckedCreateNestedOneWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAuthenticatorInput = {
@@ -28725,8 +28867,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUpdateManyWithoutUserNestedInput
-    sessions?: SessionUpdateManyWithoutUserNestedInput
     Merchant?: MerchantUpdateOneWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuthenticatorInput = {
@@ -28738,33 +28880,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
-    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     Merchant?: MerchantUncheckedUpdateOneWithoutUserNestedInput
-  }
-
-  export type StableCoinCreateWithoutWalletInput = {
-    id?: string
-    name: string
-    symbol: string
-    logoUrl?: string | null
-    description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type StableCoinUncheckedCreateWithoutWalletInput = {
-    id?: string
-    name: string
-    symbol: string
-    logoUrl?: string | null
-    description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type StableCoinCreateOrConnectWithoutWalletInput = {
-    where: StableCoinWhereUniqueInput
-    create: XOR<StableCoinCreateWithoutWalletInput, StableCoinUncheckedCreateWithoutWalletInput>
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MerchantCreateWithoutWalletInput = {
@@ -28777,12 +28894,12 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
     user: UserCreateNestedOneWithoutMerchantInput
     PaymentLink?: PaymentLinkCreateNestedManyWithoutMerchantInput
     PaymentPage?: PaymentPageCreateNestedManyWithoutMerchantInput
-    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
-    Transaction?: TransactionCreateNestedManyWithoutMerchantInput
     QRPayment?: QRPaymentCreateNestedManyWithoutMerchantInput
+    Transaction?: TransactionCreateNestedManyWithoutMerchantInput
   }
 
   export type MerchantUncheckedCreateWithoutWalletInput = {
@@ -28796,11 +28913,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
+    IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutMerchantInput
     PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
     PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
-    IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutMerchantInput
-    Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
     QRPayment?: QRPaymentUncheckedCreateNestedManyWithoutMerchantInput
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
   }
 
   export type MerchantCreateOrConnectWithoutWalletInput = {
@@ -28808,35 +28925,31 @@ export namespace Prisma {
     create: XOR<MerchantCreateWithoutWalletInput, MerchantUncheckedCreateWithoutWalletInput>
   }
 
-  export type StableCoinUpsertWithoutWalletInput = {
-    update: XOR<StableCoinUpdateWithoutWalletInput, StableCoinUncheckedUpdateWithoutWalletInput>
+  export type StableCoinCreateWithoutWalletInput = {
+    id?: string
+    name: string
+    symbol: string
+    logoUrl?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutStableCoinInput
+  }
+
+  export type StableCoinUncheckedCreateWithoutWalletInput = {
+    id?: string
+    name: string
+    symbol: string
+    logoUrl?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutStableCoinInput
+  }
+
+  export type StableCoinCreateOrConnectWithoutWalletInput = {
+    where: StableCoinWhereUniqueInput
     create: XOR<StableCoinCreateWithoutWalletInput, StableCoinUncheckedCreateWithoutWalletInput>
-    where?: StableCoinWhereInput
-  }
-
-  export type StableCoinUpdateToOneWithWhereWithoutWalletInput = {
-    where?: StableCoinWhereInput
-    data: XOR<StableCoinUpdateWithoutWalletInput, StableCoinUncheckedUpdateWithoutWalletInput>
-  }
-
-  export type StableCoinUpdateWithoutWalletInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    symbol?: StringFieldUpdateOperationsInput | string
-    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type StableCoinUncheckedUpdateWithoutWalletInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    symbol?: StringFieldUpdateOperationsInput | string
-    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MerchantUpsertWithoutWalletInput = {
@@ -28860,12 +28973,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutMerchantNestedInput
     user?: UserUpdateOneRequiredWithoutMerchantNestedInput
     PaymentLink?: PaymentLinkUpdateManyWithoutMerchantNestedInput
     PaymentPage?: PaymentPageUpdateManyWithoutMerchantNestedInput
-    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutMerchantNestedInput
-    Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
     QRPayment?: QRPaymentUpdateManyWithoutMerchantNestedInput
+    Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
   }
 
   export type MerchantUncheckedUpdateWithoutWalletInput = {
@@ -28879,11 +28992,44 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
+    IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutMerchantNestedInput
     PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
     PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
-    IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutMerchantNestedInput
-    Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
     QRPayment?: QRPaymentUncheckedUpdateManyWithoutMerchantNestedInput
+    Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
+  }
+
+  export type StableCoinUpsertWithoutWalletInput = {
+    update: XOR<StableCoinUpdateWithoutWalletInput, StableCoinUncheckedUpdateWithoutWalletInput>
+    create: XOR<StableCoinCreateWithoutWalletInput, StableCoinUncheckedCreateWithoutWalletInput>
+    where?: StableCoinWhereInput
+  }
+
+  export type StableCoinUpdateToOneWithWhereWithoutWalletInput = {
+    where?: StableCoinWhereInput
+    data: XOR<StableCoinUpdateWithoutWalletInput, StableCoinUncheckedUpdateWithoutWalletInput>
+  }
+
+  export type StableCoinUpdateWithoutWalletInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    symbol?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutStableCoinNestedInput
+  }
+
+  export type StableCoinUncheckedUpdateWithoutWalletInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    symbol?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutStableCoinNestedInput
   }
 
   export type WalletCreateWithoutStableCoinInput = {
@@ -28912,6 +29058,46 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type IntiatedPaymentCreateWithoutStableCoinInput = {
+    id?: string
+    initiatedFrom: $Enums.IntiatedFrom
+    status?: $Enums.IntiatedPaymentStatus
+    index: number
+    walletAddress: string
+    amount: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    merchant: MerchantCreateNestedOneWithoutIntiatedPaymentInput
+    paymentLink?: PaymentLinkCreateNestedOneWithoutIntiatedPaymentInput
+    paymentPage?: PaymentPageCreateNestedOneWithoutIntiatedPaymentInput
+    Transaction?: TransactionCreateNestedManyWithoutIntiatedPaymentInput
+  }
+
+  export type IntiatedPaymentUncheckedCreateWithoutStableCoinInput = {
+    id?: string
+    initiatedFrom: $Enums.IntiatedFrom
+    status?: $Enums.IntiatedPaymentStatus
+    index: number
+    walletAddress: string
+    amount: Decimal | DecimalJsLike | number | string
+    paymentPageId?: string | null
+    paymentLinkId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    merchantId: string
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutIntiatedPaymentInput
+  }
+
+  export type IntiatedPaymentCreateOrConnectWithoutStableCoinInput = {
+    where: IntiatedPaymentWhereUniqueInput
+    create: XOR<IntiatedPaymentCreateWithoutStableCoinInput, IntiatedPaymentUncheckedCreateWithoutStableCoinInput>
+  }
+
+  export type IntiatedPaymentCreateManyStableCoinInputEnvelope = {
+    data: IntiatedPaymentCreateManyStableCoinInput | IntiatedPaymentCreateManyStableCoinInput[]
+    skipDuplicates?: boolean
+  }
+
   export type WalletUpsertWithWhereUniqueWithoutStableCoinInput = {
     where: WalletWhereUniqueInput
     update: XOR<WalletUpdateWithoutStableCoinInput, WalletUncheckedUpdateWithoutStableCoinInput>
@@ -28928,45 +29114,20 @@ export namespace Prisma {
     data: XOR<WalletUpdateManyMutationInput, WalletUncheckedUpdateManyWithoutStableCoinInput>
   }
 
-  export type MerchantCreateWithoutPaymentLinkInput = {
-    id?: string
-    name: string
-    email: string
-    phoneNumber?: string | null
-    address?: string | null
-    logoUrl?: string | null
-    description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutMerchantInput
-    Wallet?: WalletCreateNestedManyWithoutMerchantInput
-    PaymentPage?: PaymentPageCreateNestedManyWithoutMerchantInput
-    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
-    Transaction?: TransactionCreateNestedManyWithoutMerchantInput
-    QRPayment?: QRPaymentCreateNestedManyWithoutMerchantInput
+  export type IntiatedPaymentUpsertWithWhereUniqueWithoutStableCoinInput = {
+    where: IntiatedPaymentWhereUniqueInput
+    update: XOR<IntiatedPaymentUpdateWithoutStableCoinInput, IntiatedPaymentUncheckedUpdateWithoutStableCoinInput>
+    create: XOR<IntiatedPaymentCreateWithoutStableCoinInput, IntiatedPaymentUncheckedCreateWithoutStableCoinInput>
   }
 
-  export type MerchantUncheckedCreateWithoutPaymentLinkInput = {
-    id?: string
-    name: string
-    email: string
-    phoneNumber?: string | null
-    address?: string | null
-    logoUrl?: string | null
-    description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
-    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
-    IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutMerchantInput
-    Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
-    QRPayment?: QRPaymentUncheckedCreateNestedManyWithoutMerchantInput
+  export type IntiatedPaymentUpdateWithWhereUniqueWithoutStableCoinInput = {
+    where: IntiatedPaymentWhereUniqueInput
+    data: XOR<IntiatedPaymentUpdateWithoutStableCoinInput, IntiatedPaymentUncheckedUpdateWithoutStableCoinInput>
   }
 
-  export type MerchantCreateOrConnectWithoutPaymentLinkInput = {
-    where: MerchantWhereUniqueInput
-    create: XOR<MerchantCreateWithoutPaymentLinkInput, MerchantUncheckedCreateWithoutPaymentLinkInput>
+  export type IntiatedPaymentUpdateManyWithWhereWithoutStableCoinInput = {
+    where: IntiatedPaymentScalarWhereInput
+    data: XOR<IntiatedPaymentUpdateManyMutationInput, IntiatedPaymentUncheckedUpdateManyWithoutStableCoinInput>
   }
 
   export type IntiatedPaymentCreateWithoutPaymentLinkInput = {
@@ -28978,9 +29139,10 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    stableCoin: StableCoinCreateNestedOneWithoutIntiatedPaymentInput
+    merchant: MerchantCreateNestedOneWithoutIntiatedPaymentInput
     paymentPage?: PaymentPageCreateNestedOneWithoutIntiatedPaymentInput
     Transaction?: TransactionCreateNestedManyWithoutIntiatedPaymentInput
-    merchant: MerchantCreateNestedOneWithoutIntiatedPaymentInput
   }
 
   export type IntiatedPaymentUncheckedCreateWithoutPaymentLinkInput = {
@@ -28991,6 +29153,7 @@ export namespace Prisma {
     walletAddress: string
     amount: Decimal | DecimalJsLike | number | string
     paymentPageId?: string | null
+    stableCoinId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     merchantId: string
@@ -29005,6 +29168,63 @@ export namespace Prisma {
   export type IntiatedPaymentCreateManyPaymentLinkInputEnvelope = {
     data: IntiatedPaymentCreateManyPaymentLinkInput | IntiatedPaymentCreateManyPaymentLinkInput[]
     skipDuplicates?: boolean
+  }
+
+  export type MerchantCreateWithoutPaymentLinkInput = {
+    id?: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+    address?: string | null
+    logoUrl?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
+    user: UserCreateNestedOneWithoutMerchantInput
+    PaymentPage?: PaymentPageCreateNestedManyWithoutMerchantInput
+    QRPayment?: QRPaymentCreateNestedManyWithoutMerchantInput
+    Transaction?: TransactionCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletCreateNestedManyWithoutMerchantInput
+  }
+
+  export type MerchantUncheckedCreateWithoutPaymentLinkInput = {
+    id?: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+    address?: string | null
+    logoUrl?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutMerchantInput
+    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
+    QRPayment?: QRPaymentUncheckedCreateNestedManyWithoutMerchantInput
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
+  }
+
+  export type MerchantCreateOrConnectWithoutPaymentLinkInput = {
+    where: MerchantWhereUniqueInput
+    create: XOR<MerchantCreateWithoutPaymentLinkInput, MerchantUncheckedCreateWithoutPaymentLinkInput>
+  }
+
+  export type IntiatedPaymentUpsertWithWhereUniqueWithoutPaymentLinkInput = {
+    where: IntiatedPaymentWhereUniqueInput
+    update: XOR<IntiatedPaymentUpdateWithoutPaymentLinkInput, IntiatedPaymentUncheckedUpdateWithoutPaymentLinkInput>
+    create: XOR<IntiatedPaymentCreateWithoutPaymentLinkInput, IntiatedPaymentUncheckedCreateWithoutPaymentLinkInput>
+  }
+
+  export type IntiatedPaymentUpdateWithWhereUniqueWithoutPaymentLinkInput = {
+    where: IntiatedPaymentWhereUniqueInput
+    data: XOR<IntiatedPaymentUpdateWithoutPaymentLinkInput, IntiatedPaymentUncheckedUpdateWithoutPaymentLinkInput>
+  }
+
+  export type IntiatedPaymentUpdateManyWithWhereWithoutPaymentLinkInput = {
+    where: IntiatedPaymentScalarWhereInput
+    data: XOR<IntiatedPaymentUpdateManyMutationInput, IntiatedPaymentUncheckedUpdateManyWithoutPaymentLinkInput>
   }
 
   export type MerchantUpsertWithoutPaymentLinkInput = {
@@ -29028,12 +29248,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutMerchantNestedInput
-    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
-    PaymentPage?: PaymentPageUpdateManyWithoutMerchantNestedInput
     IntiatedPayment?: IntiatedPaymentUpdateManyWithoutMerchantNestedInput
-    Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
+    user?: UserUpdateOneRequiredWithoutMerchantNestedInput
+    PaymentPage?: PaymentPageUpdateManyWithoutMerchantNestedInput
     QRPayment?: QRPaymentUpdateManyWithoutMerchantNestedInput
+    Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
   }
 
   export type MerchantUncheckedUpdateWithoutPaymentLinkInput = {
@@ -29047,68 +29267,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
-    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
     IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutMerchantNestedInput
-    Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
+    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
     QRPayment?: QRPaymentUncheckedUpdateManyWithoutMerchantNestedInput
-  }
-
-  export type IntiatedPaymentUpsertWithWhereUniqueWithoutPaymentLinkInput = {
-    where: IntiatedPaymentWhereUniqueInput
-    update: XOR<IntiatedPaymentUpdateWithoutPaymentLinkInput, IntiatedPaymentUncheckedUpdateWithoutPaymentLinkInput>
-    create: XOR<IntiatedPaymentCreateWithoutPaymentLinkInput, IntiatedPaymentUncheckedCreateWithoutPaymentLinkInput>
-  }
-
-  export type IntiatedPaymentUpdateWithWhereUniqueWithoutPaymentLinkInput = {
-    where: IntiatedPaymentWhereUniqueInput
-    data: XOR<IntiatedPaymentUpdateWithoutPaymentLinkInput, IntiatedPaymentUncheckedUpdateWithoutPaymentLinkInput>
-  }
-
-  export type IntiatedPaymentUpdateManyWithWhereWithoutPaymentLinkInput = {
-    where: IntiatedPaymentScalarWhereInput
-    data: XOR<IntiatedPaymentUpdateManyMutationInput, IntiatedPaymentUncheckedUpdateManyWithoutPaymentLinkInput>
-  }
-
-  export type MerchantCreateWithoutPaymentPageInput = {
-    id?: string
-    name: string
-    email: string
-    phoneNumber?: string | null
-    address?: string | null
-    logoUrl?: string | null
-    description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutMerchantInput
-    PaymentLink?: PaymentLinkCreateNestedManyWithoutMerchantInput
-    Wallet?: WalletCreateNestedManyWithoutMerchantInput
-    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
-    Transaction?: TransactionCreateNestedManyWithoutMerchantInput
-    QRPayment?: QRPaymentCreateNestedManyWithoutMerchantInput
-  }
-
-  export type MerchantUncheckedCreateWithoutPaymentPageInput = {
-    id?: string
-    name: string
-    email: string
-    phoneNumber?: string | null
-    address?: string | null
-    logoUrl?: string | null
-    description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
-    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
-    IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutMerchantInput
-    Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
-    QRPayment?: QRPaymentUncheckedCreateNestedManyWithoutMerchantInput
-  }
-
-  export type MerchantCreateOrConnectWithoutPaymentPageInput = {
-    where: MerchantWhereUniqueInput
-    create: XOR<MerchantCreateWithoutPaymentPageInput, MerchantUncheckedCreateWithoutPaymentPageInput>
+    Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
   }
 
   export type IntiatedPaymentCreateWithoutPaymentPageInput = {
@@ -29120,9 +29283,10 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
+    stableCoin: StableCoinCreateNestedOneWithoutIntiatedPaymentInput
+    merchant: MerchantCreateNestedOneWithoutIntiatedPaymentInput
     paymentLink?: PaymentLinkCreateNestedOneWithoutIntiatedPaymentInput
     Transaction?: TransactionCreateNestedManyWithoutIntiatedPaymentInput
-    merchant: MerchantCreateNestedOneWithoutIntiatedPaymentInput
   }
 
   export type IntiatedPaymentUncheckedCreateWithoutPaymentPageInput = {
@@ -29133,6 +29297,7 @@ export namespace Prisma {
     walletAddress: string
     amount: Decimal | DecimalJsLike | number | string
     paymentLinkId?: string | null
+    stableCoinId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     merchantId: string
@@ -29147,6 +29312,47 @@ export namespace Prisma {
   export type IntiatedPaymentCreateManyPaymentPageInputEnvelope = {
     data: IntiatedPaymentCreateManyPaymentPageInput | IntiatedPaymentCreateManyPaymentPageInput[]
     skipDuplicates?: boolean
+  }
+
+  export type MerchantCreateWithoutPaymentPageInput = {
+    id?: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+    address?: string | null
+    logoUrl?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
+    user: UserCreateNestedOneWithoutMerchantInput
+    PaymentLink?: PaymentLinkCreateNestedManyWithoutMerchantInput
+    QRPayment?: QRPaymentCreateNestedManyWithoutMerchantInput
+    Transaction?: TransactionCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletCreateNestedManyWithoutMerchantInput
+  }
+
+  export type MerchantUncheckedCreateWithoutPaymentPageInput = {
+    id?: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+    address?: string | null
+    logoUrl?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutMerchantInput
+    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
+    QRPayment?: QRPaymentUncheckedCreateNestedManyWithoutMerchantInput
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
+  }
+
+  export type MerchantCreateOrConnectWithoutPaymentPageInput = {
+    where: MerchantWhereUniqueInput
+    create: XOR<MerchantCreateWithoutPaymentPageInput, MerchantUncheckedCreateWithoutPaymentPageInput>
   }
 
   export type PaymentPageFormCreateWithoutPaymentPageInput = {
@@ -29173,6 +29379,22 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type IntiatedPaymentUpsertWithWhereUniqueWithoutPaymentPageInput = {
+    where: IntiatedPaymentWhereUniqueInput
+    update: XOR<IntiatedPaymentUpdateWithoutPaymentPageInput, IntiatedPaymentUncheckedUpdateWithoutPaymentPageInput>
+    create: XOR<IntiatedPaymentCreateWithoutPaymentPageInput, IntiatedPaymentUncheckedCreateWithoutPaymentPageInput>
+  }
+
+  export type IntiatedPaymentUpdateWithWhereUniqueWithoutPaymentPageInput = {
+    where: IntiatedPaymentWhereUniqueInput
+    data: XOR<IntiatedPaymentUpdateWithoutPaymentPageInput, IntiatedPaymentUncheckedUpdateWithoutPaymentPageInput>
+  }
+
+  export type IntiatedPaymentUpdateManyWithWhereWithoutPaymentPageInput = {
+    where: IntiatedPaymentScalarWhereInput
+    data: XOR<IntiatedPaymentUpdateManyMutationInput, IntiatedPaymentUncheckedUpdateManyWithoutPaymentPageInput>
+  }
+
   export type MerchantUpsertWithoutPaymentPageInput = {
     update: XOR<MerchantUpdateWithoutPaymentPageInput, MerchantUncheckedUpdateWithoutPaymentPageInput>
     create: XOR<MerchantCreateWithoutPaymentPageInput, MerchantUncheckedCreateWithoutPaymentPageInput>
@@ -29194,12 +29416,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutMerchantNestedInput
     user?: UserUpdateOneRequiredWithoutMerchantNestedInput
     PaymentLink?: PaymentLinkUpdateManyWithoutMerchantNestedInput
-    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
-    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutMerchantNestedInput
-    Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
     QRPayment?: QRPaymentUpdateManyWithoutMerchantNestedInput
+    Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
   }
 
   export type MerchantUncheckedUpdateWithoutPaymentPageInput = {
@@ -29213,27 +29435,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
-    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
     IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutMerchantNestedInput
-    Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
+    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
     QRPayment?: QRPaymentUncheckedUpdateManyWithoutMerchantNestedInput
-  }
-
-  export type IntiatedPaymentUpsertWithWhereUniqueWithoutPaymentPageInput = {
-    where: IntiatedPaymentWhereUniqueInput
-    update: XOR<IntiatedPaymentUpdateWithoutPaymentPageInput, IntiatedPaymentUncheckedUpdateWithoutPaymentPageInput>
-    create: XOR<IntiatedPaymentCreateWithoutPaymentPageInput, IntiatedPaymentUncheckedCreateWithoutPaymentPageInput>
-  }
-
-  export type IntiatedPaymentUpdateWithWhereUniqueWithoutPaymentPageInput = {
-    where: IntiatedPaymentWhereUniqueInput
-    data: XOR<IntiatedPaymentUpdateWithoutPaymentPageInput, IntiatedPaymentUncheckedUpdateWithoutPaymentPageInput>
-  }
-
-  export type IntiatedPaymentUpdateManyWithWhereWithoutPaymentPageInput = {
-    where: IntiatedPaymentScalarWhereInput
-    data: XOR<IntiatedPaymentUpdateManyMutationInput, IntiatedPaymentUncheckedUpdateManyWithoutPaymentPageInput>
+    Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
   }
 
   export type PaymentPageFormUpsertWithWhereUniqueWithoutPaymentPageInput = {
@@ -29260,6 +29466,101 @@ export namespace Prisma {
     paymentPageId?: StringFilter<"PaymentPageForm"> | string
     createdAt?: DateTimeFilter<"PaymentPageForm"> | Date | string
     updatedAt?: DateTimeFilter<"PaymentPageForm"> | Date | string
+  }
+
+  export type StableCoinCreateWithoutIntiatedPaymentInput = {
+    id?: string
+    name: string
+    symbol: string
+    logoUrl?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Wallet?: WalletCreateNestedManyWithoutStableCoinInput
+  }
+
+  export type StableCoinUncheckedCreateWithoutIntiatedPaymentInput = {
+    id?: string
+    name: string
+    symbol: string
+    logoUrl?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Wallet?: WalletUncheckedCreateNestedManyWithoutStableCoinInput
+  }
+
+  export type StableCoinCreateOrConnectWithoutIntiatedPaymentInput = {
+    where: StableCoinWhereUniqueInput
+    create: XOR<StableCoinCreateWithoutIntiatedPaymentInput, StableCoinUncheckedCreateWithoutIntiatedPaymentInput>
+  }
+
+  export type MerchantCreateWithoutIntiatedPaymentInput = {
+    id?: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+    address?: string | null
+    logoUrl?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutMerchantInput
+    PaymentLink?: PaymentLinkCreateNestedManyWithoutMerchantInput
+    PaymentPage?: PaymentPageCreateNestedManyWithoutMerchantInput
+    QRPayment?: QRPaymentCreateNestedManyWithoutMerchantInput
+    Transaction?: TransactionCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletCreateNestedManyWithoutMerchantInput
+  }
+
+  export type MerchantUncheckedCreateWithoutIntiatedPaymentInput = {
+    id?: string
+    name: string
+    email: string
+    phoneNumber?: string | null
+    address?: string | null
+    logoUrl?: string | null
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    userId: string
+    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
+    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
+    QRPayment?: QRPaymentUncheckedCreateNestedManyWithoutMerchantInput
+    Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
+  }
+
+  export type MerchantCreateOrConnectWithoutIntiatedPaymentInput = {
+    where: MerchantWhereUniqueInput
+    create: XOR<MerchantCreateWithoutIntiatedPaymentInput, MerchantUncheckedCreateWithoutIntiatedPaymentInput>
+  }
+
+  export type PaymentLinkCreateWithoutIntiatedPaymentInput = {
+    id?: string
+    amount: Decimal | DecimalJsLike | number | string
+    status?: $Enums.PaymentLinkStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expiresAt?: Date | string | null
+    description?: string | null
+    merchant: MerchantCreateNestedOneWithoutPaymentLinkInput
+  }
+
+  export type PaymentLinkUncheckedCreateWithoutIntiatedPaymentInput = {
+    id?: string
+    amount: Decimal | DecimalJsLike | number | string
+    status?: $Enums.PaymentLinkStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    expiresAt?: Date | string | null
+    description?: string | null
+    merchantId: string
+  }
+
+  export type PaymentLinkCreateOrConnectWithoutIntiatedPaymentInput = {
+    where: PaymentLinkWhereUniqueInput
+    create: XOR<PaymentLinkCreateWithoutIntiatedPaymentInput, PaymentLinkUncheckedCreateWithoutIntiatedPaymentInput>
   }
 
   export type PaymentPageCreateWithoutIntiatedPaymentInput = {
@@ -29293,33 +29594,6 @@ export namespace Prisma {
   export type PaymentPageCreateOrConnectWithoutIntiatedPaymentInput = {
     where: PaymentPageWhereUniqueInput
     create: XOR<PaymentPageCreateWithoutIntiatedPaymentInput, PaymentPageUncheckedCreateWithoutIntiatedPaymentInput>
-  }
-
-  export type PaymentLinkCreateWithoutIntiatedPaymentInput = {
-    id?: string
-    amount: Decimal | DecimalJsLike | number | string
-    status?: $Enums.PaymentLinkStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expiresAt?: Date | string | null
-    description?: string | null
-    merchant: MerchantCreateNestedOneWithoutPaymentLinkInput
-  }
-
-  export type PaymentLinkUncheckedCreateWithoutIntiatedPaymentInput = {
-    id?: string
-    amount: Decimal | DecimalJsLike | number | string
-    status?: $Enums.PaymentLinkStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    expiresAt?: Date | string | null
-    description?: string | null
-    merchantId: string
-  }
-
-  export type PaymentLinkCreateOrConnectWithoutIntiatedPaymentInput = {
-    where: PaymentLinkWhereUniqueInput
-    create: XOR<PaymentLinkCreateWithoutIntiatedPaymentInput, PaymentLinkUncheckedCreateWithoutIntiatedPaymentInput>
   }
 
   export type TransactionCreateWithoutIntiatedPaymentInput = {
@@ -29362,45 +29636,117 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type MerchantCreateWithoutIntiatedPaymentInput = {
-    id?: string
-    name: string
-    email: string
-    phoneNumber?: string | null
-    address?: string | null
-    logoUrl?: string | null
-    description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user: UserCreateNestedOneWithoutMerchantInput
-    PaymentLink?: PaymentLinkCreateNestedManyWithoutMerchantInput
-    Wallet?: WalletCreateNestedManyWithoutMerchantInput
-    PaymentPage?: PaymentPageCreateNestedManyWithoutMerchantInput
-    Transaction?: TransactionCreateNestedManyWithoutMerchantInput
-    QRPayment?: QRPaymentCreateNestedManyWithoutMerchantInput
+  export type StableCoinUpsertWithoutIntiatedPaymentInput = {
+    update: XOR<StableCoinUpdateWithoutIntiatedPaymentInput, StableCoinUncheckedUpdateWithoutIntiatedPaymentInput>
+    create: XOR<StableCoinCreateWithoutIntiatedPaymentInput, StableCoinUncheckedCreateWithoutIntiatedPaymentInput>
+    where?: StableCoinWhereInput
   }
 
-  export type MerchantUncheckedCreateWithoutIntiatedPaymentInput = {
-    id?: string
-    name: string
-    email: string
-    phoneNumber?: string | null
-    address?: string | null
-    logoUrl?: string | null
-    description?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    userId: string
-    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
-    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
-    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
-    Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
-    QRPayment?: QRPaymentUncheckedCreateNestedManyWithoutMerchantInput
+  export type StableCoinUpdateToOneWithWhereWithoutIntiatedPaymentInput = {
+    where?: StableCoinWhereInput
+    data: XOR<StableCoinUpdateWithoutIntiatedPaymentInput, StableCoinUncheckedUpdateWithoutIntiatedPaymentInput>
   }
 
-  export type MerchantCreateOrConnectWithoutIntiatedPaymentInput = {
-    where: MerchantWhereUniqueInput
+  export type StableCoinUpdateWithoutIntiatedPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    symbol?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Wallet?: WalletUpdateManyWithoutStableCoinNestedInput
+  }
+
+  export type StableCoinUncheckedUpdateWithoutIntiatedPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    symbol?: StringFieldUpdateOperationsInput | string
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Wallet?: WalletUncheckedUpdateManyWithoutStableCoinNestedInput
+  }
+
+  export type MerchantUpsertWithoutIntiatedPaymentInput = {
+    update: XOR<MerchantUpdateWithoutIntiatedPaymentInput, MerchantUncheckedUpdateWithoutIntiatedPaymentInput>
     create: XOR<MerchantCreateWithoutIntiatedPaymentInput, MerchantUncheckedCreateWithoutIntiatedPaymentInput>
+    where?: MerchantWhereInput
+  }
+
+  export type MerchantUpdateToOneWithWhereWithoutIntiatedPaymentInput = {
+    where?: MerchantWhereInput
+    data: XOR<MerchantUpdateWithoutIntiatedPaymentInput, MerchantUncheckedUpdateWithoutIntiatedPaymentInput>
+  }
+
+  export type MerchantUpdateWithoutIntiatedPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMerchantNestedInput
+    PaymentLink?: PaymentLinkUpdateManyWithoutMerchantNestedInput
+    PaymentPage?: PaymentPageUpdateManyWithoutMerchantNestedInput
+    QRPayment?: QRPaymentUpdateManyWithoutMerchantNestedInput
+    Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
+  }
+
+  export type MerchantUncheckedUpdateWithoutIntiatedPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
+    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
+    QRPayment?: QRPaymentUncheckedUpdateManyWithoutMerchantNestedInput
+    Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
+  }
+
+  export type PaymentLinkUpsertWithoutIntiatedPaymentInput = {
+    update: XOR<PaymentLinkUpdateWithoutIntiatedPaymentInput, PaymentLinkUncheckedUpdateWithoutIntiatedPaymentInput>
+    create: XOR<PaymentLinkCreateWithoutIntiatedPaymentInput, PaymentLinkUncheckedCreateWithoutIntiatedPaymentInput>
+    where?: PaymentLinkWhereInput
+  }
+
+  export type PaymentLinkUpdateToOneWithWhereWithoutIntiatedPaymentInput = {
+    where?: PaymentLinkWhereInput
+    data: XOR<PaymentLinkUpdateWithoutIntiatedPaymentInput, PaymentLinkUncheckedUpdateWithoutIntiatedPaymentInput>
+  }
+
+  export type PaymentLinkUpdateWithoutIntiatedPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    merchant?: MerchantUpdateOneRequiredWithoutPaymentLinkNestedInput
+  }
+
+  export type PaymentLinkUncheckedUpdateWithoutIntiatedPaymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    merchantId?: StringFieldUpdateOperationsInput | string
   }
 
   export type PaymentPageUpsertWithoutIntiatedPaymentInput = {
@@ -29442,39 +29788,6 @@ export namespace Prisma {
     PaymentPageForm?: PaymentPageFormUncheckedUpdateManyWithoutPaymentPageNestedInput
   }
 
-  export type PaymentLinkUpsertWithoutIntiatedPaymentInput = {
-    update: XOR<PaymentLinkUpdateWithoutIntiatedPaymentInput, PaymentLinkUncheckedUpdateWithoutIntiatedPaymentInput>
-    create: XOR<PaymentLinkCreateWithoutIntiatedPaymentInput, PaymentLinkUncheckedCreateWithoutIntiatedPaymentInput>
-    where?: PaymentLinkWhereInput
-  }
-
-  export type PaymentLinkUpdateToOneWithWhereWithoutIntiatedPaymentInput = {
-    where?: PaymentLinkWhereInput
-    data: XOR<PaymentLinkUpdateWithoutIntiatedPaymentInput, PaymentLinkUncheckedUpdateWithoutIntiatedPaymentInput>
-  }
-
-  export type PaymentLinkUpdateWithoutIntiatedPaymentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    status?: EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    merchant?: MerchantUpdateOneRequiredWithoutPaymentLinkNestedInput
-  }
-
-  export type PaymentLinkUncheckedUpdateWithoutIntiatedPaymentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    status?: EnumPaymentLinkStatusFieldUpdateOperationsInput | $Enums.PaymentLinkStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    merchantId?: StringFieldUpdateOperationsInput | string
-  }
-
   export type TransactionUpsertWithWhereUniqueWithoutIntiatedPaymentInput = {
     where: TransactionWhereUniqueInput
     update: XOR<TransactionUpdateWithoutIntiatedPaymentInput, TransactionUncheckedUpdateWithoutIntiatedPaymentInput>
@@ -29491,53 +29804,6 @@ export namespace Prisma {
     data: XOR<TransactionUpdateManyMutationInput, TransactionUncheckedUpdateManyWithoutIntiatedPaymentInput>
   }
 
-  export type MerchantUpsertWithoutIntiatedPaymentInput = {
-    update: XOR<MerchantUpdateWithoutIntiatedPaymentInput, MerchantUncheckedUpdateWithoutIntiatedPaymentInput>
-    create: XOR<MerchantCreateWithoutIntiatedPaymentInput, MerchantUncheckedCreateWithoutIntiatedPaymentInput>
-    where?: MerchantWhereInput
-  }
-
-  export type MerchantUpdateToOneWithWhereWithoutIntiatedPaymentInput = {
-    where?: MerchantWhereInput
-    data: XOR<MerchantUpdateWithoutIntiatedPaymentInput, MerchantUncheckedUpdateWithoutIntiatedPaymentInput>
-  }
-
-  export type MerchantUpdateWithoutIntiatedPaymentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneRequiredWithoutMerchantNestedInput
-    PaymentLink?: PaymentLinkUpdateManyWithoutMerchantNestedInput
-    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
-    PaymentPage?: PaymentPageUpdateManyWithoutMerchantNestedInput
-    Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
-    QRPayment?: QRPaymentUpdateManyWithoutMerchantNestedInput
-  }
-
-  export type MerchantUncheckedUpdateWithoutIntiatedPaymentInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
-    address?: NullableStringFieldUpdateOperationsInput | string | null
-    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    userId?: StringFieldUpdateOperationsInput | string
-    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
-    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
-    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
-    Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
-    QRPayment?: QRPaymentUncheckedUpdateManyWithoutMerchantNestedInput
-  }
-
   export type IntiatedPaymentCreateWithoutTransactionInput = {
     id?: string
     initiatedFrom: $Enums.IntiatedFrom
@@ -29547,9 +29813,10 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     createdAt?: Date | string
     updatedAt?: Date | string
-    paymentPage?: PaymentPageCreateNestedOneWithoutIntiatedPaymentInput
-    paymentLink?: PaymentLinkCreateNestedOneWithoutIntiatedPaymentInput
+    stableCoin: StableCoinCreateNestedOneWithoutIntiatedPaymentInput
     merchant: MerchantCreateNestedOneWithoutIntiatedPaymentInput
+    paymentLink?: PaymentLinkCreateNestedOneWithoutIntiatedPaymentInput
+    paymentPage?: PaymentPageCreateNestedOneWithoutIntiatedPaymentInput
   }
 
   export type IntiatedPaymentUncheckedCreateWithoutTransactionInput = {
@@ -29561,6 +29828,7 @@ export namespace Prisma {
     amount: Decimal | DecimalJsLike | number | string
     paymentPageId?: string | null
     paymentLinkId?: string | null
+    stableCoinId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     merchantId: string
@@ -29581,12 +29849,12 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
     user: UserCreateNestedOneWithoutMerchantInput
     PaymentLink?: PaymentLinkCreateNestedManyWithoutMerchantInput
-    Wallet?: WalletCreateNestedManyWithoutMerchantInput
     PaymentPage?: PaymentPageCreateNestedManyWithoutMerchantInput
-    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
     QRPayment?: QRPaymentCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletCreateNestedManyWithoutMerchantInput
   }
 
   export type MerchantUncheckedCreateWithoutTransactionInput = {
@@ -29600,11 +29868,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
-    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
-    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
     IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutMerchantInput
+    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
+    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
     QRPayment?: QRPaymentUncheckedCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
   }
 
   export type MerchantCreateOrConnectWithoutTransactionInput = {
@@ -29632,9 +29900,10 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    paymentPage?: PaymentPageUpdateOneWithoutIntiatedPaymentNestedInput
-    paymentLink?: PaymentLinkUpdateOneWithoutIntiatedPaymentNestedInput
+    stableCoin?: StableCoinUpdateOneRequiredWithoutIntiatedPaymentNestedInput
     merchant?: MerchantUpdateOneRequiredWithoutIntiatedPaymentNestedInput
+    paymentLink?: PaymentLinkUpdateOneWithoutIntiatedPaymentNestedInput
+    paymentPage?: PaymentPageUpdateOneWithoutIntiatedPaymentNestedInput
   }
 
   export type IntiatedPaymentUncheckedUpdateWithoutTransactionInput = {
@@ -29646,6 +29915,7 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paymentPageId?: NullableStringFieldUpdateOperationsInput | string | null
     paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    stableCoinId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     merchantId?: StringFieldUpdateOperationsInput | string
@@ -29672,12 +29942,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutMerchantNestedInput
     user?: UserUpdateOneRequiredWithoutMerchantNestedInput
     PaymentLink?: PaymentLinkUpdateManyWithoutMerchantNestedInput
-    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
     PaymentPage?: PaymentPageUpdateManyWithoutMerchantNestedInput
-    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutMerchantNestedInput
     QRPayment?: QRPaymentUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
   }
 
   export type MerchantUncheckedUpdateWithoutTransactionInput = {
@@ -29691,11 +29961,11 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
-    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
-    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
     IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutMerchantNestedInput
+    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
+    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
     QRPayment?: QRPaymentUncheckedUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
   }
 
   export type PaymentPageCreateWithoutPaymentPageFormInput = {
@@ -29708,8 +29978,8 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     status?: $Enums.PaymentPageStatus
-    merchant: MerchantCreateNestedOneWithoutPaymentPageInput
     IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutPaymentPageInput
+    merchant: MerchantCreateNestedOneWithoutPaymentPageInput
   }
 
   export type PaymentPageUncheckedCreateWithoutPaymentPageFormInput = {
@@ -29786,8 +30056,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
-    merchant?: MerchantUpdateOneRequiredWithoutPaymentPageNestedInput
     IntiatedPayment?: IntiatedPaymentUpdateManyWithoutPaymentPageNestedInput
+    merchant?: MerchantUpdateOneRequiredWithoutPaymentPageNestedInput
   }
 
   export type PaymentPageUncheckedUpdateWithoutPaymentPageFormInput = {
@@ -30004,12 +30274,12 @@ export namespace Prisma {
     description?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
     user: UserCreateNestedOneWithoutMerchantInput
     PaymentLink?: PaymentLinkCreateNestedManyWithoutMerchantInput
-    Wallet?: WalletCreateNestedManyWithoutMerchantInput
     PaymentPage?: PaymentPageCreateNestedManyWithoutMerchantInput
-    IntiatedPayment?: IntiatedPaymentCreateNestedManyWithoutMerchantInput
     Transaction?: TransactionCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletCreateNestedManyWithoutMerchantInput
   }
 
   export type MerchantUncheckedCreateWithoutQRPaymentInput = {
@@ -30023,11 +30293,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: string
-    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
-    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
-    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
     IntiatedPayment?: IntiatedPaymentUncheckedCreateNestedManyWithoutMerchantInput
+    PaymentLink?: PaymentLinkUncheckedCreateNestedManyWithoutMerchantInput
+    PaymentPage?: PaymentPageUncheckedCreateNestedManyWithoutMerchantInput
     Transaction?: TransactionUncheckedCreateNestedManyWithoutMerchantInput
+    Wallet?: WalletUncheckedCreateNestedManyWithoutMerchantInput
   }
 
   export type MerchantCreateOrConnectWithoutQRPaymentInput = {
@@ -30056,12 +30326,12 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutMerchantNestedInput
     user?: UserUpdateOneRequiredWithoutMerchantNestedInput
     PaymentLink?: PaymentLinkUpdateManyWithoutMerchantNestedInput
-    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
     PaymentPage?: PaymentPageUpdateManyWithoutMerchantNestedInput
-    IntiatedPayment?: IntiatedPaymentUpdateManyWithoutMerchantNestedInput
     Transaction?: TransactionUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUpdateManyWithoutMerchantNestedInput
   }
 
   export type MerchantUncheckedUpdateWithoutQRPaymentInput = {
@@ -30075,11 +30345,25 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
-    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
-    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
-    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
     IntiatedPayment?: IntiatedPaymentUncheckedUpdateManyWithoutMerchantNestedInput
+    PaymentLink?: PaymentLinkUncheckedUpdateManyWithoutMerchantNestedInput
+    PaymentPage?: PaymentPageUncheckedUpdateManyWithoutMerchantNestedInput
     Transaction?: TransactionUncheckedUpdateManyWithoutMerchantNestedInput
+    Wallet?: WalletUncheckedUpdateManyWithoutMerchantNestedInput
+  }
+
+  export type IntiatedPaymentCreateManyMerchantInput = {
+    id?: string
+    initiatedFrom: $Enums.IntiatedFrom
+    status?: $Enums.IntiatedPaymentStatus
+    index: number
+    walletAddress: string
+    amount: Decimal | DecimalJsLike | number | string
+    paymentPageId?: string | null
+    paymentLinkId?: string | null
+    stableCoinId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type PaymentLinkCreateManyMerchantInput = {
@@ -30090,14 +30374,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     expiresAt?: Date | string | null
     description?: string | null
-  }
-
-  export type WalletCreateManyMerchantInput = {
-    id?: string
-    balance: Decimal | DecimalJsLike | number | string
-    stableCoinId: string
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type PaymentPageCreateManyMerchantInput = {
@@ -30112,15 +30388,13 @@ export namespace Prisma {
     status?: $Enums.PaymentPageStatus
   }
 
-  export type IntiatedPaymentCreateManyMerchantInput = {
+  export type QRPaymentCreateManyMerchantInput = {
     id?: string
-    initiatedFrom: $Enums.IntiatedFrom
-    status?: $Enums.IntiatedPaymentStatus
-    index: number
-    walletAddress: string
     amount: Decimal | DecimalJsLike | number | string
-    paymentPageId?: string | null
-    paymentLinkId?: string | null
+    status?: $Enums.QRPaymentStatus
+    type?: $Enums.QRPaymentType
+    expiresAt?: Date | string | null
+    expired?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -30140,15 +30414,56 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type QRPaymentCreateManyMerchantInput = {
+  export type WalletCreateManyMerchantInput = {
     id?: string
-    amount: Decimal | DecimalJsLike | number | string
-    status?: $Enums.QRPaymentStatus
-    type?: $Enums.QRPaymentType
-    expiresAt?: Date | string | null
-    expired?: boolean
+    balance: Decimal | DecimalJsLike | number | string
+    stableCoinId: string
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type IntiatedPaymentUpdateWithoutMerchantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    initiatedFrom?: EnumIntiatedFromFieldUpdateOperationsInput | $Enums.IntiatedFrom
+    status?: EnumIntiatedPaymentStatusFieldUpdateOperationsInput | $Enums.IntiatedPaymentStatus
+    index?: IntFieldUpdateOperationsInput | number
+    walletAddress?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stableCoin?: StableCoinUpdateOneRequiredWithoutIntiatedPaymentNestedInput
+    paymentLink?: PaymentLinkUpdateOneWithoutIntiatedPaymentNestedInput
+    paymentPage?: PaymentPageUpdateOneWithoutIntiatedPaymentNestedInput
+    Transaction?: TransactionUpdateManyWithoutIntiatedPaymentNestedInput
+  }
+
+  export type IntiatedPaymentUncheckedUpdateWithoutMerchantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    initiatedFrom?: EnumIntiatedFromFieldUpdateOperationsInput | $Enums.IntiatedFrom
+    status?: EnumIntiatedPaymentStatusFieldUpdateOperationsInput | $Enums.IntiatedPaymentStatus
+    index?: IntFieldUpdateOperationsInput | number
+    walletAddress?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paymentPageId?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    stableCoinId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Transaction?: TransactionUncheckedUpdateManyWithoutIntiatedPaymentNestedInput
+  }
+
+  export type IntiatedPaymentUncheckedUpdateManyWithoutMerchantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    initiatedFrom?: EnumIntiatedFromFieldUpdateOperationsInput | $Enums.IntiatedFrom
+    status?: EnumIntiatedPaymentStatusFieldUpdateOperationsInput | $Enums.IntiatedPaymentStatus
+    index?: IntFieldUpdateOperationsInput | number
+    walletAddress?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paymentPageId?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    stableCoinId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentLinkUpdateWithoutMerchantInput = {
@@ -30181,30 +30496,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type WalletUpdateWithoutMerchantInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    stableCoin?: StableCoinUpdateOneRequiredWithoutWalletNestedInput
-  }
-
-  export type WalletUncheckedUpdateWithoutMerchantInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    stableCoinId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type WalletUncheckedUpdateManyWithoutMerchantInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    stableCoinId?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PaymentPageUpdateWithoutMerchantInput = {
@@ -30247,43 +30538,35 @@ export namespace Prisma {
     status?: EnumPaymentPageStatusFieldUpdateOperationsInput | $Enums.PaymentPageStatus
   }
 
-  export type IntiatedPaymentUpdateWithoutMerchantInput = {
+  export type QRPaymentUpdateWithoutMerchantInput = {
     id?: StringFieldUpdateOperationsInput | string
-    initiatedFrom?: EnumIntiatedFromFieldUpdateOperationsInput | $Enums.IntiatedFrom
-    status?: EnumIntiatedPaymentStatusFieldUpdateOperationsInput | $Enums.IntiatedPaymentStatus
-    index?: IntFieldUpdateOperationsInput | number
-    walletAddress?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    paymentPage?: PaymentPageUpdateOneWithoutIntiatedPaymentNestedInput
-    paymentLink?: PaymentLinkUpdateOneWithoutIntiatedPaymentNestedInput
-    Transaction?: TransactionUpdateManyWithoutIntiatedPaymentNestedInput
   }
 
-  export type IntiatedPaymentUncheckedUpdateWithoutMerchantInput = {
+  export type QRPaymentUncheckedUpdateWithoutMerchantInput = {
     id?: StringFieldUpdateOperationsInput | string
-    initiatedFrom?: EnumIntiatedFromFieldUpdateOperationsInput | $Enums.IntiatedFrom
-    status?: EnumIntiatedPaymentStatusFieldUpdateOperationsInput | $Enums.IntiatedPaymentStatus
-    index?: IntFieldUpdateOperationsInput | number
-    walletAddress?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    paymentPageId?: NullableStringFieldUpdateOperationsInput | string | null
-    paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    Transaction?: TransactionUncheckedUpdateManyWithoutIntiatedPaymentNestedInput
   }
 
-  export type IntiatedPaymentUncheckedUpdateManyWithoutMerchantInput = {
+  export type QRPaymentUncheckedUpdateManyWithoutMerchantInput = {
     id?: StringFieldUpdateOperationsInput | string
-    initiatedFrom?: EnumIntiatedFromFieldUpdateOperationsInput | $Enums.IntiatedFrom
-    status?: EnumIntiatedPaymentStatusFieldUpdateOperationsInput | $Enums.IntiatedPaymentStatus
-    index?: IntFieldUpdateOperationsInput | number
-    walletAddress?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    paymentPageId?: NullableStringFieldUpdateOperationsInput | string | null
-    paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
+    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    expired?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -30333,35 +30616,26 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type QRPaymentUpdateWithoutMerchantInput = {
+  export type WalletUpdateWithoutMerchantInput = {
     id?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
-    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
-    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expired?: BoolFieldUpdateOperationsInput | boolean
+    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stableCoin?: StableCoinUpdateOneRequiredWithoutWalletNestedInput
+  }
+
+  export type WalletUncheckedUpdateWithoutMerchantInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    stableCoinId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type QRPaymentUncheckedUpdateWithoutMerchantInput = {
+  export type WalletUncheckedUpdateManyWithoutMerchantInput = {
     id?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
-    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
-    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expired?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type QRPaymentUncheckedUpdateManyWithoutMerchantInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
-    status?: EnumQRPaymentStatusFieldUpdateOperationsInput | $Enums.QRPaymentStatus
-    type?: EnumQRPaymentTypeFieldUpdateOperationsInput | $Enums.QRPaymentType
-    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    expired?: BoolFieldUpdateOperationsInput | boolean
+    balance?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    stableCoinId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -30381,13 +30655,6 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type SessionCreateManyUserInput = {
-    sessionToken: string
-    expires: Date | string
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
   export type AuthenticatorCreateManyUserInput = {
     credentialID: string
     providerAccountId: string
@@ -30396,6 +30663,13 @@ export namespace Prisma {
     credentialDeviceType: string
     credentialBackedUp: boolean
     transports?: string | null
+  }
+
+  export type SessionCreateManyUserInput = {
+    sessionToken: string
+    expires: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type AccountUpdateWithoutUserInput = {
@@ -30443,27 +30717,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type SessionUpdateWithoutUserInput = {
-    sessionToken?: StringFieldUpdateOperationsInput | string
-    expires?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SessionUncheckedUpdateWithoutUserInput = {
-    sessionToken?: StringFieldUpdateOperationsInput | string
-    expires?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type SessionUncheckedUpdateManyWithoutUserInput = {
-    sessionToken?: StringFieldUpdateOperationsInput | string
-    expires?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type AuthenticatorUpdateWithoutUserInput = {
     credentialID?: StringFieldUpdateOperationsInput | string
     providerAccountId?: StringFieldUpdateOperationsInput | string
@@ -30494,9 +30747,44 @@ export namespace Prisma {
     transports?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type SessionUpdateWithoutUserInput = {
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUncheckedUpdateWithoutUserInput = {
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SessionUncheckedUpdateManyWithoutUserInput = {
+    sessionToken?: StringFieldUpdateOperationsInput | string
+    expires?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type WalletCreateManyStableCoinInput = {
     id?: string
     balance: Decimal | DecimalJsLike | number | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    merchantId: string
+  }
+
+  export type IntiatedPaymentCreateManyStableCoinInput = {
+    id?: string
+    initiatedFrom: $Enums.IntiatedFrom
+    status?: $Enums.IntiatedPaymentStatus
+    index: number
+    walletAddress: string
+    amount: Decimal | DecimalJsLike | number | string
+    paymentPageId?: string | null
+    paymentLinkId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     merchantId: string
@@ -30526,6 +30814,50 @@ export namespace Prisma {
     merchantId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type IntiatedPaymentUpdateWithoutStableCoinInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    initiatedFrom?: EnumIntiatedFromFieldUpdateOperationsInput | $Enums.IntiatedFrom
+    status?: EnumIntiatedPaymentStatusFieldUpdateOperationsInput | $Enums.IntiatedPaymentStatus
+    index?: IntFieldUpdateOperationsInput | number
+    walletAddress?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    merchant?: MerchantUpdateOneRequiredWithoutIntiatedPaymentNestedInput
+    paymentLink?: PaymentLinkUpdateOneWithoutIntiatedPaymentNestedInput
+    paymentPage?: PaymentPageUpdateOneWithoutIntiatedPaymentNestedInput
+    Transaction?: TransactionUpdateManyWithoutIntiatedPaymentNestedInput
+  }
+
+  export type IntiatedPaymentUncheckedUpdateWithoutStableCoinInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    initiatedFrom?: EnumIntiatedFromFieldUpdateOperationsInput | $Enums.IntiatedFrom
+    status?: EnumIntiatedPaymentStatusFieldUpdateOperationsInput | $Enums.IntiatedPaymentStatus
+    index?: IntFieldUpdateOperationsInput | number
+    walletAddress?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paymentPageId?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    merchantId?: StringFieldUpdateOperationsInput | string
+    Transaction?: TransactionUncheckedUpdateManyWithoutIntiatedPaymentNestedInput
+  }
+
+  export type IntiatedPaymentUncheckedUpdateManyWithoutStableCoinInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    initiatedFrom?: EnumIntiatedFromFieldUpdateOperationsInput | $Enums.IntiatedFrom
+    status?: EnumIntiatedPaymentStatusFieldUpdateOperationsInput | $Enums.IntiatedPaymentStatus
+    index?: IntFieldUpdateOperationsInput | number
+    walletAddress?: StringFieldUpdateOperationsInput | string
+    amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    paymentPageId?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    merchantId?: StringFieldUpdateOperationsInput | string
+  }
+
   export type IntiatedPaymentCreateManyPaymentLinkInput = {
     id?: string
     initiatedFrom: $Enums.IntiatedFrom
@@ -30534,6 +30866,7 @@ export namespace Prisma {
     walletAddress: string
     amount: Decimal | DecimalJsLike | number | string
     paymentPageId?: string | null
+    stableCoinId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     merchantId: string
@@ -30548,9 +30881,10 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stableCoin?: StableCoinUpdateOneRequiredWithoutIntiatedPaymentNestedInput
+    merchant?: MerchantUpdateOneRequiredWithoutIntiatedPaymentNestedInput
     paymentPage?: PaymentPageUpdateOneWithoutIntiatedPaymentNestedInput
     Transaction?: TransactionUpdateManyWithoutIntiatedPaymentNestedInput
-    merchant?: MerchantUpdateOneRequiredWithoutIntiatedPaymentNestedInput
   }
 
   export type IntiatedPaymentUncheckedUpdateWithoutPaymentLinkInput = {
@@ -30561,6 +30895,7 @@ export namespace Prisma {
     walletAddress?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paymentPageId?: NullableStringFieldUpdateOperationsInput | string | null
+    stableCoinId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     merchantId?: StringFieldUpdateOperationsInput | string
@@ -30575,6 +30910,7 @@ export namespace Prisma {
     walletAddress?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paymentPageId?: NullableStringFieldUpdateOperationsInput | string | null
+    stableCoinId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     merchantId?: StringFieldUpdateOperationsInput | string
@@ -30588,6 +30924,7 @@ export namespace Prisma {
     walletAddress: string
     amount: Decimal | DecimalJsLike | number | string
     paymentLinkId?: string | null
+    stableCoinId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     merchantId: string
@@ -30608,9 +30945,10 @@ export namespace Prisma {
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stableCoin?: StableCoinUpdateOneRequiredWithoutIntiatedPaymentNestedInput
+    merchant?: MerchantUpdateOneRequiredWithoutIntiatedPaymentNestedInput
     paymentLink?: PaymentLinkUpdateOneWithoutIntiatedPaymentNestedInput
     Transaction?: TransactionUpdateManyWithoutIntiatedPaymentNestedInput
-    merchant?: MerchantUpdateOneRequiredWithoutIntiatedPaymentNestedInput
   }
 
   export type IntiatedPaymentUncheckedUpdateWithoutPaymentPageInput = {
@@ -30621,6 +30959,7 @@ export namespace Prisma {
     walletAddress?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    stableCoinId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     merchantId?: StringFieldUpdateOperationsInput | string
@@ -30635,6 +30974,7 @@ export namespace Prisma {
     walletAddress?: StringFieldUpdateOperationsInput | string
     amount?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
     paymentLinkId?: NullableStringFieldUpdateOperationsInput | string | null
+    stableCoinId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     merchantId?: StringFieldUpdateOperationsInput | string

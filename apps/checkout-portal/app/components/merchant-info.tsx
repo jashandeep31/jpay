@@ -19,13 +19,15 @@ export function MerchantInfo({
         <div
           className={`relative ${compact ? "h-8 w-8" : "h-12 w-12"} overflow-hidden rounded-full border`}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={logo || ""}
-            alt="Merchant Logo"
-            // fill
-            className="object-cover"
-          />
+          {logo ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={logo || ""}
+              alt="Merchant Logo"
+              // fill
+              className="object-cover"
+            />
+          ) : null}
         </div>
         <div>
           <h3 className={`font-medium ${compact ? "text-sm" : "text-base"}`}>

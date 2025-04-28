@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -15,25 +9,23 @@ datasource db {
 }
 
 model Merchant {
-  id          String   @id @default(uuid())
-  name        String
-  email       String   @unique
-  phoneNumber String?
-  address     String?
-  logoUrl     String?
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  user   User   @relation(fields: [userId], references: [id])
-  userId String @unique
-
-  PaymentLink     PaymentLink[]
-  Wallet          Wallet[]
-  PaymentPage     PaymentPage[]
+  id              String            @id @default(uuid())
+  name            String
+  email           String            @unique
+  phoneNumber     String?
+  address         String?
+  logoUrl         String?
+  description     String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  userId          String            @unique
   IntiatedPayment IntiatedPayment[]
-  Transaction     Transaction[]
+  user            User              @relation(fields: [userId], references: [id])
+  PaymentLink     PaymentLink[]
+  PaymentPage     PaymentPage[]
   QRPayment       QRPayment[]
+  Transaction     Transaction[]
+  Wallet          Wallet[]
 }
 
 model User {
@@ -42,14 +34,12 @@ model User {
   email         String          @unique
   emailVerified DateTime?
   image         String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
   accounts      Account[]
-  sessions      Session[]
-  // Optional for WebAuthn support
   Authenticator Authenticator[]
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Merchant  Merchant?
+  Merchant      Merchant?
+  sessions      Session[]
 }
 
 model Account {
@@ -64,11 +54,9 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
 }
@@ -77,10 +65,9 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {
@@ -91,7 +78,6 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
-// Optional for WebAuthn support
 model Authenticator {
   credentialID         String  @unique
   userId               String
@@ -101,77 +87,163 @@ model Authenticator {
   credentialDeviceType String
   credentialBackedUp   Boolean
   transports           String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                 User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, credentialID])
 }
 
 model Wallet {
-  id      String  @id @default(uuid())
-  balance Decimal @db.Decimal(10, 2)
-
-  stableCoin   StableCoin @relation(fields: [stableCoinId], references: [id])
+  id           String     @id @default(uuid())
+  balance      Decimal    @db.Decimal(10, 2)
   stableCoinId String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  merchant   Merchant @relation(fields: [merchantId], references: [id])
-  merchantId String
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  merchantId   String
+  merchant     Merchant   @relation(fields: [merchantId], references: [id])
+  stableCoin   StableCoin @relation(fields: [stableCoinId], references: [id])
 }
 
 model StableCoin {
-  id          String   @id @default(cuid())
-  name        String
-  symbol      String   @unique
-  logoUrl     String?
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  Wallet      Wallet[]
+  id              String            @id @default(cuid())
+  name            String
+  symbol          String            @unique
+  logoUrl         String?
+  description     String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  Wallet          Wallet[]
+  IntiatedPayment IntiatedPayment[]
 }
 
 model PaymentLink {
+  id              String            @id @default(uuid())
+  amount          Decimal           @db.Decimal(10, 2)
+  status          PaymentLinkStatus @default(ACTIVE)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  expiresAt       DateTime?
+  description     String?
+  merchantId      String
+  IntiatedPayment IntiatedPayment[]
+  merchant        Merchant          @relation(fields: [merchantId], references: [id])
+}
+
+model PaymentPage {
+  id              String            @id @default(uuid())
+  title           String
+  description     String?
+  logoUrl         String
+  amount          Decimal           @db.Decimal(10, 2)
+  expiresAt       DateTime?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  status          PaymentPageStatus @default(PENDING)
+  merchantId      String
+  IntiatedPayment IntiatedPayment[]
+  merchant        Merchant          @relation(fields: [merchantId], references: [id])
+  PaymentPageForm PaymentPageForm[]
+}
+
+// 1 initiated has wrong spelling
+model IntiatedPayment {
+  id            String                @id @default(uuid())
+  initiatedFrom IntiatedFrom
+  status        IntiatedPaymentStatus @default(PENDING)
+  index         Int
+  walletAddress String
+  amount        Decimal               @db.Decimal(10, 2)
+  paymentPageId String?
+  paymentLinkId String?
+  stableCoin    StableCoin            @relation(fields: [stableCoinId], references: [id])
+  stableCoinId  String
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  merchantId    String
+  merchant      Merchant              @relation(fields: [merchantId], references: [id])
+  paymentLink   PaymentLink?          @relation(fields: [paymentLinkId], references: [id])
+  paymentPage   PaymentPage?          @relation(fields: [paymentPageId], references: [id])
+  Transaction   Transaction[]
+}
+
+model Transaction {
+  id                String            @id @default(uuid())
+  status            TransactionStatus
+  amount            Decimal           @db.Decimal(10, 2)
+  intiatedPaymentId String
+  initiatedFrom     IntiatedFrom
+  toAddress         String
+  fromAddress       String
+  settled           Boolean
+  settledAt         DateTime?
+  settledTo         String?
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  merchantId        String
+  intiatedPayment   IntiatedPayment   @relation(fields: [intiatedPaymentId], references: [id])
+  merchant          Merchant          @relation(fields: [merchantId], references: [id])
+}
+
+model PaymentButton {
   id          String            @id @default(uuid())
+  title       String
+  type        PaymentButtonType
+  description String?
   amount      Decimal           @db.Decimal(10, 2)
-  status      PaymentLinkStatus @default(ACTIVE)
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
-  expiresAt   DateTime?
-  description String?
+}
 
-  merchant   Merchant @relation(fields: [merchantId], references: [id])
+model PaymentPageForm {
+  id                   String                 @id @default(uuid())
+  paymentPageId        String
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  paymentPage          PaymentPage            @relation(fields: [paymentPageId], references: [id])
+  PaymentPageFormField PaymentPageFormField[]
+}
+
+model PaymentPageFormField {
+  id                        String                      @id @default(uuid())
+  type                      PaymentPageFormFieldType
+  label                     String
+  placeholder               String?
+  required                  Boolean                     @default(false)
+  value                     String?
+  paymentPageFormId         String
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+  paymentPageForm           PaymentPageForm             @relation(fields: [paymentPageFormId], references: [id])
+  PaymentPageFormFieldValue PaymentPageFormFieldValue[]
+}
+
+model PaymentPageFormFieldValue {
+  id                     String               @id @default(uuid())
+  paymentPageFormFieldId String
+  value                  String
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+  paymentPageFormField   PaymentPageFormField @relation(fields: [paymentPageFormFieldId], references: [id])
+}
+
+model QRPayment {
+  id         String          @id @default(uuid())
+  amount     Decimal         @db.Decimal(10, 2)
+  status     QRPaymentStatus @default(ACTIVE)
+  type       QRPaymentType   @default(SINGLE_USE)
+  expiresAt  DateTime?
+  expired    Boolean         @default(false)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
   merchantId String
-
-  IntiatedPayment IntiatedPayment[]
+  merchant   Merchant        @relation(fields: [merchantId], references: [id])
 }
 
 enum PaymentLinkStatus {
   COMPLETED
   PENDING
-  // TODO: remove PENDING
   ACTIVE
   CANCELLED
   EXPIRED
-}
-
-model PaymentPage {
-  id String @id @default(uuid())
-
-  title       String
-  description String?
-  logoUrl     String
-  amount      Decimal  @db.Decimal(10, 2)
-  merchant    Merchant @relation(fields: [merchantId], references: [id])
-
-  expiresAt       DateTime?
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  IntiatedPayment IntiatedPayment[]
-  status          PaymentPageStatus @default(PENDING)
-  PaymentPageForm PaymentPageForm[]
-  merchantId      String
 }
 
 enum PaymentPageStatus {
@@ -181,30 +253,6 @@ enum PaymentPageStatus {
   ACTIVE
   CANCELLED
   EXPIRED
-}
-
-model IntiatedPayment {
-  id String @id @default(uuid())
-
-  initiatedFrom IntiatedFrom
-  status        IntiatedPaymentStatus @default(PENDING)
-  index         Int
-  walletAddress String
-  amount        Decimal               @db.Decimal(10, 2)
-
-  paymentPage   PaymentPage? @relation(fields: [paymentPageId], references: [id])
-  paymentPageId String?
-
-  paymentLink   PaymentLink? @relation(fields: [paymentLinkId], references: [id])
-  paymentLinkId String?
-
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  Transaction Transaction[]
-
-  merchant Merchant @relation(fields: [merchantId], references: [id])
-
-  merchantId String
 }
 
 enum IntiatedFrom {
@@ -219,44 +267,11 @@ enum IntiatedPaymentStatus {
   CANCELLED
 }
 
-model Transaction {
-  id     String            @id @default(uuid())
-  status TransactionStatus
-  amount Decimal           @db.Decimal(10, 2)
-
-  intiatedPayment   IntiatedPayment @relation(fields: [intiatedPaymentId], references: [id])
-  intiatedPaymentId String
-  initiatedFrom     IntiatedFrom
-
-  toAddress   String
-  fromAddress String
-  settled     Boolean
-  settledAt   DateTime?
-  settledTo   String?
-
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  merchant   Merchant @relation(fields: [merchantId], references: [id])
-  merchantId String
-}
-
 enum TransactionStatus {
   PENDING
   COMPLETED
   REFUNDED
   FAILED
-}
-
-model PaymentButton {
-  id          String            @id @default(uuid())
-  title       String
-  type        PaymentButtonType
-  description String?
-
-  amount Decimal @db.Decimal(10, 2)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 enum PaymentButtonType {
@@ -265,66 +280,11 @@ enum PaymentButtonType {
   OTHER
 }
 
-model PaymentPageForm {
-  id String @id @default(uuid())
-
-  paymentPage   PaymentPage @relation(fields: [paymentPageId], references: [id])
-  paymentPageId String
-
-  createdAt            DateTime               @default(now())
-  updatedAt            DateTime               @updatedAt
-  PaymentPageFormField PaymentPageFormField[]
-}
-
-model PaymentPageFormField {
-  id String @id @default(uuid())
-
-  type        PaymentPageFormFieldType
-  label       String
-  placeholder String?
-  required    Boolean                  @default(false)
-  value       String?
-
-  paymentPageForm           PaymentPageForm             @relation(fields: [paymentPageFormId], references: [id])
-  paymentPageFormId         String
-  createdAt                 DateTime                    @default(now())
-  updatedAt                 DateTime                    @updatedAt
-  PaymentPageFormFieldValue PaymentPageFormFieldValue[]
-}
-
 enum PaymentPageFormFieldType {
   TEXT
   NUMBER
   EMAIL
   PHONE
-}
-
-model PaymentPageFormFieldValue {
-  id String @id @default(uuid())
-
-  paymentPageFormField   PaymentPageFormField @relation(fields: [paymentPageFormFieldId], references: [id])
-  paymentPageFormFieldId String
-
-  value String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model QRPayment {
-  id String @id @default(uuid())
-
-  amount    Decimal         @db.Decimal(10, 2)
-  status    QRPaymentStatus @default(ACTIVE)
-  type      QRPaymentType   @default(SINGLE_USE)
-  expiresAt DateTime?
-  expired   Boolean         @default(false)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  merchant   Merchant @relation(fields: [merchantId], references: [id])
-  merchantId String
 }
 
 enum QRPaymentType {

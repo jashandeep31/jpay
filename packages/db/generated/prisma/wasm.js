@@ -233,6 +233,7 @@ exports.Prisma.IntiatedPaymentScalarFieldEnum = {
   amount: 'amount',
   paymentPageId: 'paymentPageId',
   paymentLinkId: 'paymentLinkId',
+  stableCoinId: 'stableCoinId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   merchantId: 'merchantId'

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   Card,
   CardDescription,
@@ -8,6 +7,7 @@ import {
 } from "@repo/ui/components/ui/card";
 import { triggerPaymentLink } from "../pl/[id]/_actions";
 import { PaymentMethodCardSubmitButton } from "./payment-method-card-submit-button";
+import { redirect } from "next/navigation";
 
 interface PaymentMethodCardProps {
   title: string;
@@ -51,7 +51,12 @@ export function PaymentMethodCard({
           <form
             action={async (formData: FormData) => {
               "use server";
-              await triggerPaymentLink(formData);
+              const res = await triggerPaymentLink(formData);
+              if (res.ok) {
+                redirect(`/pl/${paymentLinkId}/${res.data.id}`);
+              } else {
+                console.error(res.error);
+              }
             }}
           >
             <input type="hidden" name="paymentLinkId" value={paymentLinkId} />

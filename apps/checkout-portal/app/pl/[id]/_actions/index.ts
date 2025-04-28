@@ -1,10 +1,13 @@
 "use server";
 import { db } from "@/lib/db";
-import * as bip39 from "bip39";
-
+import { Keypair } from "@solana/web3.js";
+import { derivePath } from "ed25519-hd-key";
+import { ServerActionResponseToClient } from "@/types/server-action";
 const Phrase: string = process.env.ONETIME_PAYMENT_RECEVING_WALLET_PHRASE || "";
 
-export async function triggerPaymentLink(formData: FormData) {
+export async function triggerPaymentLink(
+  formData: FormData
+): Promise<ServerActionResponseToClient<{ id: string }>> {
   try {
     const paymentLinkId = formData.get("paymentLinkId") as string;
     const paymentCoinId = formData.get("paymentCoinId") as string;
@@ -29,26 +32,48 @@ export async function triggerPaymentLink(formData: FormData) {
     if (!stableCoin) {
       throw new Error("Payment coin not found");
     }
-    const seed = await bip39.mnemonicToSeed(Phrase);
-    console.log(seed);
 
-    // const initiatedPayment = await db.intiatedPayment.create({
-    //   data: {
-    //     initiatedFrom: "PAYMENT_LINK",
-    //     status: "PENDING",
-    //     index: 0,
-    //     walletAddress: paymentLink.walletAddress,
-    //     amount: paymentLink.amount,
-    //     paymentPageId: paymentLink.paymentPageId,
-    //     paymentLinkId: paymentLinkId,
-    //     merchantId: paymentLink.merchantId,
-    //   },
-    // });
-  } catch (error) {
-    console.log(`error ${error}`);
+    const result = await db.$transaction(async (tx) => {
+      const [{ nextidx }] = await tx.$queryRaw<
+        Array<{ nextidx: bigint }>
+      >`SELECT nextval('wallet_index_seq') AS nextidx`;
+
+      const newIndex = Number(nextidx);
+      const path = `m/44'/501'/${newIndex}'/0'`;
+      const derivedSeed = derivePath(path, Phrase);
+      const keypair = Keypair.fromSeed(derivedSeed.key);
+
+      const initiatedPayment = await tx.intiatedPayment.create({
+        data: {
+          initiatedFrom: "PAYMENT_LINK",
+          status: "PENDING",
+          stableCoinId: paymentCoinId,
+          index: newIndex,
+          walletAddress: keypair.publicKey.toBase58(),
+          amount: paymentLink.amount,
+          paymentLinkId: paymentLinkId,
+          merchantId: paymentLink.merchantId,
+        },
+      });
+
+      return {
+        ok: true,
+        data: {
+          id: initiatedPayment.id,
+        },
+      };
+    });
+
     return {
-      status: "error",
-      message: error instanceof Error ? error.message : "Unknown error",
+      ok: true,
+      data: {
+        id: result.data.id,
+      },
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : "Unknown error",
     };
   }
 }
