@@ -12,11 +12,11 @@ export async function getPaymentPages(): Promise<
 > {
   try {
     const session = await auth();
-    if (!session?.user) throw new Error("Unauthorized");
+    if (!session?.merchantId) throw new Error("Unauthorized");
 
     const paymentPages = await db.paymentPage.findMany({
       where: {
-        userId: session.user.id,
+        merchantId: session.merchantId,
       },
       orderBy: {
         createdAt: "desc",
@@ -57,7 +57,7 @@ export async function createPaymentPage(data: {
         description: data.description,
         logoUrl: data.logoUrl,
         amount: data.amount,
-        userId: session.user.id,
+        merchantId: session.merchantId,
         expiresAt: data.expiresAt,
       },
     });
@@ -87,7 +87,7 @@ export async function cancelPaymentPage(data: {
     if (!session?.user) throw new Error("Unauthorized");
 
     const existingPage = await db.paymentPage.findUnique({
-      where: { id: data.id, userId: session.user.id },
+      where: { id: data.id, merchantId: session.merchantId },
     });
 
     if (!existingPage) {
@@ -99,7 +99,7 @@ export async function cancelPaymentPage(data: {
     }
 
     const paymentPage = await db.paymentPage.update({
-      where: { id: data.id, userId: session.user.id },
+      where: { id: data.id, merchantId: session.merchantId },
       data: { status: "CANCELLED" },
     });
 

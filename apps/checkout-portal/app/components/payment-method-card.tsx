@@ -1,7 +1,4 @@
 import Link from "next/link";
-import { ArrowRight, DollarSign } from "lucide-react";
-
-import { Button } from "@repo/ui/components/ui/button";
 import {
   Card,
   CardDescription,
@@ -9,19 +6,23 @@ import {
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/ui/card";
+import { triggerPaymentLink } from "../pl/[id]/_actions";
+import { PaymentMethodCardSubmitButton } from "./payment-method-card-submit-button";
 
 interface PaymentMethodCardProps {
   title: string;
   description: string;
-  icon: "usdt" | "usd";
-  href: string;
+  icon: string | null;
+  paymentLinkId: string;
+  paymentCoinId: string;
 }
 
 export function PaymentMethodCard({
   title,
   description,
   icon,
-  href,
+  paymentLinkId,
+  paymentCoinId,
 }: PaymentMethodCardProps) {
   return (
     <Card className="hover:border-primary transition-colors">
@@ -33,8 +34,11 @@ export function PaymentMethodCard({
               USDT
             </div>
           ) : (
-            <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-blue-500 flex items-center justify-center text-white">
-              <DollarSign className="h-4 w-4 sm:h-6 sm:w-6" />
+            <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center text-white">
+              {icon ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={icon} alt={title} className="w-full h-full" />
+              ) : null}
             </div>
           )}
         </div>
@@ -43,12 +47,19 @@ export function PaymentMethodCard({
         </CardDescription>
       </CardHeader>
       <CardFooter>
-        <Link href={href} className="w-full">
-          <Button className="w-full">
-            Select
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
-        </Link>
+        <div className="w-full">
+          <form
+            action={async (formData: FormData) => {
+              "use server";
+              await triggerPaymentLink(formData);
+            }}
+          >
+            <input type="hidden" name="paymentLinkId" value={paymentLinkId} />
+            <input type="hidden" name="paymentCoinId" value={paymentCoinId} />
+
+            <PaymentMethodCardSubmitButton />
+          </form>
+        </div>
       </CardFooter>
     </Card>
   );

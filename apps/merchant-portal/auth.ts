@@ -8,6 +8,7 @@ declare module "next-auth" {
    * Returned by `auth`, `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
   interface Session {
+    merchantId: string;
     user: {
       id: string;
       /** The user's postal address. */
@@ -33,9 +34,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     async session({ session, user, token }) {
-      console.log(token);
       if (session.user && token.sub) {
         session.user.id = token.sub;
+        const merchant = await db.merchant.upsert({
+          where: {
+            userId: session.user.id,
+          },
+          update: {},
+          create: {
+            userId: session.user.id,
+            name: session.user.name || "Default name",
+            email: session.user.email,
+            logoUrl: session.user.image || "Default image",
+          },
+        });
+        session.merchantId = merchant.id;
       }
       return session;
     },

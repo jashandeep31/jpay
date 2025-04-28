@@ -13,14 +13,14 @@ export async function createPaymentLink(
   try {
     const session = await auth();
     console.log(session);
-    if (!session?.user?.id) {
+    if (!session?.merchantId) {
       throw new Error("Unauthorized");
     }
     const paymentLink = await db.paymentLink.create({
       data: {
         amount,
         expiresAt: expiryDate ? new Date(expiryDate) : null,
-        userId: session.user.id,
+        merchantId: session.merchantId,
         description,
       },
     });
@@ -51,7 +51,7 @@ export async function getPaymentLinks(): Promise<
     }
     const paymentLinks = await db.paymentLink.findMany({
       where: {
-        userId: session.user.id,
+        merchantId: session.merchantId,
       },
       orderBy: {
         createdAt: "desc",
@@ -79,13 +79,13 @@ export async function cancelPaymentLink(
 > {
   try {
     const session = await auth();
-    if (!session?.user?.id) {
+    if (!session?.merchantId) {
       throw new Error("Unauthorized");
     }
     const paymentLink = await db.paymentLink.findUnique({
       where: {
         id,
-        userId: session?.user?.id,
+        merchantId: session?.merchantId,
       },
     });
     if (!paymentLink) {

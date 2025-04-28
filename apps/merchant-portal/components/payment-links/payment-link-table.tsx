@@ -25,6 +25,7 @@ import { useToast } from "@/app/hooks/use-toast";
 
 import { PaymentLink } from "@repo/db";
 import { cancelPaymentLink } from "@/app/dashboard/payment-link/_actions";
+import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
 
 interface PaymentLinkTableProps {
   paymentLinks: PaymentLink[];
@@ -38,7 +39,7 @@ export default function PaymentLinkTable({
   const { toast } = useToast();
 
   const handleCopyLink = (id: string) => {
-    const linkUrl = `${window.location.origin}/payment/${id}`;
+    const linkUrl = `${CHECKOUT_PORTAL_URL}/pl/${id}`;
     navigator.clipboard.writeText(linkUrl);
     toast({
       title: "Link copied",

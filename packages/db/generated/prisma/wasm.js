@@ -117,6 +117,19 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.MerchantScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  phoneNumber: 'phoneNumber',
+  address: 'address',
+  logoUrl: 'logoUrl',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -171,10 +184,10 @@ exports.Prisma.AuthenticatorScalarFieldEnum = {
 exports.Prisma.WalletScalarFieldEnum = {
   id: 'id',
   balance: 'balance',
-  userId: 'userId',
   stableCoinId: 'stableCoinId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  merchantId: 'merchantId'
 };
 
 exports.Prisma.StableCoinScalarFieldEnum = {
@@ -195,7 +208,7 @@ exports.Prisma.PaymentLinkScalarFieldEnum = {
   updatedAt: 'updatedAt',
   expiresAt: 'expiresAt',
   description: 'description',
-  userId: 'userId'
+  merchantId: 'merchantId'
 };
 
 exports.Prisma.PaymentPageScalarFieldEnum = {
@@ -204,11 +217,11 @@ exports.Prisma.PaymentPageScalarFieldEnum = {
   description: 'description',
   logoUrl: 'logoUrl',
   amount: 'amount',
-  userId: 'userId',
   expiresAt: 'expiresAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  status: 'status'
+  status: 'status',
+  merchantId: 'merchantId'
 };
 
 exports.Prisma.IntiatedPaymentScalarFieldEnum = {
@@ -221,7 +234,8 @@ exports.Prisma.IntiatedPaymentScalarFieldEnum = {
   paymentPageId: 'paymentPageId',
   paymentLinkId: 'paymentLinkId',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  merchantId: 'merchantId'
 };
 
 exports.Prisma.TransactionScalarFieldEnum = {
@@ -236,7 +250,8 @@ exports.Prisma.TransactionScalarFieldEnum = {
   settledAt: 'settledAt',
   settledTo: 'settledTo',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  merchantId: 'merchantId'
 };
 
 exports.Prisma.PaymentButtonScalarFieldEnum = {
@@ -285,7 +300,7 @@ exports.Prisma.QRPaymentScalarFieldEnum = {
   expired: 'expired',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  userId: 'userId'
+  merchantId: 'merchantId'
 };
 
 exports.Prisma.SortOrder = {
@@ -303,9 +318,8 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 exports.PaymentLinkStatus = exports.$Enums.PaymentLinkStatus = {
-  PENDING: 'PENDING',
   COMPLETED: 'COMPLETED',
-  FAILED: 'FAILED',
+  PENDING: 'PENDING',
   ACTIVE: 'ACTIVE',
   CANCELLED: 'CANCELLED',
   EXPIRED: 'EXPIRED'
@@ -364,6 +378,7 @@ exports.QRPaymentType = exports.$Enums.QRPaymentType = {
 };
 
 exports.Prisma.ModelName = {
+  Merchant: 'Merchant',
   User: 'User',
   Account: 'Account',
   Session: 'Session',

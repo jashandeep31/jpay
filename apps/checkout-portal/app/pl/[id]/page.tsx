@@ -17,14 +17,16 @@ export default async function SelectPaymentMethod({
   params: Promise<{ id: string }>;
 }) {
   const id = (await params).id;
+  const stableCoins = await db.stableCoin.findMany();
   const paymentLink = await db.paymentLink.findUnique({
     where: {
       id,
     },
     include: {
-      user: {
+      merchant: {
         select: {
           name: true,
+          logoUrl: true,
         },
       },
     },
@@ -52,17 +54,20 @@ export default async function SelectPaymentMethod({
               Select Payment Method
             </h1>
             <p className="text-muted-foreground mt-1 md:mt-2">
-              Choose how you'd like to pay for your transaction.
+              Choose how you&apos;d like to pay for your transaction.
             </p>
           </div>
-          <MerchantInfo name={paymentLink.user.name || ""} />
+          <MerchantInfo
+            logo={paymentLink.merchant?.logoUrl}
+            name={paymentLink.merchant.name || ""}
+          />
         </div>
 
         <Card>
           <CardHeader>
             <CardTitle>Payment Details</CardTitle>
             <CardDescription>
-              You're paying for: Premium Subscription
+              You&apos;re paying for: Premium Subscription
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -76,19 +81,16 @@ export default async function SelectPaymentMethod({
         </Card>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <PaymentMethodCard
-            title="USDT (Tether)"
-            description="Pay with USDT on Ethereum, Tron, or Binance Smart Chain"
-            icon="usdt"
-            href={`/pl/${id}/pay`}
-          />
-
-          <PaymentMethodCard
-            title="USD (Credit Card)"
-            description="Pay with your credit or debit card"
-            icon="usd"
-            href={`/pl/${id}/pay`}
-          />
+          {stableCoins.map((coin) => (
+            <PaymentMethodCard
+              key={coin.id}
+              title={`${coin.name} (${coin.symbol})`}
+              description={`Pay with ${coin.symbol} on Solana `}
+              icon={coin.logoUrl}
+              paymentLinkId={id}
+              paymentCoinId={coin.id}
+            />
+          ))}
         </div>
       </div>
     </div>

@@ -178,8 +178,8 @@ export default function PaymentDetails() {
             {method === "usdt" && (
               <div className="text-center text-sm text-muted-foreground mt-4">
                 <p>
-                  After sending the payment, click "Complete Payment" to check
-                  the status.
+                  After sending the payment, click &quot;Complete Payment&quot;
+                  to check the status.
                 </p>
                 <p className="mt-2">
                   Need help?{" "}

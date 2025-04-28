@@ -1,10 +1,9 @@
-import Image from "next/image";
 import { Card, CardContent } from "@repo/ui/components/ui/card";
 
 interface MerchantInfoProps {
   compact?: boolean;
   name?: string;
-  logo?: string;
+  logo?: string | null;
 }
 
 export function MerchantInfo({
@@ -20,10 +19,11 @@ export function MerchantInfo({
         <div
           className={`relative ${compact ? "h-8 w-8" : "h-12 w-12"} overflow-hidden rounded-full border`}
         >
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={logo || ""}
             alt="Merchant Logo"
-            fill
+            // fill
             className="object-cover"
           />
         </div>
