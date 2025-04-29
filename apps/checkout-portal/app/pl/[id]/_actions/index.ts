@@ -3,6 +3,7 @@ import { db } from "@/lib/db";
 import { Keypair } from "@solana/web3.js";
 import { derivePath } from "ed25519-hd-key";
 import { ServerActionResponseToClient } from "@/types/server-action";
+import PaymentWalletQueue from "@/queues/producer/payment-wallet-producer";
 const Phrase: string = process.env.ONETIME_PAYMENT_RECEVING_WALLET_PHRASE || "";
 
 export async function triggerPaymentLink(
@@ -55,7 +56,9 @@ export async function triggerPaymentLink(
           merchantId: paymentLink.merchantId,
         },
       });
-
+      await PaymentWalletQueue.add("payment-wallet-queue", {
+        initiatedPaymentId: initiatedPayment.id,
+      });
       return {
         ok: true,
         data: {
