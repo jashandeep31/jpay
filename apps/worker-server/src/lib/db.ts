@@ -1,6 +1,6 @@
 import { PrismaClient } from "@repo/db";
 import IORedis from "ioredis";
-export const db: any = new PrismaClient();
+export const db: PrismaClient = new PrismaClient();
 
 export const redisConnection = new IORedis({
   host: "localhost",

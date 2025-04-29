@@ -1,5 +1,25 @@
-import { Job, Worker } from "bullmq";
+import { Job, Queue, Worker } from "bullmq";
 import { db, redisConnection } from "../../lib/db";
+import { paymentReceivingSocket } from "../../sockets/payment-receving-socket";
+const PaymentWalletQueue = new Queue("payment-wallet-queue", {
+  connection: redisConnection,
+});
+
+(async () => {
+  const initiatedPayments = await db.intiatedPayment.findMany({
+    where: {
+      status: "PENDING",
+      createdAt: {
+        gte: new Date(Date.now() - 1000 * 60 * 5),
+      },
+    },
+  });
+  for (const initiatedPayment of initiatedPayments) {
+    await PaymentWalletQueue.add("payment-wallet-queue", {
+      initiatedPaymentId: initiatedPayment.id,
+    });
+  }
+})();
 
 export const paymentWalletWorker = new Worker(
   "payment-wallet-queue",
@@ -11,10 +31,13 @@ export const paymentWalletWorker = new Worker(
       },
     });
     if (!initiatedPayment) return;
+    paymentReceivingSocket.addAddress(
+      initiatedPayment.walletAddress,
+      initiatedPayment.id
+    );
   },
+
   { connection: redisConnection }
 );
 
-paymentWalletWorker.on("completed", (jobId, result) => {
-  console.log(`${jobId} has completed with result ${result}`);
-});
+paymentWalletWorker.on("completed", (jobId, result) => {});
