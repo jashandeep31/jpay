@@ -172,6 +172,9 @@ importers:
       '@repo/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
       bullmq:
         specifier: ^5.51.1
         version: 5.51.1

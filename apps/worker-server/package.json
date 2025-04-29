@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@repo/db": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "bullmq": "^5.51.1",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
