@@ -31,10 +31,8 @@ export const paymentWalletWorker = new Worker(
       },
     });
     if (!initiatedPayment) return;
-    paymentReceivingSocket.addAddress(
-      initiatedPayment.walletAddress,
-      initiatedPayment.id
-    );
+    const socket = await paymentReceivingSocket;
+    socket.addAddress(initiatedPayment.walletAddress, initiatedPayment.id);
   },
 
   { connection: redisConnection }

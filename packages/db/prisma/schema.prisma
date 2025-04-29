@@ -111,6 +111,7 @@ model StableCoin {
   description     String?
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
+  authority       String
   Wallet          Wallet[]
   IntiatedPayment IntiatedPayment[]
 }
@@ -150,7 +151,7 @@ model IntiatedPayment {
   initiatedFrom IntiatedFrom
   status        IntiatedPaymentStatus @default(PENDING)
   index         Int
-  walletAddress String
+  walletAddress String                @unique
   amount        Decimal               @db.Decimal(10, 2)
   paymentPageId String?
   paymentLinkId String?
@@ -171,7 +172,7 @@ model Transaction {
   amount            Decimal           @db.Decimal(10, 2)
   intiatedPaymentId String
   initiatedFrom     IntiatedFrom
-  toAddress         String
+  toAddress         String            @unique
   fromAddress       String
   settled           Boolean
   settledAt         DateTime?
