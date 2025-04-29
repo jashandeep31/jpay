@@ -13,7 +13,6 @@ export interface ParsedTransaction {
   tokenSymbol?: string; // Optional, if you want to resolve mint to symbol like USDT
 }
 
-const WALLET = "81BG5vui4vVhEugbkqiAj2ftFsc14oJ8eM8UxHCnGr4v";
 const WSS_URL: string = process.env.SOLANA_WSS_URL!;
 
 class PaymentReceivingSocket {
@@ -61,14 +60,6 @@ class PaymentReceivingSocket {
       console.log("WebSocket not open, attempting to reconnect...");
       await this.reconnect();
     }
-    this.ws.send(
-      JSON.stringify({
-        jsonrpc: "2.0",
-        id: 42,
-        method: "accountSubscribe",
-        params: [WALLET, { commitment: "confirmed", encoding: "jsonParsed" }],
-      })
-    );
 
     this.ws.send(
       JSON.stringify({
@@ -115,7 +106,7 @@ class PaymentReceivingSocket {
       const transaction = await getTransaction(
         msg.params.result.value.signature
       );
-      console.log("Parsed transaction:", transaction);
+      //   console.log("Parsed transaction:", transaction);
     }
   }
 
