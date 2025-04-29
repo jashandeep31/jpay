@@ -1,72 +1,101 @@
 import WebSocket from "ws";
+import { EventEmitter } from "events";
 
 const SOLANA_WSS_URL = process.env.SOLANA_WSS_URL!;
 
-class WsConnection {
-  private ws: WebSocket;
-  private isClosed: boolean = false;
-  private queuedMessages: string[] = [];
-  private lastPingEventTime: number = Date.now();
-  private lastSocketEventTime: number = Date.now();
+export class WsConnection extends EventEmitter {
+  private ws!: WebSocket;
+  private isGettingConnected = false;
+  private queuedData: string[] = [];
+  private lastPingEventTime = Date.now();
+  private lastSocketEventTime = Date.now();
 
-  constructor(ws: WebSocket) {
-    this.ws = ws;
+  constructor() {
+    super();
+    this.connect();
+    this.autoCloseConnection();
+  }
+
+  private connect() {
+    if (this.isGettingConnected) return;
+    this.ws = new WebSocket(SOLANA_WSS_URL);
+    this.isGettingConnected = true;
+    this.ws.on("open", () => {
+      this.onOpen();
+      this.isGettingConnected = false;
+    });
+    this.ws.on("message", (raw) => this.onMessage(raw.toString()));
+    this.ws.on("close", () => this.onClose());
+    this.ws.on("error", (err) => console.error("WS error", err));
+  }
+
+  private onOpen() {
+    console.log("WebSocket is open");
+    this.sendQueuedData(); // flush any earlier queued messages
+    this.autoRePing(); // start your ping‐timer here
+  }
+
+  private onMessage(msg: string) {
+    this.lastSocketEventTime = Date.now();
+    console.log(`message is `);
+    this.emit("message", msg);
+  }
+
+  private onClose() {
+    console.log("WebSocket closed, reconnecting in 1s…");
+    setTimeout(() => this.reconnect(), 1_000);
+  }
+
+  private reconnect() {
+    // only reconnect if the socket is REALLY closed
+    if (this.ws.readyState === WebSocket.CLOSED) {
+      this.connect();
+    }
   }
 
   private autoCloseConnection() {
-    const autoCloseTimer = setInterval(
-      () => {
-        if (Date.now() - this.lastSocketEventTime > 1000 * 60 * 10) {
-          this.ws.close();
-          clearInterval(autoCloseTimer);
-          this.isClosed = true;
-        }
-      },
-      1000 * 60 * 10
-    );
-  }
-
-  private handleEvents() {
-    this.ws.on("open", () => {
-      console.log("WebSocket is open");
-    });
-    this.ws.on("close", () => {
-      this.isClosed = true;
-    });
-    this.autoRePing();
+    setInterval(() => {
+      if (Date.now() - this.lastSocketEventTime > 10 * 60_000) {
+        console.log("No activity for 10m – closing socket");
+        this.ws.close();
+      }
+    }, 10 * 60_000);
   }
 
   private autoRePing() {
     setInterval(() => {
-      if (Date.now() - this.lastPingEventTime > 30000) {
+      if (Date.now() - this.lastPingEventTime > 30_000) {
         this.ws.ping();
+        this.lastPingEventTime = Date.now();
       }
-    }, 30000);
+    }, 30_000);
   }
 
-  private async sendQueuedMessages() {
-    if (this.isClosed) {
-      await this.reconnect();
+  private sendQueuedData() {
+    // only send if fully OPEN
+    if (this.ws.readyState !== WebSocket.OPEN) return;
+
+    while (this.queuedData.length) {
+      const msg = this.queuedData.shift()!;
+      this.ws.send(msg);
+      console.debug("Flushed queued message:", msg);
     }
-    this.queuedMessages.forEach((message) => {
-      this.ws.send(message);
-    });
-    this.queuedMessages = [];
   }
 
-  private async reconnect() {
-    this.ws = new WebSocket(SOLANA_WSS_URL);
-    this.handleEvents();
-  }
+  public sendData(data: string) {
+    // always queue
+    this.queuedData.push(data);
 
-  public async messageHandler(data: string) {
-    this.lastSocketEventTime = Date.now();
-  }
-
-  public async sendData(data: string) {
-    if (this.isClosed) {
-      await this.reconnect();
+    switch (this.ws.readyState) {
+      case WebSocket.OPEN:
+        // can send right away
+        this.sendQueuedData();
+        break;
+      case WebSocket.CLOSED:
+        // need to reconnect, `onOpen` will flush
+        this.reconnect();
+        break;
+      // if CONNECTING or CLOSING, do nothing – the queue will be flushed on open
     }
-    this.queuedMessages.push(data);
   }
 }

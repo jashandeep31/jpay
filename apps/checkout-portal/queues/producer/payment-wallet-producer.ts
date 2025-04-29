@@ -13,6 +13,7 @@ export interface InitiatedPaymentQueuePayload {
   amount: number;
   walletAddress: string;
   createdAt: Date;
+  associatedWalletId: string;
 }
 
 export default PaymentWalletQueue;

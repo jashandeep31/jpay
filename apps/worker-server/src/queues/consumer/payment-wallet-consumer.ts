@@ -1,7 +1,7 @@
 import { Job, Queue, Worker } from "bullmq";
 import { db, redisConnection } from "../../lib/db";
-import { paymentReceivingSocket } from "../../sockets/payment-receving-socket";
-const PaymentWalletQueue = new Queue("payment-wallet-queue", {
+import { WalletTrackingSocket } from "../../sockets/wallet-tracking-socket";
+const PaymentWalletQueue = new Queue("initiated-payment-queue", {
   connection: redisConnection,
 });
 
@@ -13,10 +13,11 @@ export interface InitiatedPaymentQueuePayload {
   amount: number;
   walletAddress: string;
   createdAt: Date;
+  associatedWalletId: string;
 }
 
 export const paymentWalletWorker = new Worker(
-  "payment-wallet-queue",
+  "initiated-payment-queue",
   async (job: Job<InitiatedPaymentQueuePayload>) => {
     const {
       id,
@@ -28,8 +29,10 @@ export const paymentWalletWorker = new Worker(
       type,
     } = job.data;
 
-    const socket = await paymentReceivingSocket;
-    socket.addAddress(walletAddress, id);
+    const socketv1 = new WalletTrackingSocket();
+    socketv1.addWalletToTrack(job.data);
+    // const socket = await paymentReceivingSocket;
+    // socket.addAddress(walletAddress, id);
   },
 
   { connection: redisConnection }

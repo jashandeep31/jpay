@@ -1,11 +1,12 @@
 "use server";
 import { db } from "@/lib/db";
-import { Keypair } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import { derivePath } from "ed25519-hd-key";
 import { ServerActionResponseToClient } from "@/types/server-action";
 import PaymentWalletQueue, {
   InitiatedPaymentQueuePayload,
 } from "@/queues/producer/payment-wallet-producer";
+import { getAssociatedTokenAddress } from "@solana/spl-token";
 const Phrase: string = process.env.ONETIME_PAYMENT_RECEVING_WALLET_PHRASE || "";
 
 export async function triggerPaymentLink(
@@ -45,6 +46,10 @@ export async function triggerPaymentLink(
       const path = `m/44'/501'/${newIndex}'/0'`;
       const derivedSeed = derivePath(path, Phrase);
       const keypair = Keypair.fromSeed(derivedSeed.key);
+      const ait = await getAssociatedTokenAddress(
+        new PublicKey(stableCoin.authority),
+        keypair.publicKey
+      );
 
       const initiatedPayment = await tx.intiatedPayment.create({
         data: {
@@ -67,6 +72,7 @@ export async function triggerPaymentLink(
         amount: Number(paymentLink.amount),
         walletAddress: initiatedPayment.walletAddress,
         createdAt: initiatedPayment.createdAt,
+        associatedWalletId: ait.toBase58(),
       } satisfies InitiatedPaymentQueuePayload);
 
       return {
