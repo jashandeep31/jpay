@@ -3,7 +3,9 @@ import { db } from "@/lib/db";
 import { Keypair } from "@solana/web3.js";
 import { derivePath } from "ed25519-hd-key";
 import { ServerActionResponseToClient } from "@/types/server-action";
-import PaymentWalletQueue from "@/queues/producer/payment-wallet-producer";
+import PaymentWalletQueue, {
+  InitiatedPaymentQueuePayload,
+} from "@/queues/producer/payment-wallet-producer";
 const Phrase: string = process.env.ONETIME_PAYMENT_RECEVING_WALLET_PHRASE || "";
 
 export async function triggerPaymentLink(
@@ -56,9 +58,17 @@ export async function triggerPaymentLink(
           merchantId: paymentLink.merchantId,
         },
       });
-      await PaymentWalletQueue.add("payment-wallet-queue", {
-        initiatedPaymentId: initiatedPayment.id,
-      });
+
+      await PaymentWalletQueue.add("initiated-payment-queue", {
+        type: "pl",
+        id: initiatedPayment.id,
+        paymentCoinId: stableCoin.id,
+        paymentCoinMint: stableCoin.authority,
+        amount: Number(paymentLink.amount),
+        walletAddress: initiatedPayment.walletAddress,
+        createdAt: initiatedPayment.createdAt,
+      } satisfies InitiatedPaymentQueuePayload);
+
       return {
         ok: true,
         data: {
