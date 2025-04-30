@@ -37,6 +37,9 @@ export default function RecentPayments({
             <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Status
             </th>
+            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              Settled
+            </th>
             <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
               Actions
             </th>
@@ -55,16 +58,18 @@ export default function RecentPayments({
                 <div className="text-sm text-gray-900">
                   ${payment.amount.toString()}
                 </div>
-                <div className="text-xs text-gray-500">{payment.status}</div>
+                <div className="text-xs text-gray-500">
+                  {payment.stableCoinName}
+                </div>
               </td>
               <td className="px-4 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                   <div>
                     <div className="text-sm font-medium text-gray-900">
-                      To: {payment.toAddress}
+                      To: {payment.toWalletAddress}
                     </div>
                     <div className="text-sm text-gray-500">
-                      From: {payment.fromAddress}
+                      From: {payment.fromWalletAddress}
                     </div>
                   </div>
                 </div>
@@ -83,7 +88,10 @@ export default function RecentPayments({
                   {payment.status === "COMPLETED" ? "Paid" : "Pending"}
                 </Badge>
               </td>
-              <td className="px-4 py-4 whitespace-nowrap text-right text-sm font-medium">
+              <td className="px-4 py-4 whitespace-nowrap text-left text-sm font-medium">
+                {payment.settled ? "Yes" : "No"}
+              </td>
+              <td className="px-4 py-4 whitespace-nowrap text-left text-sm font-medium">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="h-8 w-8 p-0">

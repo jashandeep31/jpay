@@ -74,7 +74,7 @@ export default function DashboardHeader() {
   // Get current page title
   const getCurrentPageTitle = () => {
     if (pathname === "/dashboard") return "Dashboard Overview";
-    if (pathname === "/dashboard/create-link") return "Create Payment Link";
+    if (pathname === "/dashboard/payment-link") return "Payment Links";
     if (pathname === "/dashboard/payments") return "Payments";
     if (pathname === "/dashboard/invoices") return "Invoices & Subscriptions";
     if (pathname === "/dashboard/payouts") return "Payouts";
@@ -112,7 +112,7 @@ export default function DashboardHeader() {
         </div>
 
         <div className="ml-4 flex items-center md:ml-6 space-x-3">
-          <div className="hidden md:block w-72">
+          {/* <div className="hidden md:block w-72">
             <div className="relative">
               <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                 <Search className="h-4 w-4 text-gray-400" aria-hidden="true" />
@@ -123,7 +123,7 @@ export default function DashboardHeader() {
                 className="pl-10 text-sm focus-visible:ring-blue-500"
               />
             </div>
-          </div>
+          </div> */}
 
           {/* <NotificationsDropdown /> */}
 

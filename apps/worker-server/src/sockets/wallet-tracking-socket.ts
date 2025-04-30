@@ -128,30 +128,60 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
       where: {
         id: transaction.id,
       },
+      include: {
+        stableCoin: true,
+      },
     });
     if (!initiatedPayment) return;
-    // console.log(JSON.stringify(initiatedPayment), "initiatedPayment");
-    // console.log(JSON.stringify(parsedTransaction), "parsedTransaction");
-
-    console.log(
-      parsedTransaction.amount,
-      transaction.amount,
-      "parsedTransaction.amount"
-    );
+    if (initiatedPayment.stableCoin.authority !== parsedTransaction.tokenMint) {
+      console.log("token mint does not match");
+      return;
+    }
+    if (
+      !parsedTransaction.from ||
+      !parsedTransaction.to ||
+      !parsedTransaction.ataFrom ||
+      !parsedTransaction.ataTo
+    ) {
+      console.log("no from or to or ataFrom or ataTo");
+      return;
+    }
 
     if (parsedTransaction.amount !== transaction.amount) {
       console.log("amounts do not match");
       return;
     }
-
+    if (
+      initiatedPayment.initiatedFrom === "PAYMENT_LINK" &&
+      initiatedPayment.paymentLinkId
+    ) {
+      const pl = await db.paymentLink.findUnique({
+        where: {
+          id: initiatedPayment.paymentLinkId,
+        },
+      });
+      if (pl?.oneTimeLink) {
+        await db.paymentLink.update({
+          where: {
+            id: initiatedPayment.paymentLinkId,
+          },
+          data: {
+            status: "COMPLETED",
+          },
+        });
+      }
+    }
     const dbTransaction = await db.transaction.create({
       data: {
         status: "COMPLETED",
         amount: transaction.amount,
         intiatedPaymentId: initiatedPayment.id,
         initiatedFrom: transaction.type,
-        toAddress: parsedTransaction.to,
-        fromAddress: parsedTransaction.from,
+        toWalletAddress: parsedTransaction.to,
+        fromWalletAddress: parsedTransaction.from,
+        toAtaWalletAddress: parsedTransaction.ataTo,
+        fromAtaWalletAddress: parsedTransaction.ataFrom,
+        stableCoinName: `${initiatedPayment.stableCoin.name} (${initiatedPayment.stableCoin.symbol})`,
         settled: false,
         merchantId: initiatedPayment.merchantId,
       },

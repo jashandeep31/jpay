@@ -176,9 +176,9 @@ model Transaction {
   intiatedPaymentId      String
   initiatedFrom          IntiatedFrom
   toWalletAddress        String            @unique
-  fromWalletAddress      String            @unique
+  fromWalletAddress      String
   toAtaWalletAddress     String            @unique
-  fromAtaWalletAddress   String            @unique
+  fromAtaWalletAddress   String
   settled                Boolean           @default(false)
   settledAt              DateTime?
   settledToWalletAddress String?

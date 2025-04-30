@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import RecentPayments from "@/components/dashboard/recent-payments";
 import { db } from "../../db";
+import { auth } from "@/auth";
 
 async function getTransactions() {
   const transactions = await db.transaction.findMany({
@@ -28,12 +29,15 @@ async function getTransactions() {
   return transactions;
 }
 export default async function DashboardPage() {
-  const transactions = await getTransactions();
+  const [session, transactions] = await Promise.all([
+    auth(),
+    getTransactions(),
+  ]);
   return (
     <div className="flex flex-col gap-5 pt-1">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h2 className="text-2xl font-bold tracking-tight">
-          Welcome back, John
+          Welcome back, {session?.user?.name || "User"}
         </h2>
         <div className="flex items-center gap-2">
           <Link href="/dashboard/create-link">

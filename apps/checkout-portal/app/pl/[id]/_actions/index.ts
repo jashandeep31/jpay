@@ -58,6 +58,7 @@ export async function triggerPaymentLink(
           stableCoinId: paymentCoinId,
           index: newIndex,
           walletAddress: keypair.publicKey.toBase58(),
+          ataWalletAddress: ait.toBase58(),
           amount: paymentLink.amount,
           paymentLinkId: paymentLinkId,
           merchantId: paymentLink.merchantId,

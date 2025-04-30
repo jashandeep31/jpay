@@ -25,6 +25,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@repo/ui/components/ui/tooltip";
+import { Badge } from "@repo/ui/components/ui/badge";
 
 const sidebarLinks = [
   {
@@ -126,6 +127,9 @@ export default function DashboardSidebar() {
               <>
                 <span className="text-2xl font-bold text-gray-900">JPay</span>
                 <span className="ml-1 text-blue-500 font-bold">.</span>
+                <Badge variant="outline" className="ml-1 text-blue-500">
+                  Devnet
+                </Badge>
               </>
             )}
           </Link>
