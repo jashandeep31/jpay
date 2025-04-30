@@ -35,7 +35,9 @@ const formSchema = z.object({
   title: z.string().min(3, {
     message: "Title must be at least 3 characters.",
   }),
-  description: z.string().optional(),
+  description: z.string().min(10, {
+    message: "Description is required",
+  }),
   logoUrl: z.string().url({
     message: "Please enter a valid URL for your logo.",
   }),
@@ -47,7 +49,9 @@ const formSchema = z.object({
     .refine((val) => !isNaN(val), {
       message: "Amount must be a valid number.",
     }),
-  expiresAt: z.date().optional(),
+  expiresAt: z.date().min(new Date(), {
+    message: "Expiration date must be today or in the future",
+  }),
 });
 
 export default function CreatePaymentPage() {
@@ -143,7 +147,7 @@ export default function CreatePaymentPage() {
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Description (Optional)</FormLabel>
+                        <FormLabel>Description</FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="Describe what this payment is for..."
@@ -214,7 +218,7 @@ export default function CreatePaymentPage() {
                     name="expiresAt"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
-                        <FormLabel>Expiration Date (Optional)</FormLabel>
+                        <FormLabel>Expiration Date </FormLabel>
                         <FormControl>
                           <Input
                             type="date"
@@ -270,7 +274,9 @@ export default function CreatePaymentPage() {
                 This is how your payment page will look to customers.
               </CardDescription>
             </CardHeader>
-            <CardContent className="h-[500px] overflow-auto"></CardContent>
+            <CardContent className="h-[500px] overflow-auto">
+              <h5>!Preview is not available yet</h5>
+            </CardContent>
             <CardFooter className="text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
                 <InfoIcon className="h-4 w-4" />

@@ -108,10 +108,11 @@ model StableCoin {
   name            String
   symbol          String            @unique
   logoUrl         String?
+  authority       String
   description     String?
+  decimalCount    Int
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  authority       String
   Wallet          Wallet[]
   IntiatedPayment IntiatedPayment[]
 }
@@ -122,6 +123,7 @@ model PaymentLink {
   status          PaymentLinkStatus @default(ACTIVE)
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
+  oneTimeLink     Boolean           @default(false)
   expiresAt       DateTime?
   description     String?
   merchantId      String
@@ -135,7 +137,7 @@ model PaymentPage {
   description     String?
   logoUrl         String
   amount          Decimal           @db.Decimal(10, 2)
-  expiresAt       DateTime?
+  expiresAt       DateTime
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   status          PaymentPageStatus @default(PENDING)
@@ -147,41 +149,45 @@ model PaymentPage {
 
 // 1 initiated has wrong spelling
 model IntiatedPayment {
-  id            String                @id @default(uuid())
-  initiatedFrom IntiatedFrom
-  status        IntiatedPaymentStatus @default(PENDING)
-  index         Int
-  walletAddress String                @unique
-  amount        Decimal               @db.Decimal(10, 2)
-  paymentPageId String?
-  paymentLinkId String?
-  stableCoin    StableCoin            @relation(fields: [stableCoinId], references: [id])
-  stableCoinId  String
-  createdAt     DateTime              @default(now())
-  updatedAt     DateTime              @updatedAt
-  merchantId    String
-  merchant      Merchant              @relation(fields: [merchantId], references: [id])
-  paymentLink   PaymentLink?          @relation(fields: [paymentLinkId], references: [id])
-  paymentPage   PaymentPage?          @relation(fields: [paymentPageId], references: [id])
-  Transaction   Transaction[]
+  id               String                @id @default(uuid())
+  initiatedFrom    IntiatedFrom
+  status           IntiatedPaymentStatus @default(PENDING)
+  index            Int
+  walletAddress    String                @unique
+  ataWalletAddress String                @unique
+  amount           Decimal               @db.Decimal(10, 2)
+  paymentPageId    String?
+  paymentLinkId    String?
+  stableCoin       StableCoin            @relation(fields: [stableCoinId], references: [id])
+  stableCoinId     String
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  merchantId       String
+  merchant         Merchant              @relation(fields: [merchantId], references: [id])
+  paymentLink      PaymentLink?          @relation(fields: [paymentLinkId], references: [id])
+  paymentPage      PaymentPage?          @relation(fields: [paymentPageId], references: [id])
+  Transaction      Transaction[]
 }
 
 model Transaction {
-  id                String            @id @default(uuid())
-  status            TransactionStatus
-  amount            Decimal           @db.Decimal(10, 2)
-  intiatedPaymentId String
-  initiatedFrom     IntiatedFrom
-  toAddress         String            @unique
-  fromAddress       String
-  settled           Boolean
-  settledAt         DateTime?
-  settledTo         String?
-  createdAt         DateTime          @default(now())
-  updatedAt         DateTime          @updatedAt
-  merchantId        String
-  intiatedPayment   IntiatedPayment   @relation(fields: [intiatedPaymentId], references: [id])
-  merchant          Merchant          @relation(fields: [merchantId], references: [id])
+  id                     String            @id @default(uuid())
+  status                 TransactionStatus
+  amount                 Decimal           @db.Decimal(10, 2)
+  intiatedPaymentId      String
+  initiatedFrom          IntiatedFrom
+  toWalletAddress        String            @unique
+  fromWalletAddress      String            @unique
+  toAtaWalletAddress     String            @unique
+  fromAtaWalletAddress   String            @unique
+  settled                Boolean           @default(false)
+  settledAt              DateTime?
+  settledToWalletAddress String?
+  stableCoinName         String
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+  merchantId             String
+  intiatedPayment        IntiatedPayment   @relation(fields: [intiatedPaymentId], references: [id])
+  merchant               Merchant          @relation(fields: [merchantId], references: [id])
 }
 
 model PaymentButton {

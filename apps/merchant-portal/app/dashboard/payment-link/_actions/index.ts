@@ -6,7 +6,8 @@ import { PaymentLink } from "@repo/db";
 export async function createPaymentLink(
   amount: number,
   description: string,
-  expiryDate: string
+  expiryDate: string,
+  oneTimeLink: boolean
 ): Promise<
   ServerActionResponseToClient<Omit<PaymentLink, "amount"> & { amount: number }>
 > {
@@ -22,6 +23,7 @@ export async function createPaymentLink(
         expiresAt: expiryDate ? new Date(expiryDate) : null,
         merchantId: session.merchantId,
         description,
+        oneTimeLink,
       },
     });
     return {

@@ -66,9 +66,7 @@ export default async function SelectPaymentMethod({
         <Card>
           <CardHeader>
             <CardTitle>Payment Details</CardTitle>
-            <CardDescription>
-              You&apos;re paying for: Premium Subscription
-            </CardDescription>
+            <CardDescription>{paymentLink.description}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="flex justify-between items-center py-2">

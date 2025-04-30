@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@repo/ui/components/ui/button";
+import { Switch } from "@repo/ui/components/ui/switch";
 import {
   Card,
   CardContent,
@@ -22,13 +23,22 @@ export default function CreateLinkPage() {
   const [amount, setAmount] = useState<number | null>();
   const [description, setDescription] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
+  const [oneTimeLink, setOneTimeLink] = useState(false);
 
   const handleCreatePaymentLink = async () => {
     if (!amount) return;
+    if (expiryDate && new Date(expiryDate) < new Date()) {
+      toast({
+        title: "Error",
+        description: "Expiry date must be in the future",
+      });
+      return;
+    }
     const paymentLink = await createPaymentLink(
       amount,
       description,
-      expiryDate
+      expiryDate,
+      oneTimeLink
     );
     if (paymentLink.ok) {
       router.push(`/dashboard/payment-link/`);
@@ -86,6 +96,15 @@ export default function CreateLinkPage() {
                 value={expiryDate}
                 onChange={(e) => setExpiryDate(e.target.value)}
               />
+            </div>
+
+            <div className="flex items-center space-x-2 mt-3">
+              <Switch
+                id="oneTimeLink"
+                checked={oneTimeLink}
+                onCheckedChange={setOneTimeLink}
+              />
+              <Label htmlFor="oneTimeLink">One Time Link</Label>
             </div>
           </CardContent>
           <CardFooter>
