@@ -7,13 +7,13 @@ export class WsConnection extends EventEmitter {
   private ws!: WebSocket;
   private isGettingConnected = false;
   private queuedData: string[] = [];
-  private lastPingEventTime = Date.now();
+  private isClosedDueToNoActivity = false;
+  private lastPingOrActivityEventTime = Date.now();
   private lastSocketEventTime = Date.now();
 
   constructor() {
     super();
     this.connect();
-    this.autoCloseConnection();
   }
 
   private connect() {
@@ -22,10 +22,11 @@ export class WsConnection extends EventEmitter {
     this.isGettingConnected = true;
     this.ws.on("open", () => {
       this.onOpen();
+      this.isClosedDueToNoActivity = false;
       this.isGettingConnected = false;
     });
     this.ws.on("message", (raw) => this.onMessage(raw.toString()));
-    this.ws.on("close", () => this.onClose());
+    // this.ws.on("close", () => this.onClose());
     this.ws.on("error", (err) => console.error("WS error", err));
   }
 
@@ -33,18 +34,20 @@ export class WsConnection extends EventEmitter {
     console.log("WebSocket is open");
     this.sendQueuedData(); // flush any earlier queued messages
     this.autoRePing(); // start your ping‐timer here
+    this.autoCloseConnection();
   }
 
   private onMessage(msg: string) {
     this.lastSocketEventTime = Date.now();
-    console.log(`message is `);
+    this.lastPingOrActivityEventTime = Date.now();
+
     this.emit("message", msg);
   }
 
-  private onClose() {
-    console.log("WebSocket closed, reconnecting in 1s…");
-    setTimeout(() => this.reconnect(), 1_000);
-  }
+  // private onClose() {
+  //   console.log("WebSocket closed, reconnecting in 1s…");
+  //   setTimeout(() => this.reconnect(), 1_000);
+  // }
 
   private reconnect() {
     // only reconnect if the socket is REALLY closed
@@ -54,19 +57,26 @@ export class WsConnection extends EventEmitter {
   }
 
   private autoCloseConnection() {
-    setInterval(() => {
+    const interval = setInterval(() => {
       if (Date.now() - this.lastSocketEventTime > 10 * 60_000) {
         console.log("No activity for 10m – closing socket");
         this.ws.close();
+        this.isClosedDueToNoActivity = true;
+        clearInterval(interval);
       }
     }, 10 * 60_000);
   }
-
   private autoRePing() {
-    setInterval(() => {
-      if (Date.now() - this.lastPingEventTime > 30_000) {
+    const interval = setInterval(() => {
+      if (this.isClosedDueToNoActivity) {
+        clearInterval(interval);
+        return;
+      }
+
+      if (Date.now() - this.lastPingOrActivityEventTime > 30_000) {
+        console.log("pinging");
         this.ws.ping();
-        this.lastPingEventTime = Date.now();
+        this.lastPingOrActivityEventTime = Date.now();
       }
     }, 30_000);
   }
@@ -77,6 +87,8 @@ export class WsConnection extends EventEmitter {
 
     while (this.queuedData.length) {
       const msg = this.queuedData.shift()!;
+      this.lastSocketEventTime = Date.now();
+      this.lastPingOrActivityEventTime = Date.now();
       this.ws.send(msg);
       console.debug("Flushed queued message:", msg);
     }

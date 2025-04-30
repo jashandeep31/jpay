@@ -1,10 +1,13 @@
 {
-  "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "declaration": true,
-    "declarationMap": true,
-    "noEmitOnError": true
+    // …other options…
+    "module": "NodeNext", // or "Node16" if you prefer
+    "moduleResolution": "NodeNext", // resolves both .js/.ts ESM & CJS
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".", // so your `@repo/*` path mappings work
+
+    "outDir": "dist",
+    "target": "ES2020"
   }
 }
