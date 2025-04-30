@@ -1,19 +1,25 @@
 import WebSocket from "ws";
 import { WsConnection } from "./connection.js";
 import { InitiatedPaymentQueuePayload } from "../queues/consumer/payment-wallet-consumer.js";
-import { getTransaction, sendUSDT } from "./lib/utilts.js";
-import { ParsedTransaction } from "./lib/utilts.js";
+import {
+  getSignatureForAddress,
+  getTransaction,
+  parseTransaction,
+  sendToken,
+} from "./lib/utilts.js";
+import { db } from "../lib/db.js";
 
 export class WalletTrackingSocket {
   private static instance: WalletTrackingSocket;
   private wsConnectionProvider: WsConnection;
   private subscribedTransactions: {
     transaction: InitiatedPaymentQueuePayload;
-    subscriptionId: string;
+    subscriptionId: number;
+    isReceivedAction: boolean;
   }[] = [];
   private transactions: InitiatedPaymentQueuePayload[] = [];
 
-  private constructor() {
+  constructor() {
     this.wsConnectionProvider = new WsConnection();
     this.wsConnectionProvider.on("message", this.onMessage.bind(this));
   }
@@ -26,7 +32,6 @@ export class WalletTrackingSocket {
   }
 
   public async addWalletToTrack(data: InitiatedPaymentQueuePayload) {
-    console.log(`wallet is ${data.walletAddress} , ${data.associatedWalletId}`);
     this.transactions.push(data);
     this.wsConnectionProvider.sendData(
       JSON.stringify({
@@ -58,8 +63,6 @@ export class WalletTrackingSocket {
       return;
     }
 
-    console.log(JSON.stringify(msg));
-
     if (msg.id && msg.result) {
       const { id, result } = msg;
       const transaction = this.transactions.find(
@@ -68,49 +71,92 @@ export class WalletTrackingSocket {
       if (!transaction) {
         return;
       }
-      sendUSDT(transaction.associatedWalletId, 1);
+      sendToken(transaction.walletAddress, transaction.amount);
       this.subscribedTransactions.push({
         transaction,
         subscriptionId: result,
+        isReceivedAction: false,
       });
       return;
     }
 
     if (
-      msg?.method === "logsNotification" &&
+      msg?.method === "accountNotification" &&
       msg?.params?.subscription &&
-      msg?.params?.result?.value?.signature
+      msg?.params?.result?.value
     ) {
       const subscribedTransaction = this.subscribedTransactions.find(
         (sub) => sub.subscriptionId === msg.params.subscription
       );
+
       if (subscribedTransaction) {
-        // this.removeAddress(id);
-        const signature = msg.params.result.value.signature;
-        processWalletTrackedTransactions(subscribedTransaction, signature);
+        if (subscribedTransaction.isReceivedAction) {
+          console.log(`already received action`);
+          return;
+        } else {
+          processWalletTrackedTransactions(subscribedTransaction);
+          subscribedTransaction.isReceivedAction = true;
+        }
       } else {
         // also remove from all TODO
         // this.removeTransaction(msg.params.subscription);
+        //
       }
     }
   }
 }
 
-async function processWalletTrackedTransactions(
-  subscribedTransaction: {
-    transaction: InitiatedPaymentQueuePayload;
-    subscriptionId: string;
-  },
-  signature: string
-) {
-  const { transaction, subscriptionId } = subscribedTransaction;
-  console.log(`calling parser`);
-  const parsedTransaction: ParsedTransaction | null =
-    await getTransaction(signature);
-  console.log(parsedTransaction);
-  console.log(`calling done`);
-  if (!parsedTransaction) {
-    return;
+async function processWalletTrackedTransactions(subscribedTransaction: {
+  transaction: InitiatedPaymentQueuePayload;
+  subscriptionId: number;
+}) {
+  try {
+    const { transaction, subscriptionId } = subscribedTransaction;
+    await new Promise((resolve) => setTimeout(resolve, 10000));
+    const lastSignature = await getSignatureForAddress(
+      transaction.associatedWalletId,
+      subscriptionId
+    );
+
+    if (!lastSignature) {
+      console.log("no signature found");
+      return;
+    }
+    const unParsedTransaction = await getTransaction(lastSignature, 4, 5000);
+    const parsedTransaction = parseTransaction(unParsedTransaction);
+    const initiatedPayment = await db.intiatedPayment.findUnique({
+      where: {
+        id: transaction.id,
+      },
+    });
+    if (!initiatedPayment) return;
+    // console.log(JSON.stringify(initiatedPayment), "initiatedPayment");
+    // console.log(JSON.stringify(parsedTransaction), "parsedTransaction");
+
+    console.log(
+      parsedTransaction.amount,
+      transaction.amount,
+      "parsedTransaction.amount"
+    );
+
+    if (parsedTransaction.amount !== transaction.amount) {
+      console.log("amounts do not match");
+      return;
+    }
+
+    const dbTransaction = await db.transaction.create({
+      data: {
+        status: "COMPLETED",
+        amount: transaction.amount,
+        intiatedPaymentId: initiatedPayment.id,
+        initiatedFrom: transaction.type,
+        toAddress: parsedTransaction.to,
+        fromAddress: parsedTransaction.from,
+        settled: false,
+        merchantId: initiatedPayment.merchantId,
+      },
+    });
+  } catch (error) {
+    console.log(error, "error");
   }
-  console.log(transaction);
 }

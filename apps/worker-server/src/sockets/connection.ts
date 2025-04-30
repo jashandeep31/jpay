@@ -1,7 +1,6 @@
 import WebSocket from "ws";
 import { EventEmitter } from "events";
-
-const SOLANA_WSS_URL = process.env.SOLANA_WSS_URL!;
+import { env } from "../lib/env.js";
 
 export class WsConnection extends EventEmitter {
   private ws!: WebSocket;
@@ -13,12 +12,15 @@ export class WsConnection extends EventEmitter {
 
   constructor() {
     super();
+    if (!env.SOLANA_WSS_URL) {
+      throw new Error("SOLANA_WSS_URL environment variable is not set");
+    }
     this.connect();
   }
 
   private connect() {
     if (this.isGettingConnected) return;
-    this.ws = new WebSocket(SOLANA_WSS_URL);
+    this.ws = new WebSocket(env.SOLANA_WSS_URL!);
     this.isGettingConnected = true;
     this.ws.on("open", () => {
       this.onOpen();

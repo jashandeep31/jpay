@@ -1,12 +1,9 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import express from "express";
-import webhookRoutes from "./routes/webhook-routes";
+import { env } from "./lib/env.js";
+import webhookRoutes from "./routes/webhook-routes.js";
 // import { testPaymentReceivingSocket } from "./sockets/payment-receving-socket";
-import "./queues/consumer/payment-wallet-consumer";
+import "./queues/consumer/payment-wallet-consumer.js";
 
-const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(express.json());
 
@@ -18,6 +15,6 @@ app.use("/webhook", webhookRoutes);
 
 // Initialize the payment wallet worker
 
-app.listen(PORT, () => {
-  console.log(`server is running on port ${PORT}`);
+app.listen(env.PORT, () => {
+  console.log(`server is running on port ${env.PORT}`);
 });

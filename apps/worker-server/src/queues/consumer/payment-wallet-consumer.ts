@@ -1,12 +1,12 @@
 import { Job, Queue, Worker } from "bullmq";
-import { db, redisConnection } from "../../lib/db";
-import { WalletTrackingSocket } from "../../sockets/wallet-tracking-socket";
+import { db, redisConnection } from "../../lib/db.js";
+import { WalletTrackingSocket } from "../../sockets/wallet-tracking-socket.js";
 const PaymentWalletQueue = new Queue("initiated-payment-queue", {
   connection: redisConnection,
 });
 
 export interface InitiatedPaymentQueuePayload {
-  type: "pl" | "pb";
+  type: "PAYMENT_PAGE" | "PAYMENT_LINK";
   id: string;
   paymentCoinId: string;
   paymentCoinMint: string;
@@ -14,25 +14,36 @@ export interface InitiatedPaymentQueuePayload {
   walletAddress: string;
   createdAt: Date;
   associatedWalletId: string;
+  subId: Number;
 }
 
 export const paymentWalletWorker = new Worker(
   "initiated-payment-queue",
   async (job: Job<InitiatedPaymentQueuePayload>) => {
-    const {
-      id,
-      paymentCoinId,
-      paymentCoinMint,
-      amount,
-      walletAddress,
-      createdAt,
-      type,
-    } = job.data;
+    try {
+      console.log(`Starting job processing`);
+      const {
+        id,
+        paymentCoinId,
+        paymentCoinMint,
+        amount,
+        walletAddress,
+        createdAt,
+        type,
+      } = job.data;
 
-    const socketv1 = new WalletTrackingSocket();
-    socketv1.addWalletToTrack(job.data);
-    // const socket = await paymentReceivingSocket;
-    // socket.addAddress(walletAddress, id);
+      // Use singleton instance instead of creating new
+      const socket = WalletTrackingSocket.getInstance();
+      await socket.addWalletToTrack({
+        ...job.data,
+        subId: Date.now() + Math.floor(Math.random() * 1000000),
+      });
+
+      return { success: true };
+    } catch (error) {
+      console.error("Error processing payment job:", error);
+      throw error; // Re-throw to mark job as failed
+    }
   },
 
   { connection: redisConnection }

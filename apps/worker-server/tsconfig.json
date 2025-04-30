@@ -1,13 +1,28 @@
 {
   "compilerOptions": {
-    // …other options…
-    "module": "NodeNext", // or "Node16" if you prefer
-    "moduleResolution": "NodeNext", // resolves both .js/.ts ESM & CJS
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": ".", // so your `@repo/*` path mappings work
-
+    "target": "es6",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
+    "baseUrl": ".",
     "outDir": "dist",
-    "target": "ES2020"
-  }
+    "sourceMap": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "types": ["node"],
+    "plugins": [
+      {
+        "transform": "typescript-transform-paths"
+      },
+      {
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true
+      }
+    ],
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["process.env.d.ts", "./**/*.ts"],
+  "exclude": ["node_modules"]
 }

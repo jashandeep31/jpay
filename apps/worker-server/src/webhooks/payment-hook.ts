@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { db } from "../lib/db";
+import { db } from "../lib/db.js";
 const TOKEN_MINTS: Record<string, string> = {
   Es9vMFrzaCER3DPEDv3J1YQZ4DdNV57WiEbyxz2gJdnL: "USDT", // mainnet USDT
   Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr: "USDC", // mainnet USDC

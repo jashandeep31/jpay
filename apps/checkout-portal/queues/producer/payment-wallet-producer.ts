@@ -1,12 +1,13 @@
 import { Queue } from "bullmq";
 import { redisConnection } from "@/lib/db";
+import { IntiatedFrom } from "@repo/db";
 
 const PaymentWalletQueue = new Queue("initiated-payment-queue", {
   connection: redisConnection,
 });
 
 export interface InitiatedPaymentQueuePayload {
-  type: "pl" | "pb";
+  type: IntiatedFrom;
   id: string;
   paymentCoinId: string;
   paymentCoinMint: string;

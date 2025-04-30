@@ -65,7 +65,7 @@ export async function triggerPaymentLink(
       });
 
       await PaymentWalletQueue.add("initiated-payment-queue", {
-        type: "pl",
+        type: "PAYMENT_LINK",
         id: initiatedPayment.id,
         paymentCoinId: stableCoin.id,
         paymentCoinMint: stableCoin.authority,

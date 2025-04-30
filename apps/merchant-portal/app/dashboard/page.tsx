@@ -20,12 +20,15 @@ import RecentPayments from "@/components/dashboard/recent-payments";
 import { db } from "../../db";
 
 async function getTransactions() {
-  const transactions = await db.transaction.findMany();
+  const transactions = await db.transaction.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
   return transactions;
 }
 export default async function DashboardPage() {
   const transactions = await getTransactions();
-  console.log(transactions.length);
   return (
     <div className="flex flex-col gap-5 pt-1">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -118,7 +121,7 @@ export default async function DashboardPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <RecentPayments />
+            <RecentPayments transactions={transactions} />
           </CardContent>
         </Card>
       </div>
