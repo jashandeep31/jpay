@@ -1,19 +1,17 @@
 "use client";
 
-import { Bitcoin, CreditCard } from "lucide-react";
 import { cn } from "@repo/ui/lib/utils";
 
 interface PaymentOptionProps {
   id: string;
   title: string;
   description: string;
-  icon: "usdt" | "btc" | "eth" | "card";
+  icon: string;
   selected: boolean;
   onClick: () => void;
 }
 
 export function PaymentOption({
-  id,
   title,
   description,
   icon,
@@ -32,26 +30,8 @@ export function PaymentOption({
     >
       <div className="flex items-center space-x-3">
         <div className="flex-shrink-0">
-          {icon === "usdt" && (
-            <div className="h-10 w-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold text-xs">
-              USDT
-            </div>
-          )}
-          {icon === "btc" && (
-            <div className="h-10 w-10 rounded-full bg-orange-500 flex items-center justify-center text-white">
-              <Bitcoin className="h-5 w-5" />
-            </div>
-          )}
-          {icon === "eth" && (
-            <div className="h-10 w-10 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold text-xs">
-              ETH
-            </div>
-          )}
-          {icon === "card" && (
-            <div className="h-10 w-10 rounded-full bg-blue-500 flex items-center justify-center text-white">
-              <CreditCard className="h-5 w-5" />
-            </div>
-          )}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={icon} alt={title} className="w-10 h-10" />
         </div>
         <div className="flex-grow">
           <h4 className="font-medium">{title}</h4>

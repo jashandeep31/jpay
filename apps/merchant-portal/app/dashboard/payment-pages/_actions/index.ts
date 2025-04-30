@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { db } from "@/db";
 import { PaymentPage } from "@repo/db";
 import { ServerActionResponseToClient } from "@/types/server-actions";
+import { IPaymentPageFormField } from "../create/page";
 
 export async function getPaymentPages(): Promise<
   ServerActionResponseToClient<
@@ -43,23 +44,43 @@ export async function createPaymentPage(data: {
   description: string | undefined;
   logoUrl: string;
   amount: number;
-  expiresAt: Date | undefined;
+  expiresAt: Date;
+  fields: IPaymentPageFormField[];
 }): Promise<
   ServerActionResponseToClient<Omit<PaymentPage, "amount"> & { amount: number }>
 > {
   try {
     const session = await auth();
     if (!session?.user) throw new Error("Unauthorized");
+    const paymentPage = await db.$transaction(async (tx) => {
+      const paymentPage = await tx.paymentPage.create({
+        data: {
+          title: data.title,
+          description: data.description,
+          logoUrl: data.logoUrl,
+          amount: data.amount,
+          merchantId: session.merchantId,
+          expiresAt: data.expiresAt,
+        },
+      });
 
-    const paymentPage = await db.paymentPage.create({
-      data: {
-        title: data.title,
-        description: data.description,
-        logoUrl: data.logoUrl,
-        amount: data.amount,
-        merchantId: session.merchantId,
-        expiresAt: data.expiresAt,
-      },
+      const paymentPageForm = await tx.paymentPageForm.create({
+        data: {
+          paymentPageId: paymentPage.id,
+        },
+      });
+
+      await tx.paymentPageFormField.createMany({
+        data: data.fields.map((field) => ({
+          paymentPageFormId: paymentPageForm.id,
+          type: field.type,
+          label: field.label,
+          placeholder: field.placeholder,
+          required: field.required,
+        })),
+      });
+
+      return paymentPage;
     });
 
     return {

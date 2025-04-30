@@ -26,7 +26,6 @@ export default function CreateLinkPage() {
   const { toast } = useToast();
   const router = useRouter();
   const [amount, setAmount] = useState<number | null>();
-
   const handleCreateQRPayment = async () => {
     if (!amount) return;
     const qrPayment = await createQRPayment(amount, "PERMANENT");

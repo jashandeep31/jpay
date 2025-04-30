@@ -144,7 +144,7 @@ model PaymentPage {
   merchantId      String
   IntiatedPayment IntiatedPayment[]
   merchant        Merchant          @relation(fields: [merchantId], references: [id])
-  PaymentPageForm PaymentPageForm[]
+  PaymentPageForm PaymentPageForm?
 }
 
 // 1 initiated has wrong spelling
@@ -202,7 +202,7 @@ model PaymentButton {
 
 model PaymentPageForm {
   id                   String                 @id @default(uuid())
-  paymentPageId        String
+  paymentPageId        String                 @unique
   createdAt            DateTime               @default(now())
   updatedAt            DateTime               @updatedAt
   paymentPage          PaymentPage            @relation(fields: [paymentPageId], references: [id])

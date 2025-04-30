@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -30,6 +30,9 @@ import { Textarea } from "@repo/ui/components/ui/textarea";
 
 import { useToast } from "@/app/hooks/use-toast";
 import { createPaymentPage } from "../_actions";
+import { PaymentPageFormFieldType } from "@repo/db";
+import { Label } from "@repo/ui/components/ui/label";
+import { Switch } from "@repo/ui/components/ui/switch";
 
 const formSchema = z.object({
   title: z.string().min(3, {
@@ -54,10 +57,45 @@ const formSchema = z.object({
   }),
 });
 
+export type IPaymentPageFormField = {
+  label: string;
+  placeholder: string;
+  required: boolean;
+  type: PaymentPageFormFieldType;
+};
 export default function CreatePaymentPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [fields, setFields] = useState<IPaymentPageFormField[]>([
+    {
+      label: "Name",
+      placeholder: "Enter your name",
+      required: true,
+      type: PaymentPageFormFieldType.TEXT,
+    },
+    {
+      label: "Email",
+      placeholder: "Enter your email",
+      required: true,
+      type: PaymentPageFormFieldType.EMAIL,
+    },
+  ]);
+  const updateField = (index: number, field: IPaymentPageFormField) => {
+    setFields((prev) => {
+      const newFields = [...prev];
+      newFields[index] = field;
+      return newFields;
+    });
+  };
+
+  const removeField = (index: number) => {
+    setFields((prev) => {
+      const newFields = [...prev];
+      newFields.splice(index, 1);
+      return newFields;
+    });
+  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -66,7 +104,6 @@ export default function CreatePaymentPage() {
       description: "",
       logoUrl: "",
       amount: undefined,
-      expiresAt: undefined,
     },
   });
 
@@ -74,10 +111,27 @@ export default function CreatePaymentPage() {
     setIsSubmitting(true);
 
     try {
+      const isFieldsValid = fields.every((field) => {
+        return (
+          field.label &&
+          field.placeholder &&
+          field.type &&
+          Object.values(PaymentPageFormFieldType).includes(field.type)
+        );
+      });
+      if (!isFieldsValid) {
+        toast({
+          title: "Error",
+          description: "Please fill all the extra fields correctly",
+        });
+        return;
+      }
+
       await createPaymentPage({
         ...values,
         description: values.description || "", // Ensure description is always defined
-        expiresAt: values.expiresAt || undefined,
+        expiresAt: values.expiresAt,
+        fields: fields,
       });
 
       toast({
@@ -247,15 +301,36 @@ export default function CreatePaymentPage() {
                       </FormItem>
                     )}
                   />
-
-                  <div className="flex gap-4">
-                    {/* <Button
+                  {fields.map((field, index) => (
+                    <ExtraFieldAddingCard
+                      index={index}
+                      key={field.label}
+                      parentfield={field}
+                      updateField={updateField}
+                      removeField={removeField}
+                    />
+                  ))}
+                  <div>
+                    <Button
                       type="button"
-                      variant="outline"
-                      onClick={handlePreview}
+                      variant={"outline"}
+                      size={"sm"}
+                      onClick={() =>
+                        setFields([
+                          ...fields,
+                          {
+                            label: "",
+                            placeholder: "",
+                            required: false,
+                            type: PaymentPageFormFieldType.TEXT,
+                          },
+                        ])
+                      }
                     >
-                      Preview
-                    </Button> */}
+                      Add Field
+                    </Button>
+                  </div>
+                  <div className="flex gap-4">
                     <Button type="submit" disabled={isSubmitting}>
                       {isSubmitting ? "Creating..." : "Create Payment Page"}
                     </Button>
@@ -292,3 +367,79 @@ export default function CreatePaymentPage() {
     </div>
   );
 }
+
+const ExtraFieldAddingCard = ({
+  index,
+  parentfield,
+  updateField,
+  removeField,
+}: {
+  index: number;
+  parentfield: IPaymentPageFormField | null;
+  updateField: (index: number, field: IPaymentPageFormField) => void;
+  removeField: (index: number) => void;
+}) => {
+  const [field, setField] = useState(
+    parentfield || {
+      label: "",
+      placeholder: "",
+      required: false,
+      type: PaymentPageFormFieldType.TEXT,
+    }
+  );
+
+  const [isUpdate, setIsUpdate] = useState(false);
+  useEffect(() => {
+    if (field !== parentfield) {
+      setIsUpdate(true);
+    }
+  }, [field, parentfield]);
+
+  return (
+    <div className="space-y-2 border rounded-md  p-4">
+      <div className="flex justify-end">
+        <Button
+          onClick={() => removeField(index)}
+          type="button"
+          variant={"destructive"}
+          size={"sm"}
+        >
+          x
+        </Button>
+      </div>
+      <Label>Label</Label>
+      <Input
+        placeholder="Label"
+        value={field.label}
+        onChange={(e) => {
+          setField({ ...field, label: e.target.value });
+        }}
+      />
+      <Label>Placeholder</Label>
+      <Input
+        placeholder="Placeholder"
+        value={field.placeholder}
+        onChange={(e) => {
+          setField({ ...field, placeholder: e.target.value });
+        }}
+      />
+      <Label>Required</Label>
+      <Switch
+        checked={field.required}
+        onCheckedChange={(checked) => setField({ ...field, required: checked })}
+      />
+
+      <div className="flex gap-2 justify-end">
+        <Button
+          disabled={!isUpdate}
+          type="button"
+          variant={"outline"}
+          size={"sm"}
+          onClick={() => updateField(index, field)}
+        >
+          Update
+        </Button>
+      </div>
+    </div>
+  );
+};
