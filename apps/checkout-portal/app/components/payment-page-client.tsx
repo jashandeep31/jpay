@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 
 import { Button } from "@repo/ui/components/ui/button";
@@ -11,12 +10,16 @@ import { Separator } from "@repo/ui/components/ui/separator";
 import { Input } from "@repo/ui/components/ui/input";
 import { Label } from "@repo/ui/components/ui/label";
 import { PaymentOption } from "@/app/components/payment-option";
+import * as z from "zod";
 import {
   Merchant,
   PaymentPage,
   PaymentPageFormField,
+  PaymentPageFormFieldType,
   StableCoin,
 } from "@repo/db";
+import { triggerPaymentPage } from "../pp/[id]/_actions";
+import { useRouter } from "next/navigation";
 
 export default function PaymentPageClient({
   paymentPage,
@@ -34,17 +37,70 @@ export default function PaymentPageClient({
   const router = useRouter();
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [formFields, setFormFields] = useState<
+    {
+      type: PaymentPageFormFieldType;
+      value: string;
+      required: boolean;
+    }[]
+  >(
+    paymentPage.PaymentPageForm?.PaymentPageFormField.map((field) => ({
+      type: field.type,
+      value: "",
+      required: field.required,
+    })) || []
+  );
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     if (!selectedMethod) return;
-
     setLoading(true);
+
+    // Validate all required fields
+    const validationErrors: string[] = [];
+
+    formFields.forEach((field, index) => {
+      if (field.required && !field.value.trim()) {
+        validationErrors.push(`Field ${index + 1} is required`);
+        return;
+      }
+
+      try {
+        if (field.type === PaymentPageFormFieldType.TEXT) {
+          z.string().min(1).parse(field.value);
+        } else if (field.type === PaymentPageFormFieldType.NUMBER) {
+          z.number().parse(Number(field.value));
+        } else if (field.type === PaymentPageFormFieldType.EMAIL) {
+          z.string().email().parse(field.value);
+        } else if (field.type === PaymentPageFormFieldType.PHONE) {
+          z.string().min(1).parse(field.value);
+        }
+      } catch (error) {
+        if (error instanceof z.ZodError) {
+          validationErrors.push(`Invalid value for field ${index + 1}`);
+        }
+      }
+    });
+
+    if (validationErrors.length > 0) {
+      alert(validationErrors.join("\n"));
+      setLoading(false);
+      return;
+    }
+
+    // Proceed with payment if validation passes
+    setLoading(false);
+    const result = await triggerPaymentPage(paymentPage.id, selectedMethod, []);
+    console.log(result);
+    if (result.ok) {
+      router.push(`/pl/1/${result.data.id}`);
+    }
+
     // Simulate payment processing
-    setTimeout(() => {
-      router.push(
-        `/payment/confirmation?txid=mock-transaction-id&method=${selectedMethod}`
-      );
-    }, 1500);
+    // setTimeout(() => {
+    //   router.push(
+    //     `/payment/confirmation?txid=mock-transaction-id&method=${selectedMethod}`
+    //   );
+    // }, 1500);
   };
 
   return (
@@ -140,6 +196,16 @@ export default function PaymentPageClient({
                         <Label htmlFor={field.label}>{field.label}</Label>
                         <Input
                           id={field.label}
+                          onChange={(e) => {
+                            setFormFields((prev) => {
+                              const newFields = [...prev];
+                              newFields[index] = {
+                                ...newFields[index],
+                                value: e.target.value,
+                              };
+                              return newFields;
+                            });
+                          }}
                           type={field.type}
                           placeholder={field.placeholder || ""}
                         />

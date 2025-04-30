@@ -113,10 +113,12 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
   try {
     const { transaction, subscriptionId } = subscribedTransaction;
     await new Promise((resolve) => setTimeout(resolve, 10000));
+
     const lastSignature = await getSignatureForAddress(
       transaction.associatedWalletId,
       subscriptionId
     );
+    console.log(`last signature: ${lastSignature}`);
 
     if (!lastSignature) {
       console.log("no signature found");
@@ -171,12 +173,13 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
         });
       }
     }
+    console.log(initiatedPayment.initiatedFrom);
     const dbTransaction = await db.transaction.create({
       data: {
         status: "COMPLETED",
         amount: transaction.amount,
         intiatedPaymentId: initiatedPayment.id,
-        initiatedFrom: transaction.type,
+        initiatedFrom: initiatedPayment.initiatedFrom,
         toWalletAddress: parsedTransaction.to,
         fromWalletAddress: parsedTransaction.from,
         toAtaWalletAddress: parsedTransaction.ataTo,
@@ -186,6 +189,7 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
         merchantId: initiatedPayment.merchantId,
       },
     });
+    console.log(JSON.stringify(dbTransaction));
   } catch (error) {
     console.log(error, "error");
   }
