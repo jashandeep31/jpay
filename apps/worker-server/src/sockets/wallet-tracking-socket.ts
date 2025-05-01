@@ -121,8 +121,7 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
     console.log(`last signature: ${lastSignature}`);
 
     if (!lastSignature) {
-      console.log("no signature found");
-      return;
+      throw new Error("no signature found");
     }
     const unParsedTransaction = await getTransaction(lastSignature, 4, 5000);
     const parsedTransaction = parseTransaction(unParsedTransaction);
@@ -134,10 +133,9 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
         stableCoin: true,
       },
     });
-    if (!initiatedPayment) return;
+    if (!initiatedPayment) throw new Error("initiated payment not found");
     if (initiatedPayment.stableCoin.authority !== parsedTransaction.tokenMint) {
-      console.log("token mint does not match");
-      return;
+      throw new Error("token mint does not match");
     }
     if (
       !parsedTransaction.from ||
@@ -145,13 +143,11 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
       !parsedTransaction.ataFrom ||
       !parsedTransaction.ataTo
     ) {
-      console.log("no from or to or ataFrom or ataTo");
-      return;
+      throw new Error("no from or to or ataFrom or ataTo");
     }
 
     if (parsedTransaction.amount !== transaction.amount) {
-      console.log("amounts do not match");
-      return;
+      throw new Error("amounts do not match");
     }
     if (
       initiatedPayment.initiatedFrom === "PAYMENT_LINK" &&
@@ -187,7 +183,14 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
         },
       });
     }
-
+    await db.intiatedPayment.update({
+      where: {
+        id: initiatedPayment.id,
+      },
+      data: {
+        status: "COMPLETED",
+      },
+    });
     console.log(initiatedPayment.initiatedFrom);
     const dbTransaction = await db.transaction.create({
       data: {
@@ -204,6 +207,7 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
         merchantId: initiatedPayment.merchantId,
       },
     });
+
     console.log(JSON.stringify(dbTransaction));
   } catch (error) {
     console.log(error, "error");

@@ -27,6 +27,7 @@ model Merchant {
   Transaction     Transaction[]
   Wallet          Wallet[]
   Invoice         Invoice[]
+  JPayLink        JPayLink[]
 }
 
 model User {
@@ -161,6 +162,7 @@ model IntiatedPayment {
   paymentPageId String?
   paymentLinkId String?
   invoiceId     String?
+  jPayLinkId    String?
 
   stableCoin   StableCoin    @relation(fields: [stableCoinId], references: [id])
   stableCoinId String
@@ -172,6 +174,7 @@ model IntiatedPayment {
   paymentPage  PaymentPage?  @relation(fields: [paymentPageId], references: [id])
   Transaction  Transaction[]
   invoice      Invoice?      @relation(fields: [invoiceId], references: [id])
+  jPayLink     JPayLink?     @relation(fields: [jPayLinkId], references: [id])
 }
 
 model Transaction {
@@ -271,6 +274,7 @@ enum IntiatedFrom {
   PAYMENT_PAGE
   PAYMENT_LINK
   INVOICE
+  JPAY_LINK
 }
 
 enum IntiatedPaymentStatus {
@@ -334,4 +338,16 @@ enum InvoiceStatus {
   ACTIVE
   PAID
   CANCELLED
+}
+
+model JPayLink {
+  id                  String            @id @default(uuid())
+  merchant            Merchant          @relation(fields: [merchantId], references: [id])
+  merchantId          String
+  uid                 String            @unique
+  tag                 String // used only to respresnt
+  notifyOnEachPayment Boolean           @default(false)
+  IntiatedPayment     IntiatedPayment[]
+  updatedAt           DateTime          @updatedAt
+  createdAt           DateTime          @default(now())
 }
