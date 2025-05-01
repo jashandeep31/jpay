@@ -7,9 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/ui/card";
-import { PaymentMethodCard } from "@/app/components/payment-method-card";
 import { MerchantInfo } from "@/app/components/merchant-info";
 import { db } from "@/lib/db";
+import { CoinCard } from "@/app/components/coin-card";
 
 export default async function SelectPaymentMethod({
   params,
@@ -80,13 +80,14 @@ export default async function SelectPaymentMethod({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {stableCoins.map((coin) => (
-            <PaymentMethodCard
+            <CoinCard
               key={coin.id}
               title={`${coin.name} (${coin.symbol})`}
               description={`Pay with ${coin.symbol} on Solana `}
               icon={coin.logoUrl}
-              paymentLinkId={id}
-              paymentCoinId={coin.id}
+              paymentId={id}
+              initiatedFrom="PAYMENT_LINK"
+              coinId={coin.id}
             />
           ))}
         </div>

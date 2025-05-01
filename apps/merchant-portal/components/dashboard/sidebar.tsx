@@ -56,16 +56,6 @@ const sidebarLinks = [
   },
 
   {
-    name: "Invoices & Subscriptions",
-    href: "/dashboard/invoices",
-    icon: FileText,
-  },
-  {
-    name: "Payouts",
-    href: "/dashboard/payouts",
-    icon: Landmark,
-  },
-  {
     name: "Web API",
     href: "/dashboard/web-api",
     icon: Webhook,
@@ -74,6 +64,11 @@ const sidebarLinks = [
     name: "@jpay-links",
     href: "/dashboard/jpay-links",
     icon: ArrowDownToLine,
+  },
+  {
+    name: "Bulk Payouts",
+    href: "/dashboard/bulk-payouts",
+    icon: Landmark,
   },
 ];
 
@@ -139,9 +134,7 @@ export default function DashboardSidebar() {
           <nav className="flex-1 px-2 space-y-1 bg-white">
             <TooltipProvider delayDuration={0}>
               {sidebarLinks.map((link) => {
-                const isActive =
-                  pathname === link.href ||
-                  pathname.startsWith(link.href + "/");
+                const isActive = pathname === link.href;
                 return (
                   <Tooltip key={link.name}>
                     <TooltipTrigger asChild>

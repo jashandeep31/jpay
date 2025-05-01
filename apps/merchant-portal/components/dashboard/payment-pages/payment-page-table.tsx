@@ -21,9 +21,10 @@ import { Button } from "@repo/ui/components/ui/button";
 import { Badge } from "@repo/ui/components/ui/badge";
 import { Copy, ExternalLink, MoreHorizontal, XCircle } from "lucide-react";
 import { formatCurrency, formatDate } from "@/app/lib/utils";
-import { useToast } from "@/app/hooks/use-toast";
+import { toast } from "sonner";
 import { PaymentLink, PaymentPage } from "@repo/db";
 import { cancelPaymentPage } from "@/app/dashboard/payment-pages/_actions";
+import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
 
 interface PaymentPageTableProps {
   paymentPages: PaymentPage[];
@@ -34,19 +35,16 @@ export default function PaymentPageTable({
   paymentPages,
   onStatusChange,
 }: PaymentPageTableProps) {
-  const { toast } = useToast();
-
   const handleCopyLink = (id: string) => {
-    const linkUrl = `${window.location.origin}/payment/${id}`;
+    const linkUrl = `${CHECKOUT_PORTAL_URL}/pp/${id}`;
     navigator.clipboard.writeText(linkUrl);
-    toast({
-      title: "Link copied",
+    toast.success("Link copied", {
       description: "Payment link copied to clipboard",
     });
   };
 
   const handleOpenLink = (id: string) => {
-    const linkUrl = `${window.location.origin}/payment/${id}`;
+    const linkUrl = `${CHECKOUT_PORTAL_URL}/pp/${id}`;
     window.open(linkUrl, "_blank");
   };
 
@@ -56,21 +54,18 @@ export default function PaymentPageTable({
       if (!response.ok) {
         throw new Error(response.error);
       }
-      toast({
-        title: "Payment page cancelled",
+      toast.success("Payment page cancelled", {
         description: "Payment page cancelled successfully",
       });
       onStatusChange();
     } catch (error) {
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: error instanceof Error ? error.message : "Unknown error",
-        variant: "destructive",
       });
     }
   };
 
-  const getStatusBadge = (status: PaymentLink["status"]) => {
+  const getStatusBadge = (status: PaymentPage["status"]) => {
     switch (status) {
       case "PENDING":
         return (
