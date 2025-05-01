@@ -11,7 +11,7 @@ import {
   TabsTrigger,
 } from "@repo/ui/components/ui/tabs";
 import { initialInvoiceData, type InvoiceData } from "./invoice-form";
-import { ClockFading, Download, FileText, Printer } from "lucide-react";
+import { Download, FileText, Printer } from "lucide-react";
 import { useToast } from "@/app/hooks/use-toast";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";

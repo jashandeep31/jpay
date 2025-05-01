@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useToast } from "@/app/hooks/use-toast";
+import { toast } from "sonner";
+
 import {
   Tabs,
   TabsContent,
@@ -23,8 +24,6 @@ import { PaymentLink } from "@repo/db";
 import Link from "next/link";
 
 export default function PaymentLinksPage() {
-  const { toast } = useToast();
-
   const [loading, setloading] = useState(true);
   const [paymentLinks, setPaymentLinks] = useState<PaymentLink[]>([]);
 
@@ -32,13 +31,9 @@ export default function PaymentLinksPage() {
     const payments = await getPaymentLinks();
     if (payments.ok) {
       setPaymentLinks(payments.data as unknown as PaymentLink[]);
-    } else {
-      toast({
-        title: "Error",
-        description: payments.error,
-      });
+      toast("Event has been created");
     }
-  }, [toast]);
+  }, []);
 
   useEffect(() => {
     (async () => {
