@@ -26,6 +26,7 @@ model Merchant {
   QRPayment       QRPayment[]
   Transaction     Transaction[]
   Wallet          Wallet[]
+  Invoice         Invoice[]
 }
 
 model User {
@@ -156,17 +157,21 @@ model IntiatedPayment {
   walletAddress    String                @unique
   ataWalletAddress String                @unique
   amount           Decimal               @db.Decimal(10, 2)
-  paymentPageId    String?
-  paymentLinkId    String?
-  stableCoin       StableCoin            @relation(fields: [stableCoinId], references: [id])
-  stableCoinId     String
-  createdAt        DateTime              @default(now())
-  updatedAt        DateTime              @updatedAt
-  merchantId       String
-  merchant         Merchant              @relation(fields: [merchantId], references: [id])
-  paymentLink      PaymentLink?          @relation(fields: [paymentLinkId], references: [id])
-  paymentPage      PaymentPage?          @relation(fields: [paymentPageId], references: [id])
-  Transaction      Transaction[]
+
+  paymentPageId String?
+  paymentLinkId String?
+  invoiceId     String?
+
+  stableCoin   StableCoin    @relation(fields: [stableCoinId], references: [id])
+  stableCoinId String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  merchantId   String
+  merchant     Merchant      @relation(fields: [merchantId], references: [id])
+  paymentLink  PaymentLink?  @relation(fields: [paymentLinkId], references: [id])
+  paymentPage  PaymentPage?  @relation(fields: [paymentPageId], references: [id])
+  Transaction  Transaction[]
+  invoice      Invoice?      @relation(fields: [invoiceId], references: [id])
 }
 
 model Transaction {
@@ -303,4 +308,29 @@ enum QRPaymentStatus {
   USED
   ACTIVE
   EXPIRED
+}
+
+model Invoice {
+  id         String @id @default(uuid())
+  merchantId String
+
+  invoiceNumber String
+  invoiceDate   DateTime
+  dueDate       DateTime
+  pdfLink       String?
+  status        InvoiceStatus @default(ACTIVE)
+  amount        Decimal       @db.Decimal(10, 2)
+
+  merchant  Merchant @relation(fields: [merchantId], references: [id])
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  IntiatedPayment IntiatedPayment[]
+}
+
+enum InvoiceStatus {
+  PENDING
+  ACTIVE
+  PAID
+  CANCELLED
 }
