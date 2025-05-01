@@ -173,6 +173,21 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
         });
       }
     }
+    if (
+      initiatedPayment.initiatedFrom === "INVOICE" &&
+      initiatedPayment.invoiceId
+    ) {
+      await db.invoice.update({
+        where: {
+          id: initiatedPayment.invoiceId,
+        },
+
+        data: {
+          status: "PAID",
+        },
+      });
+    }
+
     console.log(initiatedPayment.initiatedFrom);
     const dbTransaction = await db.transaction.create({
       data: {

@@ -12,8 +12,8 @@ import {
 } from "@repo/ui/components/ui/tabs";
 import { initialInvoiceData, type InvoiceData } from "./invoice-form";
 import { Download, FileText, Printer } from "lucide-react";
-import { useToast } from "@/app/hooks/use-toast";
-import html2canvas from "html2canvas";
+import { toast } from "sonner";
+import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
 import { createInvoice } from "@/app/dashboard/invoices/_actions";
 import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
@@ -23,36 +23,29 @@ export function InvoiceGenerator() {
     useState<InvoiceData>(initialInvoiceData);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const invoiceRef = useRef<HTMLDivElement>(null);
-  const { toast } = useToast();
 
   const handleDownloadPDF = async () => {
     if (!invoiceRef.current) return;
-    setIsGeneratingPDF(true);
-    toast({
-      title: "Generating PDF",
-      description: "Please wait while we prepare your invoice...",
+    const invoice = await createInvoice({
+      invoiceNumber: invoiceData.invoiceNumber,
+      invoiceDate: new Date(invoiceData.invoiceDate),
+      dueDate: new Date(invoiceData.dueDate),
+      amount: invoiceData.total,
+    });
+    if (!invoice.ok || !invoice.data) {
+      toast.error(invoice.error);
+      return;
+    }
+    setInvoiceData({
+      ...invoiceData,
+      paymentLink: `${CHECKOUT_PORTAL_URL}/invoice/${invoice.data.id}`,
     });
 
-    try {
-      const invoice = await createInvoice({
-        invoiceNumber: invoiceData.invoiceNumber,
-        invoiceDate: new Date(invoiceData.invoiceDate),
-        dueDate: new Date(invoiceData.dueDate),
-        amount: invoiceData.total,
-      });
-      if (!invoice.ok || !invoice.data) {
-        toast({
-          title: "Error Creating Invoice",
-          description: invoice.error,
-          variant: "destructive",
-        });
-        return;
-      }
-      setInvoiceData({
-        ...invoiceData,
-        paymentLink: `${CHECKOUT_PORTAL_URL}/invoice/${invoice.data.id}`,
-      });
+    setIsGeneratingPDF(true);
+    toast("Generating PDF...");
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
+    try {
       // Define margin in mm
       const margin = 15; // 15mm margin on all sides
       // Create a new jsPDF instance
@@ -67,21 +60,32 @@ export function InvoiceGenerator() {
         scale: 2,
         useCORS: true,
         logging: false,
-        backgroundColor: "#ffffff", // Force white background
-        allowTaint: true, // Allow cross-origin images
-        foreignObjectRendering: false, // Disable foreignObject rendering which can cause issues
+        backgroundColor: "#ffffff",
+        allowTaint: true,
+        foreignObjectRendering: false,
         onclone: (clonedDoc) => {
           // Convert any oklch colors to rgb before rendering
           const elements = clonedDoc.querySelectorAll("*");
           elements.forEach((element) => {
             const style = window.getComputedStyle(element);
-            if (style.backgroundColor.includes("oklch")) {
-              (element as HTMLElement).style.backgroundColor = "#ffffff";
+            const computedBgColor = style.backgroundColor;
+            const computedColor = style.color;
+
+            if (computedBgColor && computedBgColor !== "rgba(0, 0, 0, 0)") {
+              (element as HTMLElement).style.backgroundColor = computedBgColor;
             }
-            if (style.color.includes("oklch")) {
-              (element as HTMLElement).style.color = "#000000";
+            if (computedColor) {
+              (element as HTMLElement).style.color = computedColor;
             }
           });
+
+          // Ensure the payment button is visible
+          const paymentButton = clonedDoc.querySelector('a[href*="invoice"]');
+          if (paymentButton) {
+            (paymentButton as HTMLElement).style.display = "block";
+            (paymentButton as HTMLElement).style.visibility = "visible";
+            (paymentButton as HTMLElement).style.opacity = "1";
+          }
         },
       });
 
@@ -115,19 +119,10 @@ export function InvoiceGenerator() {
 
       // Save the PDF
       doc.save(`Invoice-${invoiceData.invoiceNumber}.pdf`);
-
-      toast({
-        title: "PDF Generated Successfully",
-        description: "Your invoice has been downloaded.",
-        variant: "default",
-      });
+      toast("PDF Generated Successfully");
     } catch (error) {
       console.error("Error generating PDF:", error);
-      toast({
-        title: "Error Generating PDF",
-        description: "There was a problem creating your PDF. Please try again.",
-        variant: "destructive",
-      });
+      toast.error("Error Generating PDF");
     } finally {
       setIsGeneratingPDF(false);
     }

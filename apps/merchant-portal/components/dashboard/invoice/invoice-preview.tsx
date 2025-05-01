@@ -15,6 +15,7 @@ export function InvoicePreview({ invoiceData }: InvoicePreviewProps) {
       <div className="flex justify-between items-start mb-8">
         <div>
           {invoiceData.companyLogo && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={invoiceData.companyLogo || "/placeholder.svg"}
               alt="Company Logo"
@@ -119,20 +120,33 @@ export function InvoicePreview({ invoiceData }: InvoicePreviewProps) {
       </div>
 
       {/* Payment Button */}
-      {invoiceData.paymentLink && (
-        <div className="mt-8 flex justify-center">
+      <div className="flex items-center justify-center">
+        {invoiceData.paymentLink ? (
           <a
+            className="text-blue-500"
             href={invoiceData.paymentLink}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg">
+            {invoiceData.paymentLink}
+          </a>
+        ) : null}
+      </div>
+      {/* {invoiceData.paymentLink && (
+        <div className="mt-8 flex justify-center print:block">
+          <a
+            href={invoiceData.paymentLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="print:block print:visible print:opacity-100"
+          >
+            <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg print:bg-green-600 print:text-white print:border-2 print:border-green-600">
               <CreditCard className="mr-2 h-5 w-5" />
               Pay Now with JPay
             </Button>
           </a>
         </div>
-      )}
+      )} */}
 
       {/* Notes */}
       {invoiceData.notes && (

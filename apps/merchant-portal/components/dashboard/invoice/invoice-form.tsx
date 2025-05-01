@@ -432,7 +432,11 @@ export function InvoiceForm({ invoiceData, setInvoiceData }: InvoiceFormProps) {
               </div>
             </div>
           ))}
-          <Button variant="outline" onClick={addItem} className="w-full">
+          <Button
+            variant="outline"
+            onClick={addItem}
+            className="w-full mt-4 bg-white hover:bg-gray-50 border-dashed border-2"
+          >
             <Plus className="h-4 w-4 mr-2" />
             Add Item
           </Button>
