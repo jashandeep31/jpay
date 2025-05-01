@@ -13,7 +13,6 @@ import {
 import { Input } from "@repo/ui/components/ui/input";
 import { Label } from "@repo/ui/components/ui/label";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/app/hooks/use-toast";
 import {
   Select,
   SelectValue,
@@ -21,23 +20,21 @@ import {
   SelectTrigger,
   SelectContent,
 } from "@repo/ui/components/ui/select";
+import { toast } from "sonner";
 import { createQRPayment } from "../_actions";
 export default function CreateLinkPage() {
-  const { toast } = useToast();
   const router = useRouter();
   const [amount, setAmount] = useState<number | null>();
   const handleCreateQRPayment = async () => {
     if (!amount) return;
     const qrPayment = await createQRPayment(amount, "PERMANENT");
     if (qrPayment.ok) {
-      toast({
-        title: "QR Payment Created",
+      toast.success("QR Payment Created", {
         description: "QR Payment created successfully",
       });
       router.push(`/dashboard/qr-payments/`);
     } else {
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: qrPayment.error,
       });
     }

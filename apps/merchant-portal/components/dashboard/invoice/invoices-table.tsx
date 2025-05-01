@@ -21,7 +21,7 @@ import { Button } from "@repo/ui/components/ui/button";
 import { Badge } from "@repo/ui/components/ui/badge";
 import { Copy, ExternalLink, MoreHorizontal, XCircle } from "lucide-react";
 import { formatCurrency, formatDate } from "@/app/lib/utils";
-import { useToast } from "@/app/hooks/use-toast";
+import { toast } from "sonner";
 
 import { Invoice } from "@repo/db";
 import { cancelPaymentLink } from "@/app/dashboard/payment-link/_actions";
@@ -32,13 +32,10 @@ interface InvoicesTableProps {
 }
 
 export default function InvoicesTable({ invoices }: InvoicesTableProps) {
-  const { toast } = useToast();
-
   const handleCopyLink = (id: string) => {
     const linkUrl = `${CHECKOUT_PORTAL_URL}/invoice/${id}`;
     navigator.clipboard.writeText(linkUrl);
-    toast({
-      title: "Invoice copied",
+    toast.success("Invoice copied", {
       description: "Invoice copied to clipboard",
     });
   };
@@ -52,22 +49,17 @@ export default function InvoicesTable({ invoices }: InvoicesTableProps) {
     try {
       const response = await cancelPaymentLink(id);
       if (response.ok) {
-        toast({
-          title: "Payment link cancelled",
+        toast.success("Payment link cancelled", {
           description: "The payment link has been cancelled successfully.",
         });
       } else {
-        toast({
-          title: "Error",
+        toast.error("Error", {
           description: response.error,
-          variant: "destructive",
         });
       }
     } catch (error) {
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: error instanceof Error ? error.message : "Unknown error",
-        variant: "destructive",
       });
     }
   };

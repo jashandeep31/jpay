@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useToast } from "@/app/hooks/use-toast";
+import { toast } from "sonner";
 import {
   Tabs,
   TabsContent,
@@ -23,7 +23,6 @@ import { getQRPayments } from "./_actions";
 import QRPaymentsTable from "@/components/dashboard/qr-payments/qr-payments-table";
 
 export default function QRPaymentsPage() {
-  const { toast } = useToast();
   const [loading, setloading] = useState(true);
   const [qrPayments, setQRPayments] = useState<QRPayment[]>([]);
 
@@ -35,8 +34,7 @@ export default function QRPaymentsPage() {
       }
       setQRPayments(resposne.data as unknown as QRPayment[]);
     } catch (error) {
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: error instanceof Error ? error.message : "Unknown error",
       });
 
@@ -44,7 +42,7 @@ export default function QRPaymentsPage() {
     } finally {
       setloading(false);
     }
-  }, [toast]);
+  }, []);
 
   useEffect(() => {
     callGetQRPayments();

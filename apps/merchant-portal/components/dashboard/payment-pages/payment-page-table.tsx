@@ -22,7 +22,7 @@ import { Badge } from "@repo/ui/components/ui/badge";
 import { Copy, ExternalLink, MoreHorizontal, XCircle } from "lucide-react";
 import { formatCurrency, formatDate } from "@/app/lib/utils";
 import { toast } from "sonner";
-import { PaymentLink, PaymentPage } from "@repo/db";
+import { PaymentPage } from "@repo/db";
 import { cancelPaymentPage } from "@/app/dashboard/payment-pages/_actions";
 import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useToast } from "@/app/hooks/use-toast";
+import { toast } from "sonner";
 import {
   Tabs,
   TabsContent,
@@ -23,8 +23,6 @@ import Link from "next/link";
 import { getPaymentPages } from "./_actions";
 
 export default function PaymentPagesPage() {
-  const { toast } = useToast();
-
   const [loading, setloading] = useState(true);
   const [paymentPages, setPaymentPages] = useState<PaymentPage[]>([]);
 
@@ -38,16 +36,14 @@ export default function PaymentPagesPage() {
       // Temporary fix to ensure the data is typed correctly
       setPaymentPages(pages as unknown as PaymentPage[]);
     } catch (error) {
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: error instanceof Error ? error.message : "Unknown error",
-        variant: "destructive",
       });
       setPaymentPages([]);
     } finally {
       setloading(false);
     }
-  }, [toast]);
+  }, []);
 
   useEffect(() => {
     callGetPaymentPages();

@@ -12,13 +12,13 @@ export async function getQRPayments(): Promise<
 > {
   try {
     const session = await auth();
-    if (!session?.user?.id) {
+    if (!session?.merchantId) {
       throw new Error("Unauthorized");
     }
 
     const qrPayments = await db.qRPayment.findMany({
       where: {
-        userId: session.user.id,
+        merchantId: session.merchantId,
       },
       orderBy: {
         createdAt: "desc",
@@ -47,7 +47,7 @@ export async function createQRPayment(
   ServerActionResponseToClient<Omit<QRPayment, "amount"> & { amount: number }>
 > {
   const session = await auth();
-  if (!session?.user?.id) {
+  if (!session?.merchantId) {
     throw new Error("Unauthorized");
   }
 
@@ -55,7 +55,7 @@ export async function createQRPayment(
     data: {
       amount,
       type,
-      userId: session.user.id,
+      merchantId: session.merchantId,
     },
   });
 

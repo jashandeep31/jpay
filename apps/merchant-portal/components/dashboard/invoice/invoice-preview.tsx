@@ -1,8 +1,6 @@
 import { formatCurrency, formatDate } from "@/app/lib/utils";
 import type { InvoiceData } from "./invoice-form";
 import { Separator } from "@repo/ui/components/ui/separator";
-import { Button } from "@repo/ui/components/ui/button";
-import { CreditCard } from "lucide-react";
 
 interface InvoicePreviewProps {
   invoiceData: InvoiceData;

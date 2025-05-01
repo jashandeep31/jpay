@@ -16,9 +16,8 @@ import { Label } from "@repo/ui/components/ui/label";
 import { Textarea } from "@repo/ui/components/ui/textarea";
 import { createPaymentLink } from "../_actions";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/app/hooks/use-toast";
+import { toast } from "sonner";
 export default function CreateLinkPage() {
-  const { toast } = useToast();
   const router = useRouter();
   const [amount, setAmount] = useState<number | null>();
   const [description, setDescription] = useState("");
@@ -28,8 +27,7 @@ export default function CreateLinkPage() {
   const handleCreatePaymentLink = async () => {
     if (!amount) return;
     if (expiryDate && new Date(expiryDate) < new Date()) {
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: "Expiry date must be in the future",
       });
       return;
@@ -43,8 +41,7 @@ export default function CreateLinkPage() {
     if (paymentLink.ok) {
       router.push(`/dashboard/payment-link/`);
     } else {
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: paymentLink.error,
       });
     }

@@ -21,11 +21,11 @@ import { Button } from "@repo/ui/components/ui/button";
 import { Badge } from "@repo/ui/components/ui/badge";
 import { Copy, ExternalLink, MoreHorizontal, XCircle } from "lucide-react";
 import { formatCurrency, formatDate } from "@/app/lib/utils";
-import { useToast } from "@/app/hooks/use-toast";
 
 import { PaymentLink } from "@repo/db";
 import { cancelPaymentLink } from "@/app/dashboard/payment-link/_actions";
 import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
+import { toast } from "sonner";
 
 interface PaymentLinkTableProps {
   paymentLinks: PaymentLink[];
@@ -36,13 +36,10 @@ export default function PaymentLinkTable({
   paymentLinks,
   onStatusChange,
 }: PaymentLinkTableProps) {
-  const { toast } = useToast();
-
   const handleCopyLink = (id: string) => {
     const linkUrl = `${CHECKOUT_PORTAL_URL}/pl/${id}`;
     navigator.clipboard.writeText(linkUrl);
-    toast({
-      title: "Link copied",
+    toast.success("Link copied", {
       description: "Payment link copied to clipboard",
     });
   };
@@ -56,23 +53,18 @@ export default function PaymentLinkTable({
     try {
       const response = await cancelPaymentLink(id);
       if (response.ok) {
-        toast({
-          title: "Payment link cancelled",
+        toast.success("Payment link cancelled", {
           description: "The payment link has been cancelled successfully.",
         });
         onStatusChange();
       } else {
-        toast({
-          title: "Error",
+        toast.error("Error", {
           description: response.error,
-          variant: "destructive",
         });
       }
     } catch (error) {
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: error instanceof Error ? error.message : "Unknown error",
-        variant: "destructive",
       });
     }
   };

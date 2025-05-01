@@ -20,8 +20,8 @@ import { Button } from "@repo/ui/components/ui/button";
 import { Badge } from "@repo/ui/components/ui/badge";
 import { Copy, ExternalLink, MoreHorizontal } from "lucide-react";
 import { formatCurrency, formatDate } from "@/app/lib/utils";
-import { useToast } from "@/app/hooks/use-toast";
 import { QRPayment } from "@repo/db";
+import { toast } from "sonner";
 
 interface QRPaymentsTableProps {
   qrPayments: QRPayment[];
@@ -29,13 +29,10 @@ interface QRPaymentsTableProps {
 }
 
 export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
-  const { toast } = useToast();
-
   const handleCopyLink = (id: string) => {
     const linkUrl = `${window.location.origin}/payment/${id}`;
     navigator.clipboard.writeText(linkUrl);
-    toast({
-      title: "Link copied",
+    toast.success("Link copied", {
       description: "Payment link copied to clipboard",
     });
   };

@@ -28,12 +28,11 @@ import {
 import { Input } from "@repo/ui/components/ui/input";
 import { Textarea } from "@repo/ui/components/ui/textarea";
 
-import { useToast } from "@/app/hooks/use-toast";
 import { createPaymentPage } from "../_actions";
 import { PaymentPageFormFieldType } from "@repo/db";
 import { Label } from "@repo/ui/components/ui/label";
 import { Switch } from "@repo/ui/components/ui/switch";
-
+import { toast } from "sonner";
 const formSchema = z.object({
   title: z.string().min(3, {
     message: "Title must be at least 3 characters.",
@@ -65,7 +64,6 @@ export type IPaymentPageFormField = {
 };
 export default function CreatePaymentPage() {
   const router = useRouter();
-  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fields, setFields] = useState<IPaymentPageFormField[]>([
     {
@@ -120,8 +118,7 @@ export default function CreatePaymentPage() {
         );
       });
       if (!isFieldsValid) {
-        toast({
-          title: "Error",
+        toast.error("Error", {
           description: "Please fill all the extra fields correctly",
         });
         return;
@@ -134,17 +131,14 @@ export default function CreatePaymentPage() {
         fields: fields,
       });
 
-      toast({
-        title: "Success",
+      toast.success("Success", {
         description: "Payment page created successfully",
       });
 
       router.push("/dashboard/payment-pages");
     } catch (error) {
-      toast({
-        title: "Error",
+      toast.error("Error", {
         description: error instanceof Error ? error.message : "Unknown error",
-        variant: "destructive",
       });
     } finally {
       setIsSubmitting(false);

@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/ui/card";
-import { PaymentMethodCard } from "@/app/components/payment-method-card";
 import { MerchantInfo } from "@/app/components/merchant-info";
 import { db } from "@/lib/db";
 import { CoinCard } from "@/app/components/coin-card";
