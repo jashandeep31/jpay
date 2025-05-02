@@ -31,7 +31,6 @@ export default function PaymentLinksPage() {
     const payments = await getPaymentLinks();
     if (payments.ok) {
       setPaymentLinks(payments.data as unknown as PaymentLink[]);
-      toast("Event has been created");
     }
   }, []);
 

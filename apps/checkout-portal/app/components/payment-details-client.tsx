@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Check, Copy, ExternalLink } from "lucide-react";
-
+import QRCode from "qrcode";
 import { Button } from "@repo/ui/components/ui/button";
 import {
   Card,
@@ -53,6 +53,12 @@ export function PaymentDetailsClient({
       router.push("/payment/confirmation?txid=mock-transaction-id");
     }, 2000);
   };
+  useEffect(() => {
+    const canvas = document.getElementById("qr-code") as HTMLCanvasElement;
+    if (canvas) {
+      QRCode.toCanvas(canvas, walletAddress);
+    }
+  }, [walletAddress]);
 
   return (
     <div className="container max-w-2xl px-4 py-8 md:py-12">
@@ -91,8 +97,14 @@ export function PaymentDetailsClient({
               </div>
             </div>
           </CardHeader>
-          <Separator className="mb-6" />
+          <Separator className="" />
           <CardContent>
+            <div className="flex justify-center">
+              <canvas
+                id="qr-code"
+                className="w-[100px] h-[100px] mb-4"
+              ></canvas>
+            </div>
             <div className="space-y-4">
               <div className="p-3 md:p-4 bg-muted rounded-lg">
                 <Label htmlFor="wallet-address" className="text-sm font-medium">
@@ -133,12 +145,11 @@ export function PaymentDetailsClient({
               <div className="text-sm text-muted-foreground">
                 <p className="font-medium">Important:</p>
                 <ul className="list-disc list-inside space-y-1 mt-2">
-                  <li>Send only USDT to this address</li>
                   <li>
-                    Supported networks: Ethereum (ERC20), Tron (TRC20), BSC
-                    (BEP20)
+                    Only send {initiatedPayment.stableCoin.symbol} by{" "}
+                    {initiatedPayment.stableCoin.name} to this address else the
+                    payment will fail.
                   </li>
-                  <li>Include the exact amount to ensure proper processing</li>
                 </ul>
               </div>
             </div>

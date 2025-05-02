@@ -59,7 +59,7 @@ export const updateWebhook = async () => {
       },
     });
     const arrayLiveWallets = liveWallets.map((liveWallet) => {
-      return liveWallet.id;
+      return liveWallet.walletAddress;
     });
     const res = await fetch(process.env.HELIUS_WEBHOOK_API!, {
       method: "PUT",
@@ -70,7 +70,7 @@ export const updateWebhook = async () => {
         webhookURL: "https://smee.io/jashandeep31",
         transactionTypes: ["Any"],
         accountAddresses: arrayLiveWallets,
-        webhookType: "enhanced",
+        webhookType: "enhancedDevnet",
       }),
     });
 
