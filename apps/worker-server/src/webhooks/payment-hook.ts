@@ -43,10 +43,37 @@ export const paymentHook = async (
             liveWalletWalletAddress: liveWallet.walletAddress,
           },
         });
+        await tx.liveWallet.update({
+          where: {
+            id: liveWallet.id,
+          },
+          data: {
+            balance: {
+              increment: parsedTransaction.amount,
+            },
+          },
+        });
+        await tx.wallet.upsert({
+          where: {
+            uiId: `${initiatedPayment.merchantId}-${stableCoin.id}`,
+          },
+          update: {
+            balance: {
+              increment: parsedTransaction.amount,
+            },
+          },
+          create: {
+            merchantId: initiatedPayment.merchantId,
+            stableCoinId: stableCoin.id,
+            balance: parsedTransaction.amount,
+            uiId: `${initiatedPayment.merchantId}-${stableCoin.id}`,
+          },
+        });
         await tx.transaction.create({
           data: {
             status: "COMPLETED",
             amount: parsedTransaction.amount,
+            signature: parsedTransaction.signature,
             intiatedPaymentId: initiatedPayment.id,
             initiatedFrom: "LIVE_WALLET",
             toWalletAddress: initiatedPayment.walletAddress,

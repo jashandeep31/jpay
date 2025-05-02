@@ -105,6 +105,7 @@ model Wallet {
   merchantId   String
   merchant     Merchant   @relation(fields: [merchantId], references: [id])
   stableCoin   StableCoin @relation(fields: [stableCoinId], references: [id])
+  uiId         String     @unique // combo of merchantId and stableCoinId
 }
 
 model StableCoin {
@@ -197,6 +198,7 @@ model Transaction {
   settledAt              DateTime?
   settledToWalletAddress String?
   stableCoinName         String
+  signature              String            @unique
   createdAt              DateTime          @default(now())
   updatedAt              DateTime          @updatedAt
   merchantId             String
@@ -383,7 +385,7 @@ enum APIGeneratedPaymentLinkStatus {
 }
 
 model LiveWallet {
-  id                  String            @default(uuid())
+  id                  String            @id @default(uuid())
   merchant            Merchant          @relation(fields: [merchantId], references: [id])
   merchantId          String
   walletAddress       String            @unique

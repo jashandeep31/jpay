@@ -58,7 +58,7 @@ export default function LiveWalletsTable({
         <TableHeader>
           <TableRow>
             <TableHead>Wallet Address</TableHead>
-            <TableHead>Balance</TableHead>
+            <TableHead>Total Balance</TableHead>
             <TableHead>Notify on each payment</TableHead>
             <TableHead>Active</TableHead>
             <TableHead>Created</TableHead>

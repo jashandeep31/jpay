@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Button } from "@repo/ui/components/ui/button";
+import { Button, buttonVariants } from "@repo/ui/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { cn } from "@repo/ui/lib/utils";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -120,16 +121,20 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden md:block">
-            <Button
-              className={`relative overflow-hidden group transition-all duration-300 ${
-                scrolled
-                  ? "bg-blue-500 hover:bg-blue-600 text-white"
-                  : "bg-blue-500 hover:bg-blue-600 text-white"
-              }`}
+            <Link
+              href={`/auth/login`}
+              className={cn(
+                buttonVariants(),
+                `relative overflow-hidden group transition-all duration-300 ${
+                  scrolled
+                    ? "bg-blue-500 hover:bg-blue-600 text-white"
+                    : "bg-blue-500 hover:bg-blue-600 text-white"
+                }`
+              )}
             >
               <span className="relative z-10">Get Started</span>
               <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
-            </Button>
+            </Link>
           </div>
         </div>
       </div>

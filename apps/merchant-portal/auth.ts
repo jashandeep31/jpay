@@ -48,6 +48,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             logoUrl: session.user.image || "Default image",
           },
         });
+
         session.merchantId = merchant.id;
       }
       return session;

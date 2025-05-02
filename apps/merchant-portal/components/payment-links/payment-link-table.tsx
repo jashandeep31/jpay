@@ -45,7 +45,7 @@ export default function PaymentLinkTable({
   };
 
   const handleOpenLink = (id: string) => {
-    const linkUrl = `${window.location.origin}/payment/${id}`;
+    const linkUrl = `${CHECKOUT_PORTAL_URL}/pl/${id}`;
     window.open(linkUrl, "_blank");
   };
 

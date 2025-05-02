@@ -8,6 +8,12 @@ import {
   sendToken,
 } from "./lib/utilts.js";
 import { db } from "../lib/db.js";
+import { IntiatedPayment } from "@repo/db";
+
+type tx = Omit<
+  typeof db,
+  "$connect" | "$disconnect" | "$on" | "$transaction" | "$use" | "$extends"
+>;
 
 export class WalletTrackingSocket {
   private static instance: WalletTrackingSocket;
@@ -118,13 +124,11 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
       transaction.associatedWalletId,
       subscriptionId
     );
-    console.log(`last signature: ${lastSignature}`);
+    if (!lastSignature) throw new Error("no signature found");
 
-    if (!lastSignature) {
-      throw new Error("no signature found");
-    }
-    const unParsedTransaction = await getTransaction(lastSignature, 4, 5000);
-    const parsedTransaction = parseTransaction(unParsedTransaction);
+    const parsedTransaction = parseTransaction(
+      await getTransaction(lastSignature, 4, 5000)
+    );
     const initiatedPayment = await db.intiatedPayment.findUnique({
       where: {
         id: transaction.id,
@@ -137,99 +141,142 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
     if (initiatedPayment.stableCoin.authority !== parsedTransaction.tokenMint) {
       throw new Error("token mint does not match");
     }
-    if (
-      !parsedTransaction.from ||
-      !parsedTransaction.to ||
-      !parsedTransaction.ataFrom ||
-      !parsedTransaction.ataTo
-    ) {
-      throw new Error("no from or to or ataFrom or ataTo");
-    }
+    await db.$transaction(async (tx) => {
+      if (
+        !parsedTransaction.from ||
+        !parsedTransaction.to ||
+        !parsedTransaction.ataFrom ||
+        !parsedTransaction.ataTo ||
+        parsedTransaction.amount !== transaction.amount
+      )
+        throw new Error("no from or to or ataFrom or ataTo");
 
-    if (parsedTransaction.amount !== transaction.amount) {
-      throw new Error("amounts do not match");
-    }
-    if (
-      initiatedPayment.initiatedFrom === "PAYMENT_LINK" &&
-      initiatedPayment.paymentLinkId
-    ) {
-      const pl = await db.paymentLink.findUnique({
+      await getAndUpdatePaymentLink(initiatedPayment, tx);
+      await getAndUpdateInvoice(initiatedPayment, tx);
+      await getAndUpdateQRPayment(initiatedPayment, tx);
+      await getAndUpdateIntiatedPayment(initiatedPayment, tx);
+      await tx.wallet.upsert({
         where: {
-          id: initiatedPayment.paymentLinkId,
+          uiId: `${initiatedPayment.merchantId}-${initiatedPayment.stableCoin.id}`,
+        },
+        update: {
+          balance: {
+            increment: transaction.amount,
+          },
+        },
+        create: {
+          merchantId: initiatedPayment.merchantId,
+          stableCoinId: initiatedPayment.stableCoin.id,
+          balance: transaction.amount,
+          uiId: `${initiatedPayment.merchantId}-${initiatedPayment.stableCoin.id}`,
         },
       });
-      if (pl?.oneTimeLink) {
-        await db.paymentLink.update({
-          where: {
-            id: initiatedPayment.paymentLinkId,
-          },
-          data: {
-            status: "COMPLETED",
-          },
-        });
-      }
-    }
-    if (
-      initiatedPayment.initiatedFrom === "INVOICE" &&
-      initiatedPayment.invoiceId
-    ) {
-      await db.invoice.update({
-        where: {
-          id: initiatedPayment.invoiceId,
-        },
-
+      await tx.transaction.create({
         data: {
-          status: "PAID",
+          status: "COMPLETED",
+          amount: transaction.amount,
+          intiatedPaymentId: initiatedPayment.id,
+          initiatedFrom: initiatedPayment.initiatedFrom,
+          signature: lastSignature,
+          toWalletAddress: parsedTransaction.to,
+          fromWalletAddress: parsedTransaction.from,
+          toAtaWalletAddress: parsedTransaction.ataTo,
+          fromAtaWalletAddress: parsedTransaction.ataFrom,
+          stableCoinName: `${initiatedPayment.stableCoin.name} (${initiatedPayment.stableCoin.symbol})`,
+          settled: false,
+          merchantId: initiatedPayment.merchantId,
         },
       });
-    }
-    if (
-      initiatedPayment.initiatedFrom === "QR_PAYMENT" &&
-      initiatedPayment.qRPaymentId
-    ) {
-      const qrPayment = await db.qRPayment.findUnique({
-        where: {
-          id: initiatedPayment.qRPaymentId,
-        },
-      });
-      if (qrPayment?.type === "SINGLE_USE") {
-        await db.qRPayment.update({
-          where: {
-            id: initiatedPayment.qRPaymentId,
-          },
-          data: {
-            status: "USED",
-          },
-        });
-      }
-    }
-    await db.intiatedPayment.update({
-      where: {
-        id: initiatedPayment.id,
-      },
-      data: {
-        status: "COMPLETED",
-      },
     });
-    console.log(initiatedPayment.initiatedFrom);
-    const dbTransaction = await db.transaction.create({
-      data: {
-        status: "COMPLETED",
-        amount: transaction.amount,
-        intiatedPaymentId: initiatedPayment.id,
-        initiatedFrom: initiatedPayment.initiatedFrom,
-        toWalletAddress: parsedTransaction.to,
-        fromWalletAddress: parsedTransaction.from,
-        toAtaWalletAddress: parsedTransaction.ataTo,
-        fromAtaWalletAddress: parsedTransaction.ataFrom,
-        stableCoinName: `${initiatedPayment.stableCoin.name} (${initiatedPayment.stableCoin.symbol})`,
-        settled: false,
-        merchantId: initiatedPayment.merchantId,
-      },
-    });
-
-    console.log(JSON.stringify(dbTransaction));
   } catch (error) {
     console.log(error, "error");
   }
 }
+
+const getAndUpdatePaymentLink = async (
+  initiatedPayment: IntiatedPayment,
+  tx: tx
+) => {
+  if (
+    initiatedPayment.initiatedFrom === "PAYMENT_LINK" &&
+    initiatedPayment.paymentLinkId
+  ) {
+    let pl = await tx.paymentLink.findUnique({
+      where: {
+        id: initiatedPayment.paymentLinkId,
+      },
+    });
+    if (pl?.oneTimeLink) {
+      pl = await tx.paymentLink.update({
+        where: {
+          id: initiatedPayment.paymentLinkId,
+        },
+        data: {
+          status: "COMPLETED",
+        },
+      });
+    }
+    return pl;
+  }
+};
+
+const getAndUpdateInvoice = async (
+  initiatedPayment: IntiatedPayment,
+  tx: tx
+) => {
+  if (
+    initiatedPayment.initiatedFrom === "INVOICE" &&
+    initiatedPayment.invoiceId
+  ) {
+    return await tx.invoice.update({
+      where: {
+        id: initiatedPayment.invoiceId,
+      },
+
+      data: {
+        status: "PAID",
+      },
+    });
+  }
+};
+
+const getAndUpdateQRPayment = async (
+  initiatedPayment: IntiatedPayment,
+  tx: tx
+) => {
+  if (
+    initiatedPayment.initiatedFrom === "QR_PAYMENT" &&
+    initiatedPayment.qRPaymentId
+  ) {
+    let qrPayment = await tx.qRPayment.findUnique({
+      where: {
+        id: initiatedPayment.qRPaymentId,
+      },
+    });
+    if (qrPayment?.type === "SINGLE_USE") {
+      qrPayment = await tx.qRPayment.update({
+        where: {
+          id: initiatedPayment.qRPaymentId,
+        },
+        data: {
+          status: "USED",
+        },
+      });
+    }
+    return qrPayment;
+  }
+};
+
+const getAndUpdateIntiatedPayment = async (
+  initiatedPayment: IntiatedPayment,
+  tx: tx
+) => {
+  return await tx.intiatedPayment.update({
+    where: {
+      id: initiatedPayment.id,
+    },
+    data: {
+      status: "COMPLETED",
+    },
+  });
+};
