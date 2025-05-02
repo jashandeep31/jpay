@@ -36,9 +36,9 @@ export const createLiveWallet = async (): Promise<
           balance: 0,
         },
       });
-
       return liveWallet;
     });
+    await updateWebhook();
     return {
       ok: true,
       data: { id: result.id },
@@ -48,5 +48,44 @@ export const createLiveWallet = async (): Promise<
       ok: false,
       error: e instanceof Error ? e.message : "Unknown error",
     };
+  }
+};
+
+export const updateWebhook = async () => {
+  try {
+    const liveWallets = await db.liveWallet.findMany({
+      where: {
+        isActive: true,
+      },
+    });
+    const arrayLiveWallets = liveWallets.map((liveWallet) => {
+      return liveWallet.id;
+    });
+    const res = await fetch(process.env.HELIUS_WEBHOOK_API!, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        webhookURL: "https://smee.io/jashandeep31",
+        transactionTypes: ["Any"],
+        accountAddresses: arrayLiveWallets,
+        webhookType: "enhanced",
+      }),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(
+        `Failed to update webhook: ${errorData.message || res.statusText}`
+      );
+    }
+
+    console.log("Webhook updated successfully");
+  } catch (error) {
+    console.error(
+      "Error updating webhook:",
+      error instanceof Error ? error.message : "Unknown error"
+    );
   }
 };
