@@ -183,6 +183,26 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
         },
       });
     }
+    if (
+      initiatedPayment.initiatedFrom === "QR_PAYMENT" &&
+      initiatedPayment.qRPaymentId
+    ) {
+      const qrPayment = await db.qRPayment.findUnique({
+        where: {
+          id: initiatedPayment.qRPaymentId,
+        },
+      });
+      if (qrPayment?.type === "SINGLE_USE") {
+        await db.qRPayment.update({
+          where: {
+            id: initiatedPayment.qRPaymentId,
+          },
+          data: {
+            status: "USED",
+          },
+        });
+      }
+    }
     await db.intiatedPayment.update({
       where: {
         id: initiatedPayment.id,

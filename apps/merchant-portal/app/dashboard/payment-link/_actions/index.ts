@@ -1,6 +1,6 @@
 "use server";
 import { auth } from "@/auth";
-import { db } from "@/db";
+import { db } from "@/lib/db";
 import { ServerActionResponseToClient } from "@/types/server-actions";
 import { PaymentLink } from "@repo/db";
 export async function createPaymentLink(

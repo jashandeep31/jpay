@@ -22,6 +22,7 @@ import { Copy, ExternalLink, MoreHorizontal } from "lucide-react";
 import { formatCurrency, formatDate } from "@/app/lib/utils";
 import { QRPayment } from "@repo/db";
 import { toast } from "sonner";
+import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
 
 interface QRPaymentsTableProps {
   qrPayments: QRPayment[];
@@ -30,7 +31,7 @@ interface QRPaymentsTableProps {
 
 export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
   const handleCopyLink = (id: string) => {
-    const linkUrl = `${window.location.origin}/payment/${id}`;
+    const linkUrl = `${CHECKOUT_PORTAL_URL}/qr/${id}`;
     navigator.clipboard.writeText(linkUrl);
     toast.success("Link copied", {
       description: "Payment link copied to clipboard",
@@ -38,7 +39,7 @@ export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
   };
 
   const handleOpenLink = (id: string) => {
-    const linkUrl = `${window.location.origin}/payment/${id}`;
+    const linkUrl = `${CHECKOUT_PORTAL_URL}/qr/${id}`;
     window.open(linkUrl, "_blank");
   };
 

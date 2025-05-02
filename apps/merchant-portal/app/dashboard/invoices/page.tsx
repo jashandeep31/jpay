@@ -8,7 +8,7 @@ import React from "react";
 import InvoicesTable from "@/components/dashboard/invoice/invoices-table";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import { db } from "@/db";
+import { db } from "@/lib/db";
 
 const page = async () => {
   const session = await auth();

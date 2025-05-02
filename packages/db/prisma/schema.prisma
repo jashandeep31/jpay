@@ -9,25 +9,27 @@ datasource db {
 }
 
 model Merchant {
-  id              String            @id @default(uuid())
-  name            String
-  email           String            @unique
-  phoneNumber     String?
-  address         String?
-  logoUrl         String?
-  description     String?
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  userId          String            @unique
-  IntiatedPayment IntiatedPayment[]
-  user            User              @relation(fields: [userId], references: [id])
-  PaymentLink     PaymentLink[]
-  PaymentPage     PaymentPage[]
-  QRPayment       QRPayment[]
-  Transaction     Transaction[]
-  Wallet          Wallet[]
-  Invoice         Invoice[]
-  JPayLink        JPayLink[]
+  id                      String                    @id @default(uuid())
+  name                    String
+  email                   String                    @unique
+  phoneNumber             String?
+  address                 String?
+  logoUrl                 String?
+  description             String?
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
+  userId                  String                    @unique
+  IntiatedPayment         IntiatedPayment[]
+  user                    User                      @relation(fields: [userId], references: [id])
+  PaymentLink             PaymentLink[]
+  PaymentPage             PaymentPage[]
+  QRPayment               QRPayment[]
+  Transaction             Transaction[]
+  Wallet                  Wallet[]
+  Invoice                 Invoice[]
+  JPayLink                JPayLink[]
+  APIGeneratedPaymentLink APIGeneratedPaymentLink[]
+  LiveWallet              LiveWallet[]
 }
 
 model User {
@@ -110,7 +112,7 @@ model StableCoin {
   name            String
   symbol          String            @unique
   logoUrl         String?
-  authority       String
+  authority       String            @unique
   description     String?
   decimalCount    Int
   createdAt       DateTime          @default(now())
@@ -155,14 +157,16 @@ model IntiatedPayment {
   initiatedFrom    IntiatedFrom
   status           IntiatedPaymentStatus @default(PENDING)
   index            Int
-  walletAddress    String                @unique
-  ataWalletAddress String                @unique
+  walletAddress    String
+  ataWalletAddress String
   amount           Decimal               @db.Decimal(10, 2)
 
-  paymentPageId String?
-  paymentLinkId String?
-  invoiceId     String?
-  jPayLinkId    String?
+  paymentPageId           String?
+  paymentLinkId           String?
+  invoiceId               String?
+  jPayLinkId              String?
+  qRPaymentId             String?
+  liveWalletWalletAddress String?
 
   stableCoin   StableCoin    @relation(fields: [stableCoinId], references: [id])
   stableCoinId String
@@ -175,6 +179,8 @@ model IntiatedPayment {
   Transaction  Transaction[]
   invoice      Invoice?      @relation(fields: [invoiceId], references: [id])
   jPayLink     JPayLink?     @relation(fields: [jPayLinkId], references: [id])
+  qrPayment    QRPayment?    @relation(fields: [qRPaymentId], references: [id])
+  liveWallet   LiveWallet?   @relation(fields: [liveWalletWalletAddress], references: [walletAddress])
 }
 
 model Transaction {
@@ -183,9 +189,9 @@ model Transaction {
   amount                 Decimal           @db.Decimal(10, 2)
   intiatedPaymentId      String
   initiatedFrom          IntiatedFrom
-  toWalletAddress        String            @unique
+  toWalletAddress        String
   fromWalletAddress      String
-  toAtaWalletAddress     String            @unique
+  toAtaWalletAddress     String
   fromAtaWalletAddress   String
   settled                Boolean           @default(false)
   settledAt              DateTime?
@@ -241,16 +247,17 @@ model PaymentPageFormFieldValue {
 }
 
 model QRPayment {
-  id         String          @id @default(uuid())
-  amount     Decimal         @db.Decimal(10, 2)
-  status     QRPaymentStatus @default(ACTIVE)
-  type       QRPaymentType   @default(SINGLE_USE)
-  expiresAt  DateTime?
-  expired    Boolean         @default(false)
-  createdAt  DateTime        @default(now())
-  updatedAt  DateTime        @updatedAt
-  merchantId String
-  merchant   Merchant        @relation(fields: [merchantId], references: [id])
+  id              String            @id @default(uuid())
+  amount          Decimal           @db.Decimal(10, 2)
+  status          QRPaymentStatus   @default(ACTIVE)
+  type            QRPaymentType     @default(SINGLE_USE)
+  expiresAt       DateTime?
+  expired         Boolean           @default(false)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  merchantId      String
+  merchant        Merchant          @relation(fields: [merchantId], references: [id])
+  IntiatedPayment IntiatedPayment[]
 }
 
 enum PaymentLinkStatus {
@@ -275,6 +282,8 @@ enum IntiatedFrom {
   PAYMENT_LINK
   INVOICE
   JPAY_LINK
+  QR_PAYMENT
+  LIVE_WALLET
 }
 
 enum IntiatedPaymentStatus {
@@ -350,4 +359,39 @@ model JPayLink {
   IntiatedPayment     IntiatedPayment[]
   updatedAt           DateTime          @updatedAt
   createdAt           DateTime          @default(now())
+}
+
+model APIGeneratedPaymentLink {
+  id          String                        @id @default(uuid())
+  merchantId  String
+  amount      Decimal                       @db.Decimal(10, 2)
+  status      APIGeneratedPaymentLinkStatus @default(PROCESSING)
+  paidAt      DateTime?
+  redirectUrl String
+  callbackUrl String // after the paymetn is completed we will call this url
+  updatedAt   DateTime                      @updatedAt
+  validUntil  DateTime?
+  createdAt   DateTime                      @default(now())
+
+  merchant Merchant @relation(fields: [merchantId], references: [id])
+}
+
+enum APIGeneratedPaymentLinkStatus {
+  PROCESSING
+  PAID
+  FAILED
+}
+
+model LiveWallet {
+  id                  String            @default(uuid())
+  merchant            Merchant          @relation(fields: [merchantId], references: [id])
+  merchantId          String
+  walletAddress       String            @unique
+  balance             Decimal           @default(0) @db.Decimal(10, 2)
+  index               Int               @unique
+  notifyOnEachPayment Boolean           @default(false)
+  isActive            Boolean           @default(true)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  IntiatedPayment     IntiatedPayment[]
 }

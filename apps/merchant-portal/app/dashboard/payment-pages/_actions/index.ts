@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/auth";
-import { db } from "@/db";
+import { db } from "@/lib/db";
 import { PaymentPage } from "@repo/db";
 import { ServerActionResponseToClient } from "@/types/server-actions";
 import { IPaymentPageFormField } from "../create/page";

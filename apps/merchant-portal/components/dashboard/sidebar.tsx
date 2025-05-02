@@ -17,6 +17,7 @@ import {
   FileKey2,
   Webhook,
   Landmark,
+  WalletMinimal,
 } from "lucide-react";
 import { useSidebar } from "@/context/sidebar-context";
 import {
@@ -48,7 +49,16 @@ const sidebarLinks = [
     href: "/dashboard/invoices",
     icon: FileKey2,
   },
-
+  {
+    name: "@jpay-links",
+    href: "/dashboard/jpay-links",
+    icon: ArrowDownToLine,
+  },
+  {
+    name: "Live Wallets",
+    href: "/dashboard/live-wallets",
+    icon: WalletMinimal,
+  },
   {
     name: "QR Payments",
     href: "/dashboard/qr-payments",
@@ -60,11 +70,7 @@ const sidebarLinks = [
     href: "/dashboard/web-api",
     icon: Webhook,
   },
-  {
-    name: "@jpay-links",
-    href: "/dashboard/jpay-links",
-    icon: ArrowDownToLine,
-  },
+
   {
     name: "Bulk Payouts",
     href: "/dashboard/bulk-payouts",

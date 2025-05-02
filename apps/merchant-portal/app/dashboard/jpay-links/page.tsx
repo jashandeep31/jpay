@@ -6,7 +6,7 @@ import { CardTitle } from "@repo/ui/components/ui/card";
 import Link from "next/link";
 import React from "react";
 import { auth } from "@/auth";
-import { db } from "@/db";
+import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import JPayLinksTable from "@/components/dashboard/jpay-links/jpay-links-table";
 const page = async () => {

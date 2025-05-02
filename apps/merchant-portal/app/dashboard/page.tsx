@@ -17,22 +17,27 @@ import {
   LinkIcon,
 } from "lucide-react";
 import RecentPayments from "@/components/dashboard/recent-payments";
-import { db } from "../../db";
+import { db } from "../../lib/db";
 import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
-async function getTransactions() {
+async function getTransactions(merchantId: string) {
   const transactions = await db.transaction.findMany({
     orderBy: {
       createdAt: "desc",
+    },
+    where: {
+      merchantId,
     },
   });
   return transactions;
 }
 export default async function DashboardPage() {
-  const [session, transactions] = await Promise.all([
-    auth(),
-    getTransactions(),
-  ]);
+  const session = await auth();
+  if (!session?.merchantId) {
+    redirect("/auth/login");
+  }
+  const transactions = await getTransactions(session.merchantId);
   return (
     <div className="flex flex-col gap-5 pt-1">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -40,7 +45,7 @@ export default async function DashboardPage() {
           Welcome back, {session?.user?.name || "User"}
         </h2>
         <div className="flex items-center gap-2">
-          <Link href="/dashboard/create-link">
+          <Link href="/dashboard/payment-link/create">
             <Button className="bg-blue-500 hover:bg-blue-600 w-full sm:w-auto">
               <LinkIcon className="mr-2 h-4 w-4" />
               Create Payment Link

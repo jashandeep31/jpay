@@ -75,6 +75,8 @@ export async function triggerInitiatedPayment(
           initiatedFrom === "PAYMENT_PAGE" ? (paymentId as string) : undefined,
         invoiceId:
           initiatedFrom === "INVOICE" ? (paymentId as string) : undefined,
+        qRPaymentId:
+          initiatedFrom === "QR_PAYMENT" ? (paymentId as string) : undefined,
       },
     });
     await PaymentWalletQueue.add("initiated-payment-queue", {
@@ -119,6 +121,13 @@ const getPaymentDetails = async (id: string, initiatedFrom: IntiatedFrom) => {
   }
   if (initiatedFrom === "INVOICE") {
     return await db.invoice.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+  if (initiatedFrom === "QR_PAYMENT") {
+    return await db.qRPayment.findUnique({
       where: {
         id,
       },

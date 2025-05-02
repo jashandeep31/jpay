@@ -1,0 +1,52 @@
+"use server";
+
+import { auth } from "@/auth";
+import { db } from "@/lib/db";
+import { ServerActionResponseToClient } from "@/types/server-actions";
+import { Keypair } from "@solana/web3.js";
+import { derivePath } from "ed25519-hd-key";
+
+const Phrase: string = process.env.ONETIME_PAYMENT_RECEVING_WALLET_PHRASE || "";
+
+export const createLiveWallet = async (): Promise<
+  ServerActionResponseToClient<{ id: string }>
+> => {
+  try {
+    const session = await auth();
+    if (!session?.merchantId) {
+      throw new Error("Unauthorized");
+    }
+    const merchantId = session.merchantId;
+
+    const result = await db.$transaction(async (tx) => {
+      const [{ nextidx }] = await tx.$queryRaw<
+        Array<{ nextidx: bigint }>
+      >`SELECT nextval('wallet_index_seq') AS nextidx`;
+
+      const newIndex = Number(nextidx);
+      const path = `m/44'/501'/${newIndex}'/0'`;
+      const derivedSeed = derivePath(path, Phrase);
+      const keypair = Keypair.fromSeed(derivedSeed.key);
+
+      const liveWallet = await tx.liveWallet.create({
+        data: {
+          merchantId,
+          walletAddress: keypair.publicKey.toBase58(),
+          index: newIndex,
+          balance: 0,
+        },
+      });
+
+      return liveWallet;
+    });
+    return {
+      ok: true,
+      data: { id: result.id },
+    };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "Unknown error",
+    };
+  }
+};
