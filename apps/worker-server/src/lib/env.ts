@@ -8,6 +8,8 @@ export const env = {
   // Add other environment variables here
   SOLANA_RPC_URL: process.env.SOLANA_RPC_URL!,
   SYNDICA_RPC_API_URL: process.env.SYNDICA_RPC_API_URL!,
+  WHATSAPP_AUTH_TOKEN: process.env.WHATSAPP_AUTH_TOKEN!,
+  WHATSAPP_PHONE_ID: process.env.WHATSAPP_PHONE_ID!,
 } as const;
 
 type EnvType = typeof env;

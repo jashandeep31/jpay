@@ -1,11 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { db } from "../lib/db.js";
 import { parseTransaction } from "../lib/parse-transaction.js";
-const TOKEN_MINTS: Record<string, string> = {
-  Es9vMFrzaCER3DPEDv3J1YQZ4DdNV57WiEbyxz2gJdnL: "USDT", // mainnet USDT
-  Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr: "USDC", // mainnet USDC
-  // Add more as needed
-};
+import { WhatsappAlerts } from "../whatsapp-alerts/index.js";
+
+const whatsappAlerts = new WhatsappAlerts();
 
 export const paymentHook = async (
   req: Request,
@@ -85,6 +83,15 @@ export const paymentHook = async (
           },
         });
       });
+      if (liveWallet.notifyOnEachPayment) {
+        await whatsappAlerts.sendLiveWalletPaymentReceivedAlert({
+          amount: parsedTransaction.amount,
+          fromWalletAddress: parsedTransaction.from,
+          toWalletAddress: parsedTransaction.to,
+          coinName: `${stableCoin.name} (${stableCoin.symbol})`,
+          alertNumber: 919914296525,
+        });
+      }
     }
     res.status(200).json({
       message: "Payment received",

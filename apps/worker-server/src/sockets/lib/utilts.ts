@@ -8,6 +8,7 @@ import {
   LAMPORTS_PER_SOL,
   sendAndConfirmTransaction,
 } from "@solana/web3.js";
+// @ts-ignore
 import bs58 from "bs58";
 import {
   getAssociatedTokenAddress,
