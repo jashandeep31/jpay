@@ -13,6 +13,8 @@ import {
 } from "@repo/ui/components/ui/card";
 import { ImageIcon, Loader2, UploadIcon, XIcon } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
+import { generateProfileLogoUploadUrl } from "@/app/dashboard/settings/_actions";
 
 interface LogoUploadCardProps {
   currentLogo: string;
@@ -25,46 +27,74 @@ export function LogoUploadCard({
 }: LogoUploadCardProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [rawFile, setRawFile] = useState<File | null>(null);
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    setRawFile(file);
 
     // Validate file type
-    if (!file.type.startsWith("image/")) {
-      alert("Please upload an image file (JPEG, PNG, etc.).");
+    if (!file.type.match(/^image\/(jpeg|png)$/)) {
+      toast.error("Please upload a JPEG or PNG image file.");
       return;
     }
 
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      alert("Please upload an image smaller than 5MB.");
+      toast.error("Please upload an image smaller than 5MB.");
       return;
     }
 
     // Create a preview URL
     const url = URL.createObjectURL(file);
     setPreviewUrl(url);
+    setSelectedFile(file);
   };
 
   const handleUpload = async () => {
-    if (!previewUrl) return;
-
+    if (!rawFile || !previewUrl) return;
     setIsUploading(true);
-
+    console.log(rawFile);
     try {
-      // Simulate upload delay
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Get presigned URL for direct upload
+      const contentType = rawFile.type as "image/jpeg" | "image/png";
+      const presignedUrl = await generateProfileLogoUploadUrl(
+        rawFile.name,
+        contentType
+      );
+      if (!presignedUrl) {
+        throw new Error("Failed to generate upload URL");
+      }
 
-      // In a real app, you would upload the file to a server/storage
-      // and get back a URL to the uploaded file
+      // Upload directly to S3 using the presigned URL
+      console.log(presignedUrl);
+      const response = await fetch(presignedUrl, {
+        method: "PUT",
+        headers: {
+          "Content-Type": contentType,
+        },
+        body: rawFile,
+      });
 
-      // For this demo, we'll just use the preview URL
-      onLogoUpdate(previewUrl);
+      if (!response.ok) {
+        throw new Error("Failed to upload to S3");
+      }
+
+      // Extract the URL from the presigned URL
+
+      // Update the logo URL
+      toast.success("Logo uploaded successfully");
     } catch (error) {
       console.error("Error uploading logo:", error);
+      toast.error("Failed to upload logo. Please try again.");
     } finally {
       setIsUploading(false);
+      setSelectedFile(null);
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+        setPreviewUrl(null);
+      }
     }
   };
 
@@ -73,6 +103,7 @@ export function LogoUploadCard({
       URL.revokeObjectURL(previewUrl);
       setPreviewUrl(null);
     }
+    setSelectedFile(null);
   };
 
   return (
@@ -106,6 +137,7 @@ export function LogoUploadCard({
               <p>Upload a logo for your merchant profile.</p>
               <p>Recommended: Square image, at least 200x200 pixels.</p>
               <p>Max file size: 5MB</p>
+              <p>Supported formats: JPEG, PNG</p>
             </div>
 
             {!previewUrl ? (
@@ -116,7 +148,7 @@ export function LogoUploadCard({
                     Upload Logo
                     <input
                       type="file"
-                      accept="image/*"
+                      accept="image/jpeg,image/png"
                       className="hidden"
                       onChange={handleFileChange}
                     />
