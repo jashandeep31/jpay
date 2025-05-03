@@ -8,14 +8,7 @@ import {
   CardTitle,
 } from "@repo/ui/components/ui/card";
 
-import {
-  ArrowUpRight,
-  ArrowDownRight,
-  TrendingUp,
-  Clock,
-  DollarSign,
-  LinkIcon,
-} from "lucide-react";
+import { LinkIcon } from "lucide-react";
 import RecentPayments from "@/components/dashboard/recent-payments";
 import { db } from "../../lib/db";
 import { auth } from "@/auth";
@@ -37,6 +30,14 @@ export default async function DashboardPage() {
   if (!session?.merchantId) {
     redirect("/auth/login");
   }
+  const wallets = await db.wallet.findMany({
+    where: {
+      merchantId: session.merchantId,
+    },
+    include: {
+      stableCoin: true,
+    },
+  });
   const transactions = await getTransactions(session.merchantId);
   return (
     <div className="flex flex-col gap-5 pt-1">
@@ -55,70 +56,28 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Volume</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">$45,231.89</div>
-            <p className="text-xs text-muted-foreground">
-              <span className="text-green-500 inline-flex items-center">
-                <ArrowUpRight className="mr-1 h-3 w-3" />
-                +20.1%
-              </span>{" "}
-              from last month
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending Links</CardTitle>
-            <LinkIcon className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">12</div>
-            <p className="text-xs text-muted-foreground">
-              <span className="text-red-500 inline-flex items-center">
-                <ArrowDownRight className="mr-1 h-3 w-3" />
-                -4
-              </span>{" "}
-              from last week
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Active Subscriptions
-            </CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">24</div>
-            <p className="text-xs text-muted-foreground">
-              <span className="text-green-500 inline-flex items-center">
-                <ArrowUpRight className="mr-1 h-3 w-3" />
-                +3
-              </span>{" "}
-              new this month
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Pending Payouts
-            </CardTitle>
-            <Clock className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">$6,450.00</div>
-            <p className="text-xs text-muted-foreground">
-              Scheduled for tomorrow
-            </p>
-          </CardContent>
-        </Card>
+        {wallets.map((wallet) => (
+          <Card key={wallet.id}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                <div className="flex items-center gap-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={wallet.stableCoin.logoUrl || ""}
+                    alt={wallet.stableCoin.name}
+                    className="w-4 h-4 rounded-full"
+                  />
+                  {wallet.stableCoin.name} ({wallet.stableCoin.symbol})
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                Balance: ${wallet.balance.toLocaleString()}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
       <div className="mt-4">

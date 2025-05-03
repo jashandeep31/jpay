@@ -30,6 +30,8 @@ model Merchant {
   JPayLink                JPayLink[]
   APIGeneratedPaymentLink APIGeneratedPaymentLink[]
   LiveWallet              LiveWallet[]
+
+  MerchantApiKey MerchantApiKey[]
 }
 
 model User {
@@ -363,6 +365,32 @@ model JPayLink {
   createdAt           DateTime          @default(now())
 }
 
+model LiveWallet {
+  id                  String            @id @default(uuid())
+  merchant            Merchant          @relation(fields: [merchantId], references: [id])
+  merchantId          String
+  walletAddress       String            @unique
+  balance             Decimal           @default(0) @db.Decimal(10, 2)
+  index               Int               @unique
+  notifyOnEachPayment Boolean           @default(false)
+  isActive            Boolean           @default(true)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  IntiatedPayment     IntiatedPayment[]
+}
+
+model MerchantApiKey {
+  id         String @id @default(uuid())
+  tag        String
+  privateKey String @unique // store with the hashed value
+  publicKey  String @unique
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  merchant   Merchant @relation(fields: [merchantId], references: [id])
+  merchantId String
+}
+
 model APIGeneratedPaymentLink {
   id          String                        @id @default(uuid())
   merchantId  String
@@ -382,18 +410,4 @@ enum APIGeneratedPaymentLinkStatus {
   PROCESSING
   PAID
   FAILED
-}
-
-model LiveWallet {
-  id                  String            @id @default(uuid())
-  merchant            Merchant          @relation(fields: [merchantId], references: [id])
-  merchantId          String
-  walletAddress       String            @unique
-  balance             Decimal           @default(0) @db.Decimal(10, 2)
-  index               Int               @unique
-  notifyOnEachPayment Boolean           @default(false)
-  isActive            Boolean           @default(true)
-  createdAt           DateTime          @default(now())
-  updatedAt           DateTime          @updatedAt
-  IntiatedPayment     IntiatedPayment[]
 }
