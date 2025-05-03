@@ -1,0 +1,79 @@
+"use client";
+
+import { buttonVariants } from "@repo/ui/components/ui/button";
+import { Card, CardContent } from "@repo/ui/components/ui/card";
+import { CheckCircle2, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import type { BusinessProfile } from "./profile-completion-flow";
+import Link from "next/link";
+
+interface ProfileCompletedViewProps {
+  profile: BusinessProfile;
+}
+
+export function ProfileCompletedView({ profile }: ProfileCompletedViewProps) {
+  return (
+    <div className="flex flex-col items-center text-center max-w-md mx-auto">
+      <div className="mb-8">
+        <CheckCircle2 className="h-16 w-16 text-green-500 mx-auto mb-4" />
+        <h2 className="text-2xl font-bold mb-2">Profile Completed!</h2>
+        <p className="text-muted-foreground">
+          Thank you for completing your profile. You&apos;re all set to start
+          using our platform.
+        </p>
+      </div>
+
+      <Card className="w-full mb-8">
+        <CardContent className="pt-6">
+          <div className="flex flex-col items-center">
+            {profile.logoUrl ? (
+              <div className="relative w-24 h-24 mb-4 rounded-full overflow-hidden border">
+                <Image
+                  src={profile.logoUrl || "/placeholder.svg"}
+                  alt={`${profile.businessName} logo`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ) : (
+              <div className="w-24 h-24 mb-4 rounded-full bg-primary/10 flex items-center justify-center">
+                <span className="text-xl font-bold text-primary">
+                  {profile.businessName.charAt(0)}
+                </span>
+              </div>
+            )}
+
+            <h3 className="text-xl font-bold">{profile.businessName}</h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              {profile.industry}
+            </p>
+
+            <div className="w-full space-y-3 text-left">
+              <div>
+                <div className="text-sm font-medium">Phone Number</div>
+                <div>{profile.phoneNumber}</div>
+              </div>
+
+              <div>
+                <div className="text-sm font-medium">Address</div>
+                <div>{profile.businessAddress}</div>
+              </div>
+
+              {profile.description && (
+                <div>
+                  <div className="text-sm font-medium">Description</div>
+                  <div className="text-sm">{profile.description}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Link href="/dashboard" className={buttonVariants()}>
+        Go to Dashboard
+        <ArrowRight className="ml-2 h-4 w-4" />
+      </Link>
+    </div>
+  );
+}
