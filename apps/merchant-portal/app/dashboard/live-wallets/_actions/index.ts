@@ -89,3 +89,35 @@ export const updateWebhook = async () => {
     );
   }
 };
+
+export const updatePaymentNotifications = async (
+  walletId: string,
+  notifyOnEachPayment: boolean
+): Promise<ServerActionResponseToClient<{ success: boolean }>> => {
+  try {
+    const session = await auth();
+    if (!session?.merchantId) {
+      throw new Error("Unauthorized");
+    }
+
+    await db.liveWallet.update({
+      where: {
+        id: walletId,
+        merchantId: session.merchantId,
+      },
+      data: {
+        notifyOnEachPayment,
+      },
+    });
+
+    return {
+      ok: true,
+      data: { success: true },
+    };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "Unknown error",
+    };
+  }
+};

@@ -18,20 +18,24 @@ import {
 } from "@repo/ui/components/ui/dropdown-menu";
 import { Button } from "@repo/ui/components/ui/button";
 
-import { Copy, ExternalLink, MoreHorizontal } from "lucide-react";
+import { Bell, Copy, ExternalLink, MoreHorizontal } from "lucide-react";
 import { formatDate } from "@/app/lib/utils";
 import { toast } from "sonner";
 import { LiveWallet } from "@repo/db";
 import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
 import { Badge } from "@repo/ui/components/ui/badge";
+import { updatePaymentNotifications } from "@/app/dashboard/live-wallets/_actions";
+import { useState } from "react";
 
 interface LiveWalletsTableProps {
   liveWallets: (Omit<LiveWallet, "balance"> & { balance: number })[];
 }
 
 export default function LiveWalletsTable({
-  liveWallets,
+  liveWallets: initialLiveWallets,
 }: LiveWalletsTableProps) {
+  const [liveWallets, setLiveWallets] = useState(initialLiveWallets);
+
   const handleCopyLink = (uid: string) => {
     const linkUrl = `${CHECKOUT_PORTAL_URL}/@${uid}`;
     navigator.clipboard.writeText(linkUrl);
@@ -43,6 +47,40 @@ export default function LiveWalletsTable({
   const handleOpenLink = (uid: string) => {
     const linkUrl = `${CHECKOUT_PORTAL_URL}/@${uid}`;
     window.open(linkUrl, "_blank");
+  };
+
+  const handleNotificationToggle = async (
+    walletId: string,
+    notifyOnEachPayment: boolean
+  ) => {
+    const toastId = toast.loading("Updating notifications...");
+
+    try {
+      const res = await updatePaymentNotifications(
+        walletId,
+        !notifyOnEachPayment
+      );
+      if (res.ok) {
+        setLiveWallets(
+          liveWallets.map((wallet) => {
+            if (wallet.id === walletId) {
+              return {
+                ...wallet,
+                notifyOnEachPayment: !notifyOnEachPayment,
+              };
+            }
+            return wallet;
+          })
+        );
+        toast.success("Notifications updated", {
+          id: toastId,
+        });
+      }
+    } catch {
+      toast.error("Failed to update notifications", {
+        id: toastId,
+      });
+    }
   };
 
   if (liveWallets.length === 0) {
@@ -96,6 +134,19 @@ export default function LiveWalletsTable({
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={() =>
+                        handleNotificationToggle(
+                          liveWallet.id,
+                          liveWallet.notifyOnEachPayment
+                        )
+                      }
+                    >
+                      <Bell className="mr-2 h-4 w-4" />
+                      {liveWallet.notifyOnEachPayment
+                        ? "Disable Notifications"
+                        : "Enable Notifications"}
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => handleCopyLink(liveWallet.walletAddress)}
                     >

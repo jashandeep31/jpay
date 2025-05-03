@@ -10,13 +10,15 @@ export const env = {
   SYNDICA_RPC_API_URL: process.env.SYNDICA_RPC_API_URL!,
   WHATSAPP_AUTH_TOKEN: process.env.WHATSAPP_AUTH_TOKEN!,
   WHATSAPP_PHONE_ID: process.env.WHATSAPP_PHONE_ID!,
+  SEND_WHATSAPP_MESSAGES: process.env.SEND_WHATSAPP_MESSAGES
+    ? process.env.SEND_WHATSAPP_MESSAGES === "true"
+    : false,
 } as const;
-
 type EnvType = typeof env;
 type EnvKey = keyof EnvType;
 
 for (const key of Object.keys(env) as EnvKey[]) {
-  if (!env[key]) {
+  if (env[key] === undefined || env[key] === null) {
     throw new Error(`${key} is not set`);
   }
 }

@@ -54,6 +54,7 @@ export class WhatsappAlerts {
 }
 
 const sendWhatsappAlert = async (data: unknown) => {
+  if (!env.SEND_WHATSAPP_MESSAGES) return;
   try {
     console.log("Sending WhatsApp alert");
     const res = await axios.post(
