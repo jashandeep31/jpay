@@ -1,6 +1,7 @@
 import express from "express";
 import { env } from "./lib/env.js";
 import webhookRoutes from "./routes/webhook-routes.js";
+import pgRoutes from "./routes/pg-routes.js";
 // import { testPaymentReceivingSocket } from "./sockets/payment-receving-socket";
 import "./queues/consumer/payment-wallet-consumer.js";
 import cors from "cors";
@@ -10,9 +11,10 @@ app.use(express.json());
 app.use(cors());
 
 app.all("/", (req, res) => {
-  res.send("Hello World");
+  res.send(`Hello World , ${Math.random()}`);
 });
 app.use("/webhook", webhookRoutes);
+app.use("/api/v1/pg", pgRoutes);
 // testPaymentReceivingSocket();
 
 // Initialize the payment wallet worker

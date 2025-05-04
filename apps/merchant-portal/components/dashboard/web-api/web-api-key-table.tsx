@@ -17,8 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@repo/ui/components/ui/dropdown-menu";
 import { Button } from "@repo/ui/components/ui/button";
-
-import { MoreHorizontal, Trash } from "lucide-react";
+import { MoreHorizontal, Trash, Copy } from "lucide-react";
 import { formatDate } from "@/app/lib/utils";
 // import { toast } from "sonner";
 // import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
@@ -33,13 +32,13 @@ interface WebApiKeyTableProps {
 
 export default function WebApiKeyTable({ webApiKeys }: WebApiKeyTableProps) {
   const router = useRouter();
-  //   const handleCopyLink = (uid: string) => {
-  //     const linkUrl = `${CHECKOUT_PORTAL_URL}/@${uid}`;
-  //     navigator.clipboard.writeText(linkUrl);
-  //     toast.success("JPay Link copied", {
-  //       description: "JPay Link copied to clipboard",
-  //     });
-  //   };
+  const handleCopyLink = (publicKey: string) => {
+    const linkUrl = `${publicKey}`;
+    navigator.clipboard.writeText(linkUrl);
+    toast.success("API Key copied", {
+      description: "API Key copied to clipboard",
+    });
+  };
 
   //   const handleOpenLink = (uid: string) => {
   //     const linkUrl = `${CHECKOUT_PORTAL_URL}/@${uid}`;
@@ -103,6 +102,13 @@ export default function WebApiKeyTable({ webApiKeys }: WebApiKeyTableProps) {
                       <Trash className="mr-2 h-4 w-4" />
                       Delete
                     </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => handleCopyLink(webApiKey.publicKey)}
+                    >
+                      <Copy className="mr-2 h-4 w-4" />
+                      Copy
+                    </DropdownMenuItem>
+
                     {/*  <DropdownMenuItem
                       onClick={() => handleOpenLink(jpayLink.uid)}
                     >

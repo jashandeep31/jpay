@@ -399,6 +399,7 @@ model APIGeneratedPaymentLink {
   paidAt      DateTime?
   redirectUrl String
   callbackUrl String // after the paymetn is completed we will call this url
+  paymentUID  String                        @unique
   updatedAt   DateTime                      @updatedAt
   validUntil  DateTime?
   createdAt   DateTime                      @default(now())
