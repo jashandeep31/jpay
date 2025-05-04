@@ -95,6 +95,7 @@ export class WalletTrackingSocket {
         (sub) => sub.subscriptionId === msg.params.subscription
       );
 
+      console.log(`accout nios`);
       if (subscribedTransaction) {
         if (!subscribedTransaction.isReceivedAction) {
           processWalletTrackedTransactions(subscribedTransaction);

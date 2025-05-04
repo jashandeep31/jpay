@@ -92,7 +92,7 @@ export default function PaymentPageClient({
     const result = await triggerPaymentPage(paymentPage.id, selectedMethod, []);
     console.log(result);
     if (result.ok) {
-      router.push(`/pl/1/${result.data.id}`);
+      router.push(`/payment/${result.data.id}`);
     }
 
     // Simulate payment processing
