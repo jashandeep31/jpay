@@ -22,7 +22,6 @@ export class WalletTrackingSocket {
     transaction: InitiatedPaymentQueuePayload;
     subscriptionId: number;
     isReceivedAction: boolean;
-    receivedCount: number;
   }[] = [];
   private transactions: InitiatedPaymentQueuePayload[] = [];
 
@@ -78,12 +77,11 @@ export class WalletTrackingSocket {
       if (!transaction) {
         return;
       }
-      sendToken(transaction.walletAddress, transaction.amount);
+      // sendToken(transaction.walletAddress, transaction.amount);
       this.subscribedTransactions.push({
         transaction,
         subscriptionId: result,
         isReceivedAction: false,
-        receivedCount: 0,
       });
       return;
     }
@@ -98,11 +96,12 @@ export class WalletTrackingSocket {
       );
 
       if (subscribedTransaction) {
-        subscribedTransaction.receivedCount++;
-        if (subscribedTransaction.receivedCount >= 2) {
+        if (!subscribedTransaction.isReceivedAction) {
           processWalletTrackedTransactions(subscribedTransaction);
           subscribedTransaction.isReceivedAction = true;
           return;
+        } else {
+          console.log(`already received action`);
         }
       } else {
         // also remove from all TODO

@@ -46,6 +46,9 @@ export function PaymentDetailsClient({
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+  console.log(
+    `solana:${walletAddress}?amount=${amount}&spl-token=${initiatedPayment.stableCoin.authority}`
+  );
 
   const handlePayment = () => {
     setLoading(true);
@@ -57,9 +60,12 @@ export function PaymentDetailsClient({
   useEffect(() => {
     const canvas = document.getElementById("qr-code") as HTMLCanvasElement;
     if (canvas) {
-      QRCode.toCanvas(canvas, walletAddress);
+      QRCode.toCanvas(
+        canvas,
+        `solana:${walletAddress}?amount=${amount}&spl-token=${initiatedPayment.stableCoin.authority}`
+      );
     }
-  }, [walletAddress]);
+  }, [walletAddress, amount, initiatedPayment.stableCoin.authority]);
   useEffect(() => {
     const checkStatus = async () => {
       const status = await checkInitiatedPaymentStatus(initiatedPayment.id);
