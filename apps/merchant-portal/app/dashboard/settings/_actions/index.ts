@@ -1,5 +1,7 @@
 "use server";
 
+import { auth } from "@/auth";
+import { db, redisConnection } from "@/lib/db";
 import { generatePresignedUrl } from "@/lib/s3-config";
 
 export async function generateProfileLogoUploadUrl(
@@ -10,20 +12,52 @@ export async function generateProfileLogoUploadUrl(
     if (fileType !== "image/jpeg" && fileType !== "image/png") {
       throw new Error("Invalid file type");
     }
-    const presignedUrl = await generatePresignedUrl(
+    const result = await generatePresignedUrl(
       "merchant/profile/logo",
       fileName,
       fileType,
       3600 // 1 hour expiration
     );
+
+    if (!result) {
+      throw new Error("Failed to generate upload URL");
+    }
+
+    const { presignedUrl, uploadId } = result;
     console.log(presignedUrl);
     if (!presignedUrl) {
       throw new Error("Failed to generate upload URL");
     }
 
-    return presignedUrl;
+    return { presignedUrl, uploadId };
   } catch (error) {
     console.error("Error generating presigned URL:", error);
     throw new Error("Failed to generate upload URL");
+  }
+}
+
+export async function updateLogoUrl(uploadId: string) {
+  try {
+    const session = await auth();
+    if (!session?.merchantId) {
+      throw new Error("Unauthorized");
+    }
+    const upload = await redisConnection.hgetall(uploadId);
+    if (!upload) {
+      throw new Error("Upload not found");
+    }
+
+    await db.merchant.update({
+      where: {
+        id: session.merchantId,
+      },
+      data: {
+        logoUrl: upload.publicUrl,
+      },
+    });
+    await redisConnection.del(uploadId);
+  } catch (error) {
+    console.error("Error updating logo URL:", error);
+    throw new Error("Failed to update logo URL");
   }
 }

@@ -1,8 +1,9 @@
 import { PrismaClient } from "@repo/db";
+import IORedis from "ioredis";
+
 export const db = new PrismaClient();
-
-// const globalForPrisma = globalThis as unknown as { prisma: PrismaClient };
-
-// export const db = globalForPrisma.prisma || new PrismaClient();
-
-// if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = db;
+export const redisConnection = new IORedis({
+  host: "localhost",
+  port: 6379,
+  maxRetriesPerRequest: null,
+});

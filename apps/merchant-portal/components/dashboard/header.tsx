@@ -13,7 +13,6 @@ import {
   FileText,
   ArrowDownToLine,
   Settings,
-  HelpCircle,
   LogOut,
   PanelLeft,
 } from "lucide-react";
@@ -35,6 +34,7 @@ import {
 // import NotificationsDropdown from "@/components/notifications/notifications-dropdown";
 // import { useNotifications } from "@/context/notifications-context";
 import { useSidebar } from "@/context/sidebar-context";
+import { signOut } from "next-auth/react";
 
 const mobileLinks = [
   {
@@ -144,12 +144,10 @@ export default function DashboardHeader() {
                 <Settings className="mr-2 h-4 w-4" />
                 <span>Settings</span>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <HelpCircle className="mr-2 h-4 w-4" />
-                <span>Help & Support</span>
-              </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => signOut({ callbackUrl: "/auth/login" })}
+              >
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Sign out</span>
               </DropdownMenuItem>
@@ -229,7 +227,10 @@ export default function DashboardHeader() {
               <Button
                 variant="outline"
                 className="w-full justify-start"
-                onClick={() => setMobileMenuOpen(false)}
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  signOut({ callbackUrl: "/auth/login" });
+                }}
               >
                 <LogOut className="mr-3 h-5 w-5 text-gray-400" />
                 Sign out

@@ -141,6 +141,9 @@ importers:
       html2canvas-pro:
         specifier: ^1.5.10
         version: 1.5.10
+      ioredis:
+        specifier: ^5.6.1
+        version: 5.6.1
       jspdf:
         specifier: ^3.0.1
         version: 3.0.1

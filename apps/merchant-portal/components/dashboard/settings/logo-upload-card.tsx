@@ -14,7 +14,10 @@ import {
 import { ImageIcon, Loader2, UploadIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
-import { generateProfileLogoUploadUrl } from "@/app/dashboard/settings/_actions";
+import {
+  generateProfileLogoUploadUrl,
+  updateLogoUrl,
+} from "@/app/dashboard/settings/_actions";
 
 interface LogoUploadCardProps {
   currentLogo: string;
@@ -59,16 +62,15 @@ export function LogoUploadCard({
     try {
       // Get presigned URL for direct upload
       const contentType = rawFile.type as "image/jpeg" | "image/png";
-      const presignedUrl = await generateProfileLogoUploadUrl(
+      const result = await generateProfileLogoUploadUrl(
         rawFile.name,
         contentType
       );
-      if (!presignedUrl) {
+      if (!result) {
         throw new Error("Failed to generate upload URL");
       }
+      const { presignedUrl, uploadId } = result;
 
-      // Upload directly to S3 using the presigned URL
-      console.log(presignedUrl);
       const response = await fetch(presignedUrl, {
         method: "PUT",
         headers: {
@@ -81,9 +83,7 @@ export function LogoUploadCard({
         throw new Error("Failed to upload to S3");
       }
 
-      // Extract the URL from the presigned URL
-
-      // Update the logo URL
+      await updateLogoUrl(uploadId);
       toast.success("Logo uploaded successfully");
     } catch (error) {
       console.error("Error uploading logo:", error);
