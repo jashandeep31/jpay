@@ -21,7 +21,6 @@ export default async function Page({ params }: PageProps) {
       },
     },
   });
-
   const walletAddress = initiatedPayment?.walletAddress;
   const amount = Number(initiatedPayment?.amount);
 

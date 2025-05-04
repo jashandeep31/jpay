@@ -124,6 +124,7 @@ export default function InvoicesTable({ invoices }: InvoicesTableProps) {
               <TableCell>
                 {invoice.pdfLink ? (
                   <a
+                    className="text-blue-500 hover:text-blue-600"
                     href={invoice.pdfLink}
                     target="_blank"
                     rel="noopener noreferrer"

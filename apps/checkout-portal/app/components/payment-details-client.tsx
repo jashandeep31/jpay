@@ -82,7 +82,7 @@ export function PaymentDetailsClient({
               Complete your payment by sending USDT to the address below
             </p>
           </div>
-          <MerchantInfo />
+          <MerchantInfo logo={initiatedPayment.merchant.logoUrl} />
         </div>
 
         <Card>
@@ -93,7 +93,11 @@ export function PaymentDetailsClient({
                 <CardDescription>Amount: ${amount}.00</CardDescription>
               </div>
               <div className="hidden sm:block">
-                <MerchantInfo compact />
+                <MerchantInfo
+                  name={initiatedPayment.merchant.name}
+                  logo={initiatedPayment.merchant.logoUrl}
+                  compact
+                />
               </div>
             </div>
           </CardHeader>

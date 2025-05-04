@@ -52,16 +52,18 @@ export function InvoiceGenerator() {
     try {
       // Define margin in mm
       const margin = 15; // 15mm margin on all sides
-      // Create a new jsPDF instance
+      // Create a new jsPDF instance with compression
       const doc = new jsPDF({
         orientation: "portrait",
         unit: "mm",
         format: "a4",
+        compress: true, // Enable compression
+        putOnlyUsedFonts: true, // Only include used fonts
       });
 
       // Get the invoice element and render it to a canvas
       const canvas = await html2canvas(invoiceRef.current, {
-        scale: 2,
+        scale: 1.5, // Reduced from 2 to 1.5 for better compression
         useCORS: true,
         logging: false,
         backgroundColor: "#ffffff",
