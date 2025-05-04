@@ -33,6 +33,7 @@ import { PaymentPageFormFieldType } from "@repo/db";
 import { Label } from "@repo/ui/components/ui/label";
 import { Switch } from "@repo/ui/components/ui/switch";
 import { toast } from "sonner";
+import { generatePresignedUrl } from "@/lib/s3-config";
 const formSchema = z.object({
   title: z.string().min(3, {
     message: "Title must be at least 3 characters.",
@@ -40,9 +41,7 @@ const formSchema = z.object({
   description: z.string().min(10, {
     message: "Description is required",
   }),
-  logoUrl: z.string().url({
-    message: "Please enter a valid URL for your logo.",
-  }),
+  image: z.instanceof(File).optional(),
   amount: z.coerce
     .number()
     .positive({
@@ -98,13 +97,11 @@ export default function CreatePaymentPage() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      logoUrl: "",
-      amount: undefined,
+      title: "Sample Payment Page",
+      description: "This is a sample payment page",
+      amount: 100,
     },
   });
-
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
 
@@ -124,8 +121,29 @@ export default function CreatePaymentPage() {
         return;
       }
 
+      const image = values.image;
+      if (!image) throw new Error("Image is required");
+      const getpresignedUrl = await generatePresignedUrl(
+        "payment-pages",
+        image.name,
+        image.type as
+          | "image/jpeg"
+          | "image/png"
+          | "image/webp"
+          | "application/pdf"
+      );
+      if (!getpresignedUrl) throw new Error("Failed to generate presigned URL");
+      const s3Res = await fetch(getpresignedUrl.presignedUrl, {
+        method: "PUT",
+        body: image,
+        headers: {
+          "Content-Type": image.type,
+        },
+      });
+      if (!s3Res.ok) throw new Error("Failed to upload image to S3");
       await createPaymentPage({
         ...values,
+        image: getpresignedUrl.uploadId,
         description: values.description || "", // Ensure description is always defined
         expiresAt: values.expiresAt,
         fields: fields,
@@ -212,21 +230,28 @@ export default function CreatePaymentPage() {
 
                   <FormField
                     control={form.control}
-                    name="logoUrl"
-                    render={({ field }) => (
+                    name="image"
+                    render={({ field: { onChange } }) => (
                       <FormItem>
-                        <FormLabel>Logo URL</FormLabel>
+                        <FormLabel>Logo</FormLabel>
                         <FormControl>
                           <div className="flex">
                             <Input
-                              placeholder="https://example.com/logo.png"
-                              {...field}
+                              type="file"
+                              accept="image/*"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                  onChange(file);
+                                }
+                              }}
+                              // {...field}
                             />
                           </div>
                         </FormControl>
                         <FormDescription className="flex items-center gap-1">
                           <InfoIcon className="h-3 w-3" />
-                          URL to your company or brand logo.
+                          Upload your company or brand logo.
                         </FormDescription>
                         <FormMessage />
                       </FormItem>

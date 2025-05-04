@@ -1,7 +1,7 @@
 "use server";
 
 import { auth } from "@/auth";
-import { db } from "@/lib/db";
+import { db, redisConnection } from "@/lib/db";
 import { PaymentPage } from "@repo/db";
 import { ServerActionResponseToClient } from "@/types/server-actions";
 import { IPaymentPageFormField } from "../create/page";
@@ -42,7 +42,7 @@ export async function getPaymentPages(): Promise<
 export async function createPaymentPage(data: {
   title: string;
   description: string | undefined;
-  logoUrl: string;
+  image: string;
   amount: number;
   expiresAt: Date;
   fields: IPaymentPageFormField[];
@@ -52,12 +52,19 @@ export async function createPaymentPage(data: {
   try {
     const session = await auth();
     if (!session?.user) throw new Error("Unauthorized");
+
+    const imageUrl = async () => {
+      const image = await redisConnection.hgetall(data.image);
+      redisConnection.del(data.image);
+      return image.publicUrl;
+    };
+
     const paymentPage = await db.$transaction(async (tx) => {
       const paymentPage = await tx.paymentPage.create({
         data: {
           title: data.title,
           description: data.description,
-          logoUrl: data.logoUrl,
+          logoUrl: await imageUrl(),
           amount: data.amount,
           merchantId: session.merchantId,
           expiresAt: data.expiresAt,

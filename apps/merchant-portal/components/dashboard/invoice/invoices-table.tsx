@@ -105,6 +105,7 @@ export default function InvoicesTable({ invoices }: InvoicesTableProps) {
           <TableRow>
             <TableHead>Amount</TableHead>
             <TableHead>Invoice Id</TableHead>
+            <TableHead>PDF</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Created</TableHead>
             <TableHead>Expires</TableHead>
@@ -119,6 +120,17 @@ export default function InvoicesTable({ invoices }: InvoicesTableProps) {
               </TableCell>
               <TableCell className="max-w-[200px] truncate">
                 {invoice.invoiceNumber}
+              </TableCell>
+              <TableCell>
+                {invoice.pdfLink ? (
+                  <a
+                    href={invoice.pdfLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View PDF
+                  </a>
+                ) : null}
               </TableCell>
               <TableCell>{getStatusBadge(invoice.status)}</TableCell>
               <TableCell>{formatDate(new Date(invoice.createdAt))}</TableCell>

@@ -1,7 +1,8 @@
 "use server";
 
 import { auth } from "@/auth";
-import { db } from "@/lib/db";
+import { db, redisConnection } from "@/lib/db";
+import { ServerActionResponseToClient } from "@/types/server-actions";
 
 // model Invoice {
 //     id         String @id @default(uuid())
@@ -64,6 +65,40 @@ export const createInvoice = async ({
     return {
       ok: false,
       error: error instanceof Error ? error.message : "Unknown error",
+    };
+  }
+};
+export const updateInvoiceAddPDF = async ({
+  invoiceId,
+  uploadId,
+}: {
+  invoiceId: string;
+  uploadId: string;
+}): Promise<ServerActionResponseToClient<{ id: string }>> => {
+  try {
+    const session = await auth();
+    if (!session?.merchantId) throw new Error("Unauthorized");
+    const imageUrl = await redisConnection.hgetall(uploadId);
+    redisConnection.del(uploadId);
+    await db.invoice.update({
+      where: {
+        id: invoiceId,
+        merchantId: session.merchantId,
+      },
+      data: {
+        pdfLink: imageUrl.publicUrl,
+      },
+    });
+    return {
+      ok: true,
+      data: {
+        id: invoiceId,
+      },
+    };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "Unknown error",
     };
   }
 };

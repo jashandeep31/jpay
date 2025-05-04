@@ -1,12 +1,20 @@
 import { formatCurrency, formatDate } from "@/app/lib/utils";
 import type { InvoiceData } from "./invoice-form";
 import { Separator } from "@repo/ui/components/ui/separator";
-
+import { useEffect } from "react";
+import QRCode from "qrcode";
 interface InvoicePreviewProps {
   invoiceData: InvoiceData;
 }
 
 export function InvoicePreview({ invoiceData }: InvoicePreviewProps) {
+  useEffect(() => {
+    const canvas = document.getElementById("qr-code") as HTMLCanvasElement;
+    if (canvas) {
+      QRCode.toCanvas(canvas, invoiceData.paymentLink);
+    }
+  }, [invoiceData.paymentLink]);
+
   return (
     <div className="font-sans text-gray-900 print:text-black">
       {/* Header */}
@@ -118,17 +126,9 @@ export function InvoicePreview({ invoiceData }: InvoicePreviewProps) {
       </div>
 
       {/* Payment Button */}
-      <div className="flex items-center justify-center">
-        {invoiceData.paymentLink ? (
-          <a
-            className="text-blue-500"
-            href={invoiceData.paymentLink}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {invoiceData.paymentLink}
-          </a>
-        ) : null}
+      <div className="flex items-center justify-center flex-col">
+        <canvas id="qr-code" className="w-[100px] h-[100px] "></canvas>
+        <p className="text-sm text-gray-500">{invoiceData.paymentLink}</p>
       </div>
       {/* {invoiceData.paymentLink && (
         <div className="mt-8 flex justify-center print:block">

@@ -15,8 +15,12 @@ import { Download, FileText, Printer } from "lucide-react";
 import { toast } from "sonner";
 import html2canvas from "html2canvas-pro";
 import jsPDF from "jspdf";
-import { createInvoice } from "@/app/dashboard/invoices/_actions";
+import {
+  createInvoice,
+  updateInvoiceAddPDF,
+} from "@/app/dashboard/invoices/_actions";
 import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
+import { generatePresignedUrl } from "@/lib/s3-config";
 
 export function InvoiceGenerator() {
   const [invoiceData, setInvoiceData] =
@@ -117,12 +121,37 @@ export function InvoiceGenerator() {
         heightLeft -= pageHeight - 2 * margin;
       }
 
-      // Save the PDF
+      // Get PDF as Blob
+      const pdfBlob = doc.output("blob");
+
+      // Get pre-signed S3 URL
+      const presignRes = await generatePresignedUrl(
+        "invoices",
+        `Invoice-${invoiceData.invoiceNumber}.pdf`,
+        "application/pdf"
+      );
+      if (!presignRes) throw new Error("Failed to get S3 upload URL");
+      const { presignedUrl, uploadId } = presignRes;
+
+      // Upload to S3
+      const uploadRes = await fetch(presignedUrl, {
+        method: "PUT",
+        headers: { "Content-Type": "application/pdf" },
+        body: pdfBlob,
+      });
+      await updateInvoiceAddPDF({
+        invoiceId: invoice.data.id,
+        uploadId,
+      });
+      if (!uploadRes.ok) throw new Error("Failed to upload PDF to S3");
+
+      toast("PDF Uploaded to S3 Successfully");
+
+      // Save locally as well
       doc.save(`Invoice-${invoiceData.invoiceNumber}.pdf`);
-      toast("PDF Generated Successfully");
     } catch (error) {
-      console.error("Error generating PDF:", error);
-      toast.error("Error Generating PDF");
+      console.error("Error generating/uploading PDF:", error);
+      toast.error("Error Generating or Uploading PDF");
     } finally {
       setIsGeneratingPDF(false);
     }
