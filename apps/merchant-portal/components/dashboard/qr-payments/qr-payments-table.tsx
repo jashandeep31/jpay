@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Table,
   TableBody,
@@ -18,11 +19,12 @@ import {
 } from "@repo/ui/components/ui/dropdown-menu";
 import { Button } from "@repo/ui/components/ui/button";
 import { Badge } from "@repo/ui/components/ui/badge";
-import { Copy, ExternalLink, MoreHorizontal } from "lucide-react";
+import { Copy, ExternalLink, MoreHorizontal, QrCode } from "lucide-react";
 import { formatCurrency, formatDate } from "@/app/lib/utils";
 import { QRPayment } from "@repo/db";
 import { toast } from "sonner";
 import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
+import { QRCodeModal } from "./qr-code-modal";
 
 interface QRPaymentsTableProps {
   qrPayments: QRPayment[];
@@ -30,6 +32,10 @@ interface QRPaymentsTableProps {
 }
 
 export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
+  const [selectedPaymentId, setSelectedPaymentId] = useState<string | null>(
+    null
+  );
+
   const handleCopyLink = (id: string) => {
     const linkUrl = `${CHECKOUT_PORTAL_URL}/qr/${id}`;
     navigator.clipboard.writeText(linkUrl);
@@ -112,31 +118,50 @@ export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
               <TableCell>{formatDate(new Date(link.createdAt))}</TableCell>
 
               <TableCell className="text-right">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                      <span className="sr-only">Open menu</span>
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={() => handleCopyLink(link.id)}>
-                      <Copy className="mr-2 h-4 w-4" />
-                      Copy Link
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => handleOpenLink(link.id)}>
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      Open Link
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+                <div className="flex justify-end gap-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => setSelectedPaymentId(link.id)}
+                  >
+                    <span className="sr-only">Show QR Code</span>
+                    <QrCode className="h-4 w-4" />
+                  </Button>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <span className="sr-only">Open menu</span>
+                        <MoreHorizontal className="h-4 w-4" />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onClick={() => handleCopyLink(link.id)}>
+                        <Copy className="mr-2 h-4 w-4" />
+                        Copy Link
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleOpenLink(link.id)}>
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        Open Link
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+
+      {selectedPaymentId && (
+        <QRCodeModal
+          isOpen={!!selectedPaymentId}
+          onClose={() => setSelectedPaymentId(null)}
+          paymentId={selectedPaymentId}
+        />
+      )}
     </div>
   );
 }
