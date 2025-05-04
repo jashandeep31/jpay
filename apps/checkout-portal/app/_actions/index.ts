@@ -77,6 +77,8 @@ export async function triggerInitiatedPayment(
           initiatedFrom === "INVOICE" ? (paymentId as string) : undefined,
         qRPaymentId:
           initiatedFrom === "QR_PAYMENT" ? (paymentId as string) : undefined,
+        pgPaymentId:
+          initiatedFrom === "PG_PAYMENT" ? (paymentId as string) : undefined,
       },
     });
     await PaymentWalletQueue.add("initiated-payment-queue", {
@@ -128,6 +130,13 @@ const getPaymentDetails = async (id: string, initiatedFrom: IntiatedFrom) => {
   }
   if (initiatedFrom === "QR_PAYMENT") {
     return await db.qRPayment.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+  if (initiatedFrom === "PG_PAYMENT") {
+    return await db.aPIGeneratedPaymentLink.findUnique({
       where: {
         id,
       },

@@ -60,7 +60,7 @@ export const createPGPaymentLink = async (
 
       return apiGeneratedPaymentLink;
     });
-    console.log(`${env.CHECKOUT_PORTAL_URL}/pg/${apiGeneratedPaymentLink.id}`);
+
     res.status(200).json({
       message: "Payment link generated",
       data: {

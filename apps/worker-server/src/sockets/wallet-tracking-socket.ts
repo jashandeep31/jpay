@@ -154,7 +154,12 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
       await getAndUpdatePaymentLink(initiatedPayment, tx);
       await getAndUpdateInvoice(initiatedPayment, tx);
       await getAndUpdateQRPayment(initiatedPayment, tx);
+      await getAndUpdatePGPayment(initiatedPayment, tx);
+
+      // update initiated payment
       await getAndUpdateIntiatedPayment(initiatedPayment, tx);
+
+      // update wallet
       await tx.wallet.upsert({
         where: {
           uiId: `${initiatedPayment.merchantId}-${initiatedPayment.stableCoin.id}`,
@@ -188,6 +193,7 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
         },
       });
     });
+    // TODO: write a code to call the callback url if the payment is from the api generated payment link
   } catch (error) {
     console.log(error, "error");
   }
@@ -279,4 +285,23 @@ const getAndUpdateIntiatedPayment = async (
       status: "COMPLETED",
     },
   });
+};
+
+const getAndUpdatePGPayment = async (
+  initiatedPayment: IntiatedPayment,
+  tx: tx
+) => {
+  if (
+    initiatedPayment.initiatedFrom === "PG_PAYMENT" &&
+    initiatedPayment.pgPaymentId
+  ) {
+    return await tx.aPIGeneratedPaymentLink.update({
+      where: {
+        id: initiatedPayment.pgPaymentId,
+      },
+      data: {
+        status: "PAID",
+      },
+    });
+  }
 };

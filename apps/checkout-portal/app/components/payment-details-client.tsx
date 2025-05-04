@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Check, Copy, ExternalLink } from "lucide-react";
@@ -19,6 +19,7 @@ import { Label } from "@repo/ui/components/ui/label";
 import { MerchantInfo } from "@/app/components/merchant-info";
 import { Separator } from "@repo/ui/components/ui/separator";
 import { IntiatedPayment, StableCoin } from "@repo/db/";
+import { checkInitiatedPaymentStatus } from "../payment/[id]/_actions";
 
 interface PaymentDetailsClientProps {
   initiatedPayment: IntiatedPayment & {
@@ -59,6 +60,19 @@ export function PaymentDetailsClient({
       QRCode.toCanvas(canvas, walletAddress);
     }
   }, [walletAddress]);
+
+  const checkPaymentStatus = useCallback(async () => {
+    const status = await checkInitiatedPaymentStatus(initiatedPayment.id);
+    if (status.status === "COMPLETED") {
+      router.push("/payment/confirmation?txid=mock-transaction-id");
+    }
+  }, [initiatedPayment.id, router]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      checkPaymentStatus();
+    }, 10000);
+  }, [checkPaymentStatus]);
 
   return (
     <div className="container max-w-2xl px-4 py-8 md:py-12">

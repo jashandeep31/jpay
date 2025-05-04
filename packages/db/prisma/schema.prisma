@@ -170,6 +170,7 @@ model IntiatedPayment {
   jPayLinkId              String?
   qRPaymentId             String?
   liveWalletWalletAddress String?
+  pgPaymentId             String?
 
   stableCoin   StableCoin    @relation(fields: [stableCoinId], references: [id])
   stableCoinId String
@@ -184,6 +185,8 @@ model IntiatedPayment {
   jPayLink     JPayLink?     @relation(fields: [jPayLinkId], references: [id])
   qrPayment    QRPayment?    @relation(fields: [qRPaymentId], references: [id])
   liveWallet   LiveWallet?   @relation(fields: [liveWalletWalletAddress], references: [walletAddress])
+
+  pgPayment APIGeneratedPaymentLink? @relation(fields: [pgPaymentId], references: [id])
 }
 
 model Transaction {
@@ -288,6 +291,7 @@ enum IntiatedFrom {
   JPAY_LINK
   QR_PAYMENT
   LIVE_WALLET
+  PG_PAYMENT
 }
 
 enum IntiatedPaymentStatus {
@@ -404,7 +408,8 @@ model APIGeneratedPaymentLink {
   validUntil  DateTime?
   createdAt   DateTime                      @default(now())
 
-  merchant Merchant @relation(fields: [merchantId], references: [id])
+  merchant        Merchant          @relation(fields: [merchantId], references: [id])
+  IntiatedPayment IntiatedPayment[]
 }
 
 enum APIGeneratedPaymentLinkStatus {
