@@ -22,6 +22,7 @@ export class WalletTrackingSocket {
     transaction: InitiatedPaymentQueuePayload;
     subscriptionId: number;
     isReceivedAction: boolean;
+    receivedCount: number;
   }[] = [];
   private transactions: InitiatedPaymentQueuePayload[] = [];
 
@@ -82,6 +83,7 @@ export class WalletTrackingSocket {
         transaction,
         subscriptionId: result,
         isReceivedAction: false,
+        receivedCount: 0,
       });
       return;
     }
@@ -96,12 +98,11 @@ export class WalletTrackingSocket {
       );
 
       if (subscribedTransaction) {
-        if (subscribedTransaction.isReceivedAction) {
-          console.log(`already received action`);
-          return;
-        } else {
+        subscribedTransaction.receivedCount++;
+        if (subscribedTransaction.receivedCount >= 2) {
           processWalletTrackedTransactions(subscribedTransaction);
           subscribedTransaction.isReceivedAction = true;
+          return;
         }
       } else {
         // also remove from all TODO
@@ -118,7 +119,6 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
 }) {
   try {
     const { transaction, subscriptionId } = subscribedTransaction;
-    await new Promise((resolve) => setTimeout(resolve, 10000));
 
     const lastSignature = await getSignatureForAddress(
       transaction.associatedWalletId,

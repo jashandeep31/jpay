@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Check, Copy, ExternalLink } from "lucide-react";
@@ -60,19 +60,18 @@ export function PaymentDetailsClient({
       QRCode.toCanvas(canvas, walletAddress);
     }
   }, [walletAddress]);
-
-  const checkPaymentStatus = useCallback(async () => {
-    const status = await checkInitiatedPaymentStatus(initiatedPayment.id);
-    if (status.status === "COMPLETED") {
-      router.push("/payment/confirmation?txid=mock-transaction-id");
-    }
-  }, [initiatedPayment.id, router]);
-
   useEffect(() => {
-    setTimeout(() => {
-      checkPaymentStatus();
-    }, 10000);
-  }, [checkPaymentStatus]);
+    const checkStatus = async () => {
+      const status = await checkInitiatedPaymentStatus(initiatedPayment.id);
+      console.log(status);
+      if (status.status === "COMPLETED") {
+        router.push(`/payment/confirmation/${initiatedPayment.id}`);
+      }
+    };
+    checkStatus();
+    const interval = setInterval(checkStatus, 5000);
+    return () => clearInterval(interval);
+  }, [initiatedPayment.id, router]);
 
   return (
     <div className="container max-w-2xl px-4 py-8 md:py-12">
@@ -104,7 +103,7 @@ export function PaymentDetailsClient({
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <div>
                 <CardTitle>USDT Payment</CardTitle>
-                <CardDescription>Amount: ${amount}.00</CardDescription>
+                <CardDescription>Amount: ${amount}</CardDescription>
               </div>
               <div className="hidden sm:block">
                 <MerchantInfo
