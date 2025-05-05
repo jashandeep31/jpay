@@ -32,7 +32,8 @@ model Merchant {
   APIGeneratedPaymentLink       APIGeneratedPaymentLink[]
   LiveWallet                    LiveWallet[]
 
-  MerchantApiKey MerchantApiKey[]
+  MerchantApiKey  MerchantApiKey[]
+  BulkPayoutGroup BulkPayoutGroup[]
 }
 
 model User {
@@ -423,4 +424,37 @@ enum APIGeneratedPaymentLinkStatus {
   PROCESSING
   PAID
   FAILED
+}
+
+model BulkPayoutGroup {
+  id                    String                  @id @default(uuid())
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  name                  String
+  description           String?
+  merchantId            String
+  merchant              Merchant                @relation(fields: [merchantId], references: [id])
+  BulkPayoutGroupMember BulkPayoutGroupMember[]
+}
+
+model BulkPayoutGroupMember {
+  id                         String                       @id @default(uuid())
+  address                    String
+  amount                     Decimal                      @db.Decimal(10, 2)
+  name                       String
+  bulkPayoutGroupId          String
+  bulkPayoutGroup            BulkPayoutGroup              @relation(fields: [bulkPayoutGroupId], references: [id])
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  BulkPayoutGroupTransaction BulkPayoutGroupTransaction[]
+}
+
+model BulkPayoutGroupTransaction {
+  id                      String                @id @default(uuid())
+  amount                  Decimal               @db.Decimal(10, 2)
+  signature               String
+  bulkPayoutGroupMemberId String
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+  bulkPayoutGroupMember   BulkPayoutGroupMember @relation(fields: [bulkPayoutGroupMemberId], references: [id])
 }

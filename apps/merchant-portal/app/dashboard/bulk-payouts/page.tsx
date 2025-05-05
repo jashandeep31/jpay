@@ -4,8 +4,19 @@ import {
   AlertDescription,
   AlertTitle,
 } from "@repo/ui/components/ui/alert";
+import BulkPayoutMainUI from "@/components/dashboard/bulk-payout/bulk-payout-main-ui";
+import { db } from "@/lib/db";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
-const page = () => {
+const page = async () => {
+  const session = await auth();
+  if (!session?.merchantId) redirect("/auth/login");
+  const bulkPayoutGroups = await db.bulkPayoutGroup.findMany({
+    where: {
+      merchantId: session.merchantId,
+    },
+  });
   return (
     <div className="container mx-auto p-4 space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -29,6 +40,7 @@ const page = () => {
           </Alert>
         </div>
       </div>
+      <BulkPayoutMainUI bulkPayoutGroups={bulkPayoutGroups} />
     </div>
   );
 };
