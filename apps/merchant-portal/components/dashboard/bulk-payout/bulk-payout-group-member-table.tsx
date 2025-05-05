@@ -1,3 +1,5 @@
+"use client";
+import { sendBulkPayoutSignedTransaction } from "@/app/dashboard/_actions";
 import { formatDate } from "@/app/lib/utils";
 import { BulkPayoutGroup, BulkPayoutGroupMember } from "@repo/db";
 import { Button } from "@repo/ui/components/ui/button";
@@ -9,8 +11,15 @@ import {
   TableHeader,
   TableRow,
 } from "@repo/ui/components/ui/table";
-import { Link } from "lucide-react";
+import {
+  createTransferCheckedInstruction,
+  getAssociatedTokenAddress,
+} from "@solana/spl-token";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { PublicKey, Transaction } from "@solana/web3.js";
 import React from "react";
+import { toast } from "sonner";
+const USDC_MINT = new PublicKey("Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr");
 
 const BulkPayoutGroupMemberTable = ({
   group,
@@ -19,11 +28,62 @@ const BulkPayoutGroupMemberTable = ({
     BulkPayoutGroupMember: BulkPayoutGroupMember[];
   };
 }) => {
-  const createBulkPayout = async () => {};
+  const { connection } = useConnection();
+  const { publicKey, signTransaction } = useWallet();
+  const createBulkPayout = async () => {
+    if (!publicKey) {
+      toast.error("Please connect your wallet");
+      return;
+    }
+    if (!signTransaction) {
+      toast.error("Please connect your wallet");
+      return;
+    }
+    const fromAta = await getAssociatedTokenAddress(USDC_MINT, publicKey);
+
+    const tx = new Transaction();
+
+    for (const member of group.BulkPayoutGroupMember) {
+      const toAta = await getAssociatedTokenAddress(
+        USDC_MINT,
+        new PublicKey(member.address),
+        true
+      );
+
+      tx.add(
+        createTransferCheckedInstruction(
+          fromAta,
+          USDC_MINT,
+          toAta,
+          publicKey,
+          BigInt(Math.round(Number(member.amount) * 10 ** 6)),
+          6,
+          []
+        )
+      );
+    }
+    const { blockhash, lastValidBlockHeight } =
+      await connection.getLatestBlockhash("confirmed");
+    tx.recentBlockhash = blockhash;
+    tx.lastValidBlockHeight = lastValidBlockHeight;
+    tx.feePayer = publicKey;
+    const signedTransaction = await signTransaction(tx);
+    const rawTransaction = signedTransaction
+      .serialize({
+        requireAllSignatures: false,
+      })
+      .toString("base64");
+    const txid = await sendBulkPayoutSignedTransaction(
+      rawTransaction,
+      blockhash,
+      lastValidBlockHeight
+    );
+    toast.success(`Payout created successfully: ${txid}`);
+  };
   return (
     <div>
       <div className="flex justify-end">
-        <Button>Make Payout</Button>
+        <Button onClick={createBulkPayout}>Make Payout</Button>
       </div>
       <div className="mt-6">
         <div className="overflow-auto">
@@ -46,7 +106,7 @@ const BulkPayoutGroupMemberTable = ({
                     {member.name}
                   </TableCell>
                   <TableCell>{member.address}</TableCell>
-                  <TableCell>${member.amount.toString()}</TableCell>
+                  <TableCell>${Number(member.amount)}</TableCell>
                   <TableCell>
                     {formatDate(new Date(member.createdAt))}
                   </TableCell>

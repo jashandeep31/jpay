@@ -137,3 +137,22 @@ export const sendToken = async ({
 
   return signature;
 };
+
+export const sendBulkPayoutSignedTransaction = async (
+  signedTransaction: string,
+  blockhash: string,
+  lastValidBlockHeight: number
+) => {
+  const connection = new Connection(process.env.HELIUS_RPC_URL!, "confirmed");
+  if (!signedTransaction) throw new Error("Signed transaction not found");
+
+  const txid = await connection.sendRawTransaction(
+    Buffer.from(signedTransaction, "base64")
+  );
+  const { value } = await connection.confirmTransaction(
+    { signature: txid, blockhash, lastValidBlockHeight },
+    "confirmed"
+  );
+  if (value.err) throw new Error("Transaction failed");
+  return txid;
+};
