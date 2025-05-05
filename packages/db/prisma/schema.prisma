@@ -9,27 +9,28 @@ datasource db {
 }
 
 model Merchant {
-  id                      String                    @id @default(uuid())
-  name                    String
-  email                   String                    @unique
-  phoneNumber             String?
-  address                 String?
-  logoUrl                 String?
-  description             String?
-  createdAt               DateTime                  @default(now())
-  updatedAt               DateTime                  @updatedAt
-  userId                  String                    @unique
-  IntiatedPayment         IntiatedPayment[]
-  user                    User                      @relation(fields: [userId], references: [id])
-  PaymentLink             PaymentLink[]
-  PaymentPage             PaymentPage[]
-  QRPayment               QRPayment[]
-  Transaction             Transaction[]
-  Wallet                  Wallet[]
-  Invoice                 Invoice[]
-  JPayLink                JPayLink[]
-  APIGeneratedPaymentLink APIGeneratedPaymentLink[]
-  LiveWallet              LiveWallet[]
+  id                            String                    @id @default(uuid())
+  name                          String
+  email                         String                    @unique
+  phoneNumber                   String?
+  address                       String?
+  logoUrl                       String?
+  description                   String?
+  createdAt                     DateTime                  @default(now())
+  updatedAt                     DateTime                  @updatedAt
+  userId                        String                    @unique
+  paymentReceivingWalletAddress String?
+  IntiatedPayment               IntiatedPayment[]
+  user                          User                      @relation(fields: [userId], references: [id])
+  PaymentLink                   PaymentLink[]
+  PaymentPage                   PaymentPage[]
+  QRPayment                     QRPayment[]
+  Transaction                   Transaction[]
+  Wallet                        Wallet[]
+  Invoice                       Invoice[]
+  JPayLink                      JPayLink[]
+  APIGeneratedPaymentLink       APIGeneratedPaymentLink[]
+  LiveWallet                    LiveWallet[]
 
   MerchantApiKey MerchantApiKey[]
 }
@@ -99,15 +100,16 @@ model Authenticator {
 }
 
 model Wallet {
-  id           String     @id @default(uuid())
-  balance      Decimal    @db.Decimal(10, 2)
+  id           String        @id @default(uuid())
+  balance      Decimal       @db.Decimal(10, 2)
   stableCoinId String
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
   merchantId   String
-  merchant     Merchant   @relation(fields: [merchantId], references: [id])
-  stableCoin   StableCoin @relation(fields: [stableCoinId], references: [id])
-  uiId         String     @unique // combo of merchantId and stableCoinId
+  merchant     Merchant      @relation(fields: [merchantId], references: [id])
+  stableCoin   StableCoin    @relation(fields: [stableCoinId], references: [id])
+  uiId         String        @unique // combo of merchantId and stableCoinId
+  Transaction  Transaction[]
 }
 
 model StableCoin {
@@ -193,22 +195,27 @@ model Transaction {
   id                     String            @id @default(uuid())
   status                 TransactionStatus
   amount                 Decimal           @db.Decimal(10, 2)
+  walletId               String
   intiatedPaymentId      String
   initiatedFrom          IntiatedFrom
   toWalletAddress        String
+  toWalletAddressIndex   Int
   fromWalletAddress      String
   toAtaWalletAddress     String
   fromAtaWalletAddress   String
+  signature              String            @unique
   settled                Boolean           @default(false)
   settledAt              DateTime?
   settledToWalletAddress String?
   stableCoinName         String
-  signature              String            @unique
+  settledSignature       String?
   createdAt              DateTime          @default(now())
   updatedAt              DateTime          @updatedAt
   merchantId             String
   intiatedPayment        IntiatedPayment   @relation(fields: [intiatedPaymentId], references: [id])
   merchant               Merchant          @relation(fields: [merchantId], references: [id])
+
+  depositedTo Wallet @relation(fields: [walletId], references: [id])
 }
 
 model PaymentButton {

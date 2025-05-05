@@ -13,6 +13,7 @@ import RecentPayments from "@/components/dashboard/recent-payments";
 import { db } from "../../lib/db";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import WalletCard from "@/components/dashboard/wallet-card";
 
 async function getTransactions(merchantId: string) {
   const transactions = await db.transaction.findMany({
@@ -57,26 +58,7 @@ export default async function DashboardPage() {
 
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {wallets.map((wallet) => (
-          <Card key={wallet.id}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                <div className="flex items-center gap-2">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={wallet.stableCoin.logoUrl || ""}
-                    alt={wallet.stableCoin.name}
-                    className="w-4 h-4 rounded-full"
-                  />
-                  {wallet.stableCoin.name} ({wallet.stableCoin.symbol})
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                Balance: ${wallet.balance.toLocaleString()}
-              </div>
-            </CardContent>
-          </Card>
+          <WalletCard key={wallet.id} wallet={wallet} />
         ))}
       </div>
 

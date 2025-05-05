@@ -9,7 +9,6 @@ import {
   FileText,
   ArrowDownToLine,
   Settings,
-  HelpCircle,
   LogOut,
   ChevronLeft,
   ChevronRight,
@@ -83,11 +82,6 @@ const bottomLinks = [
     name: "Settings",
     href: "/dashboard/settings",
     icon: Settings,
-  },
-  {
-    name: "Help & Support",
-    href: "/dashboard/support",
-    icon: HelpCircle,
   },
 ];
 
