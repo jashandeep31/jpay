@@ -14,6 +14,8 @@ import {
   getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
 import { derivePath } from "ed25519-hd-key";
+import { BulkPayoutGroupMember } from "@repo/db";
+import { ServerActionResponseToClient } from "@/types/server-actions";
 
 const SEED_PHRASE = process.env.ONETIME_PAYMENT_SENDING_WALLET_PHRASE!;
 
@@ -156,3 +158,34 @@ export const sendBulkPayoutSignedTransaction = async (
   if (value.err) throw new Error("Transaction failed");
   return txid;
 };
+
+export async function addBulkPayoutGroupMember(
+  groupId: string,
+  address: string,
+  amount: number,
+  name: string
+): Promise<ServerActionResponseToClient<{ id: string }>> {
+  try {
+    if (!groupId || !address || !amount || !name)
+      throw new Error("Invalid data");
+    const session = await auth();
+    if (!session?.merchantId) throw new Error("Merchant ID not found");
+    const merchantId = session.merchantId;
+    const group = await db.bulkPayoutGroup.findUnique({
+      where: { id: groupId, merchantId },
+    });
+    if (!group) throw new Error("Group not found");
+    const member = await db.bulkPayoutGroupMember.create({
+      data: { bulkPayoutGroupId: group.id, address, amount, name },
+    });
+    return {
+      ok: true,
+      data: { id: member.id },
+    };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "An unknown error occurred",
+    };
+  }
+}
