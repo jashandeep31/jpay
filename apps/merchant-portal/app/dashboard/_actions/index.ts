@@ -40,21 +40,23 @@ export async function settleMerchantPayments(walletId: string) {
     });
 
     for (const transaction of transactions) {
+      console.log(`transaction engaed , ${transaction.id}`);
       const path = `m/44'/501'/${transaction.toWalletAddressIndex}'/0'`;
       const derivedSeed = derivePath(path, SEED_PHRASE);
       const payerKeypair = Keypair.fromSeed(derivedSeed.key);
       const mintPubkey = new PublicKey(wallet.stableCoin.authority);
-      const feePayerDerivedSeed = derivePath(path, `m/44'/501'/0'/0'`);
-      const feePayerKeypair = Keypair.fromSecretKey(feePayerDerivedSeed.key);
+      const feePayerDerivedSeed = derivePath(`m/44'/501'/0'/0'`, SEED_PHRASE);
+      const feePayerKeypair = Keypair.fromSeed(feePayerDerivedSeed.key);
 
       const signature = await sendToken({
         recipientPubkey: new PublicKey(merchant.paymentReceivingWalletAddress),
         amount: Number(transaction.amount),
         payerKeypair,
+        feePayerKeypair,
         mintPubkey,
         coinDecimals: wallet.stableCoin.decimalCount,
       });
-
+      console.log(signature);
       await db.transaction.update({
         where: { id: transaction.id },
         data: {
@@ -64,10 +66,20 @@ export async function settleMerchantPayments(walletId: string) {
           settledSignature: signature,
         },
       });
+      await db.wallet.update({
+        where: { id: walletId },
+        data: {
+          balance: {
+            decrement: Number(transaction.amount),
+          },
+        },
+      });
+      await new Promise((resolve) => setTimeout(resolve, 3000));
     }
 
     // if (!wallet) throw new Error("Wallet not found");
   } catch (e) {
+    console.log(e);
     return {
       ok: false,
       message: e instanceof Error ? e.message : "An unknown error occurred",
@@ -80,12 +92,14 @@ export const sendToken = async ({
   amount,
   payerKeypair,
   mintPubkey,
+  feePayerKeypair,
   coinDecimals,
 }: {
   recipientPubkey: PublicKey;
   amount: number;
   payerKeypair: Keypair;
   mintPubkey: PublicKey;
+  feePayerKeypair: Keypair;
   coinDecimals: number;
 }) => {
   const connection = new Connection(process.env.HELIUS_RPC_URL!, "confirmed");
@@ -100,7 +114,7 @@ export const sendToken = async ({
 
   const toAta = await getOrCreateAssociatedTokenAccount(
     connection,
-    payerKeypair,
+    feePayerKeypair,
     mintPubkey,
     recipientPubkey,
     true
@@ -114,8 +128,10 @@ export const sendToken = async ({
       amount * 10 ** coinDecimals
     )
   );
+  tx.feePayer = feePayerKeypair.publicKey;
 
   const signature = await sendAndConfirmTransaction(connection, tx, [
+    feePayerKeypair,
     payerKeypair,
   ]);
 
