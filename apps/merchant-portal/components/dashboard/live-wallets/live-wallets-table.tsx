@@ -18,6 +18,7 @@ import {
 } from "@repo/ui/components/ui/dropdown-menu";
 import { Button } from "@repo/ui/components/ui/button";
 
+import Link from "next/link";
 import { Bell, Copy, ExternalLink, MoreHorizontal } from "lucide-react";
 import { formatDate } from "@/app/lib/utils";
 import { toast } from "sonner";
@@ -134,6 +135,14 @@ export default function LiveWalletsTable({
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href={`/dashboard/live-wallets/view/${liveWallet.id}`}
+                      >
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        View Transactions
+                      </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() =>
                         handleNotificationToggle(
@@ -147,6 +156,7 @@ export default function LiveWalletsTable({
                         ? "Disable Notifications"
                         : "Enable Notifications"}
                     </DropdownMenuItem>
+
                     <DropdownMenuItem
                       onClick={() => handleCopyLink(liveWallet.walletAddress)}
                     >

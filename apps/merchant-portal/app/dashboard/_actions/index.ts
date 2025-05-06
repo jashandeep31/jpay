@@ -41,41 +41,69 @@ export async function settleMerchantPayments(walletId: string) {
     });
 
     for (const transaction of transactions) {
-      console.log(`transaction engaed , ${transaction.id}`);
-      const path = `m/44'/501'/${transaction.toWalletAddressIndex}'/0'`;
-      const derivedSeed = derivePath(path, SEED_PHRASE);
-      const payerKeypair = Keypair.fromSeed(derivedSeed.key);
-      const mintPubkey = new PublicKey(wallet.stableCoin.authority);
-      const feePayerDerivedSeed = derivePath(`m/44'/501'/0'/0'`, SEED_PHRASE);
-      const feePayerKeypair = Keypair.fromSeed(feePayerDerivedSeed.key);
+      try {
+        console.log(`transaction engaed , ${transaction.id}`);
+        const path = `m/44'/501'/${transaction.toWalletAddressIndex}'/0'`;
+        console.log(path);
+        const derivedSeed = derivePath(path, SEED_PHRASE);
+        const payerKeypair = Keypair.fromSeed(derivedSeed.key);
+        const mintPubkey = new PublicKey(wallet.stableCoin.authority);
+        const feePayerDerivedSeed = derivePath(`m/44'/501'/0'/0'`, SEED_PHRASE);
+        const feePayerKeypair = Keypair.fromSeed(feePayerDerivedSeed.key);
 
-      const signature = await sendToken({
-        recipientPubkey: new PublicKey(merchant.paymentReceivingWalletAddress),
-        amount: Number(transaction.amount),
-        payerKeypair,
-        feePayerKeypair,
-        mintPubkey,
-        coinDecimals: wallet.stableCoin.decimalCount,
-      });
-      console.log(signature);
-      await db.transaction.update({
-        where: { id: transaction.id },
-        data: {
-          settled: true,
-          settledToWalletAddress: merchant.paymentReceivingWalletAddress,
-          settledAt: new Date(),
-          settledSignature: signature,
-        },
-      });
-      await db.wallet.update({
-        where: { id: walletId },
-        data: {
-          balance: {
-            decrement: Number(transaction.amount),
-          },
-        },
-      });
-      await new Promise((resolve) => setTimeout(resolve, 3000));
+        const signature = await sendToken({
+          recipientPubkey: new PublicKey(
+            merchant.paymentReceivingWalletAddress
+          ),
+          amount: Number(transaction.amount),
+          payerKeypair,
+          feePayerKeypair,
+          mintPubkey,
+          coinDecimals: wallet.stableCoin.decimalCount,
+        });
+        await db.$transaction(async (tx) => {
+          await tx.transaction.update({
+            where: { id: transaction.id },
+            data: {
+              settled: true,
+              settledToWalletAddress: merchant.paymentReceivingWalletAddress,
+              settledAt: new Date(),
+              settledSignature: signature,
+            },
+          });
+          await tx.wallet.update({
+            where: { id: walletId },
+            data: {
+              balance: {
+                decrement: Number(transaction.amount),
+              },
+            },
+          });
+          if (transaction.initiatedFrom === "LIVE_WALLET") {
+            const initiatedTransaction = await tx.intiatedPayment.findUnique({
+              where: {
+                id: transaction.intiatedPaymentId,
+              },
+            });
+            if (initiatedTransaction?.liveWalletWalletAddress) {
+              await tx.liveWallet.update({
+                where: {
+                  walletAddress: initiatedTransaction.liveWalletWalletAddress,
+                },
+                data: {
+                  balance: {
+                    decrement: Number(transaction.amount),
+                  },
+                },
+              });
+            }
+          }
+        });
+
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+      } catch (e) {
+        console.log(e);
+      }
     }
 
     // if (!wallet) throw new Error("Wallet not found");

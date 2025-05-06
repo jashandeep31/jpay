@@ -186,6 +186,7 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
           signature: lastSignature,
           toWalletAddress: parsedTransaction.to,
           fromWalletAddress: parsedTransaction.from,
+          toWalletAddressIndex: initiatedPayment.index,
           toAtaWalletAddress: parsedTransaction.ataTo,
           fromAtaWalletAddress: parsedTransaction.ataFrom,
           stableCoinName: `${initiatedPayment.stableCoin.name} (${initiatedPayment.stableCoin.symbol})`,

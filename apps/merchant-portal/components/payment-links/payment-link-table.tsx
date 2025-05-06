@@ -26,6 +26,7 @@ import { PaymentLink } from "@repo/db";
 import { cancelPaymentLink } from "@/app/dashboard/payment-link/_actions";
 import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
 import { toast } from "sonner";
+import Link from "next/link";
 
 interface PaymentLinkTableProps {
   paymentLinks: PaymentLink[];
@@ -171,6 +172,12 @@ export default function PaymentLinkTable({
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href={`/dashboard/payment-link/view/${link.id}`}>
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        View Payments
+                      </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => handleCopyLink(link.id)}>
                       <Copy className="mr-2 h-4 w-4" />
                       Copy Link

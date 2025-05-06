@@ -167,13 +167,13 @@ model IntiatedPayment {
   ataWalletAddress String
   amount           Decimal               @db.Decimal(10, 2)
 
-  paymentPageId           String?
-  paymentLinkId           String?
-  invoiceId               String?
-  jPayLinkId              String?
-  qRPaymentId             String?
-  liveWalletWalletAddress String?
-  pgPaymentId             String?
+  paymentPageId String?
+  paymentLinkId String?
+  invoiceId     String?
+  jPayLinkId    String?
+  qRPaymentId   String?
+  liveWalletId  String?
+  pgPaymentId   String?
 
   stableCoin   StableCoin    @relation(fields: [stableCoinId], references: [id])
   stableCoinId String
@@ -187,7 +187,7 @@ model IntiatedPayment {
   invoice      Invoice?      @relation(fields: [invoiceId], references: [id])
   jPayLink     JPayLink?     @relation(fields: [jPayLinkId], references: [id])
   qrPayment    QRPayment?    @relation(fields: [qRPaymentId], references: [id])
-  liveWallet   LiveWallet?   @relation(fields: [liveWalletWalletAddress], references: [walletAddress])
+  liveWallet   LiveWallet?   @relation(fields: [liveWalletId], references: [id])
 
   pgPayment APIGeneratedPaymentLink? @relation(fields: [pgPaymentId], references: [id])
 }
@@ -200,7 +200,7 @@ model Transaction {
   intiatedPaymentId      String
   initiatedFrom          IntiatedFrom
   toWalletAddress        String
-  toWalletAddressIndex   Int?
+  toWalletAddressIndex   Int
   toAtaWalletAddress     String?
   fromWalletAddress      String
   fromAtaWalletAddress   String

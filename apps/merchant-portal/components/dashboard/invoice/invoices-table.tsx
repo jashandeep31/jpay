@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import { Invoice } from "@repo/db";
 import { cancelPaymentLink } from "@/app/dashboard/payment-link/_actions";
 import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
+import Link from "next/link";
 
 interface InvoicesTableProps {
   invoices: (Omit<Invoice, "amount"> & { amount: number })[];
@@ -151,6 +152,12 @@ export default function InvoicesTable({ invoices }: InvoicesTableProps) {
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href={`/dashboard/invoices/view/${invoice.id}`}>
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        View Transactions
+                      </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => handleCopyLink(invoice.id)}
                     >

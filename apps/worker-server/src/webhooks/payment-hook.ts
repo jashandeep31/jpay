@@ -38,7 +38,7 @@ export const paymentHook = async (
             amount: parsedTransaction.amount,
             stableCoinId: stableCoin.id,
             merchantId: liveWallet.merchantId,
-            liveWalletWalletAddress: liveWallet.walletAddress,
+            liveWalletId: liveWallet.id,
           },
         });
         await tx.liveWallet.update({
@@ -75,6 +75,7 @@ export const paymentHook = async (
             intiatedPaymentId: initiatedPayment.id,
             initiatedFrom: "LIVE_WALLET",
             toWalletAddress: initiatedPayment.walletAddress,
+            toWalletAddressIndex: initiatedPayment.index,
             fromWalletAddress: parsedTransaction.from,
             toAtaWalletAddress: parsedTransaction.toTokenAccount,
             fromAtaWalletAddress: parsedTransaction.fromTokenAccount,

@@ -11,6 +11,7 @@ import {
 } from "@repo/ui/components/ui/dropdown-menu";
 import { MoreHorizontal, Eye } from "lucide-react";
 import { Badge } from "@repo/ui/components/ui/badge";
+import Link from "next/link";
 
 export default function RecentPayments({
   transactions,
@@ -101,9 +102,11 @@ export default function RecentPayments({
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                    <DropdownMenuItem>
-                      <Eye className="mr-2 h-4 w-4" />
-                      <span>View details</span>
+                    <DropdownMenuItem asChild>
+                      <Link href={`/dashboard/trans/${payment.id}`}>
+                        <Eye className="mr-2 h-4 w-4" />
+                        <span>View details</span>
+                      </Link>
                     </DropdownMenuItem>
                     {/* {payment.status === "pending" && (
                       <DropdownMenuItem>
