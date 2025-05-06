@@ -200,9 +200,9 @@ model Transaction {
   intiatedPaymentId      String
   initiatedFrom          IntiatedFrom
   toWalletAddress        String
-  toWalletAddressIndex   Int
+  toWalletAddressIndex   Int?
+  toAtaWalletAddress     String?
   fromWalletAddress      String
-  toAtaWalletAddress     String
   fromAtaWalletAddress   String
   signature              String            @unique
   settled                Boolean           @default(false)

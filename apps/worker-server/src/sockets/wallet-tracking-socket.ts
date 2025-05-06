@@ -160,7 +160,8 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
       await getAndUpdateIntiatedPayment(initiatedPayment, tx);
 
       // update wallet
-      await tx.wallet.upsert({
+
+      const wallet = await tx.wallet.upsert({
         where: {
           uiId: `${initiatedPayment.merchantId}-${initiatedPayment.stableCoin.id}`,
         },
@@ -190,6 +191,7 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
           stableCoinName: `${initiatedPayment.stableCoin.name} (${initiatedPayment.stableCoin.symbol})`,
           settled: false,
           merchantId: initiatedPayment.merchantId,
+          walletId: wallet.id,
         },
       });
     });

@@ -51,7 +51,7 @@ export const paymentHook = async (
             },
           },
         });
-        await tx.wallet.upsert({
+        const wallet = await tx.wallet.upsert({
           where: {
             uiId: `${initiatedPayment.merchantId}-${stableCoin.id}`,
           },
@@ -80,6 +80,7 @@ export const paymentHook = async (
             fromAtaWalletAddress: parsedTransaction.fromTokenAccount,
             stableCoinName: stableCoin.name,
             merchantId: liveWallet.merchantId,
+            walletId: wallet.id,
           },
         });
       });
