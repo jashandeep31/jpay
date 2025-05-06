@@ -85,10 +85,10 @@ export async function settleMerchantPayments(walletId: string) {
                 id: transaction.intiatedPaymentId,
               },
             });
-            if (initiatedTransaction?.liveWalletWalletAddress) {
+            if (initiatedTransaction?.liveWalletId) {
               await tx.liveWallet.update({
                 where: {
-                  walletAddress: initiatedTransaction.liveWalletWalletAddress,
+                  id: initiatedTransaction.liveWalletId,
                 },
                 data: {
                   balance: {

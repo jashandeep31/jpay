@@ -23,6 +23,7 @@ import { formatDate } from "@/app/lib/utils";
 import { toast } from "sonner";
 import { JPayLink } from "@repo/db";
 import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
+import Link from "next/link";
 
 interface JPayLinksTableProps {
   jpayLinks: JPayLink[];
@@ -84,6 +85,12 @@ export default function JPayLinksTable({ jpayLinks }: JPayLinksTableProps) {
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href={`/dashboard/jpay-links/view/${jpayLink.id}`}>
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        View Transactions
+                      </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem
                       onClick={() => handleCopyLink(jpayLink.uid)}
                     >

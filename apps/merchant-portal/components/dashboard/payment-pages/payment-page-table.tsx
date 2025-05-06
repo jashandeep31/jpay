@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import { PaymentPage } from "@repo/db";
 import { cancelPaymentPage } from "@/app/dashboard/payment-pages/_actions";
 import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
+import Link from "next/link";
 
 interface PaymentPageTableProps {
   paymentPages: PaymentPage[];
@@ -165,6 +166,12 @@ export default function PaymentPageTable({
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link href={`/dashboard/payment-pages/view/${link.id}`}>
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        View Transactions
+                      </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => handleCopyLink(link.id)}>
                       <Copy className="mr-2 h-4 w-4" />
                       Copy Link
