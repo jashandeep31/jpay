@@ -30,7 +30,7 @@ const CreateJPayLink = () => {
       } else {
         toast.error(res.error, { id: toastId });
       }
-    } catch (error) {
+    } catch {
       toast.error("Something went wrong", { id: toastId });
     } finally {
       setIsLoading(false);

@@ -26,10 +26,12 @@ interface LogoUploadCardProps {
 
 export function LogoUploadCard({
   currentLogo,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onLogoUpdate,
 }: LogoUploadCardProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [rawFile, setRawFile] = useState<File | null>(null);
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

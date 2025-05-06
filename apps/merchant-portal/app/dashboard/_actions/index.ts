@@ -14,7 +14,6 @@ import {
   getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
 import { derivePath } from "ed25519-hd-key";
-import { BulkPayoutGroupMember } from "@repo/db";
 import { ServerActionResponseToClient } from "@/types/server-actions";
 
 const SEED_PHRASE = process.env.ONETIME_PAYMENT_SENDING_WALLET_PHRASE!;

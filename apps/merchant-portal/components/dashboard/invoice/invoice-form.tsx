@@ -192,6 +192,7 @@ export function InvoiceForm({ invoiceData, setInvoiceData }: InvoiceFormProps) {
                 />
                 {(logoPreview || invoiceData.companyLogo) && (
                   <div className="h-12 w-12 relative">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={logoPreview || invoiceData.companyLogo || ""}
                       alt="Company Logo"

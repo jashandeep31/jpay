@@ -28,6 +28,7 @@ export function MerchantProfileManager() {
   const [merchant, setMerchant] = useState<Merchant>(mockMerchant);
   const [isPhoneVerificationOpen, setIsPhoneVerificationOpen] = useState(false);
   const [newPhoneNumber, setNewPhoneNumber] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [profileStatus, setProfileStatus] = useState<ProfileStatus>({
     lastUpdated: new Date(),
     alerts: [],
@@ -132,6 +133,7 @@ export function MerchantProfileManager() {
   };
 
   // Helper function to calculate profile completion percentage
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const calculateCompletionPercentage = (data: any): number => {
     const fields = [
       { name: "name", weight: 25 },

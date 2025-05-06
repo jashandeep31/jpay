@@ -89,8 +89,8 @@ export function PhoneVerificationDialog({
         <DialogHeader>
           <DialogTitle>Verify Phone Number</DialogTitle>
           <DialogDescription>
-            We've sent a verification code to {phoneNumber}. Please enter the
-            6-digit code below or paste it if copied.
+            We&apos;ve sent a verification code to {phoneNumber}. Please enter
+            the 6-digit code below or paste it if copied.
           </DialogDescription>
         </DialogHeader>
 

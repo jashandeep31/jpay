@@ -183,7 +183,7 @@ export function PhoneVerificationStep({
             </div>
           </div>
           <p className="text-sm text-muted-foreground">
-            We'll send a verification code to this number. Standard message
+            We&apos;ll send a verification code to this number. Standard message
             rates may apply.
           </p>
         </div>
