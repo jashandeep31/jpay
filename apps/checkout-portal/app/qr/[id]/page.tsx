@@ -3,7 +3,6 @@ import { ArrowLeft } from "lucide-react";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@repo/ui/components/ui/card";

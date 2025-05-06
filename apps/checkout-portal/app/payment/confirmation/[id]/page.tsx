@@ -2,10 +2,11 @@ import PaymentSuccess from "@/app/components/payment-success";
 import { db } from "@/lib/db";
 import React from "react";
 
-const page = async ({ params }: { params: { id: string } }) => {
+const page = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const id = (await params).id;
   const initiatedPayment = await db.intiatedPayment.findUnique({
     where: {
-      id: params.id,
+      id,
     },
     include: {
       stableCoin: true,
