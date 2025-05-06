@@ -19,10 +19,14 @@ export default async function LoginPage() {
   }
 
   return (
-    <Card className="w-full shadow-lg border-background-200">
+    <Card className="w-full shadow-lg border-border bg-card">
       <CardHeader className="space-y-1 text-center">
-        <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
-        <CardDescription>Sign in to your JPay account</CardDescription>
+        <CardTitle className="text-2xl font-bold text-card-foreground">
+          Welcome back
+        </CardTitle>
+        <CardDescription className="text-muted-foreground">
+          Sign in to your JPay account
+        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <form
@@ -37,12 +41,12 @@ export default async function LoginPage() {
         </form>
         <div className="space-y-4"></div>
       </CardContent>
-      <CardFooter className="flex flex-col space-y-4 border-t border-gray-100 pt-5">
-        <div className="text-sm text-center text-gray-500">
+      <CardFooter className="flex flex-col space-y-4 border-t border-border pt-5">
+        <div className="text-sm text-center text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
             href="/auth/signup"
-            className="text-blue-600 hover:text-blue-800 font-medium"
+            className="text-primary hover:text-primary/80 font-medium"
           >
             Sign up
           </Link>
