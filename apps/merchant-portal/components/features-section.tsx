@@ -50,7 +50,7 @@ export function FeaturesSection() {
         <h2 className="text-3xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-[#14F195] to-[#00C2FF]">
           Powerful Features for Modern Payments
         </h2>
-        <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+        <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
           JPay combines the speed and efficiency of the Solana blockchain with
           user-friendly features designed to make stablecoin payments simple,
           secure, and seamless.
@@ -59,15 +59,15 @@ export function FeaturesSection() {
           {features.map((feature) => (
             <GradientCard key={feature.title}>
               {feature.icon}
-              <h3 className="text-xl font-semibold mb-2">
+              <h3 className="text-xl font-semibold mb-2 text-foreground">
                 {feature.title}
                 {feature.comingSoon && (
-                  <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gradient-to-r from-[#14F195]/10 to-[#00C2FF]/10 text-[#14F195]">
+                  <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-accent/10 text-primary">
                     Soon
                   </span>
                 )}
               </h3>
-              <p className="text-gray-400">{feature.description}</p>
+              <p className="text-muted-foreground">{feature.description}</p>
             </GradientCard>
           ))}
         </div>

@@ -165,18 +165,56 @@ export async function addBulkPayoutGroupMember(
   name: string
 ): Promise<ServerActionResponseToClient<{ id: string }>> {
   try {
-    if (!groupId || !address || !amount || !name)
-      throw new Error("Invalid data");
+    // Validate input parameters
+    if (!groupId || !address || !amount || !name) {
+      throw new Error("All fields are required");
+    }
+
+    if (amount <= 0) {
+      throw new Error("Amount must be greater than 0");
+    }
+
+    // Validate Solana address format
+    if (!/^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address)) {
+      throw new Error("Invalid Solana address format");
+    }
+
     const session = await auth();
-    if (!session?.merchantId) throw new Error("Merchant ID not found");
-    const merchantId = session.merchantId;
+    if (!session?.merchantId) {
+      throw new Error("Unauthorized: Please log in to continue");
+    }
+
     const group = await db.bulkPayoutGroup.findUnique({
-      where: { id: groupId, merchantId },
+      where: { id: groupId, merchantId: session.merchantId },
     });
-    if (!group) throw new Error("Group not found");
+
+    if (!group) {
+      throw new Error(
+        "Group not found or you don't have permission to access it"
+      );
+    }
+
+    // Check if member already exists in the group
+    const existingMember = await db.bulkPayoutGroupMember.findFirst({
+      where: {
+        bulkPayoutGroupId: group.id,
+        address,
+      },
+    });
+
+    if (existingMember) {
+      throw new Error("This address is already added to the group");
+    }
+
     const member = await db.bulkPayoutGroupMember.create({
-      data: { bulkPayoutGroupId: group.id, address, amount, name },
+      data: {
+        bulkPayoutGroupId: group.id,
+        address,
+        amount,
+        name,
+      },
     });
+
     return {
       ok: true,
       data: { id: member.id },

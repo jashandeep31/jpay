@@ -8,7 +8,7 @@ import { CTASection } from "@/components/cta-section";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="min-h-screen bg-background text-foreground">
       <HeroSection />
       <PartnersSection />
       <FeaturesSection />

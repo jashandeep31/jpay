@@ -58,10 +58,22 @@ export const updateWebhook = async () => {
         isActive: true,
       },
     });
+
+    if (!liveWallets.length) {
+      throw new Error("No active live wallets found");
+    }
+
     const arrayLiveWallets = liveWallets.map((liveWallet) => {
       return liveWallet.walletAddress;
     });
-    const res = await fetch(process.env.HELIUS_WEBHOOK_API!, {
+
+    if (!process.env.HELIUS_WEBHOOK_API) {
+      throw new Error(
+        "HELIUS_WEBHOOK_API environment variable is not configured"
+      );
+    }
+
+    const res = await fetch(process.env.HELIUS_WEBHOOK_API, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -81,12 +93,19 @@ export const updateWebhook = async () => {
       );
     }
 
-    console.log("Webhook updated successfully");
+    return {
+      ok: true,
+      message: "Webhook updated successfully",
+    };
   } catch (error) {
     console.error(
       "Error updating webhook:",
       error instanceof Error ? error.message : "Unknown error"
     );
+    return {
+      ok: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
   }
 };
 

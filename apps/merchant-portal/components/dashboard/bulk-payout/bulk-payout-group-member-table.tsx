@@ -103,8 +103,8 @@ const BulkPayoutGroupMemberTable = ({
       </div>
       <div className="mt-6">
         <div className="overflow-auto">
-          <Table>
-            <TableHeader>
+          <Table className="bg-card border rounded-lg">
+            <TableHeader className="bg-muted">
               <TableRow>
                 <TableHead>S.No</TableHead>
                 <TableHead>Name</TableHead>

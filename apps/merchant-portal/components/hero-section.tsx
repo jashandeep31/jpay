@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen pt-32 pb-16 overflow-hidden bg-black">
+    <section className="relative min-h-screen pt-32 pb-16 overflow-hidden bg-background">
       <InteractiveGrid
         containerClassName="absolute inset-0"
         className="opacity-30"
@@ -15,17 +15,15 @@ export function HeroSection() {
 
       <div className="relative z-10 max-w-6xl mx-auto px-6">
         <div className="text-center mb-12">
-          <div className="inline-block px-4 py-1 rounded-full bg-white/10 backdrop-blur-sm text-sm font-medium text-[#14F195] mb-6 ">
+          <div className="inline-block px-4 py-1 rounded-full bg-accent/10 backdrop-blur-sm text-sm font-medium text-primary mb-6">
             The Future of Payments is Here
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-white">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-foreground">
             Fast & Secure Stablecoin
             <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#14F195] to-[#00C2FF]">
-              Payments on Solana
-            </span>
+            <span className="text-primary">Payments on Solana</span>
           </h1>
-          <p className="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
             JPay enables businesses to accept USDC and USDT payments with
             lightning-fast speeds and minimal fees. Experience the future of
             digital payments today.
@@ -39,7 +37,7 @@ export function HeroSection() {
             </Button>
             <Button
               variant="outline"
-              className="border-white/10 hover:bg-white/5 gap-2 btn-outline bg-black"
+              className="border-border hover:bg-accent/5 gap-2 btn-outline bg-background"
               size="lg"
             >
               Learn More <ArrowRight className="w-4 h-4" />
@@ -63,22 +61,16 @@ export function HeroSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div className="p-6">
-            <div className="text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-[#14F195] to-[#00C2FF]">
-              400ms
-            </div>
-            <p className="text-gray-400">Transaction Finality</p>
+            <div className="text-4xl font-bold mb-2 text-primary">400ms</div>
+            <p className="text-muted-foreground">Transaction Finality</p>
           </div>
           <div className="p-6">
-            <div className="text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-[#14F195] to-[#00C2FF]">
-              $0.00025
-            </div>
-            <p className="text-gray-400">Average Transaction Fee</p>
+            <div className="text-4xl font-bold mb-2 text-primary">$0.00025</div>
+            <p className="text-muted-foreground">Average Transaction Fee</p>
           </div>
           <div className="p-6">
-            <div className="text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-[#14F195] to-[#00C2FF]">
-              24/7
-            </div>
-            <p className="text-gray-400">Global Availability</p>
+            <div className="text-4xl font-bold mb-2 text-primary">24/7</div>
+            <p className="text-muted-foreground">Global Availability</p>
           </div>
         </div>
       </div>

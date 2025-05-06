@@ -106,14 +106,14 @@ export default function CreatePaymentPage() {
     setIsSubmitting(true);
 
     try {
+      // Validate fields
       const isFieldsValid = fields.every((field) => {
-        return (
-          field.label &&
-          field.placeholder &&
-          field.type &&
-          Object.values(PaymentPageFormFieldType).includes(field.type)
-        );
+        if (!field.label || !field.placeholder || !field.type) {
+          return false;
+        }
+        return Object.values(PaymentPageFormFieldType).includes(field.type);
       });
+
       if (!isFieldsValid) {
         toast.error("Error", {
           description: "Please fill all the extra fields correctly",
@@ -121,8 +121,16 @@ export default function CreatePaymentPage() {
         return;
       }
 
+      // Validate image
       const image = values.image;
-      if (!image) throw new Error("Image is required");
+      if (!image) {
+        toast.error("Error", {
+          description: "Image is required",
+        });
+        return;
+      }
+
+      // Generate presigned URL
       const getpresignedUrl = await generatePresignedUrl(
         "payment-pages",
         image.name,
@@ -132,7 +140,15 @@ export default function CreatePaymentPage() {
           | "image/webp"
           | "application/pdf"
       );
-      if (!getpresignedUrl) throw new Error("Failed to generate presigned URL");
+
+      if (!getpresignedUrl) {
+        toast.error("Error", {
+          description: "Failed to generate upload URL",
+        });
+        return;
+      }
+
+      // Upload to S3
       const s3Res = await fetch(getpresignedUrl.presignedUrl, {
         method: "PUT",
         body: image,
@@ -140,14 +156,26 @@ export default function CreatePaymentPage() {
           "Content-Type": image.type,
         },
       });
-      if (!s3Res.ok) throw new Error("Failed to upload image to S3");
-      await createPaymentPage({
+
+      if (!s3Res.ok) {
+        toast.error("Error", {
+          description: "Failed to upload image to S3",
+        });
+        return;
+      }
+
+      // Create payment page
+      const result = await createPaymentPage({
         ...values,
         image: getpresignedUrl.uploadId,
-        description: values.description || "", // Ensure description is always defined
+        description: values.description || "",
         expiresAt: values.expiresAt,
         fields: fields,
       });
+
+      if (!result.ok) {
+        throw new Error(result.error);
+      }
 
       toast.success("Success", {
         description: "Payment page created successfully",

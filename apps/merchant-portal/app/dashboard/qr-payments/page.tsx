@@ -28,16 +28,15 @@ export default function QRPaymentsPage() {
 
   const callGetQRPayments = useCallback(async () => {
     try {
-      const resposne = await getQRPayments();
-      if (!resposne.ok) {
-        throw new Error(resposne.error as string);
+      const response = await getQRPayments();
+      if (!response.ok) {
+        throw new Error(response.error as string);
       }
-      setQRPayments(resposne.data as unknown as QRPayment[]);
+      setQRPayments(response.data as unknown as QRPayment[]);
     } catch (error) {
       toast.error("Error", {
         description: error instanceof Error ? error.message : "Unknown error",
       });
-
       setQRPayments([]);
     } finally {
       setloading(false);

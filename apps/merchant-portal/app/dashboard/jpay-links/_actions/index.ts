@@ -8,10 +8,17 @@ export const createJPayLink = async (
 ): Promise<ServerActionResponseToClient<{ id: string }>> => {
   try {
     const session = await auth();
-    if (!session?.merchantId) throw new Error("Unauthorized");
+    if (!session?.merchantId) {
+      throw new Error("Unauthorized: Please log in to continue");
+    }
+
     const tag = formData.get("tag") as string;
     let uid = formData.get("uid") as string;
     const notifyOnEachPayment = Boolean(formData.get("notifyOnEachPayment"));
+
+    if (!tag || !uid) {
+      throw new Error("Tag and username are required");
+    }
 
     // Remove special characters and convert to lowercase
     uid = uid
@@ -21,6 +28,18 @@ export const createJPayLink = async (
 
     if (!uid) {
       throw new Error("Username must contain at least one letter");
+    }
+
+    // Check if the username is already taken
+    const existingLink = await db.jPayLink.findFirst({
+      where: {
+        uid,
+        merchantId: session.merchantId,
+      },
+    });
+
+    if (existingLink) {
+      throw new Error("This username is already taken");
     }
 
     const jpayLink = await db.jPayLink.create({

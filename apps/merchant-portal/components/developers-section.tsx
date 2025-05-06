@@ -6,38 +6,38 @@ export function DevelopersSection() {
   return (
     <section id="developers" className="py-16 px-6">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4 text-center bg-clip-text text-transparent bg-gradient-to-r from-[#14F195] to-[#00C2FF]">
+        <h2 className="text-3xl font-bold mb-4 text-center text-primary">
           Built for Developers
         </h2>
-        <p className="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+        <p className="text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
           Our developer-friendly API and comprehensive documentation make
           integration quick and painless.
         </p>
 
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           <GradientCard>
-            <Code className="w-10 h-10 text-[#14F195] mb-4" />
+            <Code className="w-10 h-10 text-primary mb-4" />
             <h3 className="text-xl font-semibold mb-2">Simple API</h3>
-            <p className="text-gray-400 mb-4">
+            <p className="text-muted-foreground mb-4">
               RESTful API with clear endpoints and responses
             </p>
             <Button
               variant="outline"
-              className="w-full border-white/10 hover:bg-white/5 btn-outline"
+              className="w-full border-border hover:bg-accent/5"
             >
               API Reference
             </Button>
           </GradientCard>
 
           <GradientCard>
-            <FileText className="w-10 h-10 text-[#00C2FF] mb-4" />
+            <FileText className="w-10 h-10 text-primary mb-4" />
             <h3 className="text-xl font-semibold mb-2">SDKs</h3>
-            <p className="text-gray-400 mb-4">
+            <p className="text-muted-foreground mb-4">
               Libraries for JavaScript, Python, PHP, and more
             </p>
             <Button
               variant="outline"
-              className="w-full border-white/10 hover:bg-white/5 btn-outline"
+              className="w-full border-border hover:bg-accent/5"
             >
               Download SDKs
             </Button>
