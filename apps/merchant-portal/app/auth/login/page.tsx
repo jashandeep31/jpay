@@ -19,7 +19,7 @@ export default async function LoginPage() {
   }
 
   return (
-    <Card className="w-full shadow-lg border-gray-200">
+    <Card className="w-full shadow-lg border-background-200">
       <CardHeader className="space-y-1 text-center">
         <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
         <CardDescription>Sign in to your JPay account</CardDescription>

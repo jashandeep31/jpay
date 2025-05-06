@@ -10,7 +10,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
   const { collapsed } = useSidebar();
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex min-h-screen ">
       <DashboardSidebar />
       <div
         className={`flex flex-col flex-1 w-full transition-all duration-300 ease-in-out ${
@@ -32,7 +32,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-accent">
       <SidebarProvider>
         <DashboardContent>{children}</DashboardContent>
       </SidebarProvider>

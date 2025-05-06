@@ -97,32 +97,34 @@ export default function DashboardSidebar() {
         collapsed ? "md:w-16" : "md:w-64"
       }`}
     >
-      <div className="flex flex-col flex-1 h-full bg-white border-r border-gray-200 relative">
+      <div className="flex flex-col flex-1 h-full bg-sidebar border-r border-sidebar-border relative">
         {/* Toggle button */}
         <button
           onClick={toggleSidebar}
-          className="absolute -right-3 top-20 bg-white border border-gray-200 rounded-full p-1 shadow-md z-10 hover:bg-gray-50"
+          className="absolute -right-3 top-20 bg-sidebar border border-sidebar-border rounded-full p-1 shadow-md z-10 hover:bg-sidebar-accent"
         >
           {collapsed ? (
-            <ChevronRight className="h-4 w-4 text-gray-600" />
+            <ChevronRight className="h-4 w-4 text-sidebar-foreground" />
           ) : (
-            <ChevronLeft className="h-4 w-4 text-gray-600" />
+            <ChevronLeft className="h-4 w-4 text-sidebar-foreground" />
           )}
         </button>
 
         <div
-          className={`flex items-center h-16 flex-shrink-0 px-4 border-b border-gray-200 ${
+          className={`flex items-center h-16 flex-shrink-0 px-4 border-b border-sidebar-border ${
             collapsed ? "justify-center" : ""
           }`}
         >
           <Link href="/dashboard" className="flex items-center">
             {collapsed ? (
-              <span className="text-2xl font-bold text-blue-500">J</span>
+              <span className="text-2xl font-bold text-sidebar-primary">J</span>
             ) : (
               <>
-                <span className="text-2xl font-bold text-gray-900">JPay</span>
-                <span className="ml-1 text-blue-500 font-bold">.</span>
-                <Badge variant="outline" className="ml-1 text-blue-500">
+                <span className="text-2xl font-bold text-sidebar-foreground">
+                  JPay
+                </span>
+                <span className="ml-1 text-sidebar-primary font-bold">.</span>
+                <Badge variant="outline" className="ml-1 text-sidebar-primary">
                   Devnet
                 </Badge>
               </>
@@ -131,7 +133,7 @@ export default function DashboardSidebar() {
         </div>
 
         <div className="flex-1 flex flex-col overflow-y-auto pt-5 pb-4">
-          <nav className="flex-1 px-2 space-y-1 bg-white">
+          <nav className="flex-1 px-2 space-y-1 bg-sidebar">
             <TooltipProvider delayDuration={0}>
               {sidebarLinks.map((link) => {
                 const isActive = pathname === link.href;
@@ -144,8 +146,8 @@ export default function DashboardSidebar() {
                           collapsed ? "justify-center" : ""
                         } px-2 py-2 text-sm font-medium rounded-md ${
                           isActive
-                            ? "bg-blue-50 text-blue-600"
-                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                            ? "bg-sidebar-accent text-sidebar-primary"
+                            : "text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground"
                         }`}
                         onMouseEnter={() => setHoveredItem(link.name)}
                         onMouseLeave={() => setHoveredItem(null)}
@@ -153,8 +155,8 @@ export default function DashboardSidebar() {
                         <link.icon
                           className={`${collapsed ? "mr-0" : "mr-3"} flex-shrink-0 h-5 w-5 ${
                             isActive
-                              ? "text-blue-500"
-                              : "text-gray-400 group-hover:text-gray-500"
+                              ? "text-sidebar-primary"
+                              : "text-sidebar-foreground/60 group-hover:text-sidebar-foreground"
                           }`}
                           aria-hidden="true"
                         />
@@ -173,7 +175,7 @@ export default function DashboardSidebar() {
           </nav>
         </div>
 
-        <div className="flex-shrink-0 flex flex-col border-t border-gray-200 p-4">
+        <div className="flex-shrink-0 flex flex-col border-t border-sidebar-border p-4">
           <div className={`${collapsed ? "px-0" : "px-2"} space-y-1`}>
             <TooltipProvider delayDuration={0}>
               {bottomLinks.map((link) => (
@@ -183,12 +185,12 @@ export default function DashboardSidebar() {
                       href={link.href}
                       className={`group flex items-center ${
                         collapsed ? "justify-center" : ""
-                      } px-2 py-2 text-sm font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900`}
+                      } px-2 py-2 text-sm font-medium rounded-md text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground`}
                       onMouseEnter={() => setHoveredItem(link.name)}
                       onMouseLeave={() => setHoveredItem(null)}
                     >
                       <link.icon
-                        className={`${collapsed ? "mr-0" : "mr-3"} flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500`}
+                        className={`${collapsed ? "mr-0" : "mr-3"} flex-shrink-0 h-5 w-5 text-sidebar-foreground/60 group-hover:text-sidebar-foreground`}
                         aria-hidden="true"
                       />
                       {!collapsed && link.name}
@@ -203,7 +205,7 @@ export default function DashboardSidebar() {
           </div>
 
           <div
-            className={`mt-auto pt-4 border-t border-gray-200 ${collapsed ? "px-0" : "px-2"}`}
+            className={`mt-auto pt-4 border-t border-sidebar-border ${collapsed ? "px-0" : "px-2"}`}
           >
             <TooltipProvider delayDuration={0}>
               <Tooltip>
@@ -211,10 +213,10 @@ export default function DashboardSidebar() {
                   <button
                     className={`group flex items-center ${
                       collapsed ? "justify-center" : ""
-                    } px-2 py-2 text-sm font-medium rounded-md w-full text-gray-600 hover:bg-gray-50 hover:text-gray-900`}
+                    } px-2 py-2 text-sm font-medium rounded-md w-full text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground`}
                   >
                     <LogOut
-                      className={`${collapsed ? "mr-0" : "mr-3"} flex-shrink-0 h-5 w-5 text-gray-400 group-hover:text-gray-500`}
+                      className={`${collapsed ? "mr-0" : "mr-3"} flex-shrink-0 h-5 w-5 text-sidebar-foreground/60 group-hover:text-sidebar-foreground`}
                     />
                     {!collapsed && "Sign Out"}
                   </button>

@@ -43,12 +43,12 @@ export default async function DashboardPage() {
   return (
     <div className="flex flex-col gap-5 pt-1">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <h2 className="text-2xl font-bold tracking-tight">
+        <h2 className="text-2xl font-bold tracking-tight text-foreground">
           Welcome back, {session?.user?.name || "User"}
         </h2>
         <div className="flex items-center gap-2">
           <Link href="/dashboard/payment-link/create">
-            <Button className="bg-blue-500 hover:bg-blue-600 w-full sm:w-auto">
+            <Button className="bg-primary hover:bg-primary/90 w-full sm:w-auto">
               <LinkIcon className="mr-2 h-4 w-4" />
               Create Payment Link
             </Button>
@@ -63,10 +63,10 @@ export default async function DashboardPage() {
       </div>
 
       <div className="mt-4">
-        <Card>
+        <Card className="border-border">
           <CardHeader>
-            <CardTitle>Recent Payments</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-foreground">Recent Payments</CardTitle>
+            <CardDescription className="text-muted-foreground">
               Your most recent payment activity.
             </CardDescription>
           </CardHeader>

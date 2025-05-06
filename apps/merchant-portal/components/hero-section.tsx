@@ -39,7 +39,7 @@ export function HeroSection() {
             </Button>
             <Button
               variant="outline"
-              className="border-white/10 hover:bg-white/5 gap-2 btn-outline"
+              className="border-white/10 hover:bg-white/5 gap-2 btn-outline bg-black"
               size="lg"
             >
               Learn More <ArrowRight className="w-4 h-4" />

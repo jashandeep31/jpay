@@ -21,54 +21,54 @@ export default function RecentPayments({
     <div className="overflow-x-auto">
       <table className="w-full">
         <thead>
-          <tr className="border-b border-gray-200">
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <tr className="border-b border-border">
+            <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Date
             </th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Source
             </th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Amount
             </th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Customer
             </th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Status
             </th>
-            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Settled
             </th>
-            <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Actions
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200 bg-white">
+        <tbody className="divide-y divide-border bg-background">
           {transactions.map((payment) => (
-            <tr key={payment.id} className="hover:bg-gray-50">
-              <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
+            <tr key={payment.id} className="hover:bg-muted/50">
+              <td className="px-4 py-4 whitespace-nowrap text-sm text-muted-foreground">
                 {payment.createdAt.toLocaleDateString()}
               </td>
-              <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-foreground">
                 {payment.initiatedFrom}
               </td>
               <td className="px-4 py-4 whitespace-nowrap">
-                <div className="text-sm text-gray-900">
+                <div className="text-sm text-foreground">
                   ${payment.amount.toString()}
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-muted-foreground">
                   {payment.stableCoinName}
                 </div>
               </td>
               <td className="px-4 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                   <div>
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-sm font-medium text-foreground">
                       To: {payment.toWalletAddress}
                     </div>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-muted-foreground">
                       From: {payment.fromWalletAddress}
                     </div>
                   </div>
@@ -81,14 +81,14 @@ export default function RecentPayments({
                   }
                   className={
                     payment.status === "COMPLETED"
-                      ? "bg-green-100 text-green-800 hover:bg-green-200"
-                      : "bg-yellow-100 text-yellow-800 hover:bg-yellow-200"
+                      ? "bg-green-500/10 text-green-500 hover:bg-green-500/20"
+                      : "bg-yellow-500/10 text-yellow-500 hover:bg-yellow-500/20"
                   }
                 >
                   {payment.status === "COMPLETED" ? "Paid" : "Pending"}
                 </Badge>
               </td>
-              <td className="px-4 py-4 whitespace-nowrap text-left text-sm font-medium">
+              <td className="px-4 py-4 whitespace-nowrap text-left text-sm font-medium text-foreground">
                 {payment.settled ? "Yes" : "No"}
               </td>
               <td className="px-4 py-4 whitespace-nowrap text-left text-sm font-medium">
