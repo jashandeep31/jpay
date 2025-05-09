@@ -20,12 +20,14 @@ export default function PaymentSuccess({
 
   useEffect(() => {
     if (countdown === 0) {
-      window.location.href = pgPayment?.redirectUrl || "/";
+      if (initiatedPayment.initiatedFrom === "PG_PAYMENT") {
+        window.location.href = pgPayment?.redirectUrl || "/";
+      }
       return;
     }
     const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
     return () => clearTimeout(timer);
-  }, [countdown, pgPayment]);
+  }, [countdown, pgPayment, initiatedPayment]);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -70,6 +72,9 @@ export default function PaymentSuccess({
             <div className={buttonVariants()}>
               Redirecting in {countdown} second{countdown !== 1 ? "s" : ""}
             </div>
+          )}
+          {pgPayment && (
+            <div className={buttonVariants()}>You can close this page now.</div>
           )}
         </div>
       </Card>

@@ -20,6 +20,15 @@ import { MerchantInfo } from "@/app/components/merchant-info";
 import { Separator } from "@repo/ui/components/ui/separator";
 import { IntiatedPayment, StableCoin } from "@repo/db/";
 import { checkInitiatedPaymentStatus } from "../payment/[id]/_actions";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { useWalletModal } from "@solana/wallet-adapter-react-ui";
+import { PublicKey } from "@solana/web3.js";
+import { toast } from "sonner";
+import { Transaction } from "@solana/web3.js";
+import {
+  createTransferCheckedInstruction,
+  getAssociatedTokenAddress,
+} from "@solana/spl-token";
 
 interface PaymentDetailsClientProps {
   initiatedPayment: IntiatedPayment & {
@@ -37,26 +46,70 @@ export function PaymentDetailsClient({
   const router = useRouter();
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { publicKey, signTransaction } = useWallet();
+  const { setVisible } = useWalletModal();
 
   const walletAddress = initiatedPayment.walletAddress;
   const amount = Number(initiatedPayment.amount);
+  const { connection } = useConnection();
+
+  const triggerTransactionFromWallet = async () => {
+    const toastId = toast.loading("Processing payment...");
+    try {
+      setLoading(true);
+      if (!publicKey || !signTransaction)
+        throw new Error("No wallet connected");
+      const mintPubkey = new PublicKey(initiatedPayment.stableCoin.authority);
+      const fromAta = await getAssociatedTokenAddress(mintPubkey, publicKey);
+      const recipientPk = new PublicKey(initiatedPayment.walletAddress);
+      const toAta = await getAssociatedTokenAddress(mintPubkey, recipientPk);
+      const amountInBaseUnits = BigInt(
+        Math.floor(amount * 10 ** initiatedPayment.stableCoin.decimalCount)
+      );
+      const ix = createTransferCheckedInstruction(
+        fromAta,
+        mintPubkey,
+        toAta,
+        publicKey,
+        amountInBaseUnits,
+        initiatedPayment.stableCoin.decimalCount
+      );
+      const { blockhash } = await connection.getLatestBlockhash("confirmed");
+      const tx = new Transaction();
+      tx.add(ix);
+      tx.recentBlockhash = blockhash;
+      tx.feePayer = publicKey;
+
+      const signedTx = await signTransaction(tx);
+
+      const raw = signedTx.serialize();
+      const sig = await connection.sendRawTransaction(raw);
+      await connection.confirmTransaction(
+        {
+          signature: sig,
+          blockhash: blockhash,
+          lastValidBlockHeight: (await connection.getLatestBlockhash())
+            .lastValidBlockHeight,
+        },
+        "confirmed"
+      );
+
+      toast.success(`Payment successful: ${sig}`, { id: toastId });
+
+      toast.success(`Payment successful: ${sig}`, { id: toastId });
+    } catch {
+      toast.error("Payment failed", { id: toastId });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(walletAddress);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
-  console.log(
-    `solana:${walletAddress}?amount=${amount}&spl-token=${initiatedPayment.stableCoin.authority}`
-  );
 
-  const handlePayment = () => {
-    setLoading(true);
-    // Simulate payment processing
-    setTimeout(() => {
-      router.push("/payment/confirmation?txid=mock-transaction-id");
-    }, 2000);
-  };
   useEffect(() => {
     const canvas = document.getElementById("qr-code") as HTMLCanvasElement;
     if (canvas) {
@@ -178,13 +231,19 @@ export function PaymentDetailsClient({
             </div>
           </CardContent>
           <CardFooter className="flex flex-col">
-            <Button
-              className="w-full"
-              onClick={handlePayment}
-              disabled={loading}
-            >
-              {loading ? "Processing..." : "Complete Payment"}
-            </Button>
+            {!publicKey ? (
+              <Button className="w-full" onClick={() => setVisible(true)}>
+                Connect Wallet
+              </Button>
+            ) : (
+              <Button
+                className="w-full"
+                onClick={triggerTransactionFromWallet}
+                disabled={loading}
+              >
+                {loading ? "Processing..." : "Complete Payment"}
+              </Button>
+            )}
 
             <div className="text-center text-sm text-muted-foreground mt-4">
               <p>
