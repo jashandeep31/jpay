@@ -16,7 +16,7 @@ import Link from "next/link";
 export default function RecentPayments({
   transactions,
 }: {
-  transactions: Transaction[];
+  transactions: (Omit<Transaction, "amount"> & { amount: number })[];
 }) {
   return (
     <div className="overflow-x-auto">
@@ -57,7 +57,7 @@ export default function RecentPayments({
               </td>
               <td className="px-4 py-4 whitespace-nowrap">
                 <div className="text-sm text-foreground">
-                  ${payment.amount.toString()}
+                  ${payment.amount.toFixed(2)}
                 </div>
                 <div className="text-xs text-muted-foreground">
                   {payment.stableCoinName}

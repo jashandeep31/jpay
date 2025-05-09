@@ -13,7 +13,8 @@ import React from "react";
 const WalletCard = ({
   wallet,
 }: {
-  wallet: Wallet & {
+  wallet: Omit<Wallet, "balance"> & {
+    balance: number;
     stableCoin: StableCoin;
   };
 }) => {
@@ -34,7 +35,7 @@ const WalletCard = ({
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">
-          Balance: ${wallet.balance.toLocaleString()}
+          Balance: ${Number(wallet.balance).toFixed(2)}
         </div>
         <div className="flex justify-end mt-2">
           <Button onClick={() => settleMerchantPayments(wallet.id)}>

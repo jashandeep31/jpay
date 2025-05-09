@@ -31,15 +31,28 @@ export default async function DashboardPage() {
   if (!session?.merchantId) {
     redirect("/auth/login");
   }
-  const wallets = await db.wallet.findMany({
-    where: {
-      merchantId: session.merchantId,
-    },
-    include: {
-      stableCoin: true,
-    },
-  });
-  const transactions = await getTransactions(session.merchantId);
+
+  const [iWallets, iTransactions] = await Promise.all([
+    db.wallet.findMany({
+      where: {
+        merchantId: session.merchantId,
+      },
+      include: {
+        stableCoin: true,
+      },
+    }),
+    getTransactions(session.merchantId),
+  ]);
+
+  const wallets = iWallets.map((wallet) => ({
+    ...wallet,
+    balance: Number(wallet.balance),
+  }));
+  const transactions = iTransactions.map((transaction) => ({
+    ...transaction,
+    amount: Number(transaction.amount),
+  }));
+
   return (
     <div className="flex flex-col gap-5 pt-1">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
