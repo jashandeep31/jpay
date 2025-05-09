@@ -130,12 +130,6 @@ export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
                     <QrCode className="h-4 w-4" />
                   </Button>
                   <DropdownMenu>
-                    <DropdownMenuItem asChild>
-                      <Link href={`/dashboard/qr-payments/view/${link.id}`}>
-                        <ExternalLink className="mr-2 h-4 w-4" />
-                        View Transactions
-                      </Link>
-                    </DropdownMenuItem>
                     <DropdownMenuTrigger asChild>
                       <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
                         <span className="sr-only">Open menu</span>
@@ -143,6 +137,12 @@ export default function QRPaymentsTable({ qrPayments }: QRPaymentsTableProps) {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
+                      <DropdownMenuItem asChild>
+                        <Link href={`/dashboard/qr-payments/view/${link.id}`}>
+                          <ExternalLink className="mr-2 h-4 w-4" />
+                          View Transactions
+                        </Link>
+                      </DropdownMenuItem>
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
                       <DropdownMenuSeparator />
                       <DropdownMenuItem onClick={() => handleCopyLink(link.id)}>

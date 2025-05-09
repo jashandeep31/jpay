@@ -37,7 +37,7 @@ const BulkPayoutMainUI = ({
           Create Group +
         </Link>
       </div>
-      <div className="overflow-auto">
+      <div className="overflow-auto mt-6">
         <Table className="bg-card border rounded-lg">
           <TableHeader className="bg-muted">
             <TableRow>

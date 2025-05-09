@@ -8,6 +8,7 @@ import BulkPayoutMainUI from "@/components/dashboard/bulk-payout/bulk-payout-mai
 import { db } from "@/lib/db";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { Card, CardContent } from "@repo/ui/components/ui/card";
 
 const page = async () => {
   const session = await auth();
@@ -40,7 +41,11 @@ const page = async () => {
           </Alert>
         </div>
       </div>
-      <BulkPayoutMainUI bulkPayoutGroups={bulkPayoutGroups} />
+      <Card>
+        <CardContent>
+          <BulkPayoutMainUI bulkPayoutGroups={bulkPayoutGroups} />
+        </CardContent>
+      </Card>
     </div>
   );
 };
