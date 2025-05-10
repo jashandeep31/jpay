@@ -20,7 +20,7 @@ RUN rm -rf apps/merchant-portal/ apps/checkout/
 RUN pnpm install --frozen-lockfile
 
 # Build the application
-WORKDIR  /packages/db
+WORKDIR  /app/packages/db
 RUN npx prisma generate
 WORKDIR /app
 RUN pnpm --filter worker-server build
@@ -33,3 +33,6 @@ ENV NODE_ENV=production
 
 # Start the application
 CMD ["pnpm", "--filter", "worker-server", "start"]
+
+
+# docker build -t worker-server -f apps/worker-server/Dockerfile .
