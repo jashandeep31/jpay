@@ -7,14 +7,17 @@ RUN corepack enable
 # Set working directory
 WORKDIR /app
 
+# Copy package files first
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
+# Copy the entire project but use .dockerignore to exclude unnecessary files
 COPY . .
-RUN pnpm install
 
-RUN rm -rf apps/merchant-portal/
-RUN rm -rf apps/checkout/
+# Clean up unnecessary app directories to reduce image size
+RUN rm -rf apps/merchant-portal/ apps/checkout/
 
 # Install dependencies
+RUN pnpm install --frozen-lockfile
 
 # Build the application
 RUN pnpm --filter worker-server build
