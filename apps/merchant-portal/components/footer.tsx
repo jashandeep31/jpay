@@ -388,26 +388,7 @@ export function Footer() {
           <p className="text-muted-foreground text-sm mb-4 md:mb-0">
             © {new Date().getFullYear()} JPay. All rights reserved.
           </p>
-          <div className="flex gap-6">
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-            >
-              Terms of Service
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm"
-            >
-              Cookie Policy
-            </Link>
-          </div>
+          <div className="flex gap-6">jashan.dev</div>
         </div>
       </div>
     </footer>
