@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "6.6.0",
     "@repo/db": "workspace:*",
     "@repo/ui": "workspace:*",
     "@solana/spl-token": "^0.4.13",
