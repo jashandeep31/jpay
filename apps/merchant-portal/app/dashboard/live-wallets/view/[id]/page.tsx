@@ -29,7 +29,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
     },
   });
   console.log(initiatedPayments.length);
-  const transactions: Transaction[] = [];
+  const transactions: (Omit<Transaction, "amount"> & { amount: number })[] = [];
   for (const initiatedPayment of initiatedPayments) {
     const dbTransactions = await db.transaction.findMany({
       where: {
@@ -37,8 +37,12 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         status: "COMPLETED",
       },
     });
-    if (dbTransactions) {
-      transactions.push(...dbTransactions);
+    for (const dbTransaction of dbTransactions) {
+      const { amount, ...rest } = dbTransaction;
+      transactions.push({
+        ...rest,
+        amount: Number(amount),
+      });
     }
   }
 

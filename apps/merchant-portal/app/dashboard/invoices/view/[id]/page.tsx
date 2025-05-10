@@ -16,12 +16,16 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const session = await auth();
   if (!session?.merchantId) redirect("/auth/login");
   const { id } = await params;
-  const invoice = await db.invoice.findUnique({
+  const iInvoice = await db.invoice.findUnique({
     where: {
       id,
       merchantId: session.merchantId,
     },
   });
+  const invoice = {
+    ...iInvoice,
+    amount: Number(iInvoice?.amount),
+  };
   if (!invoice) redirect("/dashboard/invoices");
   const initiatedPayments = await db.intiatedPayment.findMany({
     where: {
@@ -29,7 +33,7 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
       status: "COMPLETED",
     },
   });
-  const transactions: Transaction[] = [];
+  const transactions: (Omit<Transaction, "amount"> & { amount: number })[] = [];
   for (const initiatedPayment of initiatedPayments) {
     const dbTransactions = await db.transaction.findMany({
       where: {
@@ -37,8 +41,12 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
         status: "COMPLETED",
       },
     });
-    if (dbTransactions) {
-      transactions.push(...dbTransactions);
+    for (const dbTransaction of dbTransactions) {
+      const { amount, ...rest } = dbTransaction;
+      transactions.push({
+        ...rest,
+        amount: Number(amount),
+      });
     }
   }
 
@@ -55,7 +63,13 @@ const page = async ({ params }: { params: Promise<{ id: string }> }) => {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <RecentPayments transactions={transactions} />
+            <RecentPayments
+              transactions={
+                transactions as (Omit<Transaction, "amount"> & {
+                  amount: number;
+                })[]
+              }
+            />
           </CardContent>
         </Card>
       </div>
