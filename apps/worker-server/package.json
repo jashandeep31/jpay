@@ -16,6 +16,8 @@
   "dependencies": {
     "@repo/db": "workspace:*",
     "@repo/typescript-config": "workspace:*",
+    "@solana/spl-token": "^0.4.13",
+    "@solana/web3.js": "^1.98.2",
     "axios": "^1.9.0",
     "bcryptjs": "^3.0.2",
     "bs58": "^6.0.0",
