@@ -9,10 +9,10 @@ declare module "next-auth" {
    */
   interface Session {
     merchantId: string;
+    profileCompleted: boolean;
     user: {
       id: string;
       /** The user's postal address. */
-      address: string;
       /**
        * By default, TypeScript merges new interface properties and overwrites existing ones.
        * In this case, the default session user properties will be overwritten,
@@ -50,6 +50,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         });
 
         session.merchantId = merchant.id;
+        session.profileCompleted = merchant.profileCompleted;
       }
       return session;
     },

@@ -16,25 +16,12 @@ import {
 } from "@repo/ui/components/ui/form";
 import { Input } from "@repo/ui/components/ui/input";
 import { Textarea } from "@repo/ui/components/ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@repo/ui/components/ui/select";
-import { Loader2, Building2, MapPin, Briefcase, FileText } from "lucide-react";
+import { Loader2, Building2, FileText } from "lucide-react";
 
 // Schema for business details
 const businessDetailsSchema = z.object({
   businessName: z.string().min(2, {
     message: "Business name must be at least 2 characters.",
-  }),
-  businessAddress: z.string().min(5, {
-    message: "Please enter a valid address.",
-  }),
-  industry: z.string({
-    required_error: "Please select an industry.",
   }),
   description: z
     .string()
@@ -42,6 +29,9 @@ const businessDetailsSchema = z.object({
       message: "Description must not exceed 500 characters.",
     })
     .optional(),
+  address: z.string().min(2, {
+    message: "Address must be at least 2 characters.",
+  }),
 });
 
 type BusinessDetailsValues = z.infer<typeof businessDetailsSchema>;
@@ -49,21 +39,6 @@ type BusinessDetailsValues = z.infer<typeof businessDetailsSchema>;
 interface BusinessDetailsStepProps {
   onCompleted: (details: BusinessDetailsValues) => void;
 }
-
-// List of industries
-const industries = [
-  { value: "retail", label: "Retail" },
-  { value: "food", label: "Food & Beverage" },
-  { value: "tech", label: "Technology" },
-  { value: "health", label: "Healthcare" },
-  { value: "education", label: "Education" },
-  { value: "finance", label: "Finance" },
-  { value: "manufacturing", label: "Manufacturing" },
-  { value: "construction", label: "Construction" },
-  { value: "transportation", label: "Transportation" },
-  { value: "entertainment", label: "Entertainment" },
-  { value: "other", label: "Other" },
-];
 
 export function BusinessDetailsStep({ onCompleted }: BusinessDetailsStepProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -73,9 +48,8 @@ export function BusinessDetailsStep({ onCompleted }: BusinessDetailsStepProps) {
     resolver: zodResolver(businessDetailsSchema),
     defaultValues: {
       businessName: "",
-      businessAddress: "",
-      industry: "",
       description: "",
+      address: "",
     },
   });
 
@@ -127,58 +101,23 @@ export function BusinessDetailsStep({ onCompleted }: BusinessDetailsStepProps) {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
-            name="businessAddress"
+            name="address"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="flex items-center">
-                  <MapPin className="mr-2 h-4 w-4 text-primary" />
+                  <FileText className="mr-2 h-4 w-4 text-primary" />
                   Business Address
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter your business address" {...field} />
+                  <Textarea
+                    placeholder="Tell us about your business"
+                    className="min-h-[120px]"
+                    {...field}
+                  />
                 </FormControl>
-                <FormDescription>
-                  Your business location helps us provide location-based
-                  services.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="industry"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="flex items-center">
-                  <Briefcase className="mr-2 h-4 w-4 text-primary" />
-                  Industry
-                </FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your industry" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {industries.map((industry) => (
-                      <SelectItem key={industry.value} value={industry.value}>
-                        {industry.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormDescription>
-                  Selecting your industry helps us tailor our services to your
-                  needs.
-                </FormDescription>
+                <FormDescription>The address of your business.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}

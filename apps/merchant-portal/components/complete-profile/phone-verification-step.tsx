@@ -84,8 +84,8 @@ export function PhoneVerificationStep({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVerificationOpen, setIsVerificationOpen] = useState(false);
   const [fullPhoneNumber, setFullPhoneNumber] = useState("");
-  const [formattedPhoneNumber, setFormattedPhoneNumber] = useState("");
-
+  const [formattedPhoneNumber, setFormattedPhoneNumber] =
+    useState("(122) 345-6789");
   // Form for phone number
   const form = useForm<PhoneValues>({
     resolver: zodResolver(phoneSchema),
@@ -182,9 +182,10 @@ export function PhoneVerificationStep({
               )}
             </div>
           </div>
-          <p className="text-sm text-muted-foreground">
-            We&apos;ll send a verification code to this number. Standard message
-            rates may apply.
+          <p className="text-sm  text-destructive">
+            Just simply edit a number by little and click on the button. Perfect
+            verification is disabled due to privacy issues. I dons&apos;t want
+            to get number of testers.
           </p>
         </div>
 

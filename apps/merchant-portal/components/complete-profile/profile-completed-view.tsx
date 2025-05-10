@@ -1,11 +1,9 @@
 "use client";
 
-import { buttonVariants } from "@repo/ui/components/ui/button";
+import { Button, buttonVariants } from "@repo/ui/components/ui/button";
 import { Card, CardContent } from "@repo/ui/components/ui/card";
 import { CheckCircle2, ArrowRight } from "lucide-react";
-import Image from "next/image";
 import type { BusinessProfile } from "./profile-completion-flow";
-import Link from "next/link";
 
 interface ProfileCompletedViewProps {
   profile: BusinessProfile;
@@ -28,10 +26,10 @@ export function ProfileCompletedView({ profile }: ProfileCompletedViewProps) {
           <div className="flex flex-col items-center">
             {profile.logoUrl ? (
               <div className="relative w-24 h-24 mb-4 rounded-full overflow-hidden border">
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src={profile.logoUrl || "/placeholder.svg"}
                   alt={`${profile.businessName} logo`}
-                  fill
                   className="object-cover"
                 />
               </div>
@@ -45,7 +43,7 @@ export function ProfileCompletedView({ profile }: ProfileCompletedViewProps) {
 
             <h3 className="text-xl font-bold">{profile.businessName}</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              {profile.industry}
+              {profile.description}
             </p>
 
             <div className="w-full space-y-3 text-left">
@@ -56,7 +54,7 @@ export function ProfileCompletedView({ profile }: ProfileCompletedViewProps) {
 
               <div>
                 <div className="text-sm font-medium">Address</div>
-                <div>{profile.businessAddress}</div>
+                <div>{profile.address}</div>
               </div>
 
               {profile.description && (
@@ -70,10 +68,13 @@ export function ProfileCompletedView({ profile }: ProfileCompletedViewProps) {
         </CardContent>
       </Card>
 
-      <Link href="/dashboard" className={buttonVariants()}>
+      <Button
+        onClick={() => window.location.replace("dashboard")}
+        className={buttonVariants()}
+      >
         Go to Dashboard
         <ArrowRight className="ml-2 h-4 w-4" />
-      </Link>
+      </Button>
     </div>
   );
 }

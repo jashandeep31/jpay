@@ -9,13 +9,14 @@ import { LogoUploadStep } from "./logo-upload-step";
 import { ProfileCompletedView } from "./profile-completed-view";
 import { Button } from "@repo/ui/components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import { updateCompleteProfile } from "@/app/complete-profile/_actions";
+import { toast } from "sonner";
 export interface BusinessProfile {
   phoneNumber: string;
   businessName: string;
-  businessAddress: string;
-  industry: string;
   description: string;
   logoUrl: string;
+  address: string;
 }
 
 // Define the steps in the profile completion process
@@ -39,10 +40,10 @@ export function ProfileCompletionFlow() {
   const [profile, setProfile] = useState<BusinessProfile>({
     phoneNumber: "",
     businessName: "",
-    businessAddress: "",
-    industry: "",
     description: "",
-    logoUrl: "",
+    logoUrl:
+      "https://job2tech-public.s3.us-east-1.amazonaws.com/merchant/profile/logo/4b4a5296-d9c9-4ecf-8ab1-40ebc901bc48-usdt.png",
+    address: "",
   });
 
   // Handle phone verification completion
@@ -54,9 +55,8 @@ export function ProfileCompletionFlow() {
   // Handle business details completion
   const handleBusinessDetailsCompleted = (details: {
     businessName: string;
-    businessAddress: string;
-    industry: string;
     description?: string;
+    address: string;
   }) => {
     setProfile((prev) => ({ ...prev, ...details }));
     setStepCompleted(true);
@@ -87,6 +87,27 @@ export function ProfileCompletionFlow() {
     }
   };
 
+  const handleCompleteProfile = async () => {
+    const toastId = toast.loading("Completing profile...");
+    try {
+      const res = await updateCompleteProfile({
+        phoneNumber: parseInt(profile.phoneNumber),
+        countryCode: profile.phoneNumber.split(" ")[0],
+        businessName: profile.businessName,
+        description: profile.description,
+        address: profile.address,
+      });
+      if (res.ok) {
+        setProfileCompleted(true);
+        toast.success("Profile completed successfully", { id: toastId });
+      } else {
+        toast.error("Failed to complete profile", { id: toastId });
+      }
+    } catch {
+      toast.error("Failed to complete profile", { id: toastId });
+    }
+  };
+
   // If profile is completed, show the completed view
   if (profileCompleted) {
     return <ProfileCompletedView profile={profile} />;
@@ -105,15 +126,57 @@ export function ProfileCompletionFlow() {
           {/* Step Content */}
           <div className="mb-8">
             {currentStepIndex === 0 && (
-              <PhoneVerificationStep onVerified={handlePhoneVerified} />
+              <>
+                <PhoneVerificationStep onVerified={handlePhoneVerified} />
+                <Button
+                  className="w-full mt-4"
+                  variant="destructive"
+                  onClick={() => {
+                    handlePhoneVerified("+919876543210");
+                    setCurrentStepIndex(1);
+                  }}
+                >
+                  Bypass Proccess with automatic
+                </Button>
+              </>
             )}
             {currentStepIndex === 1 && (
-              <BusinessDetailsStep
-                onCompleted={handleBusinessDetailsCompleted}
-              />
+              <>
+                <BusinessDetailsStep
+                  onCompleted={handleBusinessDetailsCompleted}
+                />
+                <Button
+                  className="w-full mt-4"
+                  variant="destructive"
+                  onClick={() => {
+                    handleBusinessDetailsCompleted({
+                      businessName: "Test Business",
+                      address: "123 Main St, Anytown, USA",
+                      description: "Test Description",
+                    });
+                    setCurrentStepIndex(3);
+                    handleCompleteProfile();
+                  }}
+                >
+                  Bypass Proccess with automatic
+                </Button>
+              </>
             )}
             {currentStepIndex === 2 && (
-              <LogoUploadStep onUploaded={handleLogoUploaded} />
+              <>
+                <LogoUploadStep onUploaded={handleLogoUploaded} />
+                <Button
+                  className="w-full mt-4"
+                  variant="destructive"
+                  onClick={() => {
+                    handleLogoUploaded("testId");
+                    setCurrentStepIndex(3);
+                    handleCompleteProfile();
+                  }}
+                >
+                  Bypass Proccess with automatic
+                </Button>
+              </>
             )}
           </div>
 

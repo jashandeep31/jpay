@@ -4,6 +4,8 @@ import DashboardSidebar from "@/components/dashboard/sidebar";
 import DashboardHeader from "@/components/dashboard/header";
 import { SidebarProvider } from "@/context/sidebar-context";
 import { useSidebar } from "@/context/sidebar-context";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 // This component is needed to access the sidebar context
 function DashboardContent({ children }: { children: React.ReactNode }) {
@@ -31,6 +33,18 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+  const session = useSession();
+
+  if (session.status === "loading") {
+    return <div>Loading...</div>;
+  }
+  if (session.status === "unauthenticated") {
+    router.push("/auth/login");
+  }
+  if (session.status === "authenticated" && !session.data.profileCompleted) {
+    router.push("/complete-profile");
+  }
   return (
     <div className="min-h-screen bg-accent">
       <SidebarProvider>

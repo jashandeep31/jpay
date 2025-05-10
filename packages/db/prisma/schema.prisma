@@ -31,6 +31,7 @@ model Merchant {
   JPayLink                      JPayLink[]
   APIGeneratedPaymentLink       APIGeneratedPaymentLink[]
   LiveWallet                    LiveWallet[]
+  profileCompleted              Boolean                   @default(false)
 
   MerchantApiKey  MerchantApiKey[]
   BulkPayoutGroup BulkPayoutGroup[]
