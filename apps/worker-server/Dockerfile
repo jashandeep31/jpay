@@ -20,6 +20,9 @@ RUN rm -rf apps/merchant-portal/ apps/checkout/
 RUN pnpm install --frozen-lockfile
 
 # Build the application
+WORKDIR  /packages/db
+RUN npx prisma generate
+WORKDIR /app
 RUN pnpm --filter worker-server build
 
 # Expose the port the app runs on
