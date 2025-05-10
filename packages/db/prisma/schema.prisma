@@ -32,9 +32,9 @@ model Merchant {
   APIGeneratedPaymentLink       APIGeneratedPaymentLink[]
   LiveWallet                    LiveWallet[]
   profileCompleted              Boolean                   @default(false)
-
-  MerchantApiKey  MerchantApiKey[]
-  BulkPayoutGroup BulkPayoutGroup[]
+  payoutWalletAddress           String?
+  MerchantApiKey                MerchantApiKey[]
+  BulkPayoutGroup               BulkPayoutGroup[]
 }
 
 model User {
