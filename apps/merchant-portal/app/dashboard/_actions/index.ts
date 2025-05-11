@@ -13,98 +13,20 @@ import {
   createTransferInstruction,
   getOrCreateAssociatedTokenAccount,
 } from "@solana/spl-token";
-import { derivePath } from "ed25519-hd-key";
 import { ServerActionResponseToClient } from "@/types/server-actions";
+import PaymentSettlementQueue from "@/queues/producer/payment-settlement-queue-producer";
 
 const SEED_PHRASE = process.env.ONETIME_PAYMENT_SENDING_WALLET_PHRASE!;
 
 export async function settleMerchantPayments(walletId: string) {
   try {
-    console.log(`started`);
     const session = await auth();
     const merchantId = session?.merchantId;
     if (!merchantId) throw new Error("Merchant ID not found");
-    const merchant = await db.merchant.findUnique({
-      where: { id: merchantId },
+    await PaymentSettlementQueue.add("payment-settlement-queue", {
+      walletId,
+      merchantId,
     });
-    if (!merchant) throw new Error("Merchant not found");
-    if (!merchant.paymentReceivingWalletAddress)
-      throw new Error("Payment receiving wallet address not found");
-
-    const wallet = await db.wallet.findUnique({
-      where: { id: walletId, merchantId },
-      include: { stableCoin: true },
-    });
-    if (!wallet) throw new Error("Wallet not found");
-    const transactions = await db.transaction.findMany({
-      where: { walletId, settled: false },
-    });
-
-    for (const transaction of transactions) {
-      try {
-        console.log(`transaction engaed , ${transaction.id}`);
-        const path = `m/44'/501'/${transaction.toWalletAddressIndex}'/0'`;
-        console.log(path);
-        const derivedSeed = derivePath(path, SEED_PHRASE);
-        const payerKeypair = Keypair.fromSeed(derivedSeed.key);
-        const mintPubkey = new PublicKey(wallet.stableCoin.authority);
-        const feePayerDerivedSeed = derivePath(`m/44'/501'/0'/0'`, SEED_PHRASE);
-        const feePayerKeypair = Keypair.fromSeed(feePayerDerivedSeed.key);
-
-        const signature = await sendToken({
-          recipientPubkey: new PublicKey(
-            merchant.paymentReceivingWalletAddress
-          ),
-          amount: Number(transaction.amount),
-          payerKeypair,
-          feePayerKeypair,
-          mintPubkey,
-          coinDecimals: wallet.stableCoin.decimalCount,
-        });
-        await db.$transaction(async (tx) => {
-          await tx.transaction.update({
-            where: { id: transaction.id },
-            data: {
-              settled: true,
-              settledToWalletAddress: merchant.paymentReceivingWalletAddress,
-              settledAt: new Date(),
-              settledSignature: signature,
-            },
-          });
-          await tx.wallet.update({
-            where: { id: walletId },
-            data: {
-              balance: {
-                decrement: Number(transaction.amount),
-              },
-            },
-          });
-          if (transaction.initiatedFrom === "LIVE_WALLET") {
-            const initiatedTransaction = await tx.intiatedPayment.findUnique({
-              where: {
-                id: transaction.intiatedPaymentId,
-              },
-            });
-            if (initiatedTransaction?.liveWalletId) {
-              await tx.liveWallet.update({
-                where: {
-                  id: initiatedTransaction.liveWalletId,
-                },
-                data: {
-                  balance: {
-                    decrement: Number(transaction.amount),
-                  },
-                },
-              });
-            }
-          }
-        });
-
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-      } catch (e) {
-        console.log(e);
-      }
-    }
 
     // if (!wallet) throw new Error("Wallet not found");
   } catch (e) {
