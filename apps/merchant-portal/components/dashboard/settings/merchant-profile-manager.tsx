@@ -1,31 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Merchant,
-  MerchantDetailsCard,
-  ProfileStatus,
-} from "./merchant-details-card";
+import { MerchantDetailsCard, ProfileStatus } from "./merchant-details-card";
 import { LogoUploadCard } from "./logo-upload-card";
 import { PhoneVerificationDialog } from "./phone-verification-dialog";
 import { toast } from "sonner";
-// Mock merchant data
-const mockMerchant: Merchant = {
-  id: "1",
-  name: "Acme Corporation",
-  description:
-    "We provide high-quality products and services for all your needs.",
-  phoneNumber: "+1 (555) 123-4567",
-  logoUrl: "/abstract-business-logo.png",
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  status: "active",
-  verificationStatus: "verified",
-  completionPercentage: 85,
-};
-
-export function MerchantProfileManager() {
-  const [merchant, setMerchant] = useState<Merchant>(mockMerchant);
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@repo/ui/components/ui/card";
+import { Input } from "@repo/ui/components/ui/input";
+import { Button } from "@repo/ui/components/ui/button";
+import { updatePaymentWalletAddress } from "@/app/dashboard/settings/_actions";
+import { Merchant as MerchantType } from "@prisma/client";
+export function MerchantProfileManager({
+  merchant: initialMerchant,
+}: {
+  merchant: MerchantType;
+}) {
+  const [merchant, setMerchant] = useState<MerchantType>(initialMerchant);
   const [isPhoneVerificationOpen, setIsPhoneVerificationOpen] = useState(false);
   const [newPhoneNumber, setNewPhoneNumber] = useState("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -160,6 +156,9 @@ export function MerchantProfileManager() {
   return (
     <div className="space-y-8">
       {/* Merchant Details Card */}
+      <PaymentWalletAddressCard
+        address={merchant.paymentReceivingWalletAddress || ""}
+      />
       <MerchantDetailsCard
         merchant={merchant}
         onProfileUpdate={handleProfileUpdate}
@@ -168,7 +167,7 @@ export function MerchantProfileManager() {
 
       {/* Logo Upload Card */}
       <LogoUploadCard
-        currentLogo={merchant.logoUrl}
+        currentLogo={merchant.logoUrl || ""}
         onLogoUpdate={handleLogoUpdate}
       />
 
@@ -183,3 +182,47 @@ export function MerchantProfileManager() {
     </div>
   );
 }
+
+const PaymentWalletAddressCard = ({ address }: { address: string }) => {
+  const [walletAddress, setWalletAddress] = useState(address);
+  const [isSaving, setIsSaving] = useState(false);
+  const handleSave = async () => {
+    const toastId = toast.loading("Saving...");
+    try {
+      const res = await updatePaymentWalletAddress(walletAddress);
+      if (res.ok) {
+        toast.success("Payment wallet address updated", {
+          description: res.data.message,
+          id: toastId,
+        });
+      } else {
+        toast.error(res.error);
+      }
+    } catch {
+      toast.dismiss(toastId);
+      toast.error("Failed to update payment wallet address");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Payment Wallet Address</CardTitle>
+        <CardDescription>
+          On this address you will receive all the payouts .
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="flex gap-2">
+        <Input
+          value={walletAddress}
+          onChange={(e) => setWalletAddress(e.target.value)}
+        />
+        <Button disabled={isSaving} onClick={handleSave}>
+          {isSaving ? "Saving..." : "Save"}
+        </Button>
+      </CardContent>
+    </Card>
+  );
+};

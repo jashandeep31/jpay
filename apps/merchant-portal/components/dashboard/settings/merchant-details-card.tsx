@@ -28,19 +28,7 @@ import { Textarea } from "@repo/ui/components/ui/textarea";
 import { Separator } from "@repo/ui/components/ui/separator";
 import { CheckIcon, Loader2, Phone } from "lucide-react";
 import { CountryCodeSelect } from "./country-code-select";
-
-export interface Merchant {
-  id: string;
-  name: string;
-  description: string;
-  phoneNumber: string;
-  logoUrl: string;
-  createdAt: Date;
-  updatedAt: Date;
-  status: "active" | "pending" | "suspended";
-  verificationStatus: "verified" | "pending" | "unverified";
-  completionPercentage: number;
-}
+import { Merchant } from "@repo/db";
 
 export interface ProfileStatus {
   lastUpdated: Date;
@@ -159,7 +147,7 @@ export function MerchantDetailsCard({
   };
 
   const { countryCode: initialCountryCode, phoneNumber: initialPhoneNumber } =
-    extractPhoneDetails(merchant.phoneNumber);
+    extractPhoneDetails(merchant.phoneNumber || "");
   const initialFormattedPhoneNumber = formatPhoneNumber(
     initialPhoneNumber,
     initialCountryCode
@@ -170,7 +158,7 @@ export function MerchantDetailsCard({
     resolver: zodResolver(profileInfoSchema),
     defaultValues: {
       name: merchant.name,
-      description: merchant.description,
+      description: merchant.description || "",
     },
   });
 

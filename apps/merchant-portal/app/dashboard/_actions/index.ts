@@ -23,6 +23,16 @@ export async function settleMerchantPayments(
     const session = await auth();
     const merchantId = session?.merchantId;
     if (!merchantId) throw new Error("Merchant ID not found");
+    const merchant = await db.merchant.findUnique({
+      where: {
+        id: merchantId,
+      },
+    });
+    if (!merchant) throw new Error("Merchant not found");
+    if (!merchant.paymentReceivingWalletAddress)
+      throw new Error(
+        "Payout wallet address not found. Please add one by going to settings."
+      );
     await PaymentSettlementQueue.add("payment-settlement-queue", {
       walletId,
       merchantId,

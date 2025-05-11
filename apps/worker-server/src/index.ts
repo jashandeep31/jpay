@@ -4,6 +4,7 @@ import webhookRoutes from "./routes/webhook-routes.js";
 import pgRoutes from "./routes/pg-routes.js";
 // import { testPaymentReceivingSocket } from "./sockets/payment-receving-socket";
 import "./queues/consumer/payment-wallet-consumer.js";
+import "./queues/consumer/payment-settlement-consumer.js";
 import cors from "cors";
 
 const app = express();

@@ -1,5 +1,5 @@
-import { db, redisConnection } from "@/lib/db.js";
-import { env } from "@/lib/env.js";
+import { db, redisConnection } from "../../lib/db.js";
+import { env } from "../../lib/env.js";
 import { createTransferInstruction } from "@solana/spl-token";
 import { getOrCreateAssociatedTokenAccount } from "@solana/spl-token";
 import {
@@ -107,7 +107,8 @@ export const paymentSettlementConsumer = new Worker(
     } catch (error) {
       console.error("Error processing settlement:", error);
     }
-  }
+  },
+  { connection: redisConnection }
 );
 
 export const sendToken = async ({
@@ -125,7 +126,7 @@ export const sendToken = async ({
   feePayerKeypair: Keypair;
   coinDecimals: number;
 }) => {
-  const connection = new Connection(process.env.HELIUS_RPC_URL!, "confirmed");
+  const connection = new Connection(env.SOLANA_RPC_URL!, "confirmed");
 
   const fromAta = await getOrCreateAssociatedTokenAccount(
     connection,

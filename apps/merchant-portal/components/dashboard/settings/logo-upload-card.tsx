@@ -12,7 +12,6 @@ import {
   CardTitle,
 } from "@repo/ui/components/ui/card";
 import { ImageIcon, Loader2, UploadIcon, XIcon } from "lucide-react";
-import Image from "next/image";
 import { toast } from "sonner";
 import {
   generateProfileLogoUploadUrl,
@@ -120,10 +119,10 @@ export function LogoUploadCard({
         <div className="flex flex-col sm:flex-row items-center gap-6">
           <div className="relative h-48 w-48 overflow-hidden rounded-md border flex items-center justify-center">
             {previewUrl || currentLogo ? (
-              <Image
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
                 src={previewUrl || currentLogo}
                 alt="Merchant logo"
-                fill
                 className="object-cover"
               />
             ) : (
