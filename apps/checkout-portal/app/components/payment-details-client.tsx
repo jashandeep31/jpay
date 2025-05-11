@@ -46,6 +46,8 @@ export function PaymentDetailsClient({
   const router = useRouter();
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isSignatureVerified, setIsSignatureVerified] = useState(false);
+  const [countdown, setCountdown] = useState(30);
   const { publicKey, signTransaction } = useWallet();
   const { setVisible } = useWalletModal();
 
@@ -94,6 +96,7 @@ export function PaymentDetailsClient({
         "confirmed"
       );
 
+      setIsSignatureVerified(true);
       toast.success(`Payment successful: ${sig}`, { id: toastId });
 
       toast.success(`Payment successful: ${sig}`, { id: toastId });
@@ -109,6 +112,24 @@ export function PaymentDetailsClient({
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isSignatureVerified && countdown > 0) {
+      timer = setInterval(() => {
+        setCountdown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [isSignatureVerified, countdown]);
+
+  useEffect(() => {
+    if (countdown === 0) {
+      router.push(`/payment/confirmation/${initiatedPayment.id}`);
+    }
+  }, [countdown, initiatedPayment.id, router]);
 
   useEffect(() => {
     const canvas = document.getElementById("qr-code") as HTMLCanvasElement;
@@ -241,7 +262,11 @@ export function PaymentDetailsClient({
                 onClick={triggerTransactionFromWallet}
                 disabled={loading}
               >
-                {loading ? "Processing..." : "Complete Payment"}
+                {loading
+                  ? "Processing..."
+                  : !isSignatureVerified
+                    ? "Complete Payment"
+                    : `Please wait for signature verification... (${countdown}s)`}
               </Button>
             )}
 
