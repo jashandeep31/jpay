@@ -16,8 +16,6 @@ import {
 import { ServerActionResponseToClient } from "@/types/server-actions";
 import PaymentSettlementQueue from "@/queues/producer/payment-settlement-queue-producer";
 
-const SEED_PHRASE = process.env.ONETIME_PAYMENT_SENDING_WALLET_PHRASE!;
-
 export async function settleMerchantPayments(walletId: string) {
   try {
     const session = await auth();

@@ -1,4 +1,5 @@
 import { db, redisConnection } from "@/lib/db.js";
+import { env } from "@/lib/env.js";
 import { createTransferInstruction } from "@solana/spl-token";
 import { getOrCreateAssociatedTokenAccount } from "@solana/spl-token";
 import {
@@ -11,7 +12,7 @@ import {
 import { Job, Worker } from "bullmq";
 import { derivePath } from "ed25519-hd-key";
 
-const SEED_PHRASE = "";
+const SEED_PHRASE = env.SEED_PHRASE;
 
 export const paymentSettlementConsumer = new Worker(
   "payment-settlement-queue",
