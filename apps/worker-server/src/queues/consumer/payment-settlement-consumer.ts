@@ -19,7 +19,7 @@ export const paymentSettlementConsumer = new Worker(
   async (job: Job<{ walletId: string; merchantId: string }>) => {
     try {
       const { walletId, merchantId } = job.data;
-      console.log(`started`);
+      console.log(`started the payment settlement for merchant ${merchantId}`);
       const merchant = await db.merchant.findUnique({
         where: { id: merchantId },
       });

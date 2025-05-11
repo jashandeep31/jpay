@@ -16,7 +16,9 @@ import {
 import { ServerActionResponseToClient } from "@/types/server-actions";
 import PaymentSettlementQueue from "@/queues/producer/payment-settlement-queue-producer";
 
-export async function settleMerchantPayments(walletId: string) {
+export async function settleMerchantPayments(
+  walletId: string
+): Promise<ServerActionResponseToClient<{ message: string }>> {
   try {
     const session = await auth();
     const merchantId = session?.merchantId;
@@ -26,12 +28,17 @@ export async function settleMerchantPayments(walletId: string) {
       merchantId,
     });
 
-    // if (!wallet) throw new Error("Wallet not found");
+    return {
+      ok: true,
+      data: {
+        message: "Payments will be settled in the background wait for a while",
+      },
+    };
   } catch (e) {
     console.log(e);
     return {
       ok: false,
-      message: e instanceof Error ? e.message : "An unknown error occurred",
+      error: e instanceof Error ? e.message : "An unknown error occurred",
     };
   }
 }
