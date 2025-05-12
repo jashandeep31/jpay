@@ -26,6 +26,7 @@ import { PublicKey } from "@solana/web3.js";
 import { toast } from "sonner";
 import { Transaction } from "@solana/web3.js";
 import {
+  createAssociatedTokenAccountInstruction,
   createTransferCheckedInstruction,
   getAssociatedTokenAddress,
 } from "@solana/spl-token";
@@ -62,12 +63,17 @@ export function PaymentDetailsClient({
       if (!publicKey || !signTransaction)
         throw new Error("No wallet connected");
       const mintPubkey = new PublicKey(initiatedPayment.stableCoin.authority);
-      const fromAta = await getAssociatedTokenAddress(mintPubkey, publicKey);
       const recipientPk = new PublicKey(initiatedPayment.walletAddress);
+
+      const fromAta = await getAssociatedTokenAddress(mintPubkey, publicKey);
       const toAta = await getAssociatedTokenAddress(mintPubkey, recipientPk);
+      const toAccountInfo = await connection.getAccountInfo(toAta);
+      const needsAta = toAccountInfo === null;
+
       const amountInBaseUnits = BigInt(
         Math.floor(amount * 10 ** initiatedPayment.stableCoin.decimalCount)
       );
+
       const ix = createTransferCheckedInstruction(
         fromAta,
         mintPubkey,
@@ -78,6 +84,17 @@ export function PaymentDetailsClient({
       );
       const { blockhash } = await connection.getLatestBlockhash("confirmed");
       const tx = new Transaction();
+      if (needsAta) {
+        tx.add(
+          createAssociatedTokenAccountInstruction(
+            publicKey, // payer
+            toAta, // ATA to create
+            recipientPk, // owner
+            mintPubkey // mint
+          )
+        );
+      }
+
       tx.add(ix);
       tx.recentBlockhash = blockhash;
       tx.feePayer = publicKey;
