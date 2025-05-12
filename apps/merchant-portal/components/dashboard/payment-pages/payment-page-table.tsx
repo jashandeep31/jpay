@@ -68,15 +68,6 @@ export default function PaymentPageTable({
 
   const getStatusBadge = (status: PaymentPage["status"]) => {
     switch (status) {
-      case "PENDING":
-        return (
-          <Badge
-            variant="outline"
-            className="bg-yellow-50 text-yellow-700 border-yellow-200"
-          >
-            Pending
-          </Badge>
-        );
       case "ACTIVE":
         return (
           <Badge
