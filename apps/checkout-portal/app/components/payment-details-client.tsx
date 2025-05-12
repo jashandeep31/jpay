@@ -87,10 +87,10 @@ export function PaymentDetailsClient({
       if (needsAta) {
         tx.add(
           createAssociatedTokenAccountInstruction(
-            publicKey, // payer
-            toAta, // ATA to create
-            recipientPk, // owner
-            mintPubkey // mint
+            publicKey,
+            toAta,
+            recipientPk,
+            mintPubkey
           )
         );
       }
