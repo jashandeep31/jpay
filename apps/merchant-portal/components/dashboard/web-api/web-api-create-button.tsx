@@ -13,9 +13,14 @@ import { createWebApiKey } from "@/app/dashboard/web-api/_actions";
 import { toast } from "sonner";
 import { Separator } from "@repo/ui/components/ui/separator";
 import { Copy } from "lucide-react";
+import { useRouter } from "next/navigation";
 const WebApiCreateButton = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [apiKey, setApiKey] = useState<string | null>(null);
+  const [apiKey, setApiKey] = useState<null | {
+    privateKey: string;
+    publicKey: string;
+  }>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [tag, setTag] = useState("");
   const [showTagDialog, setShowTagDialog] = useState(false);
@@ -31,10 +36,14 @@ const WebApiCreateButton = () => {
     try {
       const response = await createWebApiKey(tag);
       if (response.ok) {
-        setApiKey(response.data.privateKey);
+        setApiKey({
+          privateKey: response.data.privateKey,
+          publicKey: response.data.publicKey,
+        });
         toast.success("API Key created successfully", { id: toastId });
         setIsOpen(true);
         setShowTagDialog(false);
+        router.refresh();
       } else {
         console.log(response);
         toast.error("Failed to create API Key", { id: toastId });
@@ -48,9 +57,9 @@ const WebApiCreateButton = () => {
     }
   };
 
-  const handleCopyLink = () => {
+  const handleCopyLink = (key: "privateKey" | "publicKey") => {
     if (apiKey) {
-      navigator.clipboard.writeText(apiKey);
+      navigator.clipboard.writeText(apiKey[key]);
       toast.success("API Key copied", {
         description: "API Key copied to clipboard",
       });
@@ -108,9 +117,27 @@ const WebApiCreateButton = () => {
               won&apos;t be able to see it again!
             </DialogDescription>
             <Separator className="my-3" />
+            <p className="text-sm font-medium">Private key</p>
             <div className="border rounded-md p-3 flex items-center gap-2 justify-between bg-muted">
-              <p className="text-sm font-mono break-all">{apiKey}</p>
-              <Button variant="outline" size="icon" onClick={handleCopyLink}>
+              <p className="text-sm font-mono break-all">
+                {apiKey?.privateKey}
+              </p>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => handleCopyLink("privateKey")}
+              >
+                <Copy className="h-4 w-4" />
+              </Button>
+            </div>
+            <p className="text-sm font-medium">Public key</p>
+            <div className="border rounded-md p-3 flex items-center gap-2 justify-between bg-muted">
+              <p className="text-sm font-mono break-all">{apiKey?.publicKey}</p>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={() => handleCopyLink("publicKey")}
+              >
                 <Copy className="h-4 w-4" />
               </Button>
             </div>

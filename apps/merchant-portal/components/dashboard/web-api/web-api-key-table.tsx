@@ -17,7 +17,13 @@ import {
   DropdownMenuTrigger,
 } from "@repo/ui/components/ui/dropdown-menu";
 import { Button } from "@repo/ui/components/ui/button";
-import { MoreHorizontal, Trash, Copy } from "lucide-react";
+import {
+  MoreHorizontal,
+  Trash,
+  Copy,
+  CopyIcon,
+  ExternalLink,
+} from "lucide-react";
 import { formatDate } from "@/app/lib/utils";
 // import { toast } from "sonner";
 // import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
@@ -25,6 +31,7 @@ import { MerchantApiKey } from "@repo/db";
 import { deleteWebApiKey } from "@/app/dashboard/web-api/_actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface WebApiKeyTableProps {
   webApiKeys: MerchantApiKey[];
@@ -69,7 +76,14 @@ export default function WebApiKeyTable({ webApiKeys }: WebApiKeyTableProps) {
             <TableRow key={webApiKey.id}>
               <TableCell className="font-medium">{webApiKey.tag}</TableCell>
               <TableCell className="font-medium">
-                {webApiKey.publicKey.slice(0, 10)}...
+                {webApiKey.publicKey.slice(0, 10)}...{" "}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleCopyLink(webApiKey.publicKey)}
+                >
+                  <CopyIcon />
+                </Button>
               </TableCell>
 
               <TableCell>{formatDate(new Date(webApiKey.createdAt))}</TableCell>
@@ -106,7 +120,13 @@ export default function WebApiKeyTable({ webApiKeys }: WebApiKeyTableProps) {
                       onClick={() => handleCopyLink(webApiKey.publicKey)}
                     >
                       <Copy className="mr-2 h-4 w-4" />
-                      Copy
+                      Copy Public Key
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href={`/dashboard/web-api/view/${webApiKey.id}`}>
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        View Payments
+                      </Link>
                     </DropdownMenuItem>
 
                     {/*  <DropdownMenuItem

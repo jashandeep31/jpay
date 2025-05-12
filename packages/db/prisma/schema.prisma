@@ -152,7 +152,7 @@ model PaymentPage {
   expiresAt       DateTime
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  status          PaymentPageStatus @default(PENDING)
+  status          PaymentPageStatus @default(ACTIVE)
   merchantId      String
   IntiatedPayment IntiatedPayment[]
   merchant        Merchant          @relation(fields: [merchantId], references: [id])
@@ -286,9 +286,7 @@ enum PaymentLinkStatus {
 }
 
 enum PaymentPageStatus {
-  PENDING
   COMPLETED
-  FAILED
   ACTIVE
   CANCELLED
   EXPIRED

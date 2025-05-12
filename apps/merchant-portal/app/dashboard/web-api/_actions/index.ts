@@ -6,9 +6,13 @@ import { ServerActionResponseToClient } from "@/types/server-actions";
 import crypto from "crypto";
 import { hash } from "bcryptjs";
 
-export async function createWebApiKey(
-  tag: string
-): Promise<ServerActionResponseToClient<{ id: string; privateKey: string }>> {
+export async function createWebApiKey(tag: string): Promise<
+  ServerActionResponseToClient<{
+    id: string;
+    privateKey: string;
+    publicKey: string;
+  }>
+> {
   try {
     const session = await auth();
     if (!session?.merchantId) throw new Error("Unauthorized");
@@ -26,6 +30,7 @@ export async function createWebApiKey(
       data: {
         id: merchantApiKey.id,
         privateKey,
+        publicKey: merchantApiKey.publicKey,
       },
     };
   } catch (e) {
