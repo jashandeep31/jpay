@@ -21,7 +21,8 @@ export default function PaymentSuccess({
   useEffect(() => {
     if (countdown === 0) {
       if (initiatedPayment.initiatedFrom === "PG_PAYMENT") {
-        window.location.href = pgPayment?.redirectUrl || "/";
+        window.location.href =
+          pgPayment?.redirectUrl + `?paymentId=${pgPayment?.paymentUID}` || "/";
       }
       return;
     }
@@ -73,7 +74,7 @@ export default function PaymentSuccess({
               Redirecting in {countdown} second{countdown !== 1 ? "s" : ""}
             </div>
           )}
-          {pgPayment && (
+          {!pgPayment && (
             <div className={buttonVariants()}>You can close this page now.</div>
           )}
         </div>

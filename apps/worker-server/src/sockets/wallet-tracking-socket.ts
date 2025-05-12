@@ -204,7 +204,8 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
         pgPayment,
       };
     });
-    if (dbTransaction.pgPayment) {
+    // temporary disable pg payment callback
+    if (dbTransaction.pgPayment && 1 !== 1) {
       try {
         console.log(`payment callback url called`);
         console.log(
