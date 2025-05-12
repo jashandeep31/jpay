@@ -11,6 +11,8 @@ export const env = {
   WHATSAPP_AUTH_TOKEN: process.env.WHATSAPP_AUTH_TOKEN!,
   WHATSAPP_PHONE_ID: process.env.WHATSAPP_PHONE_ID!,
   SEED_PHRASE: process.env.SEED_PHRASE!,
+  REDIS_HOST: process.env.REDIS_HOST!,
+  REDIS_PORT: process.env.REDIS_PORT!,
   CHECKOUT_PORTAL_URL: process.env.CHECKOUT_PORTAL_URL!,
   SEND_WHATSAPP_MESSAGES: process.env.SEND_WHATSAPP_MESSAGES
     ? process.env.SEND_WHATSAPP_MESSAGES === "true"
