@@ -91,7 +91,6 @@ export default function PaymentPagesPage() {
             <TabsList className="mb-4">
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="active">Active</TabsTrigger>
-              <TabsTrigger value="pending">Pending</TabsTrigger>
               <TabsTrigger value="completed">Completed</TabsTrigger>
               <TabsTrigger value="expired">Expired</TabsTrigger>
             </TabsList>
@@ -118,21 +117,6 @@ export default function PaymentPagesPage() {
                 <PaymentPageTable
                   paymentPages={paymentPages.filter(
                     (page) => page.status === "ACTIVE"
-                  )}
-                  onStatusChange={mutate}
-                />
-              )}
-            </TabsContent>
-
-            <TabsContent value="pending" className="mt-0">
-              {loading ? (
-                <div className="flex justify-center items-center py-8">
-                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                </div>
-              ) : (
-                <PaymentPageTable
-                  paymentPages={(paymentPages || []).filter(
-                    (page) => page.status === "PENDING"
                   )}
                   onStatusChange={mutate}
                 />
