@@ -56,7 +56,6 @@ export class WhatsappAlerts {
 const sendWhatsappAlert = async (data: unknown) => {
   if (!env.SEND_WHATSAPP_MESSAGES) return;
   try {
-    console.log("Sending WhatsApp alert");
     const res = await axios.post(
       `https://graph.facebook.com/v22.0/${env.WHATSAPP_PHONE_ID}/messages`,
       data,
@@ -69,6 +68,6 @@ const sendWhatsappAlert = async (data: unknown) => {
     );
     console.log(res);
   } catch (e) {
-    console.log(e);
+    console.log(JSON.stringify(e));
   }
 };
