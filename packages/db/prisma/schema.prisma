@@ -119,6 +119,7 @@ model StableCoin {
   name            String
   symbol          String            @unique
   logoUrl         String?
+  tokenAddress    String            @unique
   authority       String            @unique
   description     String?
   decimalCount    Int

@@ -34,6 +34,15 @@ export default async function SelectPaymentMethod({
   if (!paymentLink) {
     return <div>Payment link not found</div>;
   }
+  if (paymentLink.status === "EXPIRED") {
+    return <div>Payment link expired</div>;
+  }
+  if (paymentLink.status === "CANCELLED") {
+    return <div>Payment link is cancelled</div>;
+  }
+  if (paymentLink.status === "COMPLETED") {
+    return <div>Payment link is completed</div>;
+  }
 
   return (
     <div className="container max-w-4xl px-4 py-8 md:py-12">

@@ -15,6 +15,8 @@ import {
   Settings,
   LogOut,
   PanelLeft,
+  Moon,
+  Sun,
 } from "lucide-react";
 import { Button } from "@repo/ui/components/ui/button";
 import { Input } from "@repo/ui/components/ui/input";
@@ -31,6 +33,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@repo/ui/components/ui/dropdown-menu";
+import { useTheme } from "next-themes";
 // import NotificationsDropdown from "@/components/notifications/notifications-dropdown";
 // import { useNotifications } from "@/context/notifications-context";
 import { useSidebar } from "@/context/sidebar-context";
@@ -70,6 +73,7 @@ export default function DashboardHeader() {
   // const { unreadCount } = useNotifications();
   const { toggleSidebar } = useSidebar();
   // const { toggleSidebar, collapsed } = useSidebar();
+  const { setTheme } = useTheme();
 
   // Get current page title
   const getCurrentPageTitle = () => {
@@ -126,7 +130,26 @@ export default function DashboardHeader() {
           </div> */}
 
           {/* <NotificationsDropdown /> */}
-
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                <span className="sr-only">Toggle theme</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => setTheme("light")}>
+                Light
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("dark")}>
+                Dark
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setTheme("system")}>
+                System
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex rounded-full bg-gray-100 dark:bg-[#1A1A1A] focus:outline-none">

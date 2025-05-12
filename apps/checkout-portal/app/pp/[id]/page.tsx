@@ -24,6 +24,13 @@ async function page({ params }: { params: Promise<{ id: string }> }) {
     return <div>Payment page not found</div>;
   }
 
+  if (paymentPage.status === "CANCELLED") {
+    return <div>Payment page is cancelled</div>;
+  }
+  if (paymentPage.status === "EXPIRED") {
+    return <div>Payment page is expired</div>;
+  }
+
   return (
     <PaymentPageClient
       paymentPage={{ ...paymentPage, amount: paymentPage.amount.toNumber() }}

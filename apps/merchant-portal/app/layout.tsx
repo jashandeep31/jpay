@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import { SessionProvider } from "next-auth/react";
 import { SolanaWalletAdapter } from "@/components/solana-wallet-adapter";
+import { ThemeProvider } from "@/components/theme-provider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,14 +26,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SolanaWalletAdapter>
-          <SessionProvider>{children}</SessionProvider>
-        </SolanaWalletAdapter>
-        <Toaster />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SolanaWalletAdapter>
+            <SessionProvider>{children}</SessionProvider>
+            <Toaster />
+          </SolanaWalletAdapter>
+        </ThemeProvider>
       </body>
     </html>
   );

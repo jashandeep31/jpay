@@ -32,18 +32,12 @@ export function CoinCard({
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-base sm:text-lg">{title}</CardTitle>
-          {icon === "usdt" ? (
-            <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-bold text-xs sm:text-sm">
-              USDT
-            </div>
-          ) : (
-            <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center text-white">
-              {icon ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={icon} alt={title} className="w-full h-full" />
-              ) : null}
-            </div>
-          )}
+          <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full flex items-center justify-center text-white">
+            {icon ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={icon} alt={title} className="w-full h-full" />
+            ) : null}
+          </div>
         </div>
         <CardDescription className="text-xs sm:text-sm mt-2">
           {description}

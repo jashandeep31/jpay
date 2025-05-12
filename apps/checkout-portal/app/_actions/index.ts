@@ -59,6 +59,8 @@ export async function triggerInitiatedPayment(
       new PublicKey(stableCoin.authority),
       keypair.publicKey
     );
+
+    console.log(stableCoin.authority, ait.toBase58());
     const initiatedPayment = await tx.intiatedPayment.create({
       data: {
         initiatedFrom: initiatedFrom,

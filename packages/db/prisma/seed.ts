@@ -6,6 +6,7 @@ async function main() {
     {
       name: "Circle",
       symbol: "USDC",
+      tokenAddress: "Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr",
       authority: "Gh9ZwEmdLJ8DscKNTkTqPbNwLNNBjuSzaG9Vp2KGtKJr",
       logoUrl:
         "https://img.icons8.com/?size=100&id=1jPxlShNofZt&format=png&color=000000",
@@ -14,8 +15,48 @@ async function main() {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
+    {
+      name: "Tether",
+      symbol: "USDT",
+      tokenAddress: "JAv9RoTyDfzwCqpGVTTK1mMkNNAVcxSERAXZ8h2XBjk1",
+      authority: "BBaeWHi8rhCAVHt24Wzp6bdQgfEds2hQon45cjrXvTLs",
+      logoUrl:
+        "https://img.icons8.com/?size=100&id=wZm3ymBvyMGj&format=png&color=000000",
+      decimalCount: 6,
+      description: "USDT is a stablecoin pegged to the US dollar.",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    // {
+    //   name: "Huobi",
+    //   symbol: "HUSD",
+    //   authority: "333ohmKu4EVhEyJR1Q8XGnq77nbtuDx5WVZgFLHPJrxU",
+    //   logoUrl: "https://img.cryptorank.io/coins/husd1586879836461.png",
+    //   decimalCount: 6,
+    //   description: "HUSD is a stablecoin pegged to the US dollar.",
+    //   createdAt: new Date(),
+    //   updatedAt: new Date(),
+    // },
+    // {
+    //   name: "Dai",
+    //   symbol: "DAI",
+    //   authority: "GvRCcMfkMkDAW6PVwooh9SqojZL3a265QwqyDM7pETp4",
+    //   logoUrl: "https://s2.coinmarketcap.com/static/img/coins/200x200/4943.png",
+    //   decimalCount: 6,
+    //   description: "DAI is a stablecoin pegged to the US dollar.",
+    //   createdAt: new Date(),
+    //   updatedAt: new Date(),
+    // },
   ];
   for (const coin of coins) {
+    const existingCoin = await prisma.stableCoin.findUnique({
+      where: {
+        symbol: coin.symbol,
+      },
+    });
+    if (existingCoin) {
+      continue;
+    }
     await prisma.stableCoin.create({
       data: coin,
     });

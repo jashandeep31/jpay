@@ -9,6 +9,7 @@ import {
 } from "./lib/utilts.js";
 import { db } from "../lib/db.js";
 import { IntiatedPayment } from "@repo/db";
+import axios from "axios";
 
 type tx = Omit<
   typeof db,
@@ -39,6 +40,7 @@ export class WalletTrackingSocket {
 
   public async addWalletToTrack(data: InitiatedPaymentQueuePayload) {
     this.transactions.push(data);
+    console.log(data.associatedWalletId);
     this.wsConnectionProvider.sendData(
       JSON.stringify({
         jsonrpc: "2.0",
@@ -85,7 +87,7 @@ export class WalletTrackingSocket {
       });
       return;
     }
-
+    console.log(`NOTIF IS THEIR`);
     if (
       msg?.method === "accountNotification" &&
       msg?.params?.subscription &&
@@ -141,7 +143,7 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
     if (initiatedPayment.stableCoin.authority !== parsedTransaction.tokenMint) {
       throw new Error("token mint does not match");
     }
-    await db.$transaction(async (tx) => {
+    const dbTransaction = await db.$transaction(async (tx) => {
       if (
         !parsedTransaction.from ||
         !parsedTransaction.to ||
@@ -151,10 +153,10 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
       )
         throw new Error("no from or to or ataFrom or ataTo");
 
-      await getAndUpdatePaymentLink(initiatedPayment, tx);
-      await getAndUpdateInvoice(initiatedPayment, tx);
-      await getAndUpdateQRPayment(initiatedPayment, tx);
-      await getAndUpdatePGPayment(initiatedPayment, tx);
+      const paymentLink = await getAndUpdatePaymentLink(initiatedPayment, tx);
+      const invoice = await getAndUpdateInvoice(initiatedPayment, tx);
+      const qrPayment = await getAndUpdateQRPayment(initiatedPayment, tx);
+      const pgPayment = await getAndUpdatePGPayment(initiatedPayment, tx);
 
       // update initiated payment
       await getAndUpdateIntiatedPayment(initiatedPayment, tx);
@@ -195,8 +197,28 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
           walletId: wallet.id,
         },
       });
+      return {
+        paymentLink,
+        invoice,
+        qrPayment,
+        pgPayment,
+      };
     });
-    // TODO: write a code to call the callback url if the payment is from the api generated payment link
+    if (dbTransaction.pgPayment) {
+      try {
+        console.log(`payment callback url called`);
+        console.log(
+          `${dbTransaction.pgPayment.callbackUrl}/${dbTransaction.pgPayment.paymentUID}`
+        );
+        const res = await axios.post(
+          `${dbTransaction.pgPayment.callbackUrl}/${dbTransaction.pgPayment.paymentUID}`,
+          {}
+        );
+        console.log(res);
+      } catch (error) {
+        console.log(error, "error");
+      }
+    }
   } catch (error) {
     console.log(error, "error");
   }

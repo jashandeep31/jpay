@@ -34,6 +34,14 @@ export default async function SelectPaymentMethod({
     return <div>QR Payment not found</div>;
   }
 
+  if (qrPayment.status === "USED") {
+    return <div>QR Payment is used</div>;
+  }
+
+  if (qrPayment.status === "EXPIRED") {
+    return <div>QR Payment is expired</div>;
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="container max-w-4xl px-4 py-8 md:py-12">

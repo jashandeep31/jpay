@@ -35,6 +35,13 @@ export default async function SelectPaymentMethod({
     return <div>Invoice not found</div>;
   }
 
+  if (invoice.status === "CANCELLED") {
+    return <div>Invoice is cancelled</div>;
+  }
+  if (invoice.status === "PAID") {
+    return <div>Invoice is paid</div>;
+  }
+
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="container max-w-4xl px-4 py-8 md:py-12">
