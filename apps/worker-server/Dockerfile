@@ -1,5 +1,5 @@
 # Use Node.js LTS version as the base image
-FROM node:23 AS builder
+FROM node:23 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
@@ -25,10 +25,6 @@ RUN npx prisma generate
 WORKDIR /app
 RUN pnpm --filter worker-server build
 
-FROM node:23 AS runner
-
-# Expose the port the app runs on
-COPY --from=builder /app /app
 EXPOSE 8000
 
 # Set environment variables
