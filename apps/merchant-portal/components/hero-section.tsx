@@ -1,7 +1,7 @@
-import { Button } from "@repo/ui/components/ui/button";
+import { buttonVariants } from "@repo/ui/components/ui/button";
 import { InteractiveGrid } from "./interactive-grid";
-import { ShineBorder } from "./shine-border";
-import { ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { cn } from "@repo/ui/lib/utils";
 
 export function HeroSection() {
   return (
@@ -29,26 +29,28 @@ export function HeroSection() {
             digital payments today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              className="bg-gradient-to-r from-[#14F195] to-[#00C2FF] text-black hover:opacity-90 transition-opacity btn-primary"
-              size="lg"
+            <Link
+              href={"/auth/signup"}
+              className={cn(
+                buttonVariants({ variant: "default" }),
+                "bg-gradient-to-r from-[#14F195] to-[#00C2FF] text-black hover:opacity-90 transition-opacity btn-primary"
+              )}
             >
               Get Started
-            </Button>
-            <Button
-              variant="outline"
-              className="border-border hover:bg-accent/5 gap-2 btn-outline bg-background"
-              size="lg"
+            </Link>
+            <Link
+              href="/auth/login"
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "border-border hover:bg-accent/5 gap-2 btn-outline bg-background"
+              )}
             >
-              Learn More <ArrowRight className="w-4 h-4" />
-            </Button>
+              Login Back
+            </Link>
           </div>
         </div>
 
-        <ShineBorder
-          className="relative mx-auto mb-16"
-          borderClassName="border border-white/10 rounded-xl overflow-hidden"
-        >
+        <div className="relative mx-auto mb-16 border rounded-xl p-6">
           <div className="video-container">
             <iframe
               src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&rel=0"
@@ -57,7 +59,7 @@ export function HeroSection() {
               allowFullScreen
             ></iframe>
           </div>
-        </ShineBorder>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div className="p-6">

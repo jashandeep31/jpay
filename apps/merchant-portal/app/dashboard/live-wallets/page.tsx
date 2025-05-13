@@ -1,15 +1,13 @@
 import { CardContent } from "@repo/ui/components/ui/card";
 import { Card, CardDescription, CardHeader } from "@repo/ui/components/ui/card";
-import { Plus } from "lucide-react";
-import { Button } from "@repo/ui/components/ui/button";
 import { CardTitle } from "@repo/ui/components/ui/card";
 import React from "react";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import LiveWalletsTable from "@/components/dashboard/live-wallets/live-wallets-table";
-import { createLiveWallet } from "./_actions";
-import { revalidatePath } from "next/cache";
+
+import CreateLiveWalletButton from "./CreateLiveWalletButton";
 
 const page = async () => {
   const session = await auth();
@@ -38,19 +36,7 @@ const page = async () => {
             in-store stablecoin payments via QR codes.
           </p>
         </div>
-        <form
-          action={async () => {
-            "use server";
-            const res = await createLiveWallet();
-            console.log(res);
-            revalidatePath("/dashboard/live-wallets");
-          }}
-        >
-          <Button type="submit">
-            <Plus className="mr-2 h-4 w-4" />
-            Create Live Wallet
-          </Button>
-        </form>
+        <CreateLiveWalletButton />
       </div>
 
       <Card>

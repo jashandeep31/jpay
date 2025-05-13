@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/db";
 import PaymentWalletQueue from "@/queues/producer/payment-wallet-producer";
-import { IntiatedFrom, StableCoin } from "@repo/db";
+import { IntiatedFrom, PaymentPageFormFieldType, StableCoin } from "@repo/db";
 import { getAssociatedTokenAddress } from "@solana/spl-token";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { InitiatedPaymentQueuePayload } from "@/queues/producer/payment-wallet-producer";
@@ -13,20 +13,66 @@ const Phrase: string = process.env.ONETIME_PAYMENT_RECEVING_WALLET_PHRASE || "";
 export async function triggerPaymentPage(
   paymentPageId: string,
   paymentCoinId: string,
-  fields: { id: string; value: string }[]
+  fields: {
+    id: string;
+    type: PaymentPageFormFieldType;
+    value: string;
+    required: boolean;
+  }[]
 ): Promise<ServerActionResponseToClient<{ id: string }>> {
+  console.log(fields, "these are fiedss");
   try {
-    console.log(`first`, fields);
-    const paymentPage = await db.paymentPage.findUnique({
-      where: { id: paymentPageId },
-      include: {
-        PaymentPageForm: {
+    const { paymentPage, paymentPageFilledForm } = await db.$transaction(
+      async (tx) => {
+        const PaymentPageForm = await tx.paymentPageForm.findUnique({
+          where: {
+            paymentPageId: paymentPageId,
+          },
           include: {
             PaymentPageFormField: true,
           },
-        },
-      },
-    });
+        });
+
+        if (!PaymentPageForm) {
+          throw new Error("Payment page form not found");
+        }
+        const paymentPage = await tx.paymentPage.findUnique({
+          where: { id: paymentPageId },
+          include: {
+            PaymentPageForm: {
+              include: {
+                PaymentPageFormField: true,
+              },
+            },
+          },
+        });
+
+        const paymentPageFilledForm = await tx.paymentPageFilledForm.create({
+          data: {
+            paymentPageId: paymentPageId,
+            status: "PENDING",
+          },
+        });
+
+        for (const field of PaymentPageForm?.PaymentPageFormField || []) {
+          const fieldValue = fields.find((f) => f.id === field.id);
+          if (!fieldValue) {
+            throw new Error("Field value not found");
+          } else {
+            await tx.paymentPageFormFilledField.create({
+              data: {
+                paymentPageFormFieldId: field.id,
+                value: fieldValue.value,
+                paymentPageFilledFormId: paymentPageFilledForm.id,
+              },
+            });
+          }
+        }
+        return { paymentPage, paymentPageFilledForm };
+      }
+    );
+    // throw new Error("test");
+
     if (!paymentPage) {
       throw new Error("Payment page not found");
     }
@@ -37,7 +83,7 @@ export async function triggerPaymentPage(
       where: { id: paymentCoinId },
     });
     if (!stableCoin) {
-      throw new Error("Stable coin not found");
+      throw new Error("Stable coi`  n not found");
     }
     const result = await createInitiatedPayment(
       stableCoin,
@@ -46,6 +92,15 @@ export async function triggerPaymentPage(
       paymentPageId,
       paymentPage.merchantId
     );
+
+    await db.paymentPageFilledForm.update({
+      where: {
+        id: paymentPageFilledForm.id,
+      },
+      data: {
+        intiatedPaymentId: result.data.id,
+      },
+    });
     if (result.ok) {
       return {
         ok: true,

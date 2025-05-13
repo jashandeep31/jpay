@@ -1,13 +1,11 @@
-import { Button } from "@repo/ui/components/ui/button";
-import { ShineBorder } from "./shine-border";
+import { Button, buttonVariants } from "@repo/ui/components/ui/button";
+import Link from "next/link";
+import { cn } from "@repo/ui/lib/utils";
 
 export function CTASection() {
   return (
     <section className="py-16 px-6">
-      <ShineBorder
-        className="max-w-4xl mx-auto p-8 rounded-xl"
-        borderClassName="border border-border rounded-xl overflow-hidden bg-accent/5"
-      >
+      <div className="max-w-4xl mx-auto p-8 rounded-xl border">
         <div className="text-center">
           <h2 className="text-3xl font-bold mb-4 text-primary">
             Ready to Transform Your Payment Experience?
@@ -23,16 +21,19 @@ export function CTASection() {
             >
               Get Started for Free
             </Button>
-            <Button
-              variant="outline"
-              className="border-border hover:bg-accent/5"
-              size="lg"
+            <Link
+              href={"https://cal.com/jashandeep31"}
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "border-border hover:bg-accent/5"
+              )}
+              target="_blank"
             >
               Schedule a Demo
-            </Button>
+            </Link>
           </div>
         </div>
-      </ShineBorder>
+      </div>
     </section>
   );
 }

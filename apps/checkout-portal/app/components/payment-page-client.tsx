@@ -39,6 +39,7 @@ export default function PaymentPageClient({
   const [loading, setLoading] = useState(false);
   const [formFields, setFormFields] = useState<
     {
+      id: string;
       type: PaymentPageFormFieldType;
       value: string;
       required: boolean;
@@ -47,6 +48,7 @@ export default function PaymentPageClient({
     paymentPage.PaymentPageForm?.PaymentPageFormField.map((field) => ({
       type: field.type,
       value: "",
+      id: field.id,
       required: field.required,
     })) || []
   );
@@ -86,10 +88,14 @@ export default function PaymentPageClient({
       setLoading(false);
       return;
     }
-
+    console.log(formFields, "these are form fields");
     // Proceed with payment if validation passes
     setLoading(false);
-    const result = await triggerPaymentPage(paymentPage.id, selectedMethod, []);
+    const result = await triggerPaymentPage(
+      paymentPage.id,
+      selectedMethod,
+      formFields
+    );
     console.log(result);
     if (result.ok) {
       router.push(`/payment/${result.data.id}`);

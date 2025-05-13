@@ -17,13 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@repo/ui/components/ui/dropdown-menu";
 import { Button } from "@repo/ui/components/ui/button";
-import {
-  MoreHorizontal,
-  Trash,
-  Copy,
-  CopyIcon,
-  ExternalLink,
-} from "lucide-react";
+import { MoreHorizontal, Trash, Copy, CopyIcon } from "lucide-react";
 import { formatDate } from "@/app/lib/utils";
 // import { toast } from "sonner";
 // import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
@@ -31,7 +25,6 @@ import { MerchantApiKey } from "@repo/db";
 import { deleteWebApiKey } from "@/app/dashboard/web-api/_actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 interface WebApiKeyTableProps {
   webApiKeys: MerchantApiKey[];
@@ -121,12 +114,6 @@ export default function WebApiKeyTable({ webApiKeys }: WebApiKeyTableProps) {
                     >
                       <Copy className="mr-2 h-4 w-4" />
                       Copy Public Key
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href={`/dashboard/web-api/view/${webApiKey.id}`}>
-                        <ExternalLink className="mr-2 h-4 w-4" />
-                        View Payments
-                      </Link>
                     </DropdownMenuItem>
 
                     {/*  <DropdownMenuItem

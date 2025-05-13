@@ -144,19 +144,20 @@ model PaymentLink {
 }
 
 model PaymentPage {
-  id              String            @id @default(uuid())
-  title           String
-  description     String?
-  logoUrl         String
-  amount          Decimal           @db.Decimal(10, 2)
-  expiresAt       DateTime
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  status          PaymentPageStatus @default(ACTIVE)
-  merchantId      String
-  IntiatedPayment IntiatedPayment[]
-  merchant        Merchant          @relation(fields: [merchantId], references: [id])
-  PaymentPageForm PaymentPageForm?
+  id                    String                  @id @default(uuid())
+  title                 String
+  description           String?
+  logoUrl               String
+  amount                Decimal                 @db.Decimal(10, 2)
+  expiresAt             DateTime
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  status                PaymentPageStatus       @default(ACTIVE)
+  merchantId            String
+  IntiatedPayment       IntiatedPayment[]
+  merchant              Merchant                @relation(fields: [merchantId], references: [id])
+  PaymentPageForm       PaymentPageForm?
+  PaymentPageFilledForm PaymentPageFilledForm[]
 }
 
 // 1 initiated has wrong spelling
@@ -192,6 +193,8 @@ model IntiatedPayment {
   liveWallet   LiveWallet?   @relation(fields: [liveWalletId], references: [id])
 
   pgPayment APIGeneratedPaymentLink? @relation(fields: [pgPaymentId], references: [id])
+
+  PaymentPageFilledForm PaymentPageFilledForm?
 }
 
 model Transaction {
@@ -241,26 +244,47 @@ model PaymentPageForm {
 }
 
 model PaymentPageFormField {
-  id                        String                      @id @default(uuid())
-  type                      PaymentPageFormFieldType
-  label                     String
-  placeholder               String?
-  required                  Boolean                     @default(false)
-  value                     String?
-  paymentPageFormId         String
-  createdAt                 DateTime                    @default(now())
-  updatedAt                 DateTime                    @updatedAt
-  paymentPageForm           PaymentPageForm             @relation(fields: [paymentPageFormId], references: [id])
-  PaymentPageFormFieldValue PaymentPageFormFieldValue[]
+  id                         String                       @id @default(uuid())
+  type                       PaymentPageFormFieldType
+  label                      String
+  placeholder                String?
+  required                   Boolean                      @default(false)
+  value                      String?
+  paymentPageFormId          String
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  paymentPageForm            PaymentPageForm              @relation(fields: [paymentPageFormId], references: [id])
+  PaymentPageFormFilledField PaymentPageFormFilledField[]
 }
 
-model PaymentPageFormFieldValue {
+model PaymentPageFilledForm {
+  id                         String                       @id @default(uuid())
+  paymentPageId              String
+  createdAt                  DateTime                     @default(now())
+  updatedAt                  DateTime                     @updatedAt
+  status                     PaymentPageFilledFormStatus  @default(PENDING)
+  paymentPage                PaymentPage                  @relation(fields: [paymentPageId], references: [id])
+  PaymentPageFormFilledField PaymentPageFormFilledField[]
+
+  initiatedPayment  IntiatedPayment? @relation(fields: [intiatedPaymentId], references: [id])
+  intiatedPaymentId String?          @unique
+}
+
+enum PaymentPageFilledFormStatus {
+  PENDING
+  COMPLETED
+}
+
+model PaymentPageFormFilledField {
   id                     String               @id @default(uuid())
+  paymentPageField       PaymentPageFormField @relation(fields: [paymentPageFormFieldId], references: [id])
   paymentPageFormFieldId String
   value                  String
   createdAt              DateTime             @default(now())
   updatedAt              DateTime             @updatedAt
-  paymentPageFormField   PaymentPageFormField @relation(fields: [paymentPageFormFieldId], references: [id])
+
+  paymentPageFilledForm   PaymentPageFilledForm @relation(fields: [paymentPageFilledFormId], references: [id])
+  paymentPageFilledFormId String
 }
 
 model QRPayment {

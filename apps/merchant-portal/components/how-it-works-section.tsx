@@ -5,23 +5,23 @@ export function HowItWorksSection() {
   const steps = [
     {
       number: "01",
-      title: "Connect Wallet",
-      description: "Link your Solana wallet to JPay with a single click",
+      title: "Create an Account",
+      description: "Sign up for a free account and get started",
     },
     {
       number: "02",
-      title: "Set Up Merchant Account",
+      title: "Setup merchant account",
       description: "Complete your business profile and verification",
     },
     {
       number: "03",
-      title: "Integrate API",
-      description: "Add our simple code snippet to your website or app",
+      title: "Create API Key",
+      description: "Generate an API key to use in your code",
     },
     {
       number: "04",
-      title: "Accept Payments",
-      description: "Start receiving USDC and USDT payments instantly",
+      title: "Integrate API",
+      description: "Add our simple code snippet to your website or app",
     },
   ];
 

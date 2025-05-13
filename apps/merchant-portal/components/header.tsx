@@ -45,12 +45,6 @@ export function Header() {
           >
             Pricing
           </Link>
-          <Link
-            href="#contact"
-            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Contact
-          </Link>
         </nav>
         <Link
           href={"/auth/login"}

@@ -1,4 +1,3 @@
-import { Button } from "@repo/ui/components/ui/button";
 import { GradientCard } from "./gradient-card";
 import { Code, FileText, BookOpen } from "lucide-react";
 
@@ -21,12 +20,6 @@ export function DevelopersSection() {
             <p className="text-muted-foreground mb-4">
               RESTful API with clear endpoints and responses
             </p>
-            <Button
-              variant="outline"
-              className="w-full border-border hover:bg-accent/5"
-            >
-              API Reference
-            </Button>
           </GradientCard>
 
           <GradientCard>
@@ -35,12 +28,7 @@ export function DevelopersSection() {
             <p className="text-muted-foreground mb-4">
               Libraries for JavaScript, Python, PHP, and more
             </p>
-            <Button
-              variant="outline"
-              className="w-full border-border hover:bg-accent/5"
-            >
-              Download SDKs
-            </Button>
+
             <div className="mt-3 flex justify-center">
               <span className="coming-soon-badge">Coming Soon</span>
             </div>
@@ -52,12 +40,6 @@ export function DevelopersSection() {
             <p className="text-gray-400 mb-4">
               Comprehensive guides and examples
             </p>
-            <Button
-              variant="outline"
-              className="w-full border-white/10 hover:bg-white/5 btn-outline"
-            >
-              Read Docs
-            </Button>
           </GradientCard>
         </div>
 
@@ -74,19 +56,27 @@ export function DevelopersSection() {
           </h3>
           <pre className="bg-black/50 p-4 rounded-lg overflow-x-auto">
             <code className="text-sm text-gray-300">
-              {`// Initialize JPay client
-const jpay = new JPay('YOUR_API_KEY');
-
-// Create a payment request
-const payment = await jpay.createPayment({
-  amount: '100.00',
-  currency: 'USDC',
-  description: 'Order #1234',
-  redirectUrl: 'https://yoursite.com/thank-you'
-});
-
-// Redirect to payment page
-window.location.href = payment.checkoutUrl;`}
+              {`export async function getPaymentURL(amount: number) {
+  const paymentUID = JPAY_PUBLIC_KEY + crypto.randomUUID();
+  const response = await axios.post(process.env.PAYMENT_GATEWAY_API_URL!, {
+    amount: amount,
+    private_key: JPAY_PRIVATE_KEY,
+    public_key: JPAY_PUBLIC_KEY,
+    paymentUID: paymentUID,
+    callback_url: $\{BASE_URL}/api/callback,
+    redirect_url: $\{BASE_URL}/checkout/success,
+  });
+  await prisma.order.create({
+    data: {
+      amount: amount,
+      orderId: crypto.randomUUID(),
+      paymentStatus: "PENDING",
+      paymentUID: paymentUID,
+    },
+  });
+  return response.data.data.checkout_url;
+}
+`}
             </code>
           </pre>
         </div>

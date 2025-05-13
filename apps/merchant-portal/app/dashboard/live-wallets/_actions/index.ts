@@ -33,6 +33,7 @@ export const createLiveWallet = async (): Promise<
           merchantId,
           walletAddress: keypair.publicKey.toBase58(),
           index: newIndex,
+          notifyOnEachPayment: true,
           balance: 0,
         },
       });

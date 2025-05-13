@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { Button } from "@repo/ui/components/ui/button";
 
 interface GoogleButtonProps {
@@ -54,8 +53,9 @@ export default function GoogleButton({
       {!isLoading ? (
         <>
           <div className="w-5 h-5 relative">
-            <Image
-              src="/google-logo.png"
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000"
               alt="Google logo"
               width={20}
               height={20}

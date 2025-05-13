@@ -157,7 +157,10 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
       const invoice = await getAndUpdateInvoice(initiatedPayment, tx);
       const qrPayment = await getAndUpdateQRPayment(initiatedPayment, tx);
       const pgPayment = await getAndUpdatePGPayment(initiatedPayment, tx);
-
+      const paymentPageForm = await getAndUpdatePaymentPageFormStatus(
+        initiatedPayment,
+        tx
+      );
       // update initiated payment
       await getAndUpdateIntiatedPayment(initiatedPayment, tx);
 
@@ -202,6 +205,7 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
         invoice,
         qrPayment,
         pgPayment,
+        paymentPageForm,
       };
     });
     // temporary disable pg payment callback
@@ -224,6 +228,25 @@ async function processWalletTrackedTransactions(subscribedTransaction: {
     console.log(error, "error");
   }
 }
+
+const getAndUpdatePaymentPageFormStatus = async (
+  initiatedPayment: IntiatedPayment,
+  tx: tx
+) => {
+  if (
+    initiatedPayment.initiatedFrom === "PAYMENT_PAGE" &&
+    initiatedPayment.paymentPageId
+  ) {
+    return await tx.paymentPageFilledForm.update({
+      where: {
+        intiatedPaymentId: initiatedPayment.id,
+      },
+      data: {
+        status: "COMPLETED",
+      },
+    });
+  }
+};
 
 const getAndUpdatePaymentLink = async (
   initiatedPayment: IntiatedPayment,

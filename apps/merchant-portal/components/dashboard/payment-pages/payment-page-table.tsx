@@ -163,6 +163,14 @@ export default function PaymentPageTable({
                         View Transactions
                       </Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link
+                        href={`/dashboard/payment-pages/responses/${link.id}`}
+                      >
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        View Responses
+                      </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => handleCopyLink(link.id)}>
                       <Copy className="mr-2 h-4 w-4" />
                       Copy Link
