@@ -123,7 +123,7 @@ export default function PaymentPageTable({
         <TableHeader>
           <TableRow>
             <TableHead>Amount</TableHead>
-            <TableHead>Description</TableHead>
+            <TableHead>Name</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Created</TableHead>
             <TableHead>Expires</TableHead>
@@ -137,7 +137,7 @@ export default function PaymentPageTable({
                 {formatCurrency(Number.parseFloat(link.amount.toString()))}
               </TableCell>
               <TableCell className="max-w-[200px] truncate">
-                {link.description || "—"}
+                {link.title || "—"}
               </TableCell>
               <TableCell>{getStatusBadge(link.status)}</TableCell>
               <TableCell>{formatDate(new Date(link.createdAt))}</TableCell>

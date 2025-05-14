@@ -143,7 +143,7 @@ export default function PaymentPageClient({
               <h1 className="text-2xl font-bold mb-2">{paymentPage.title}</h1>
             </div>
 
-            <div className="prose dark:prose-invert max-w-none">
+            <div className="prose dark:prose-invert max-w-none overflow-auto">
               <div
                 dangerouslySetInnerHTML={{
                   __html: paymentPage.description || "",

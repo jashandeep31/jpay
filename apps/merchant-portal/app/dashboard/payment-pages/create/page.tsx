@@ -34,13 +34,13 @@ import { Label } from "@repo/ui/components/ui/label";
 import { Switch } from "@repo/ui/components/ui/switch";
 import { toast } from "sonner";
 import { generatePresignedUrl } from "@/lib/s3-config";
+import CustomEditor from "@/components/custom-editor";
+
 const formSchema = z.object({
   title: z.string().min(3, {
     message: "Title must be at least 3 characters.",
   }),
-  description: z.string().min(10, {
-    message: "Description is required",
-  }),
+
   image: z.instanceof(File).optional(),
   amount: z.coerce
     .number()
@@ -64,6 +64,9 @@ export type IPaymentPageFormField = {
 export default function CreatePaymentPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [description, setDescription] = useState(
+    "This is a sample payment page"
+  );
   const [fields, setFields] = useState<IPaymentPageFormField[]>([
     {
       label: "Name",
@@ -78,6 +81,7 @@ export default function CreatePaymentPage() {
       type: PaymentPageFormFieldType.EMAIL,
     },
   ]);
+
   const updateField = (index: number, field: IPaymentPageFormField) => {
     setFields((prev) => {
       const newFields = [...prev];
@@ -98,7 +102,6 @@ export default function CreatePaymentPage() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "Sample Payment Page",
-      description: "This is a sample payment page",
       amount: 100,
     },
   });
@@ -168,7 +171,7 @@ export default function CreatePaymentPage() {
       const result = await createPaymentPage({
         ...values,
         image: getpresignedUrl.uploadId,
-        description: values.description || "",
+        description: description,
         expiresAt: values.expiresAt,
         fields: fields,
       });
@@ -236,25 +239,17 @@ export default function CreatePaymentPage() {
                     )}
                   />
 
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            placeholder="Describe what this payment is for..."
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormDescription>
-                          Provide additional details about the payment.
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <CustomEditor
+                      value={description}
+                      setValue={setDescription}
+                    />
+                    <FormDescription>
+                      Provide additional details about the payment.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
 
                   <FormField
                     control={form.control}
@@ -285,7 +280,6 @@ export default function CreatePaymentPage() {
                       </FormItem>
                     )}
                   />
-
                   <FormField
                     control={form.control}
                     name="amount"
@@ -313,7 +307,6 @@ export default function CreatePaymentPage() {
                       </FormItem>
                     )}
                   />
-
                   <FormField
                     control={form.control}
                     name="expiresAt"
