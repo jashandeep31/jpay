@@ -78,6 +78,7 @@ export default function PaymentLinksPage() {
             defaultValue="all"
             value={activeTab}
             onValueChange={setActiveTab}
+            className="overflow-auto"
           >
             <TabsList className="mb-4">
               <TabsTrigger value="all">All</TabsTrigger>

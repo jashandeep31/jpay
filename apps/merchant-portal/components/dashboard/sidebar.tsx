@@ -27,7 +27,7 @@ import {
 } from "@repo/ui/components/ui/tooltip";
 import { Badge } from "@repo/ui/components/ui/badge";
 
-const sidebarLinks = [
+export const sidebarLinks = [
   {
     name: "Overview",
     href: "/dashboard",

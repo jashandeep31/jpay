@@ -36,12 +36,6 @@ export default function DashboardLayout({
   const router = useRouter();
   const session = useSession();
 
-  if (session.status === "loading") {
-    return <div>Loading...</div>;
-  }
-  if (session.status === "unauthenticated") {
-    router.push("/auth/login");
-  }
   if (session.status === "authenticated" && !session.data.profileCompleted) {
     router.push("/complete-profile");
   }

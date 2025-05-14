@@ -7,11 +7,6 @@ import {
   Menu,
   X,
   Search,
-  LayoutDashboard,
-  LinkIcon,
-  CreditCard,
-  FileText,
-  ArrowDownToLine,
   Settings,
   LogOut,
   PanelLeft,
@@ -38,35 +33,9 @@ import { useTheme } from "next-themes";
 // import { useNotifications } from "@/context/notifications-context";
 import { useSidebar } from "@/context/sidebar-context";
 import { signOut } from "next-auth/react";
+import { sidebarLinks } from "./sidebar";
 
-const mobileLinks = [
-  {
-    name: "Overview",
-    href: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    name: "Create Link",
-    href: "/dashboard/create-link",
-    icon: LinkIcon,
-  },
-  {
-    name: "Payments",
-    href: "/dashboard/payments",
-    icon: CreditCard,
-  },
-  {
-    name: "Invoices & Subscriptions",
-    href: "/dashboard/invoices",
-    icon: FileText,
-  },
-  {
-    name: "Payouts",
-    href: "/dashboard/payouts",
-    icon: ArrowDownToLine,
-  },
-];
-
+const mobileLinks = sidebarLinks;
 export default function DashboardHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -232,9 +201,8 @@ export default function DashboardHeader() {
             <div className="mt-2 border-t border-gray-200 dark:border-[#1A1A1A] pt-4">
               <nav className="grid gap-y-1 px-4">
                 {mobileLinks.map((item) => {
-                  const isActive =
-                    pathname === item.href ||
-                    pathname.startsWith(item.href + "/");
+                  const isActive = pathname === item.href;
+
                   return (
                     <Link
                       key={item.name}

@@ -92,13 +92,10 @@ export default function RecentPayments({
               <td className="px-4 py-4 whitespace-nowrap text-left text-sm font-medium text-foreground">
                 {payment.settled ? "Yes" : "No"}
               </td>
-              <td className="px-4 py-4 whitespace-nowrap text-left text-sm font-medium">
+              <td className="px-4 py-4 whitespace-nowrap text-left text-sm font-medium ">
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                      <span className="sr-only">Open menu</span>
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
+                  <DropdownMenuTrigger>
+                    <MoreHorizontal className="h-4 w-4" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
@@ -108,19 +105,6 @@ export default function RecentPayments({
                         <span>View details</span>
                       </Link>
                     </DropdownMenuItem>
-                    {/* {payment.status === "pending" && (
-                      <DropdownMenuItem>
-                        <RefreshCw className="mr-2 h-4 w-4" />
-                        <span>Check status</span>
-                      </DropdownMenuItem>
-                    )}
-                    <DropdownMenuSeparator />
-                    {payment.status === "paid" && (
-                      <DropdownMenuItem>
-                        <RefreshCw className="mr-2 h-4 w-4" />
-                        <span>Refund payment</span>
-                      </DropdownMenuItem>
-                    )} */}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </td>
