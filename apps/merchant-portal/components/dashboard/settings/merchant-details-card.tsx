@@ -127,7 +127,7 @@ export function MerchantDetailsCard({
 }: MerchantDetailsCardProps) {
   const [isSubmittingInfo, setIsSubmittingInfo] = useState(false);
   const [isSubmittingPhone, setIsSubmittingPhone] = useState(false);
-
+  console.log(merchant);
   // Extract country code and phone number from the merchant's phone number
   const extractPhoneDetails = (fullPhoneNumber: string) => {
     // Default to US (+1) if no country code is detected
