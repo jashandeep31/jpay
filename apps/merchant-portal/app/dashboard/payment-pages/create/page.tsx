@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { InfoIcon } from "lucide-react";
+import dynamic from "next/dynamic";
 
 import { Button } from "@repo/ui/components/ui/button";
 import {
@@ -33,7 +34,14 @@ import { Label } from "@repo/ui/components/ui/label";
 import { Switch } from "@repo/ui/components/ui/switch";
 import { toast } from "sonner";
 import { generatePresignedUrl } from "@/lib/s3-config";
-import CustomEditor from "@/components/custom-editor";
+
+// Import CustomEditor dynamically with SSR disabled
+const CustomEditor = dynamic(() => import("@/components/custom-editor"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[400px] w-full bg-muted rounded-md animate-pulse" />
+  ),
+});
 
 const formSchema = z.object({
   title: z.string().min(3, {

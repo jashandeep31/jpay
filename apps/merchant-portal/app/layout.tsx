@@ -35,7 +35,6 @@ export const metadata: Metadata = {
   creator: "JPay",
   applicationName: "JPay Merchant Portal",
   generator: "Next.js",
-  viewport: "width=device-width, initial-scale=1",
   openGraph: {
     title: "JPay Merchant Portal | Solana Payment Gateway",
     description:

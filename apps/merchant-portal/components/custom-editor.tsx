@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from "react";
+import React, { useRef, useMemo, useState, useEffect } from "react";
 import JoditEditor from "jodit-react";
 
 const CustomEditor = ({
@@ -8,7 +8,12 @@ const CustomEditor = ({
   value: string;
   setValue: (value: string) => void;
 }) => {
+  const [mounted, setMounted] = useState(false);
   const editor = useRef(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const config = useMemo(
     () => ({
@@ -42,6 +47,7 @@ const CustomEditor = ({
     }),
     []
   );
+  if (!mounted) return null;
 
   return (
     <div style={{ background: "#000000" }}>
