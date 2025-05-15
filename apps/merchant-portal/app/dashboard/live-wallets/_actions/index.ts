@@ -80,7 +80,7 @@ export const updateWebhook = async () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        webhookURL: "https://smee.io/jashandeep31",
+        webhookURL: "https://worker.jashan.cfd/webhook/v1",
         transactionTypes: ["Any"],
         accountAddresses: arrayLiveWallets,
         webhookType: "enhancedDevnet",
