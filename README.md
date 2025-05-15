@@ -1,84 +1,144 @@
-# Turborepo starter
+# JPay Monorepo
 
-This Turborepo starter is maintained by the Turborepo core team.
+This is a Turborepo-powered monorepo containing the following applications and packages:
 
-## Using this example
+### Applications
 
-Run the following command:
+- `merchant-portal`: Merchant dashboard application
+- `checkout-portal`: Customer checkout portal
+- `worker-server`: Background worker server
 
-```sh
-npx create-turbo@latest
-```
+## Prerequisites
 
-## What's inside?
+Before you begin, ensure you have installed:
 
-This Turborepo includes the following packages/apps:
+- [Node.js](https://nodejs.org/) (v18 or later)
+- [pnpm](https://pnpm.io/) (v8 or later)
+- [Docker](https://www.docker.com/) (for local development)
 
-### Apps and Packages
+## Initial Setup
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+1. **Clone the repository**
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+   ```sh
+   git clone <repository-url>
+   cd jpay
+   ```
 
-### Utilities
+2. **Install dependencies**
 
-This Turborepo has some additional tools already setup for you:
+   ```sh
+   pnpm install
+   ```
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+3. **Set up environment variables**
 
-### Build
+   Copy the example environment files for each application:
 
-To build all apps and packages, run the following command:
+   ```sh
+   # For merchant portal
+   cp apps/merchant-portal/.env.example apps/merchant-portal/.env
 
-```
-cd my-turborepo
-pnpm build
-```
+   # For checkout portal
+   cp apps/checkout-portal/.env.example apps/checkout-portal/.env
 
-### Develop
+   # For worker server
+   cp apps/worker-server/.env.example apps/worker-server/.env
+   ```
 
-To develop all apps and packages, run the following command:
+4. **Start development environment**
 
-```
-cd my-turborepo
-pnpm dev
-```
+   ```sh
+   # Start Docker services
+   docker-compose up -d
 
-### Remote Caching
+   # Start all applications in development mode
+   pnpm dev
+   ```
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+## Available Scripts
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+- `pnpm dev` - Start all applications in development mode
+- `pnpm build` - Build all applications
+- `pnpm lint` - Run linting across all applications
+- `pnpm test` - Run tests across all applications
+- `pnpm clean` - Clean all build outputs and caches
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+## Application Ports
 
-```
-cd my-turborepo
-npx turbo login
-```
+- Merchant Portal: http://localhost:3000
+- Checkout Portal: http://localhost:3001
+- Worker Server: http://localhost:3002
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## Development Guidelines
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+1. **Branch Naming Convention**
 
-```
-npx turbo link
-```
+   - Feature: `feature/description`
+   - Bugfix: `fix/description`
+   - Hotfix: `hotfix/description`
 
-## Useful Links
+2. **Commit Messages**
+   Follow conventional commits:
 
-Learn more about the power of Turborepo:
+   - `feat: description`
+   - `fix: description`
+   - `chore: description`
+   - `docs: description`
 
-- [Tasks](https://turborepo.com/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turborepo.com/docs/core-concepts/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+3. **Code Quality**
+   - Run `pnpm lint` before committing
+   - Ensure all tests pass with `pnpm test`
+   - Follow the TypeScript guidelines in `packages/typescript-config`
+
+## Remote Caching
+
+This project uses Turborepo's Remote Caching feature. To enable it:
+
+1. Login to Vercel:
+
+   ```sh
+   npx turbo login
+   ```
+
+2. Link to Remote Cache:
+   ```sh
+   npx turbo link
+   ```
+
+## Troubleshooting
+
+1. **Cache Issues**
+
+   ```sh
+   # Clear Turborepo cache
+   pnpm clean
+
+   # Clear pnpm store
+   pnpm store prune
+   ```
+
+2. **Port Conflicts**
+   - Check if any other services are using the required ports
+   - Modify the port in the respective .env file if needed
+
+## Additional Resources
+
+- [Turborepo Documentation](https://turborepo.org/docs)
+- [pnpm Documentation](https://pnpm.io/documentation)
+- Internal documentation: Check `docs/` directory
+
+## Contributing
+
+1. Create a new branch from `main`
+2. Make your changes
+3. Submit a pull request
+4. Ensure CI checks pass
+5. Get approval from at least one reviewer
+
+## Support
+
+For internal support, contact the development team through:
+
+mail: jashandeep1659@gmail.com
+Discord: jashandeep31
