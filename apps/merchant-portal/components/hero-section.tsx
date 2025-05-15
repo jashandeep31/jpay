@@ -19,9 +19,9 @@ export function HeroSection() {
             The Future of Payments is Here
           </div>
           <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-tight text-foreground">
-            Fast & Secure Stablecoin
+            Making Stablecoin Payments
             <br />
-            <span className="text-primary">Payments on Solana</span>
+            <span className="text-primary">Fast & Secure</span>
           </h1>
           <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
             JPay enables businesses to accept USDC and USDT payments with

@@ -43,6 +43,7 @@ export async function getProfilePicturePresignedUrl(
 
 export async function updateCompleteProfile({
   phoneNumber,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   countryCode,
   businessName,
   description,
@@ -62,9 +63,9 @@ export async function updateCompleteProfile({
         id: session.merchantId,
       },
       data: {
-        phoneNumber: `${countryCode.replace("+", "").trim()}${phoneNumber}`,
-        name: businessName,
-        description,
+        phoneNumber: `${phoneNumber}`,
+        name: businessName || "JPay Merchant",
+        description: description || "JPay Merchant test description",
         logoUrl:
           "https://job2tech-public.s3.us-east-1.amazonaws.com/merchant/profile/logo/4b4a5296-d9c9-4ecf-8ab1-40ebc901bc48-usdt.png",
         profileCompleted: true,

@@ -282,7 +282,7 @@ export function PaymentDetailsClient({
                 {loading
                   ? "Processing..."
                   : !isSignatureVerified
-                    ? "Complete Payment"
+                    ? "Complete Payment with wallet"
                     : `Please wait for signature verification... (${countdown}s)`}
               </Button>
             )}
