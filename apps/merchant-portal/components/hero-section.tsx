@@ -51,11 +51,12 @@ export function HeroSection() {
         </div>
 
         <div className="relative mx-auto mb-16 border rounded-xl p-6">
-          <div className="video-container">
+          <div className="video-container w-full ">
             <iframe
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?controls=1&rel=0"
+              src="https://www.youtube.com/embed/Hrklu3O_81M?si=T4b8zIcjIj2wQ9ro"
               title="JPay Demo Video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture "
+              className="w-full  aspect-video"
               allowFullScreen
             ></iframe>
           </div>

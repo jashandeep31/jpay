@@ -1,5 +1,5 @@
 import { HeroSection } from "@/components/hero-section";
-import { PartnersSection } from "@/components/partners-section";
+// import { PartnersSection } from "@/components/partners-section";
 import { FeaturesSection } from "@/components/features-section";
 import { BenefitsSection } from "@/components/benefits-section";
 import { HowItWorksSection } from "@/components/how-it-works-section";
@@ -17,7 +17,7 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <HeroSection />
-      <PartnersSection />
+      {/* <PartnersSection /> */}
       <FeaturesSection />
       <BenefitsSection />
       <HowItWorksSection />
