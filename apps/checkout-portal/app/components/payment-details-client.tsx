@@ -173,13 +173,16 @@ export function PaymentDetailsClient({
   return (
     <div className="container max-w-2xl px-4 py-8 md:py-12">
       <div className="mb-6 md:mb-8">
-        <Link
-          href="/payment/select-method"
+        <Button
+          onClick={() => {
+            router.back();
+          }}
+          variant={"ghost"}
           className="flex items-center text-sm text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Payment Methods
-        </Link>
+        </Button>
       </div>
 
       <div className="space-y-6">

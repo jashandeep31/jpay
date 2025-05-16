@@ -23,7 +23,7 @@ export interface BusinessProfile {
 const STEPS = [
   { id: "phone", title: "Verify Phone Number" },
   { id: "details", title: "Fill Business Details" },
-  { id: "logo", title: "Add Logo" },
+  // { id: "logo", title: "Add Logo" },
 ];
 
 export function ProfileCompletionFlow() {
@@ -75,7 +75,8 @@ export function ProfileCompletionFlow() {
       setStepCompleted(false);
     } else {
       // All steps completed
-      setProfileCompleted(true);
+      // setProfileCompleted(true);
+      handleCompleteProfile();
     }
   };
 
@@ -127,15 +128,30 @@ export function ProfileCompletionFlow() {
           <div className="mb-8">
             {currentStepIndex === 0 && (
               <>
-                <PhoneVerificationStep onVerified={handlePhoneVerified} />
+                <div className="relative">
+                  <div className="absolute w-full h-full flex items-center justify-center bg-black/50 z-10">
+                    <p className="text-lg font-bold text-center">
+                      You can skip this step. <br />
+                      Since this is a hackathon project, I&apos;m not collecting
+                      judges&apos; phone numbers to respect privacy and keep
+                      things simple.
+                    </p>
+                  </div>
+                  <div className="opacity-50">
+                    <PhoneVerificationStep onVerified={handlePhoneVerified} />
+                  </div>
+                </div>
                 <Button
                   className="w-full mt-4"
-                  variant="destructive"
                   onClick={() => {
                     handlePhoneVerified("+919876543210");
                     setCurrentStepIndex(1);
                   }}
                 >
+                  <span className="relative flex size-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex size-2 rounded-full bg-green-500"></span>
+                  </span>
                   Bypass Proccess
                 </Button>
               </>
