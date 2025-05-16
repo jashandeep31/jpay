@@ -24,9 +24,9 @@ export function HeroSection() {
             <span className="text-primary">with Stablecoins</span>
           </h1>
           <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-            JPay enables businesses to accept USDC and USDT payments with
-            lightning-fast speeds and minimal fees. Experience the future of
-            digital payments today.
+            JPay enables businesses to accept USDC, USDT and other stablecoins
+            with lightning-fast speeds and minimal fees. Experience the future
+            of digital payments today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
