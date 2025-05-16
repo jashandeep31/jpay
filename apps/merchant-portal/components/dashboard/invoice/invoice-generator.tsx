@@ -28,6 +28,7 @@ export function InvoiceGenerator() {
     paymentLink: "",
   });
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  const [activeTab, setActiveTab] = useState("form");
   const invoiceRef = useRef<HTMLDivElement>(null);
 
   const handleDownloadPDF = async () => {
@@ -163,13 +164,17 @@ export function InvoiceGenerator() {
 
   return (
     <div className="space-y-8">
-      <Tabs defaultValue="form" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-2 bg-background">
           <TabsTrigger value="form">
             <FileText className="h-4 w-4 mr-2" />
             Edit Invoice
           </TabsTrigger>
           <TabsTrigger value="preview">
+            <span className="relative flex size-2 mr-1">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+              <span className="relative inline-flex size-2 rounded-full bg-green-500"></span>
+            </span>
             <Printer className="h-4 w-4 mr-2" />
             Download Invoice
           </TabsTrigger>
@@ -179,6 +184,11 @@ export function InvoiceGenerator() {
             invoiceData={invoiceData}
             setInvoiceData={setInvoiceData}
           />
+
+          <Button className="mt-4" onClick={() => setActiveTab("preview")}>
+            <Printer className="h-4 w-4 mr-2" />
+            Download Invoice
+          </Button>
         </TabsContent>
         <TabsContent value="preview">
           <div className="mb-4 flex justify-center mt-6">

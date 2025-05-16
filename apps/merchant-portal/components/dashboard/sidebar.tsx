@@ -17,6 +17,7 @@ import {
   Webhook,
   Landmark,
   WalletMinimal,
+  BookOpen,
 } from "lucide-react";
 import { useSidebar } from "@/context/sidebar-context";
 import {
@@ -32,6 +33,11 @@ export const sidebarLinks = [
     name: "Overview",
     href: "/dashboard",
     icon: LayoutDashboard,
+  },
+  {
+    name: "Docs of How to",
+    href: "https://jashandeep.notion.site/JPay-Payment-gateway-1f53d3428d76805fb936f87083a29b5a",
+    icon: BookOpen,
   },
   {
     name: "Payment Links",
@@ -141,6 +147,9 @@ export default function DashboardSidebar() {
                   <Tooltip key={link.name}>
                     <TooltipTrigger asChild>
                       <Link
+                        target={
+                          link.name === "Docs of How to" ? "_blank" : "_self"
+                        }
                         href={link.href}
                         className={`group flex items-center ${
                           collapsed ? "justify-center" : ""
@@ -161,7 +170,15 @@ export default function DashboardSidebar() {
                           aria-hidden="true"
                         />
                         {!collapsed && (
-                          <span className="flex-1">{link.name}</span>
+                          <span className="flex-1 flex  items-center gap-1">
+                            {link.name === "Docs of How to" && (
+                              <span className="relative flex size-2">
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                                <span className="relative inline-flex size-2 rounded-full bg-green-500"></span>
+                              </span>
+                            )}
+                            {link.name}
+                          </span>
                         )}
                       </Link>
                     </TooltipTrigger>

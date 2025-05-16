@@ -39,13 +39,18 @@ export function HeroSection() {
               Get Started
             </Link>
             <Link
-              href="/auth/login"
+              href="https://jashandeep.notion.site/JPay-Payment-gateway-1f53d3428d76805fb936f87083a29b5a"
+              target="_blank"
               className={cn(
                 buttonVariants({ variant: "outline" }),
                 "border-border hover:bg-accent/5 gap-2 btn-outline bg-background"
               )}
             >
-              Login Back
+              Docs of How to?
+              <span className="relative flex size-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75"></span>
+                <span className="relative inline-flex size-2 rounded-full bg-green-500"></span>
+              </span>
             </Link>
           </div>
         </div>
