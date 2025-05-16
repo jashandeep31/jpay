@@ -4,9 +4,51 @@ This is a Turborepo-powered monorepo containing the following applications and p
 
 ### Applications
 
-- `merchant-portal`: Merchant dashboard application
-- `checkout-portal`: Customer checkout portal
+- `merchant-portal`: [Merchant dashboard application](https://merchant.jashan.cfd/)
+- `checkout-portal`: [Customer checkout portal](https://jashan.cfd/)
 - `worker-server`: Background worker server
+
+### Tech Stack
+
+#### Frontend
+
+- **Framework**: Next.js 15.3.1 with React 19
+- **Styling**: TailwindCSS 4.x with shadcn/ui components
+- **State Management**: SWR for data fetching
+- **Form Handling**: React Hook Form with Zod validation
+- **UI Components**:
+  - Radix UI primitives
+  - Framer Motion for animations
+  - Lucide React for icons
+  - Recharts for data visualization
+
+#### Backend
+
+- **Runtime**: Node.js (v18+)
+- **API**: Next.js API Routes
+- **Database**: Prisma 6.6 ORM
+- **Authentication**: NextAuth.js 5.0
+- **Job Queue**: BullMQ with Redis
+- **File Storage**: AWS S3
+
+#### Blockchain Integration
+
+- **Network**: Solana
+- **Libraries**:
+  - `@solana/web3.js`
+  - `@solana/spl-token`
+  - `@solana/wallet-adapter`
+
+#### Development Tools
+
+- **Package Manager**: pnpm 8+
+- **Monorepo**: Turborepo with Remote Caching
+- **Language**: TypeScript 5.8
+- **Linting & Formatting**:
+  - ESLint 9
+  - Prettier
+- **Build Tool**: Turbopack
+- **Container Platform**: Docker
 
 ## Prerequisites
 
