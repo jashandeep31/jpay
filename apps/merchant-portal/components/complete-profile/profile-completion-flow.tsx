@@ -136,7 +136,7 @@ export function ProfileCompletionFlow() {
                     setCurrentStepIndex(1);
                   }}
                 >
-                  Bypass Proccess with automatic
+                  Bypass Proccess
                 </Button>
               </>
             )}
@@ -158,7 +158,7 @@ export function ProfileCompletionFlow() {
                     handleCompleteProfile();
                   }}
                 >
-                  Bypass Proccess with automatic
+                  Bypass Proccess
                 </Button>
               </>
             )}
@@ -174,7 +174,7 @@ export function ProfileCompletionFlow() {
                     handleCompleteProfile();
                   }}
                 >
-                  Bypass Proccess with automatic
+                  Bypass Proccess
                 </Button>
               </>
             )}
