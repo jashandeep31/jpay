@@ -23,8 +23,10 @@ import { CHECKOUT_PORTAL_URL } from "@/lib/conts";
 import { generatePresignedUrl } from "@/lib/s3-config";
 
 export function InvoiceGenerator() {
-  const [invoiceData, setInvoiceData] =
-    useState<InvoiceData>(initialInvoiceData);
+  const [invoiceData, setInvoiceData] = useState<InvoiceData>({
+    ...initialInvoiceData,
+    paymentLink: "",
+  });
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const invoiceRef = useRef<HTMLDivElement>(null);
 
@@ -162,14 +164,14 @@ export function InvoiceGenerator() {
   return (
     <div className="space-y-8">
       <Tabs defaultValue="form" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-2 bg-background">
           <TabsTrigger value="form">
             <FileText className="h-4 w-4 mr-2" />
             Edit Invoice
           </TabsTrigger>
           <TabsTrigger value="preview">
             <Printer className="h-4 w-4 mr-2" />
-            Preview
+            Download Invoice
           </TabsTrigger>
         </TabsList>
         <TabsContent value="form">
@@ -179,10 +181,10 @@ export function InvoiceGenerator() {
           />
         </TabsContent>
         <TabsContent value="preview">
-          <div className="mb-4 flex justify-end">
+          <div className="mb-4 flex justify-center mt-6">
             <Button
               onClick={handleDownloadPDF}
-              className="ml-2"
+              className=""
               disabled={isGeneratingPDF}
             >
               {isGeneratingPDF ? (
@@ -212,12 +214,16 @@ export function InvoiceGenerator() {
               ) : (
                 <>
                   <Download className="h-4 w-4 mr-2" />
-                  Download PDF
+                  Generate Download PDF
                 </>
               )}
             </Button>
           </div>
-          <div className="bg-white rounded-lg shadow-lg p-8 max-w-4xl mx-auto">
+          <div
+            className={`bg-white ${
+              invoiceData.paymentLink ? "opacity-100" : "opacity-50"
+            } rounded-lg shadow-lg p-8 max-w-4xl mx-auto`}
+          >
             <div ref={invoiceRef}>
               <InvoicePreview invoiceData={invoiceData} />
             </div>

@@ -127,6 +127,9 @@ export function InvoicePreview({ invoiceData }: InvoicePreviewProps) {
 
       {/* Payment Button */}
       <div className="flex items-center justify-center flex-col">
+        {!invoiceData.paymentLink
+          ? "Please click on the Download pdf to generated the invoice link"
+          : null}
         <canvas id="qr-code" className="w-[100px] h-[100px] "></canvas>
         <p className="text-sm text-gray-500">{invoiceData.paymentLink}</p>
       </div>
