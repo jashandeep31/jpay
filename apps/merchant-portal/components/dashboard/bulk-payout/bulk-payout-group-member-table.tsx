@@ -18,6 +18,7 @@ import {
   TableRow,
 } from "@repo/ui/components/ui/table";
 import {
+  createAssociatedTokenAccountInstruction,
   createTransferCheckedInstruction,
   getAssociatedTokenAddress,
 } from "@solana/spl-token";
@@ -58,10 +59,23 @@ const BulkPayoutGroupMemberTable = ({
     for (const member of group.BulkPayoutGroupMember) {
       const toAta = await getAssociatedTokenAddress(
         USDC_MINT,
-        new PublicKey(member.address),
-        true
+        new PublicKey(member.address)
       );
 
+      // Check if the ATA exists
+      const toAtaInfo = await connection.getAccountInfo(toAta);
+      const needsAta = !toAtaInfo;
+
+      if (needsAta) {
+        tx.add(
+          createAssociatedTokenAccountInstruction(
+            publicKey,
+            toAta,
+            new PublicKey(member.address),
+            USDC_MINT
+          )
+        );
+      }
       tx.add(
         createTransferCheckedInstruction(
           fromAta,

@@ -18,8 +18,8 @@ async function main() {
     {
       name: "Tether",
       symbol: "USDT",
-      tokenAddress: "JAv9RoTyDfzwCqpGVTTK1mMkNNAVcxSERAXZ8h2XBjk1",
-      authority: "BBaeWHi8rhCAVHt24Wzp6bdQgfEds2hQon45cjrXvTLs",
+      tokenAddress: "97opqBLXQGb1brcHRDyGfdZCacJhYJ6KnrN5v6t4Uc8B",
+      authority: "97opqBLXQGb1brcHRDyGfdZCacJhYJ6KnrN5v6t4Uc8B",
       logoUrl:
         "https://img.icons8.com/?size=100&id=wZm3ymBvyMGj&format=png&color=000000",
       decimalCount: 6,
