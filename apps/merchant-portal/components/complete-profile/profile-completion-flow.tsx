@@ -172,6 +172,7 @@ export function ProfileCompletionFlow() {
                     handleLogoUploaded("testId");
                     setCurrentStepIndex(3);
                     handleCompleteProfile();
+                    setProfileCompleted(true);
                   }}
                 >
                   Bypass Proccess
