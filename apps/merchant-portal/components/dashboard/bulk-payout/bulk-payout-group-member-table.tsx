@@ -59,13 +59,10 @@ const BulkPayoutGroupMemberTable = ({
     for (const member of group.BulkPayoutGroupMember) {
       const toAta = await getAssociatedTokenAddress(
         USDC_MINT,
-        new PublicKey(member.address)
+        new PublicKey(member.address),
+        true
       );
-
-      // Check if the ATA exists
-      const toAtaInfo = await connection.getAccountInfo(toAta);
-      const needsAta = !toAtaInfo;
-
+      const needsAta = toAta === null;
       if (needsAta) {
         tx.add(
           createAssociatedTokenAccountInstruction(
