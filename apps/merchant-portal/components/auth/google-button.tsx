@@ -46,7 +46,7 @@ export default function GoogleButton({
     <Button
       variant="outline"
       size="lg"
-      className="w-full flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-medium border border-gray-300"
+      className="w-full flex items-center justify-center gap-2 bg-secondary text-foreground hover:bg-gray-50 font-medium border border-gray-300"
       onClick={handleGoogleSignIn}
       disabled={isLoading}
     >

@@ -56,7 +56,7 @@ export default function DashboardHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-[#0A0A0A]">
+    <header className="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-200 dark:border-gray-800 bg-secondary">
       <div className="flex flex-1 justify-between px-4 md:px-6">
         <div className="flex flex-1 items-center">
           <button

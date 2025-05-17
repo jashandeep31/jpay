@@ -20,7 +20,7 @@ function DashboardContent({ children }: { children: React.ReactNode }) {
         }`}
       >
         <DashboardHeader />
-        <main className="flex-1 p-4 md:p-6 overflow-x-hidden">
+        <main className="flex-1 p-4 md:p-6 overflow-x-hidden bg-background">
           <div className="max-w-[1600px] mx-auto">{children}</div>
         </main>
       </div>
