@@ -155,8 +155,8 @@ export default function DashboardSidebar() {
                           collapsed ? "justify-center" : ""
                         } px-2 py-2 text-sm font-medium rounded-md ${
                           isActive
-                            ? "bg-sidebar-accent text-sidebar-primary"
-                            : "text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+                            ? "dark:bg-secondary bg-background text-sidebar-primary"
+                            : "text-sidebar-foreground/60 hover:bg-sidebar hover:text-sidebar-foreground"
                         }`}
                         onMouseEnter={() => setHoveredItem(link.name)}
                         onMouseLeave={() => setHoveredItem(null)}
